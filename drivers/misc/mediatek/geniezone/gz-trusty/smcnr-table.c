@@ -143,8 +143,8 @@ int init_smcnr_table(struct device *dev, enum tee_id_t tee_id)
 
 	if (ver < TRUSTY_API_VERSION_SMCNR_TABLE) {
 		pr_info("GZ SMC version(%u) is not supported for MTEE %d, %s\n",
-			ver, tee_id, "please update");
-		return -ENODEV;
+			ver, tee_id, ", but bypassed for old firmware!\n");
+		ver=TRUSTY_API_VERSION_SMCNR_TABLE
 	}
 
 	pr_info("New smcall table ver %d support for MTEE %d\n", ver, tee_id);
