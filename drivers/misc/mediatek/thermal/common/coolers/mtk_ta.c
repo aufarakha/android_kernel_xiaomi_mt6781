@@ -368,6 +368,9 @@ static void ta_nl_data_handler(struct sk_buff *skb)
 
 int wakeup_ta_algo(int flow_state)
 {
+	if (g_tad_pid == 0) {
+		return 0;
+	}
 	g_ta_counter++;
 	if (g_tad_pid != 0) {
 		struct tad_nl_msg_t *tad_msg = NULL;
