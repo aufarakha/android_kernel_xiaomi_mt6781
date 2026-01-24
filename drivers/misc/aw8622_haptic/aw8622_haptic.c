@@ -119,8 +119,15 @@ static int aw8622_update_pwm_frequency(struct aw8622_haptic *haptic)
 {
 	int err = 0;
 	unsigned int data_width, thresh;
+	static unsigned int last_freq = 0;
 
-	pr_info("%s frequency=%u Hz\n", __func__, haptic->frequency);
+	if (haptic->frequency == 0)
+		return -EINVAL;
+
+	if (haptic->frequency == last_freq)
+		return 0;
+
+	pr_debug("%s frequency=%u Hz\n", __func__, haptic->frequency);
 
 	mt_pwm_disable(aw8622_pwm_old_mode_config.pwm_no, aw8622_pwm_old_mode_config.pmic_pad);
 	mt_pwm_clk_sel_hal(aw8622_pwm_old_mode_config.pwm_no, CLK_26M);
@@ -135,6 +142,9 @@ static int aw8622_update_pwm_frequency(struct aw8622_haptic *haptic)
 	err = pwm_set_spec_config(&aw8622_pwm_old_mode_config);
 	if (err < 0) {
 		dev_err(haptic->dev, "%s pwm_set_spec_config failed\n", __func__);
+		last_freq = 0;
+	} else {
+		last_freq = haptic->frequency;
 	}
 
 	return err;
