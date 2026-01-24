@@ -379,14 +379,10 @@ static bool debug_low_async_space_locked(struct binder_alloc *alloc, int pid)
 	 * detected when the threshold is exceeded.
 	 */
 	if (num_buffers > 50 || total_alloc_size > alloc->buffer_size / 4) {
-		binder_alloc_debug(BINDER_DEBUG_USER_ERROR,
-			     "%d: pid %d spamming oneway? %zd buffers allocated for a total size of %zd\n",
+		pr_warn_ratelimited("%d: pid %d spamming oneway? %zd buffers allocated for a total size of %zd\n",
 			      alloc->pid, pid, num_buffers, total_alloc_size);
-		if (!alloc->oneway_spam_detected) {
-			alloc->oneway_spam_detected = true;
-			return true;
-		}
 	}
+    
 	return false;
 }
 
