@@ -175,7 +175,7 @@ static int dlm_lock_sync_interruptible(struct dlm_lock_resource *res, int mode,
 			&res->lksb, res);
 		res->sync_locking_done = false;
 		if (unlikely(ret != 0))
-			pr_info("failed to cancel previous lock request "
+			pr_debug("failed to cancel previous lock request "
 				 "%s return %d\n", res->name, ret);
 		return -EPERM;
 	} else
@@ -382,7 +382,7 @@ static void recover_slot(void *arg, struct dlm_slot *slot)
 	struct mddev *mddev = arg;
 	struct md_cluster_info *cinfo = mddev->cluster_info;
 
-	pr_info("md-cluster: %s Node %d/%d down. My slot: %d. Initiating recovery.\n",
+	pr_debug("md-cluster: %s Node %d/%d down. My slot: %d. Initiating recovery.\n",
 			mddev->bitmap_info.cluster_name,
 			slot->nodeid, slot->slot,
 			cinfo->slot_number);
@@ -523,7 +523,7 @@ static void process_add_new_disk(struct mddev *mddev, struct cluster_msg *cmsg)
 	len = snprintf(disk_uuid, 64, "DEVICE_UUID=");
 	sprintf(disk_uuid + len, "%pU", cmsg->uuid);
 	snprintf(raid_slot, 16, "RAID_DISK=%d", le32_to_cpu(cmsg->raid_slot));
-	pr_info("%s:%d Sending kobject change with %s and %s\n", __func__, __LINE__, disk_uuid, raid_slot);
+	pr_debug("%s:%d Sending kobject change with %s and %s\n", __func__, __LINE__, disk_uuid, raid_slot);
 	init_completion(&cinfo->newdisk_completion);
 	set_bit(MD_CLUSTER_WAITING_FOR_NEWDISK, &cinfo->state);
 	kobject_uevent_env(&disk_to_dev(mddev->gendisk)->kobj, KOBJ_CHANGE, envp);
@@ -648,20 +648,20 @@ static void recv_daemon(struct md_thread *thread)
 	/*release CR on ack_lockres*/
 	ret = dlm_unlock_sync(ack_lockres);
 	if (unlikely(ret != 0))
-		pr_info("unlock ack failed return %d\n", ret);
+		pr_debug("unlock ack failed return %d\n", ret);
 	/*up-convert to PR on message_lockres*/
 	ret = dlm_lock_sync(message_lockres, DLM_LOCK_PR);
 	if (unlikely(ret != 0))
-		pr_info("lock PR on msg failed return %d\n", ret);
+		pr_debug("lock PR on msg failed return %d\n", ret);
 	/*get CR on ack_lockres again*/
 	ret = dlm_lock_sync(ack_lockres, DLM_LOCK_CR);
 	if (unlikely(ret != 0))
-		pr_info("lock CR on ack failed return %d\n", ret);
+		pr_debug("lock CR on ack failed return %d\n", ret);
 out:
 	/*release CR on message_lockres*/
 	ret = dlm_unlock_sync(message_lockres);
 	if (unlikely(ret != 0))
-		pr_info("unlock msg failed return %d\n", ret);
+		pr_debug("unlock msg failed return %d\n", ret);
 	mutex_unlock(&cinfo->recv_mutex);
 }
 
@@ -826,7 +826,7 @@ static int gather_all_resync_info(struct mddev *mddev, int total_slots)
 		if (ret == -EAGAIN) {
 			s = read_resync_info(mddev, bm_lockres);
 			if (s) {
-				pr_info("%s:%d Resync[%llu..%llu] in progress on %d\n",
+				pr_debug("%s:%d Resync[%llu..%llu] in progress on %d\n",
 						__func__, __LINE__,
 						(unsigned long long) s->lo,
 						(unsigned long long) s->hi, i);
@@ -935,7 +935,7 @@ static int join(struct mddev *mddev, int nodes)
 		pr_err("md-cluster: failed to get a sync CR lock on no-new-dev!(%d)\n", ret);
 
 
-	pr_info("md-cluster: Joined cluster %s slot %d\n", str, cinfo->slot_number);
+	pr_debug("md-cluster: Joined cluster %s slot %d\n", str, cinfo->slot_number);
 	snprintf(str, 64, "bitmap%04d", cinfo->slot_number - 1);
 	cinfo->bitmap_lockres = lockres_init(mddev, str, NULL, 1);
 	if (!cinfo->bitmap_lockres) {
@@ -1510,7 +1510,7 @@ static struct md_cluster_operations cluster_ops = {
 static int __init cluster_init(void)
 {
 	pr_warn("md-cluster: support raid1 and raid10 (limited support)\n");
-	pr_info("Registering Cluster MD functions\n");
+	pr_debug("Registering Cluster MD functions\n");
 	register_md_cluster_operations(&cluster_ops, THIS_MODULE);
 	return 0;
 }

@@ -262,7 +262,7 @@ static int __init tc1100_init(void)
 	if (error)
 		goto err_device_del;
 
-	pr_info("HP Compaq TC1100 Tablet WMI Extras loaded\n");
+	pr_debug("HP Compaq TC1100 Tablet WMI Extras loaded\n");
 	return 0;
 
  err_device_del:

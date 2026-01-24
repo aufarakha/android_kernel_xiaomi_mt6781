@@ -1028,7 +1028,7 @@ static int hpt37x_init_one(struct pci_dev *dev, const struct pci_device_id *id)
 		else
 			private_data = (void *)hpt37x_timings_50;
 
-		pr_info("bus clock %dMHz, using %dMHz DPLL\n",
+		pr_debug("bus clock %dMHz, using %dMHz DPLL\n",
 			MHz[clock_slot], MHz[dpll]);
 	} else {
 		private_data = (void *)chip_table->clocks[clock_slot];
@@ -1043,7 +1043,7 @@ static int hpt37x_init_one(struct pci_dev *dev, const struct pci_device_id *id)
 		if (clock_slot < 2 && ppi[0] == &info_hpt370a)
 			ppi[0] = &info_hpt370a_33;
 
-		pr_info("%s using %dMHz bus clock\n",
+		pr_debug("%s using %dMHz bus clock\n",
 			chip_table->name, MHz[clock_slot]);
 	}
 

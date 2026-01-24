@@ -178,7 +178,7 @@ static int igt_ppgtt_alloc(void *arg)
 		err = ppgtt->vm.allocate_va_range(&ppgtt->vm, 0, size);
 		if (err) {
 			if (err == -ENOMEM) {
-				pr_info("[1] Ran out of memory for va_range [0 + %llx] [bit %d]\n",
+				pr_debug("[1] Ran out of memory for va_range [0 + %llx] [bit %d]\n",
 					size, ilog2(size));
 				err = 0; /* virtual space too large! */
 			}
@@ -196,7 +196,7 @@ static int igt_ppgtt_alloc(void *arg)
 						  last, size - last);
 		if (err) {
 			if (err == -ENOMEM) {
-				pr_info("[2] Ran out of memory for va_range [%llx + %llx] [bit %d]\n",
+				pr_debug("[2] Ran out of memory for va_range [%llx + %llx] [bit %d]\n",
 					last, size - last, ilog2(size));
 				err = 0; /* virtual space too large! */
 			}

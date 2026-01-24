@@ -856,7 +856,7 @@ static int set_tvaudio(struct cx88_core *core)
 		core->tvaudio = WW_EIAJ;
 
 	} else {
-		pr_info("tvaudio support needs work for this tv norm [%s], sorry\n",
+		pr_debug("tvaudio support needs work for this tv norm [%s], sorry\n",
 			v4l2_norm_to_name(core->tvnorm));
 		core->tvaudio = WW_NONE;
 		return 0;

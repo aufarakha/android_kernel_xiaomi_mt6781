@@ -113,7 +113,7 @@ static int bcm63xx_read_image_tag(struct mtd_info *master, const char *name,
 		STR_NULL_TERMINATE(buf->board_id);
 		STR_NULL_TERMINATE(buf->tag_version);
 
-		pr_info("%s: CFE image tag found at 0x%llx with version %s, board type %s\n",
+		pr_debug("%s: CFE image tag found at 0x%llx with version %s, board type %s\n",
 			name, tag_offset, buf->tag_version, buf->board_id);
 
 		return 0;
@@ -265,10 +265,10 @@ invalid_tag:
 	parts[curpart].size = master->size - cfelen - nvramlen;
 
 	for (i = 0; i < nrparts; i++)
-		pr_info("Partition %d is %s offset %llx and length %llx\n", i,
+		pr_debug("Partition %d is %s offset %llx and length %llx\n", i,
 			parts[i].name, parts[i].offset,	parts[i].size);
 
-	pr_info("Spare partition is offset %x and length %x\n",	spareaddr,
+	pr_debug("Spare partition is offset %x and length %x\n",	spareaddr,
 		sparelen);
 
 	*pparts = parts;

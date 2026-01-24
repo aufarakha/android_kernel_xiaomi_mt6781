@@ -1061,35 +1061,35 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 	/* pci quirks */
 	if (pci_pci_problems) {
 		if (pci_pci_problems & PCIPCI_TRITON)
-			pr_info("%s: quirk: PCIPCI_TRITON\n", dev->name);
+			pr_debug("%s: quirk: PCIPCI_TRITON\n", dev->name);
 		if (pci_pci_problems & PCIPCI_NATOMA)
-			pr_info("%s: quirk: PCIPCI_NATOMA\n", dev->name);
+			pr_debug("%s: quirk: PCIPCI_NATOMA\n", dev->name);
 		if (pci_pci_problems & PCIPCI_VIAETBF)
-			pr_info("%s: quirk: PCIPCI_VIAETBF\n", dev->name);
+			pr_debug("%s: quirk: PCIPCI_VIAETBF\n", dev->name);
 		if (pci_pci_problems & PCIPCI_VSFX)
-			pr_info("%s: quirk: PCIPCI_VSFX\n", dev->name);
+			pr_debug("%s: quirk: PCIPCI_VSFX\n", dev->name);
 #ifdef PCIPCI_ALIMAGIK
 		if (pci_pci_problems & PCIPCI_ALIMAGIK) {
-			pr_info("%s: quirk: PCIPCI_ALIMAGIK -- latency fixup\n",
+			pr_debug("%s: quirk: PCIPCI_ALIMAGIK -- latency fixup\n",
 			       dev->name);
 			latency = 0x0A;
 		}
 #endif
 		if (pci_pci_problems & (PCIPCI_FAIL|PCIAGP_FAIL)) {
-			pr_info("%s: quirk: this driver and your chipset may not work together in overlay mode.\n",
+			pr_debug("%s: quirk: this driver and your chipset may not work together in overlay mode.\n",
 				dev->name);
 			if (!saa7134_no_overlay) {
-				pr_info("%s: quirk: overlay mode will be disabled.\n",
+				pr_debug("%s: quirk: overlay mode will be disabled.\n",
 						dev->name);
 				saa7134_no_overlay = 1;
 			} else {
-				pr_info("%s: quirk: overlay mode will be forced. Use this option at your own risk.\n",
+				pr_debug("%s: quirk: overlay mode will be forced. Use this option at your own risk.\n",
 						dev->name);
 			}
 		}
 	}
 	if (UNSET != latency) {
-		pr_info("%s: setting pci latency timer to %d\n",
+		pr_debug("%s: setting pci latency timer to %d\n",
 		       dev->name,latency);
 		pci_write_config_byte(pci_dev, PCI_LATENCY_TIMER, latency);
 	}
@@ -1097,7 +1097,7 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 	/* print pci info */
 	dev->pci_rev = pci_dev->revision;
 	pci_read_config_byte(pci_dev, PCI_LATENCY_TIMER,  &dev->pci_lat);
-	pr_info("%s: found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
+	pr_debug("%s: found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
 		dev->name, pci_name(pci_dev), dev->pci_rev, pci_dev->irq,
 		dev->pci_lat,
 		(unsigned long long)pci_resource_start(pci_dev, 0));
@@ -1126,7 +1126,7 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 	dev->tda9887_conf = saa7134_boards[dev->board].tda9887_conf;
 	if (UNSET != tuner[dev->nr])
 		dev->tuner_type = tuner[dev->nr];
-	pr_info("%s: subsystem: %04x:%04x, board: %s [card=%d,%s]\n",
+	pr_debug("%s: subsystem: %04x:%04x, board: %s [card=%d,%s]\n",
 		dev->name,pci_dev->subsystem_vendor,
 		pci_dev->subsystem_device,saa7134_boards[dev->board].name,
 		dev->board, dev->autodetected ?
@@ -1189,7 +1189,7 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 				&dev->i2c_adap, "saa6588",
 				0, I2C_ADDRS(saa7134_boards[dev->board].rds_addr));
 		if (sd) {
-			pr_info("%s: found RDS decoder\n", dev->name);
+			pr_debug("%s: found RDS decoder\n", dev->name);
 			dev->has_rds = 1;
 		}
 	}
@@ -1208,7 +1208,7 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 
 	/* register v4l devices */
 	if (saa7134_no_overlay > 0)
-		pr_info("%s: Overlay support disabled.\n", dev->name);
+		pr_debug("%s: Overlay support disabled.\n", dev->name);
 
 	dev->video_dev = vdev_init(dev,&saa7134_video_template,"video");
 	dev->video_dev->ctrl_handler = &dev->ctrl_handler;
@@ -1217,11 +1217,11 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 	err = video_register_device(dev->video_dev,VFL_TYPE_GRABBER,
 				    video_nr[dev->nr]);
 	if (err < 0) {
-		pr_info("%s: can't register video device\n",
+		pr_debug("%s: can't register video device\n",
 		       dev->name);
 		goto fail4;
 	}
-	pr_info("%s: registered device %s [v4l2]\n",
+	pr_debug("%s: registered device %s [v4l2]\n",
 	       dev->name, video_device_node_name(dev->video_dev));
 
 	dev->vbi_dev = vdev_init(dev, &saa7134_video_template, "vbi");
@@ -1233,7 +1233,7 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 				    vbi_nr[dev->nr]);
 	if (err < 0)
 		goto fail4;
-	pr_info("%s: registered device %s\n",
+	pr_debug("%s: registered device %s\n",
 	       dev->name, video_device_node_name(dev->vbi_dev));
 
 	if (card_has_radio(dev)) {
@@ -1244,7 +1244,7 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 					    radio_nr[dev->nr]);
 		if (err < 0)
 			goto fail4;
-		pr_info("%s: registered device %s\n",
+		pr_debug("%s: registered device %s\n",
 		       dev->name, video_device_node_name(dev->radio_dev));
 	}
 
@@ -1529,7 +1529,7 @@ static struct pci_driver saa7134_pci_driver = {
 static int __init saa7134_init(void)
 {
 	INIT_LIST_HEAD(&saa7134_devlist);
-	pr_info("saa7130/34: v4l2 driver version %s loaded\n",
+	pr_debug("saa7130/34: v4l2 driver version %s loaded\n",
 	       SAA7134_VERSION);
 	return pci_register_driver(&saa7134_pci_driver);
 }

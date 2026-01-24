@@ -2431,7 +2431,7 @@ static int w83627ehf_probe(struct platform_device *pdev)
 		else
 			superio_outb(sio_data->sioreg, NCT6775_REG_FAN_DEBOUNCE,
 				     0x1e | tmp);
-		pr_info("Enabled fan debounce for chip %s\n", data->name);
+		pr_debug("Enabled fan debounce for chip %s\n", data->name);
 	}
 
 	w83627ehf_check_fan_inputs(sio_data, data);
@@ -2796,7 +2796,7 @@ static int __init w83627ehf_find(int sioaddr, unsigned short *addr,
 	}
 
 	superio_exit(sioaddr);
-	pr_info("Found %s chip at %#x\n", sio_name, *addr);
+	pr_debug("Found %s chip at %#x\n", sio_name, *addr);
 	sio_data->sioreg = sioaddr;
 
 	return 0;

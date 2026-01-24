@@ -172,7 +172,7 @@ static void open_rnic_dev(struct t3cdev *tdev)
 		pr_err("Unable to register device\n");
 		close_rnic_dev(tdev);
 	}
-	pr_info("Initialized device %s\n",
+	pr_debug("Initialized device %s\n",
 		pci_name(rnicp->rdev.rnic_info.pdev));
 	return;
 }

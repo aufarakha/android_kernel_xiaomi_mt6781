@@ -677,7 +677,7 @@ static int if_cs_prog_real(struct if_cs_card *card, const struct firmware *fw)
 		len = if_cs_read16(card, IF_CS_SQ_READ_LOW);
 		if (len & 1) {
 			retry++;
-			pr_info("odd, need to retry this firmware block\n");
+			pr_debug("odd, need to retry this firmware block\n");
 		} else {
 			retry = 0;
 		}

@@ -28,7 +28,7 @@ MODULE_PARM_DESC(pcm_debug, "enable debug messages for pcm");
 #define dprintk(fmt, arg...) \
 	do { \
 		if (pcm_debug) \
-			pr_info("cobalt-alsa-pcm %s: " fmt, __func__, ##arg); \
+			pr_debug("cobalt-alsa-pcm %s: " fmt, __func__, ##arg); \
 	} while (0)
 
 static const struct snd_pcm_hardware snd_cobalt_hdmi_capture = {
@@ -189,7 +189,7 @@ static int alsa_fnc(struct vb2_buffer *vb, void *priv)
 	int i;
 
 	if (pcm_debug) {
-		pr_info("alsa: ");
+		pr_debug("alsa: ");
 		for (i = 0; i < 8 * 4; i++) {
 			if (!(i & 3))
 				pr_cont(" ");

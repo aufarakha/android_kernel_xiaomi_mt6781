@@ -353,7 +353,7 @@ static int st33zp24_spi_probe(struct spi_device *dev)
 
 	/* Check SPI platform functionnalities */
 	if (!dev) {
-		pr_info("%s: dev is NULL. Device is not accessible.\n",
+		pr_debug("%s: dev is NULL. Device is not accessible.\n",
 			__func__);
 		return -ENODEV;
 	}

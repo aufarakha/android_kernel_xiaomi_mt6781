@@ -2919,14 +2919,14 @@ void bttv_idcard(struct bttv *btv)
 
 		if (type != -1) {
 			/* found it */
-			pr_info("%d: detected: %s [card=%d], PCI subsystem ID is %04x:%04x\n",
+			pr_debug("%d: detected: %s [card=%d], PCI subsystem ID is %04x:%04x\n",
 				btv->c.nr, cards[type].name, cards[type].cardnr,
 				btv->cardid & 0xffff,
 				(btv->cardid >> 16) & 0xffff);
 			btv->c.type = cards[type].cardnr;
 		} else {
 			/* 404 */
-			pr_info("%d: subsystem: %04x:%04x (UNKNOWN)\n",
+			pr_debug("%d: subsystem: %04x:%04x (UNKNOWN)\n",
 				btv->c.nr, btv->cardid & 0xffff,
 				(btv->cardid >> 16) & 0xffff);
 			pr_debug("please mail id, board name and the correct card= insmod option to linux-media@vger.kernel.org\n");
@@ -2938,7 +2938,7 @@ void bttv_idcard(struct bttv *btv)
 		btv->c.type=card[btv->c.nr];
 
 	/* print which card config we are using */
-	pr_info("%d: using: %s [card=%d,%s]\n",
+	pr_debug("%d: using: %s [card=%d,%s]\n",
 		btv->c.nr, bttv_tvcards[btv->c.type].name, btv->c.type,
 		card[btv->c.nr] < bttv_num_tvcards
 		? "insmod option" : "autodetected");
@@ -2960,7 +2960,7 @@ void bttv_idcard(struct bttv *btv)
 		}
 	}
 	bttv_tvcards[btv->c.type].gpiomask = (UNSET != gpiomask) ? gpiomask : gpiobits;
-	pr_info("%d: gpio config override: mask=0x%x, mux=",
+	pr_debug("%d: gpio config override: mask=0x%x, mux=",
 		btv->c.nr, bttv_tvcards[btv->c.type].gpiomask);
 	for (i = 0; i < ARRAY_SIZE(bttv_tvcards->gpiomux); i++) {
 		pr_cont("%s0x%x",
@@ -2987,7 +2987,7 @@ static void identify_by_eeprom(struct bttv *btv, unsigned char eeprom_data[256])
 
 	if (-1 != type) {
 		btv->c.type = type;
-		pr_info("%d: detected by eeprom: %s [card=%d]\n",
+		pr_debug("%d: detected by eeprom: %s [card=%d]\n",
 			btv->c.nr, bttv_tvcards[btv->c.type].name, btv->c.type);
 	}
 }
@@ -3032,7 +3032,7 @@ static void flyvideo_gpio(struct bttv *btv)
 		tuner_type = 3;  /* Philips SECAM(+PAL) FQ1216ME or FI1216MF */
 		break;
 	default:
-		pr_info("%d: FlyVideo_gpio: unknown tuner type\n", btv->c.nr);
+		pr_debug("%d: FlyVideo_gpio: unknown tuner type\n", btv->c.nr);
 		break;
 	}
 
@@ -3049,10 +3049,10 @@ static void flyvideo_gpio(struct bttv *btv)
 	if (is_capture_only)
 		tuner_type = TUNER_ABSENT; /* No tuner present */
 
-	pr_info("%d: FlyVideo Radio=%s RemoteControl=%s Tuner=%d gpio=0x%06x\n",
+	pr_debug("%d: FlyVideo Radio=%s RemoteControl=%s Tuner=%d gpio=0x%06x\n",
 		btv->c.nr, has_radio ? "yes" : "no",
 		has_remote ? "yes" : "no", tuner_type, gpio);
-	pr_info("%d: FlyVideo  LR90=%s tda9821/tda9820=%s capture_only=%s\n",
+	pr_debug("%d: FlyVideo  LR90=%s tda9821/tda9820=%s capture_only=%s\n",
 		btv->c.nr, is_lr90 ? "yes" : "no",
 		has_tda9820_tda9821 ? "yes" : "no",
 		is_capture_only ? "yes" : "no");
@@ -3104,7 +3104,7 @@ static void miro_pinnacle_gpio(struct bttv *btv)
 			if (btv->c.type == BTTV_BOARD_PINNACLE)
 				btv->c.type = BTTV_BOARD_PINNACLEPRO;
 		}
-		pr_info("%d: miro: id=%d tuner=%d radio=%s stereo=%s\n",
+		pr_debug("%d: miro: id=%d tuner=%d radio=%s stereo=%s\n",
 			btv->c.nr, id+1, btv->tuner_type,
 			!btv->has_radio ? "no" :
 			(btv->has_tea575x ? "tea575x" : "fmtuner"),
@@ -3150,7 +3150,7 @@ static void miro_pinnacle_gpio(struct bttv *btv)
 		}
 		if (-1 != msp)
 			btv->c.type = BTTV_BOARD_PINNACLEPRO;
-		pr_info("%d: pinnacle/mt: id=%d info=\"%s\" radio=%s\n",
+		pr_debug("%d: pinnacle/mt: id=%d info=\"%s\" radio=%s\n",
 			btv->c.nr, id, info, btv->has_radio ? "yes" : "no");
 		btv->tuner_type = TUNER_MT2032;
 	}
@@ -3399,7 +3399,7 @@ void bttv_init_card2(struct bttv *btv)
 	case BTTV_BOARD_MAGICTVIEW061:
 		if (btv->cardid == 0x3002144f) {
 			btv->has_radio=1;
-			pr_info("%d: radio detected by subsystem id (CPH05x)\n",
+			pr_debug("%d: radio detected by subsystem id (CPH05x)\n",
 				btv->c.nr);
 		}
 		break;
@@ -3499,11 +3499,11 @@ void bttv_init_card2(struct bttv *btv)
 		btv->tuner_type = tuner[btv->c.nr];
 
 	if (btv->tuner_type == TUNER_ABSENT)
-		pr_info("%d: tuner absent\n", btv->c.nr);
+		pr_debug("%d: tuner absent\n", btv->c.nr);
 	else if (btv->tuner_type == UNSET)
 		pr_warn("%d: tuner type unset\n", btv->c.nr);
 	else
-		pr_info("%d: tuner type=%d\n", btv->c.nr, btv->tuner_type);
+		pr_debug("%d: tuner type=%d\n", btv->c.nr, btv->tuner_type);
 
 	if (autoload != UNSET) {
 		pr_warn("%d: the autoload option is obsolete\n", btv->c.nr);
@@ -3704,18 +3704,18 @@ static void modtec_eeprom(struct bttv *btv)
 {
 	if( strncmp(&(eeprom_data[0x1e]),"Temic 4066 FY5",14) ==0) {
 		btv->tuner_type=TUNER_TEMIC_4066FY5_PAL_I;
-		pr_info("%d: Modtec: Tuner autodetected by eeprom: %s\n",
+		pr_debug("%d: Modtec: Tuner autodetected by eeprom: %s\n",
 			btv->c.nr, &eeprom_data[0x1e]);
 	} else if (strncmp(&(eeprom_data[0x1e]),"Alps TSBB5",10) ==0) {
 		btv->tuner_type=TUNER_ALPS_TSBB5_PAL_I;
-		pr_info("%d: Modtec: Tuner autodetected by eeprom: %s\n",
+		pr_debug("%d: Modtec: Tuner autodetected by eeprom: %s\n",
 			btv->c.nr, &eeprom_data[0x1e]);
 	} else if (strncmp(&(eeprom_data[0x1e]),"Philips FM1246",14) ==0) {
 		btv->tuner_type=TUNER_PHILIPS_NTSC;
-		pr_info("%d: Modtec: Tuner autodetected by eeprom: %s\n",
+		pr_debug("%d: Modtec: Tuner autodetected by eeprom: %s\n",
 			btv->c.nr, &eeprom_data[0x1e]);
 	} else {
-		pr_info("%d: Modtec: Unknown TunerString: %s\n",
+		pr_debug("%d: Modtec: Unknown TunerString: %s\n",
 			btv->c.nr, &eeprom_data[0x1e]);
 	}
 }
@@ -3728,7 +3728,7 @@ static void hauppauge_eeprom(struct bttv *btv)
 	btv->tuner_type = tv.tuner_type;
 	btv->has_radio  = tv.has_radio;
 
-	pr_info("%d: Hauppauge eeprom indicates model#%d\n",
+	pr_debug("%d: Hauppauge eeprom indicates model#%d\n",
 		btv->c.nr, tv.model);
 
 	/*
@@ -3736,7 +3736,7 @@ static void hauppauge_eeprom(struct bttv *btv)
 	 * type based on model #.
 	 */
 	if(tv.model == 64900) {
-		pr_info("%d: Switching board type from %s to %s\n",
+		pr_debug("%d: Switching board type from %s to %s\n",
 			btv->c.nr,
 			bttv_tvcards[btv->c.type].name,
 			bttv_tvcards[BTTV_BOARD_HAUPPAUGE_IMPACTVCB].name);
@@ -3823,7 +3823,7 @@ static int tea575x_init(struct bttv *btv)
 	btv->tea.private_data = btv;
 	btv->tea.ops = &bttv_tea_ops;
 	if (!snd_tea575x_hw_init(&btv->tea)) {
-		pr_info("%d: detected TEA575x radio\n", btv->c.nr);
+		pr_debug("%d: detected TEA575x radio\n", btv->c.nr);
 		btv->tea.mute = false;
 		return 0;
 	}
@@ -3850,7 +3850,7 @@ static int terratec_active_radio_upgrade(struct bttv *btv)
 	btv->mbox_csel    = 1 << 10;
 
 	if (!tea575x_init(btv)) {
-		pr_info("%d: Terratec Active Radio Upgrade found\n", btv->c.nr);
+		pr_debug("%d: Terratec Active Radio Upgrade found\n", btv->c.nr);
 		btv->has_saa6588 = 1;
 	}
 
@@ -3921,7 +3921,7 @@ static int pvr_boot(struct bttv *btv)
 		return rc;
 	}
 	rc = pvr_altera_load(btv, fw_entry->data, fw_entry->size);
-	pr_info("%d: altera firmware upload %s\n",
+	pr_debug("%d: altera firmware upload %s\n",
 		btv->c.nr, (rc < 0) ? "failed" : "ok");
 	release_firmware(fw_entry);
 	return rc;
@@ -4018,14 +4018,14 @@ static void osprey_eeprom(struct bttv *btv, const u8 ee[256])
 			break;
 		default:
 			/* unknown...leave generic, but get serial # */
-			pr_info("%d: osprey eeprom: unknown card type 0x%04x\n",
+			pr_debug("%d: osprey eeprom: unknown card type 0x%04x\n",
 				btv->c.nr, type);
 			break;
 		}
 		serial = get_unaligned_be32((__be32 *)(ee+6));
 	}
 
-	pr_info("%d: osprey eeprom: card=%d '%s' serial=%u\n",
+	pr_debug("%d: osprey eeprom: card=%d '%s' serial=%u\n",
 		btv->c.nr, cardid,
 		cardid > 0 ? bttv_tvcards[cardid].name : "Unknown", serial);
 
@@ -4037,7 +4037,7 @@ static void osprey_eeprom(struct bttv *btv, const u8 ee[256])
 		pr_warn("%d: osprey eeprom: Not overriding user specified card type\n",
 			btv->c.nr);
 	} else {
-		pr_info("%d: osprey eeprom: Changing card type from %d to %d\n",
+		pr_debug("%d: osprey eeprom: Changing card type from %d to %d\n",
 			btv->c.nr, btv->c.type, cardid);
 		btv->c.type = cardid;
 	}
@@ -4081,7 +4081,7 @@ static void avermedia_eeprom(struct bttv *btv)
 		if (tuner_format == 0x09)
 			tuner_type = TUNER_LG_NTSC_NEW_TAPC; /* TAPC-G702P */
 
-	pr_info("%d: Avermedia eeprom[0x%02x%02x]: tuner=",
+	pr_debug("%d: Avermedia eeprom[0x%02x%02x]: tuner=",
 		btv->c.nr, eeprom_data[0x41], eeprom_data[0x42]);
 	if (tuner_type) {
 		btv->tuner_type = tuner_type;
@@ -4136,7 +4136,7 @@ static void boot_msp34xx(struct bttv *btv, int pin)
 	if (bttv_gpio)
 		bttv_gpio_tracking(btv,"msp34xx");
 	if (bttv_verbose)
-		pr_info("%d: Hauppauge/Voodoo msp34xx: reset line init [%d]\n",
+		pr_debug("%d: Hauppauge/Voodoo msp34xx: reset line init [%d]\n",
 			btv->c.nr, pin);
 }
 
@@ -4176,7 +4176,7 @@ static void init_PXC200(struct bttv *btv)
 	btwrite(BT848_ADC_RESERVED|BT848_ADC_AGC_EN, BT848_ADC);
 
 	/*	Initialise MAX517 DAC */
-	pr_info("Setting DAC reference voltage level ...\n");
+	pr_debug("Setting DAC reference voltage level ...\n");
 	bttv_I2CWrite(btv,0x5E,0,0x80,1);
 
 	/*	Initialise 12C508 PIC */
@@ -4185,7 +4185,7 @@ static void init_PXC200(struct bttv *btv)
 	 *	argument so the numbers are different */
 
 
-	pr_info("Initialising 12C508 PIC chip ...\n");
+	pr_debug("Initialising 12C508 PIC chip ...\n");
 
 	/* First of all, enable the clock line. This is used in the PXC200-F */
 	val = btread(BT848_GPIO_DMA_CTL);
@@ -4204,12 +4204,12 @@ static void init_PXC200(struct bttv *btv)
 	for (i = 0; i < ARRAY_SIZE(vals); i++) {
 		tmp=bttv_I2CWrite(btv,0x1E,0,vals[i],1);
 		if (tmp != -1) {
-			pr_info("I2C Write(%2.2x) = %i\nI2C Read () = %2.2x\n\n",
+			pr_debug("I2C Write(%2.2x) = %i\nI2C Read () = %2.2x\n\n",
 			       vals[i],tmp,bttv_I2CRead(btv,0x1F,NULL));
 		}
 	}
 
-	pr_info("PXC200 Initialised\n");
+	pr_debug("PXC200 Initialised\n");
 }
 
 
@@ -4248,7 +4248,7 @@ init_RTV24 (struct bttv *btv)
 	uint32_t dataRead = 0;
 	long watchdog_value = 0x0E;
 
-	pr_info("%d: Adlink RTV-24 initialisation in progress ...\n",
+	pr_debug("%d: Adlink RTV-24 initialisation in progress ...\n",
 		btv->c.nr);
 
 	btwrite (0x00c3feff, BT848_GPIO_OUT_EN);
@@ -4262,7 +4262,7 @@ init_RTV24 (struct bttv *btv)
 	dataRead = btread (BT848_GPIO_DATA);
 
 	if ((((dataRead >> 18) & 0x01) != 0) || (((dataRead >> 19) & 0x01) != 1)) {
-		pr_info("%d: Adlink RTV-24 initialisation(1) ERROR_CPLD_Check_Failed (read %d)\n",
+		pr_debug("%d: Adlink RTV-24 initialisation(1) ERROR_CPLD_Check_Failed (read %d)\n",
 			btv->c.nr, dataRead);
 	}
 
@@ -4275,13 +4275,13 @@ init_RTV24 (struct bttv *btv)
 	dataRead = btread (BT848_GPIO_DATA);
 
 	if ((((dataRead >> 18) & 0x01) != 0) || (((dataRead >> 19) & 0x01) != 0)) {
-		pr_info("%d: Adlink RTV-24 initialisation(2) ERROR_CPLD_Check_Failed (read %d)\n",
+		pr_debug("%d: Adlink RTV-24 initialisation(2) ERROR_CPLD_Check_Failed (read %d)\n",
 			btv->c.nr, dataRead);
 
 		return;
 	}
 
-	pr_info("%d: Adlink RTV-24 initialisation complete\n", btv->c.nr);
+	pr_debug("%d: Adlink RTV-24 initialisation complete\n", btv->c.nr);
 }
 
 
@@ -4338,7 +4338,7 @@ init_PCI8604PW(struct bttv *btv)
 			msleep(1);
 			break;
 		case 7:
-			pr_info("PCI-8604PW unlocked\n");
+			pr_debug("PCI-8604PW unlocked\n");
 			return;
 		case 0:
 			/* FIXME: If we are in state 7 and toggle GPIO[19] one
@@ -4896,26 +4896,26 @@ void __init bttv_check_chipset(void)
 
 	/* print warnings about any quirks found */
 	if (triton1)
-		pr_info("Host bridge needs ETBF enabled\n");
+		pr_debug("Host bridge needs ETBF enabled\n");
 	if (vsfx)
-		pr_info("Host bridge needs VSFX enabled\n");
+		pr_debug("Host bridge needs VSFX enabled\n");
 	if (pcipci_fail) {
-		pr_info("bttv and your chipset may not work together\n");
+		pr_debug("bttv and your chipset may not work together\n");
 		if (!no_overlay) {
-			pr_info("overlay will be disabled\n");
+			pr_debug("overlay will be disabled\n");
 			no_overlay = 1;
 		} else {
-			pr_info("overlay forced. Use this option at your own risk.\n");
+			pr_debug("overlay forced. Use this option at your own risk.\n");
 		}
 	}
 	if (UNSET != latency)
-		pr_info("pci latency fixup [%d]\n", latency);
+		pr_debug("pci latency fixup [%d]\n", latency);
 	while ((dev = pci_get_device(PCI_VENDOR_ID_INTEL,
 				      PCI_DEVICE_ID_INTEL_82441, dev))) {
 		unsigned char b;
 		pci_read_config_byte(dev, 0x53, &b);
 		if (bttv_debug)
-			pr_info("Host bridge: 82441FX Natoma, bufcon=0x%02x\n",
+			pr_debug("Host bridge: 82441FX Natoma, bufcon=0x%02x\n",
 				b);
 	}
 }
@@ -4929,12 +4929,12 @@ int bttv_handle_chipset(struct bttv *btv)
 
 	if (bttv_verbose) {
 		if (triton1)
-			pr_info("%d: enabling ETBF (430FX/VP3 compatibility)\n",
+			pr_debug("%d: enabling ETBF (430FX/VP3 compatibility)\n",
 				btv->c.nr);
 		if (vsfx && btv->id >= 878)
-			pr_info("%d: enabling VSFX\n", btv->c.nr);
+			pr_debug("%d: enabling VSFX\n", btv->c.nr);
 		if (UNSET != latency)
-			pr_info("%d: setting pci timer to %d\n",
+			pr_debug("%d: setting pci timer to %d\n",
 				btv->c.nr, latency);
 	}
 

@@ -301,7 +301,7 @@ static void do_i2c_scan(char *name, struct i2c_client *c)
 		rc = i2c_master_recv(c, &buf, 0);
 		if (rc < 0)
 			continue;
-		pr_info("%s: i2c scan: found device @ 0x%04x  [%s]\n",
+		pr_debug("%s: i2c scan: found device @ 0x%04x  [%s]\n",
 		       name, i, i2c_devs[i] ? i2c_devs[i] : "???");
 	}
 }
@@ -329,7 +329,7 @@ int cx23885_i2c_register(struct cx23885_i2c *bus)
 	if (0 == bus->i2c_rc) {
 		dprintk(1, "%s: i2c bus %d registered\n", dev->name, bus->nr);
 		if (i2c_scan) {
-			pr_info("%s: scan bus %d:\n",
+			pr_debug("%s: scan bus %d:\n",
 					dev->name, bus->nr);
 			do_i2c_scan(dev->name, &bus->i2c_client);
 		}

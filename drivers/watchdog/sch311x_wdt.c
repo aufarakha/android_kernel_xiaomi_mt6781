@@ -479,7 +479,7 @@ static int __init sch311x_detect(int sio_config_port, unsigned short *addr)
 
 	/* Check if Logical Device Register is currently active */
 	if ((sch311x_sio_inb(sio_config_port, 0x30) & 0x01) == 0)
-		pr_info("Seems that LDN 0x0a is not active...\n");
+		pr_debug("Seems that LDN 0x0a is not active...\n");
 
 	/* Get the base address of the runtime registers */
 	base_addr = (sch311x_sio_inb(sio_config_port, 0x60) << 8) |
@@ -491,7 +491,7 @@ static int __init sch311x_detect(int sio_config_port, unsigned short *addr)
 	}
 	*addr = base_addr;
 
-	pr_info("Found an SMSC SCH311%d chip at 0x%04x\n", dev_id, base_addr);
+	pr_debug("Found an SMSC SCH311%d chip at 0x%04x\n", dev_id, base_addr);
 
 exit:
 	sch311x_sio_exit(sio_config_port);

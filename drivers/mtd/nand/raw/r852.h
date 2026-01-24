@@ -154,4 +154,4 @@ struct r852_device {
 
 
 #define message(format, ...) \
-	pr_info(format "\n", ## __VA_ARGS__)
+	pr_debug(format "\n", ## __VA_ARGS__)

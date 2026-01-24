@@ -899,7 +899,7 @@ static int nxt2002_init(struct dvb_frontend* fe)
 		pr_err("%s: Writing firmware to device failed\n", __func__);
 		return ret;
 	}
-	pr_info("%s: Firmware upload complete\n", __func__);
+	pr_debug("%s: Firmware upload complete\n", __func__);
 
 	/* Put the micro into reset */
 	nxt200x_microcontroller_stop(state);
@@ -966,7 +966,7 @@ static int nxt2004_init(struct dvb_frontend* fe)
 		pr_err("%s: Writing firmware to device failed\n", __func__);
 		return ret;
 	}
-	pr_info("%s: Firmware upload complete\n", __func__);
+	pr_debug("%s: Firmware upload complete\n", __func__);
 
 	/* ensure transfer is complete */
 	buf[0] = 0x01;
@@ -1171,11 +1171,11 @@ struct dvb_frontend* nxt200x_attach(const struct nxt200x_config* config,
 	switch (buf[0]) {
 		case 0x04:
 			state->demod_chip = NXT2002;
-			pr_info("NXT2002 Detected\n");
+			pr_debug("NXT2002 Detected\n");
 			break;
 		case 0x05:
 			state->demod_chip = NXT2004;
-			pr_info("NXT2004 Detected\n");
+			pr_debug("NXT2004 Detected\n");
 			break;
 		default:
 			goto error;

@@ -169,7 +169,7 @@ static struct i2c_adapter sibyte_board_adapter[2] = {
 
 static int __init i2c_sibyte_init(void)
 {
-	pr_info("i2c-sibyte: i2c SMBus adapter module for SiByte board\n");
+	pr_debug("i2c-sibyte: i2c SMBus adapter module for SiByte board\n");
 	if (i2c_sibyte_add_bus(&sibyte_board_adapter[0], K_SMB_FREQ_100KHZ) < 0)
 		return -ENODEV;
 	if (i2c_sibyte_add_bus(&sibyte_board_adapter[1],

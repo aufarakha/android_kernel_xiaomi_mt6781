@@ -121,7 +121,7 @@ static void __ref sfi_unmap_memory(void __iomem *virt, u32 size)
 static void sfi_print_table_header(unsigned long long pa,
 				struct sfi_table_header *header)
 {
-	pr_info("%4.4s %llX, %04X (v%d %6.6s %8.8s)\n",
+	pr_debug("%4.4s %llX, %04X (v%d %6.6s %8.8s)\n",
 		header->sig, pa,
 		header->len, header->rev, header->oem_id,
 		header->oem_table_id);
@@ -369,7 +369,7 @@ static __init int sfi_find_syst(void)
 		 * Enforce SFI spec mandate that SYST reside within a page.
 		 */
 		if (!ON_SAME_PAGE(syst_pa, syst_pa + syst_hdr->len)) {
-			pr_info("SYST 0x%llx + 0x%x crosses page\n",
+			pr_debug("SYST 0x%llx + 0x%x crosses page\n",
 					syst_pa, syst_hdr->len);
 			continue;
 		}
@@ -478,7 +478,7 @@ static int __init sfi_sysfs_init(void)
 	sfi_acpi_sysfs_init();
 	kobject_uevent(sfi_kobj, KOBJ_ADD);
 	kobject_uevent(tables_kobj, KOBJ_ADD);
-	pr_info("SFI sysfs interfaces init success\n");
+	pr_debug("SFI sysfs interfaces init success\n");
 	return 0;
 }
 
@@ -490,7 +490,7 @@ void __init sfi_init(void)
 	if (sfi_disabled)
 		return;
 
-	pr_info("Simple Firmware Interface v0.81 http://simplefirmware.org\n");
+	pr_debug("Simple Firmware Interface v0.81 http://simplefirmware.org\n");
 
 	if (sfi_find_syst() || sfi_parse_syst() || sfi_platform_init())
 		disable_sfi();

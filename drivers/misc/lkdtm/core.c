@@ -256,7 +256,7 @@ static int lkdtm_register_cpoint(struct crashpoint *crashpoint,
 	lkdtm_kprobe = &crashpoint->kprobe;
 	ret = register_kprobe(lkdtm_kprobe);
 	if (ret < 0) {
-		pr_info("Couldn't register kprobe %s\n",
+		pr_debug("Couldn't register kprobe %s\n",
 			crashpoint->kprobe.symbol_name);
 		lkdtm_kprobe = NULL;
 		lkdtm_crashpoint = NULL;
@@ -282,7 +282,7 @@ static int lkdtm_kprobe_handler(struct kprobe *kp, struct pt_regs *regs)
 
 	spin_lock_irqsave(&crash_count_lock, flags);
 	crash_count--;
-	pr_info("Crash point %s of type %s hit, trigger in %d rounds\n",
+	pr_debug("Crash point %s of type %s hit, trigger in %d rounds\n",
 		lkdtm_crashpoint->name, lkdtm_crashtype->name, crash_count);
 
 	if (crash_count == 0) {
@@ -394,7 +394,7 @@ static ssize_t direct_entry(struct file *f, const char __user *user_buf,
 	if (!crashtype)
 		return -EINVAL;
 
-	pr_info("Performing direct entry %s\n", crashtype->name);
+	pr_debug("Performing direct entry %s\n", crashtype->name);
 	lkdtm_do_action(crashtype);
 	*off += count;
 
@@ -471,13 +471,13 @@ static int __init lkdtm_module_init(void)
 	if (crashpoint) {
 		ret = lkdtm_register_cpoint(crashpoint, crashtype);
 		if (ret < 0) {
-			pr_info("Invalid crashpoint %s\n", crashpoint->name);
+			pr_debug("Invalid crashpoint %s\n", crashpoint->name);
 			goto out_err;
 		}
-		pr_info("Crash point %s of type %s registered\n",
+		pr_debug("Crash point %s of type %s registered\n",
 			crashpoint->name, cpoint_type);
 	} else {
-		pr_info("No crash points registered, enable through debugfs\n");
+		pr_debug("No crash points registered, enable through debugfs\n");
 	}
 
 	return 0;
@@ -497,7 +497,7 @@ static void __exit lkdtm_module_exit(void)
 	if (lkdtm_kprobe != NULL)
 		unregister_kprobe(lkdtm_kprobe);
 
-	pr_info("Crash point unregistered\n");
+	pr_debug("Crash point unregistered\n");
 }
 
 module_init(lkdtm_module_init);

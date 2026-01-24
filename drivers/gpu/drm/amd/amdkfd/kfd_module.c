@@ -176,7 +176,7 @@ static void __exit kfd_module_exit(void)
 	kfd_process_destroy_wq();
 	kfd_topology_shutdown();
 	kfd_chardev_exit();
-	pr_info("amdkfd: Removed module\n");
+	pr_debug("amdkfd: Removed module\n");
 }
 
 module_init(kfd_module_init);

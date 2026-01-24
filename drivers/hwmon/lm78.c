@@ -920,7 +920,7 @@ static int __init lm78_isa_found(unsigned short address)
 		found = 1;
 
 	if (found)
-		pr_info("Found an %s chip at %#x\n",
+		pr_debug("Found an %s chip at %#x\n",
 			val & 0x80 ? "LM79" : "LM78", (int)address);
 
  release:

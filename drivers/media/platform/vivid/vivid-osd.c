@@ -363,7 +363,7 @@ int vivid_fb_init(struct vivid_dev *dev)
 		return -ENOMEM;
 	dev->video_pbase = virt_to_phys(dev->video_vbase);
 
-	pr_info("Framebuffer at 0x%lx, mapped to 0x%p, size %dk\n",
+	pr_debug("Framebuffer at 0x%lx, mapped to 0x%p, size %dk\n",
 			dev->video_pbase, dev->video_vbase,
 			dev->video_buffer_size / 1024);
 

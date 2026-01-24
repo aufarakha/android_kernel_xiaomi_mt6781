@@ -4818,8 +4818,8 @@ vxge_starter(void)
 {
 	int ret = 0;
 
-	pr_info("Copyright(c) 2002-2010 Exar Corp.\n");
-	pr_info("Driver version: %s\n", DRV_VERSION);
+	pr_debug("Copyright(c) 2002-2010 Exar Corp.\n");
+	pr_debug("Driver version: %s\n", DRV_VERSION);
 
 	verify_bandwidth();
 

@@ -91,7 +91,7 @@ void rtl92ce_sw_led_off(struct ieee80211_hw *hw, struct rtl_led *pled)
 		rtl_write_byte(rtlpriv, REG_LEDCFG2, (ledcfg | BIT(3)));
 		break;
 	default:
-		pr_info("switch case %#x not processed\n", pled->ledpin);
+		pr_debug("switch case %#x not processed\n", pled->ledpin);
 		break;
 	}
 	pled->ledon = false;

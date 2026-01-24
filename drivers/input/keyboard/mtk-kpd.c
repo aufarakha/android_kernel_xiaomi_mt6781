@@ -241,7 +241,7 @@ static int kpd_pdrv_probe(struct platform_device *pdev)
 		goto err_unprepare_clk;
 	}
 
-	pr_info("kp base: 0x%p, addr:0x%p,  kp irq: %d\n",
+	pr_debug("kp base: 0x%p, addr:0x%p,  kp irq: %d\n",
 			keypad->base, &keypad->base, keypad->irqnr);
 	err = kpd_gpio_init(&pdev->dev);
 	if (err) {
@@ -304,7 +304,7 @@ static int kpd_pdrv_probe(struct platform_device *pdev)
 		goto err_irq;
 	}
 
-	pr_info("kpd_probe OK.\n");
+	pr_debug("kpd_probe OK.\n");
 
 	return 0;
 

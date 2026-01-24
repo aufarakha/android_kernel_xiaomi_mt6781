@@ -1385,7 +1385,7 @@ static int __init nct6683_find(int sioaddr, struct nct6683_sio_data *sio_data)
 	}
 
 	superio_exit(sioaddr);
-	pr_info("Found %s or compatible chip at %#x:%#x\n",
+	pr_debug("Found %s or compatible chip at %#x:%#x\n",
 		nct6683_chip_names[sio_data->kind], sioaddr, addr);
 	sio_data->sioreg = sioaddr;
 

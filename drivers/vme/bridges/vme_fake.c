@@ -1050,7 +1050,7 @@ static int fake_crcsr_init(struct vme_bridge *fake_bridge)
 
 	vstat = fake_slot_get(fake_bridge);
 
-	pr_info("CR/CSR Offset: %d\n", vstat);
+	pr_debug("CR/CSR Offset: %d\n", vstat);
 
 	return 0;
 }
@@ -1189,10 +1189,10 @@ static int __init fake_init(void)
 	fake_bridge->alloc_consistent = fake_alloc_consistent;
 	fake_bridge->free_consistent = fake_free_consistent;
 
-	pr_info("Board is%s the VME system controller\n",
+	pr_debug("Board is%s the VME system controller\n",
 			(geoid == 1) ? "" : " not");
 
-	pr_info("VME geographical address is set to %d\n", geoid);
+	pr_debug("VME geographical address is set to %d\n", geoid);
 
 	retval = fake_crcsr_init(fake_bridge);
 	if (retval) {

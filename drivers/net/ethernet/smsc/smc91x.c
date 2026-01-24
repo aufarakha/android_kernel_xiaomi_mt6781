@@ -2411,7 +2411,7 @@ static int smc_drv_probe(struct platform_device *pdev)
  out_free_netdev:
 	free_netdev(ndev);
  out:
-	pr_info("%s: not found (%d).\n", CARDNAME, ret);
+	pr_debug("%s: not found (%d).\n", CARDNAME, ret);
 
 	return ret;
 }

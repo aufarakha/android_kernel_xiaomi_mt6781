@@ -2633,7 +2633,7 @@ struct dvb_frontend *dib0090_register(struct dvb_frontend *fe, struct i2c_adapte
 	if (dib0090_reset(fe) != 0)
 		goto free_mem;
 
-	pr_info("DiB0090: successfully identified\n");
+	pr_debug("DiB0090: successfully identified\n");
 	memcpy(&fe->ops.tuner_ops, &dib0090_ops, sizeof(struct dvb_tuner_ops));
 
 	return fe;

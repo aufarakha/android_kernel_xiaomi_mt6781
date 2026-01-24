@@ -236,7 +236,7 @@ extern int mtk_mdp_dbg_level;
 #define mtk_mdp_dbg(level, fmt, args...)				 \
 	do {								 \
 		if (mtk_mdp_dbg_level >= level)				 \
-			pr_info("[MTK_MDP] level=%d %s(),%d: " fmt "\n", \
+			pr_debug("[MTK_MDP] level=%d %s(),%d: " fmt "\n", \
 				level, __func__, __LINE__, ##args);	 \
 	} while (0)
 

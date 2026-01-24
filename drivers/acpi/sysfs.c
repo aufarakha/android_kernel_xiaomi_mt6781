@@ -851,7 +851,7 @@ void __init acpi_gpe_apply_masked_gpes(void)
 	for_each_set_bit(gpe, acpi_masked_gpes_map, ACPI_MASKABLE_GPE_MAX) {
 		status = acpi_get_gpe_device(gpe, &handle);
 		if (ACPI_SUCCESS(status)) {
-			pr_info("Masking GPE 0x%x.\n", gpe);
+			pr_debug("Masking GPE 0x%x.\n", gpe);
 			(void)acpi_mask_gpe(handle, gpe, TRUE);
 		}
 	}

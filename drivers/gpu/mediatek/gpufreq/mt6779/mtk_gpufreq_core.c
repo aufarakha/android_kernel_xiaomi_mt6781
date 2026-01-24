@@ -2825,7 +2825,7 @@ static int __mt_gpufreq_pdrv_probe(struct platform_device *pdev)
 		BATTERY_OC_PRIO_GPU);
 #endif /* ifdef MT_GPUFREQ_BATT_OC_PROTECT */
 
-	pr_info(" VGPU/VSRAM/VMDLA/VAPU slew rate: down(%dmV/us), up(%dmV/us)\t",
+	pr_debug(" VGPU/VSRAM/VMDLA/VAPU slew rate: down(%dmV/us), up(%dmV/us)\t",
 		SLEW_RATE_DOWN, SLEW_RATE_UP);
 
 

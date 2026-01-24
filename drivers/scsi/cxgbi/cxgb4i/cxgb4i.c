@@ -408,7 +408,7 @@ static void send_act_open_req6(struct cxgbi_sock *csk, struct sk_buff *skb,
 
 	set_wr_txq(skb, CPL_PRIORITY_SETUP, csk->port_id);
 
-	pr_info("t%d csk 0x%p,%u,0x%lx,%u, [%pI6]:%u-[%pI6]:%u, rss_qid %u.\n",
+	pr_debug("t%d csk 0x%p,%u,0x%lx,%u, [%pI6]:%u-[%pI6]:%u, rss_qid %u.\n",
 		CHELSIO_CHIP_VERSION(lldi->adapter_type), csk, csk->state,
 		csk->flags, csk->atid,
 		&csk->saddr6.sin6_addr, ntohs(csk->saddr.sin_port),
@@ -520,7 +520,7 @@ static u32 send_rx_credits(struct cxgbi_sock *csk, u32 credits)
 
 	skb = alloc_wr(sizeof(*req), 0, GFP_ATOMIC);
 	if (!skb) {
-		pr_info("csk 0x%p, credit %u, OOM.\n", csk, credits);
+		pr_debug("csk 0x%p, credit %u, OOM.\n", csk, credits);
 		return 0;
 	}
 	req = (struct cpl_rx_data_ack *)skb->head;
@@ -813,7 +813,7 @@ static void do_act_establish(struct cxgbi_device *cdev, struct sk_buff *skb)
 
 	spin_lock_bh(&csk->lock);
 	if (unlikely(csk->state != CTP_ACTIVE_OPEN))
-		pr_info("csk 0x%p,%u,0x%lx,%u, got EST.\n",
+		pr_debug("csk 0x%p,%u,0x%lx,%u, got EST.\n",
 			csk, csk->state, csk->flags, csk->tid);
 
 	if (csk->retry_timer.function) {
@@ -1180,7 +1180,7 @@ static void do_rx_iscsi_hdr(struct cxgbi_device *cdev, struct sk_buff *skb)
 		cxgbi_skcb_set_flag(skb, SKCBF_RX_HDR);
 
 		if (cxgbi_skcb_tcp_seq(skb) != csk->rcv_nxt) {
-			pr_info("tid %u, CPL_ISCSI_HDR, bad seq, 0x%x/0x%x.\n",
+			pr_debug("tid %u, CPL_ISCSI_HDR, bad seq, 0x%x/0x%x.\n",
 				csk->tid, cxgbi_skcb_tcp_seq(skb),
 				csk->rcv_nxt);
 			goto abort_conn;
@@ -1195,7 +1195,7 @@ static void do_rx_iscsi_hdr(struct cxgbi_device *cdev, struct sk_buff *skb)
 			plen -= 40;
 
 		if ((hlen + dlen) != plen) {
-			pr_info("tid 0x%x, CPL_ISCSI_HDR, pdu len "
+			pr_debug("tid 0x%x, CPL_ISCSI_HDR, pdu len "
 				"mismatch %u != %u + %u, seq 0x%x.\n",
 				csk->tid, plen, hlen, dlen,
 				cxgbi_skcb_tcp_seq(skb));
@@ -1302,13 +1302,13 @@ cxgb4i_process_ddpvld(struct cxgbi_sock *csk,
 		      struct sk_buff *skb, u32 ddpvld)
 {
 	if (ddpvld & (1 << CPL_RX_DDP_STATUS_HCRC_SHIFT)) {
-		pr_info("csk 0x%p, lhdr 0x%p, status 0x%x, hcrc bad 0x%lx.\n",
+		pr_debug("csk 0x%p, lhdr 0x%p, status 0x%x, hcrc bad 0x%lx.\n",
 			csk, skb, ddpvld, cxgbi_skcb_flags(skb));
 		cxgbi_skcb_set_flag(skb, SKCBF_RX_HCRC_ERR);
 	}
 
 	if (ddpvld & (1 << CPL_RX_DDP_STATUS_DCRC_SHIFT)) {
-		pr_info("csk 0x%p, lhdr 0x%p, status 0x%x, dcrc bad 0x%lx.\n",
+		pr_debug("csk 0x%p, lhdr 0x%p, status 0x%x, dcrc bad 0x%lx.\n",
 			csk, skb, ddpvld, cxgbi_skcb_flags(skb));
 		cxgbi_skcb_set_flag(skb, SKCBF_RX_DCRC_ERR);
 	}
@@ -1373,7 +1373,7 @@ static void do_rx_data_ddp(struct cxgbi_device *cdev,
 	cxgbi_skcb_rx_ddigest(lskb) = ntohl(rpl->ulp_crc);
 
 	if (ntohs(rpl->len) != cxgbi_skcb_rx_pdulen(lskb))
-		pr_info("tid 0x%x, RX_DATA_DDP pdulen %u != %u.\n",
+		pr_debug("tid 0x%x, RX_DATA_DDP pdulen %u != %u.\n",
 			csk->tid, ntohs(rpl->len), cxgbi_skcb_rx_pdulen(lskb));
 
 	cxgb4i_process_ddpvld(csk, lskb, ddpvld);
@@ -1795,7 +1795,7 @@ static int cxgb4i_ofld_init(struct cxgbi_device *cdev)
 	cdev->csk_alloc_cpls = alloc_cpls;
 	cdev->csk_init_act_open = init_act_open;
 
-	pr_info("cdev 0x%p, offload up, added.\n", cdev);
+	pr_debug("cdev 0x%p, offload up, added.\n", cdev);
 	return 0;
 }
 
@@ -2028,10 +2028,10 @@ static void *t4_uld_add(const struct cxgb4_lld_info *lldi)
 
 	cdev = cxgbi_device_register(sizeof(*lldi), lldi->nports);
 	if (!cdev) {
-		pr_info("t4 device 0x%p, register failed.\n", lldi);
+		pr_debug("t4 device 0x%p, register failed.\n", lldi);
 		return NULL;
 	}
-	pr_info("0x%p,0x%x, ports %u,%s, chan %u, q %u,%u, wr %u.\n",
+	pr_debug("0x%p,0x%x, ports %u,%s, chan %u, q %u,%u, wr %u.\n",
 		cdev, lldi->adapter_type, lldi->nports,
 		lldi->ports[0]->name, lldi->nchan, lldi->ntxq,
 		lldi->nrxq, lldi->wr_cred);
@@ -2056,17 +2056,17 @@ static void *t4_uld_add(const struct cxgb4_lld_info *lldi)
 
 	cdev->pfvf = FW_VIID_PFN_G(cxgb4_port_viid(lldi->ports[0]))
 			<< FW_VIID_PFN_S;
-	pr_info("cdev 0x%p,%s, pfvf %u.\n",
+	pr_debug("cdev 0x%p,%s, pfvf %u.\n",
 		cdev, lldi->ports[0]->name, cdev->pfvf);
 
 	rc = cxgb4i_ddp_init(cdev);
 	if (rc) {
-		pr_info("t4 0x%p ddp init failed.\n", cdev);
+		pr_debug("t4 0x%p ddp init failed.\n", cdev);
 		goto err_out;
 	}
 	rc = cxgb4i_ofld_init(cdev);
 	if (rc) {
-		pr_info("t4 0x%p ofld init failed.\n", cdev);
+		pr_debug("t4 0x%p ofld init failed.\n", cdev);
 		goto err_out;
 	}
 
@@ -2104,7 +2104,7 @@ static int t4_uld_rx_handler(void *handle, const __be64 *rsp,
 		skb_copy_to_linear_data(skb, &rsp[1], len);
 	} else {
 		if (unlikely(*(u8 *)rsp != *(u8 *)pgl->va)) {
-			pr_info("? FL 0x%p,RSS%#llx,FL %#llx,len %u.\n",
+			pr_debug("? FL 0x%p,RSS%#llx,FL %#llx,len %u.\n",
 				pgl->va, be64_to_cpu(*rsp),
 				be64_to_cpu(*(u64 *)pgl->va),
 				pgl->tot_len);
@@ -2138,21 +2138,21 @@ static int t4_uld_state_change(void *handle, enum cxgb4_state state)
 
 	switch (state) {
 	case CXGB4_STATE_UP:
-		pr_info("cdev 0x%p, UP.\n", cdev);
+		pr_debug("cdev 0x%p, UP.\n", cdev);
 		break;
 	case CXGB4_STATE_START_RECOVERY:
-		pr_info("cdev 0x%p, RECOVERY.\n", cdev);
+		pr_debug("cdev 0x%p, RECOVERY.\n", cdev);
 		/* close all connections */
 		break;
 	case CXGB4_STATE_DOWN:
-		pr_info("cdev 0x%p, DOWN.\n", cdev);
+		pr_debug("cdev 0x%p, DOWN.\n", cdev);
 		break;
 	case CXGB4_STATE_DETACH:
-		pr_info("cdev 0x%p, DETACH.\n", cdev);
+		pr_debug("cdev 0x%p, DETACH.\n", cdev);
 		cxgbi_device_unregister(cdev);
 		break;
 	default:
-		pr_info("cdev 0x%p, unknown state %d.\n", cdev, state);
+		pr_debug("cdev 0x%p, unknown state %d.\n", cdev, state);
 		break;
 	}
 	return 0;

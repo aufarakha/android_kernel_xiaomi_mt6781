@@ -2527,7 +2527,7 @@ static int qeth_l3_setup_netdev(struct qeth_card *card)
 	    card->info.type == QETH_CARD_TYPE_OSX) {
 		if ((card->info.link_type == QETH_LINK_TYPE_LANE_TR) ||
 		    (card->info.link_type == QETH_LINK_TYPE_HSTR)) {
-			pr_info("qeth_l3: ignoring TR device\n");
+			pr_debug("qeth_l3: ignoring TR device\n");
 			return -ENODEV;
 		}
 
@@ -2986,14 +2986,14 @@ static void qeth_l3_unregister_notifiers(void)
 
 static int __init qeth_l3_init(void)
 {
-	pr_info("register layer 3 discipline\n");
+	pr_debug("register layer 3 discipline\n");
 	return qeth_l3_register_notifiers();
 }
 
 static void __exit qeth_l3_exit(void)
 {
 	qeth_l3_unregister_notifiers();
-	pr_info("unregister layer 3 discipline\n");
+	pr_debug("unregister layer 3 discipline\n");
 }
 
 module_init(qeth_l3_init);

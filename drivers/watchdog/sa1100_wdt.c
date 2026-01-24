@@ -189,7 +189,7 @@ static int __init sa1100dog_init(void)
 
 	ret = misc_register(&sa1100dog_miscdev);
 	if (ret == 0) {
-		pr_info("SA1100/PXA2xx Watchdog Timer: timer margin %d sec\n",
+		pr_debug("SA1100/PXA2xx Watchdog Timer: timer margin %d sec\n",
 			margin);
 		return 0;
 	}

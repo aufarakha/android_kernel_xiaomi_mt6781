@@ -110,7 +110,7 @@ static int jcore_pit_local_init(unsigned cpu)
 	struct jcore_pit *pit = this_cpu_ptr(jcore_pit_percpu);
 	unsigned buspd, freq;
 
-	pr_info("Local J-Core PIT init on cpu %u\n", cpu);
+	pr_debug("Local J-Core PIT init on cpu %u\n", cpu);
 
 	buspd = readl(pit->base + REG_BUSPD);
 	freq = DIV_ROUND_CLOSEST(NSEC_PER_SEC, buspd);
@@ -152,7 +152,7 @@ static int __init jcore_pit_init(struct device_node *node)
 		return -ENXIO;
 	}
 
-	pr_info("Initializing J-Core PIT at %p IRQ %d\n",
+	pr_debug("Initializing J-Core PIT at %p IRQ %d\n",
 		jcore_pit_base, pit_irq);
 
 	err = clocksource_mmio_init(jcore_pit_base, "jcore_pit_cs",

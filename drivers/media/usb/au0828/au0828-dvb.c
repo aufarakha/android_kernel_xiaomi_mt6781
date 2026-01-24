@@ -670,7 +670,7 @@ void au0828_dvb_suspend(struct au0828_dev *dev)
 		}
 		/* suspend frontend - does tuner and fe to sleep */
 		rc = dvb_frontend_suspend(dvb->frontend);
-		pr_info("au0828_dvb_suspend(): Suspending DVB fe %d\n", rc);
+		pr_debug("au0828_dvb_suspend(): Suspending DVB fe %d\n", rc);
 	}
 }
 
@@ -682,7 +682,7 @@ void au0828_dvb_resume(struct au0828_dev *dev)
 	if (dvb->frontend) {
 		/* resume frontend - does fe and tuner init */
 		rc = dvb_frontend_resume(dvb->frontend);
-		pr_info("au0828_dvb_resume(): Resuming DVB fe %d\n", rc);
+		pr_debug("au0828_dvb_resume(): Resuming DVB fe %d\n", rc);
 		if (dev->need_urb_start) {
 			/* Start transport */
 			mutex_lock(&dvb->lock);

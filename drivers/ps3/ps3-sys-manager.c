@@ -474,7 +474,7 @@ static int ps3_sys_manager_handle_event(struct ps3_system_bus_device *dev)
 	case PS3_SM_EVENT_THERMAL_ALERT:
 		dev_dbg(&dev->core, "%s:%d: THERMAL_ALERT (zone %u)\n",
 			__func__, __LINE__, event.value);
-		pr_info("PS3 Thermal Alert Zone %u\n", event.value);
+		pr_debug("PS3 Thermal Alert Zone %u\n", event.value);
 		break;
 	case PS3_SM_EVENT_THERMAL_CLEARED:
 		dev_dbg(&dev->core, "%s:%d: THERMAL_CLEARED (zone %u)\n",

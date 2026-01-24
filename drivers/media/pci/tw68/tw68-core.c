@@ -245,7 +245,7 @@ static int tw68_initdev(struct pci_dev *pci_dev,
 	dev->name = dev->v4l2_dev.name;
 
 	if (UNSET != latency) {
-		pr_info("%s: setting pci latency timer to %d\n",
+		pr_debug("%s: setting pci latency timer to %d\n",
 		       dev->name, latency);
 		pci_write_config_byte(pci_dev, PCI_LATENCY_TIMER, latency);
 	}
@@ -253,13 +253,13 @@ static int tw68_initdev(struct pci_dev *pci_dev,
 	/* print pci info */
 	pci_read_config_byte(pci_dev, PCI_CLASS_REVISION, &dev->pci_rev);
 	pci_read_config_byte(pci_dev, PCI_LATENCY_TIMER,  &dev->pci_lat);
-	pr_info("%s: found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
+	pr_debug("%s: found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
 		dev->name, pci_name(pci_dev), dev->pci_rev, pci_dev->irq,
 		dev->pci_lat, (u64)pci_resource_start(pci_dev, 0));
 	pci_set_master(pci_dev);
 	err = pci_set_dma_mask(pci_dev, DMA_BIT_MASK(32));
 	if (err) {
-		pr_info("%s: Oops: no 32bit PCI DMA ???\n", dev->name);
+		pr_debug("%s: Oops: no 32bit PCI DMA ???\n", dev->name);
 		goto fail1;
 	}
 
@@ -329,7 +329,7 @@ static int tw68_initdev(struct pci_dev *pci_dev,
 	}
 	tw_setl(TW68_INTMASK, dev->pci_irqmask);
 
-	pr_info("%s: registered device %s\n",
+	pr_debug("%s: registered device %s\n",
 	       dev->name, video_device_node_name(&dev->vdev));
 
 	return 0;

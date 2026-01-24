@@ -709,7 +709,7 @@ static int __init pmc_core_probe(void)
 		return err;
 	}
 
-	pr_info(" initialized\n");
+	pr_debug(" initialized\n");
 	return 0;
 }
 module_init(pmc_core_probe)

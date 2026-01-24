@@ -533,7 +533,7 @@ adb_input(unsigned char *buf, int nb, int autopoll)
 		
 	id = buf[0] >> 4;
 	if (dump_adb_input) {
-		pr_info("adb packet: ");
+		pr_debug("adb packet: ");
 		for (i = 0; i < nb; ++i)
 			pr_cont(" %x", buf[i]);
 		pr_cont(", id = %d\n", id);

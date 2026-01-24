@@ -138,7 +138,7 @@ static int __init txx9wdt_probe(struct platform_device *dev)
 	if (ret)
 		goto exit;
 
-	pr_info("Hardware Watchdog Timer: timeout=%d sec (max %ld) (nowayout= %d)\n",
+	pr_debug("Hardware Watchdog Timer: timeout=%d sec (max %ld) (nowayout= %d)\n",
 		timeout, WD_MAX_TIMEOUT, nowayout);
 
 	return 0;

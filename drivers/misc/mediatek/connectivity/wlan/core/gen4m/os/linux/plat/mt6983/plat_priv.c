@@ -149,7 +149,7 @@ void kalSetCpuFreq(IN int32_t freq, IN uint32_t set_mask)
 			ret = freq_qos_add_request(&policy->constraints,
 				&wReq->qos_req, FREQ_QOS_MIN, 0);
 			if (ret < 0) {
-				pr_info("%s: freq_qos_add_request fail cpu%d\n",
+				pr_debug("%s: freq_qos_add_request fail cpu%d\n",
 					__func__, cpu);
 				kfree(wReq);
 				break;
@@ -218,7 +218,7 @@ int32_t kalBoostCpu(IN struct ADAPTER *prAdapter,
 	if (u4TarPerfLevel >= u4BoostLittleCpuTh &&
 		u4TarPerfLevel < u4BoostCpuTh &&
 		fgRequested == ENUM_CPU_BOOST_STATUS_STOP) {
-		pr_info("Boost little (%u>=%u) freq=%u\n",
+		pr_debug("Boost little (%u>=%u) freq=%u\n",
 			u4TarPerfLevel, u4BoostLittleCpuTh, u4CpuFreq/1000);
 		fgRequested = ENUM_CPU_BOOST_STATUS_START_LITTLE;
 
@@ -236,7 +236,7 @@ int32_t kalBoostCpu(IN struct ADAPTER *prAdapter,
 	if (u4TarPerfLevel >= u4BoostCpuTh &&
 		fgRequested == ENUM_CPU_BOOST_STATUS_STOP) {
 #endif /* CFG_SUPPORT_LITTLE_CPU_BOOST */
-		pr_info("Boost and migrate big (%u>=%u) freq=%u\n",
+		pr_debug("Boost and migrate big (%u>=%u) freq=%u\n",
 			u4TarPerfLevel, u4BoostCpuTh, u4CpuFreq/1000);
 		fgRequested = ENUM_CPU_BOOST_STATUS_START_ALL;
 
@@ -255,7 +255,7 @@ int32_t kalBoostCpu(IN struct ADAPTER *prAdapter,
 	} else if (u4TarPerfLevel < u4BoostCpuTh &&
 		u4TarPerfLevel >= u4BoostLittleCpuTh &&
 		fgRequested == ENUM_CPU_BOOST_STATUS_START_ALL) {
-		pr_info("kalBoostCpu stop big core (%u<%u)\n",
+		pr_debug("kalBoostCpu stop big core (%u<%u)\n",
 			u4TarPerfLevel, u4BoostCpuTh);
 		fgRequested = ENUM_CPU_BOOST_STATUS_START_LITTLE;
 
@@ -276,7 +276,7 @@ int32_t kalBoostCpu(IN struct ADAPTER *prAdapter,
 	} else if (u4TarPerfLevel < u4BoostCpuTh &&
 		fgRequested == ENUM_CPU_BOOST_STATUS_START_ALL) {
 #endif /* CFG_SUPPORT_LITTLE_CPU_BOOST */
-		pr_info("kalBoostCpu stop all (%u<%u)\n",
+		pr_debug("kalBoostCpu stop all (%u<%u)\n",
 			u4TarPerfLevel,
 #if CFG_SUPPORT_LITTLE_CPU_BOOST
 			u4BoostLittleCpuTh

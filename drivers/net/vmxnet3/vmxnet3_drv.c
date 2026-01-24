@@ -3796,7 +3796,7 @@ static struct pci_driver vmxnet3_driver = {
 static int __init
 vmxnet3_init_module(void)
 {
-	pr_info("%s - version %s\n", VMXNET3_DRIVER_DESC,
+	pr_debug("%s - version %s\n", VMXNET3_DRIVER_DESC,
 		VMXNET3_DRIVER_VERSION_REPORT);
 	return pci_register_driver(&vmxnet3_driver);
 }

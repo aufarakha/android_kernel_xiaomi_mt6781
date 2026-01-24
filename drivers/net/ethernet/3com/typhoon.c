@@ -2246,7 +2246,7 @@ out_unmap:
 
 out:
 	if(!mode)
-		pr_info("%s: falling back to port IO\n", pci_name(pdev));
+		pr_debug("%s: falling back to port IO\n", pci_name(pdev));
 	return mode;
 }
 

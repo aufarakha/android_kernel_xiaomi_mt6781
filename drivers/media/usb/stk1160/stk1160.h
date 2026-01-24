@@ -68,7 +68,7 @@
 #endif
 
 #define stk1160_info(fmt, args...) \
-	pr_info("stk1160: " fmt, ## args)
+	pr_debug("stk1160: " fmt, ## args)
 
 #define stk1160_warn(fmt, args...) \
 	pr_warn("stk1160: " fmt, ## args)

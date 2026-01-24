@@ -1031,25 +1031,25 @@ rcu_torture_writer(void *arg)
 		gp_cond1 = gp_exp1 = gp_normal1 = gp_sync1 = true;
 	if (gp_cond1 && cur_ops->get_state && cur_ops->cond_sync) {
 		synctype[nsynctypes++] = RTWS_COND_GET;
-		pr_info("%s: Testing conditional GPs.\n", __func__);
+		pr_debug("%s: Testing conditional GPs.\n", __func__);
 	} else if (gp_cond && (!cur_ops->get_state || !cur_ops->cond_sync)) {
 		pr_alert("%s: gp_cond without primitives.\n", __func__);
 	}
 	if (gp_exp1 && cur_ops->exp_sync) {
 		synctype[nsynctypes++] = RTWS_EXP_SYNC;
-		pr_info("%s: Testing expedited GPs.\n", __func__);
+		pr_debug("%s: Testing expedited GPs.\n", __func__);
 	} else if (gp_exp && !cur_ops->exp_sync) {
 		pr_alert("%s: gp_exp without primitives.\n", __func__);
 	}
 	if (gp_normal1 && cur_ops->deferred_free) {
 		synctype[nsynctypes++] = RTWS_DEF_FREE;
-		pr_info("%s: Testing asynchronous GPs.\n", __func__);
+		pr_debug("%s: Testing asynchronous GPs.\n", __func__);
 	} else if (gp_normal && !cur_ops->deferred_free) {
 		pr_alert("%s: gp_normal without primitives.\n", __func__);
 	}
 	if (gp_sync1 && cur_ops->sync) {
 		synctype[nsynctypes++] = RTWS_SYNC;
-		pr_info("%s: Testing normal GPs.\n", __func__);
+		pr_debug("%s: Testing normal GPs.\n", __func__);
 	} else if (gp_sync && !cur_ops->sync) {
 		pr_alert("%s: gp_sync without primitives.\n", __func__);
 	}

@@ -74,7 +74,7 @@ static void hp_wireless_input_destroy(void)
 static void hpwl_notify(struct acpi_device *acpi_dev, u32 event)
 {
 	if (event != 0x80) {
-		pr_info("Received unknown event (0x%x)\n", event);
+		pr_debug("Received unknown event (0x%x)\n", event);
 		return;
 	}
 

@@ -1327,7 +1327,7 @@ int __vmbus_driver_register(struct hv_driver *hv_driver, struct module *owner, c
 {
 	int ret;
 
-	pr_info("registering driver %s\n", hv_driver->name);
+	pr_debug("registering driver %s\n", hv_driver->name);
 
 	ret = vmbus_exists();
 	if (ret < 0)
@@ -1357,7 +1357,7 @@ EXPORT_SYMBOL_GPL(__vmbus_driver_register);
  */
 void vmbus_driver_unregister(struct hv_driver *hv_driver)
 {
-	pr_info("unregistering driver %s\n", hv_driver->name);
+	pr_debug("unregistering driver %s\n", hv_driver->name);
 
 	if (!vmbus_exists()) {
 		driver_unregister(&hv_driver->driver);

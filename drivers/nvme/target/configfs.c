@@ -559,7 +559,7 @@ static struct config_group *nvmet_ns_make(struct config_group *group,
 		goto out;
 	config_group_init_type_name(&ns->group, name, &nvmet_ns_type);
 
-	pr_info("adding nsid %d to subsystem %s\n", nsid, subsys->subsysnqn);
+	pr_debug("adding nsid %d to subsystem %s\n", nsid, subsys->subsysnqn);
 
 	return &ns->group;
 out:

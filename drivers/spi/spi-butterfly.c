@@ -277,7 +277,7 @@ static void butterfly_attach(struct parport *p)
 		pr_debug("%s: dataflash at %s\n", p->name,
 			 dev_name(&pp->dataflash->dev));
 
-	pr_info("%s: AVR Butterfly\n", p->name);
+	pr_debug("%s: AVR Butterfly\n", p->name);
 	butterfly = pp;
 	return;
 

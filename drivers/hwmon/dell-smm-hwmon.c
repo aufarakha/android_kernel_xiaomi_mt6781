@@ -1106,8 +1106,8 @@ static int __init i8k_probe(void)
 		if (!ignore_dmi && !force)
 			return -ENODEV;
 
-		pr_info("not running on a supported Dell system.\n");
-		pr_info("vendor=%s, model=%s, version=%s\n",
+		pr_debug("not running on a supported Dell system.\n");
+		pr_debug("vendor=%s, model=%s, version=%s\n",
 			i8k_get_dmi_data(DMI_SYS_VENDOR),
 			i8k_get_dmi_data(DMI_PRODUCT_NAME),
 			i8k_get_dmi_data(DMI_BIOS_VERSION));

@@ -1226,7 +1226,7 @@ static int ks8842_probe(struct platform_device *pdev)
 
 	platform_set_drvdata(pdev, netdev);
 
-	pr_info("Found chip, family: 0x%x, id: 0x%x, rev: 0x%x\n",
+	pr_debug("Found chip, family: 0x%x, id: 0x%x, rev: 0x%x\n",
 		(id >> 8) & 0xff, (id >> 4) & 0xf, (id >> 1) & 0x7);
 
 	return 0;

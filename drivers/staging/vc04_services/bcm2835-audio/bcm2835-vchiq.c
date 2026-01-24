@@ -33,9 +33,9 @@
 /* Logging macros (for remapping to other logging mechanisms, i.e., printf) */
 #ifdef AUDIO_DEBUG_ENABLE
 #define LOG_ERR(fmt, arg...)   pr_err("%s:%d " fmt, __func__, __LINE__, ##arg)
-#define LOG_WARN(fmt, arg...)  pr_info("%s:%d " fmt, __func__, __LINE__, ##arg)
-#define LOG_INFO(fmt, arg...)  pr_info("%s:%d " fmt, __func__, __LINE__, ##arg)
-#define LOG_DBG(fmt, arg...)   pr_info("%s:%d " fmt, __func__, __LINE__, ##arg)
+#define LOG_WARN(fmt, arg...)  pr_debug("%s:%d " fmt, __func__, __LINE__, ##arg)
+#define LOG_INFO(fmt, arg...)  pr_debug("%s:%d " fmt, __func__, __LINE__, ##arg)
+#define LOG_DBG(fmt, arg...)   pr_debug("%s:%d " fmt, __func__, __LINE__, ##arg)
 #else
 #define LOG_ERR(fmt, arg...)   pr_err("%s:%d " fmt, __func__, __LINE__, ##arg)
 #define LOG_WARN(fmt, arg...)	 no_printk(fmt, ##arg)

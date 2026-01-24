@@ -498,7 +498,7 @@ gigaset_tty_open(struct tty_struct *tty)
 
 	gig_dbg(DEBUG_INIT, "Starting HLL for Gigaset M101");
 
-	pr_info(DRIVER_DESC "\n");
+	pr_debug(DRIVER_DESC "\n");
 
 	if (!driver) {
 		pr_err("%s: no driver structure\n", __func__);

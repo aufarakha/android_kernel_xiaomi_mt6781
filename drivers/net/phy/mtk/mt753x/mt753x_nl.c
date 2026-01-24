@@ -174,7 +174,7 @@ static int mt753x_nl_get_swdevs(struct genl_info *info, struct gsw_mt753x *gsw)
 
 	ret = mt753x_nl_list_devs(dev_info, sizeof(dev_info));
 	if (!ret) {
-		pr_info("No switch registered\n");
+		pr_debug("No switch registered\n");
 		return -EINVAL;
 	}
 
@@ -331,7 +331,7 @@ static int mt753x_nl_response(struct sk_buff *skb, struct genl_info *info)
 	}
 
 	if (!cmditem) {
-		pr_info("mt753x-nl: unknown cmd %u\n", hdr->cmd);
+		pr_debug("mt753x-nl: unknown cmd %u\n", hdr->cmd);
 		return -EINVAL;
 	}
 
@@ -341,7 +341,7 @@ static int mt753x_nl_response(struct sk_buff *skb, struct genl_info *info)
 	}
 
 	if (sat_req_attrs != cmditem->nr_required_attrs) {
-		pr_info("mt753x-nl: missing required attr(s) for cmd %u\n",
+		pr_debug("mt753x-nl: missing required attr(s) for cmd %u\n",
 			hdr->cmd);
 		return -EINVAL;
 	}
@@ -349,7 +349,7 @@ static int mt753x_nl_response(struct sk_buff *skb, struct genl_info *info)
 	if (cmditem->require_dev) {
 		gsw = mt753x_nl_parse_find_gsw(info);
 		if (!gsw) {
-			pr_info("mt753x-nl: failed to find switch dev\n");
+			pr_debug("mt753x-nl: failed to find switch dev\n");
 			return -EINVAL;
 		}
 	}
@@ -367,7 +367,7 @@ int __init mt753x_nl_init(void)
 
 	ret = genl_register_family(&mt753x_nl_family);
 	if (ret) {
-		pr_info("mt753x-nl: genl_register_family_with_ops failed\n");
+		pr_debug("mt753x-nl: genl_register_family_with_ops failed\n");
 		return ret;
 	}
 

@@ -682,7 +682,7 @@ void gigaset_isdn_unregdev(struct cardstate *cs)
  */
 void gigaset_isdn_regdrv(void)
 {
-	pr_info("ISDN4Linux interface\n");
+	pr_debug("ISDN4Linux interface\n");
 	/* nothing to do */
 }
 

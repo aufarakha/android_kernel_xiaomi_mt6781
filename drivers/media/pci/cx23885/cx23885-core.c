@@ -601,13 +601,13 @@ static void cx23885_risc_disasm(struct cx23885_tsport *port,
 	struct cx23885_dev *dev = port->dev;
 	unsigned int i, j, n;
 
-	pr_info("%s: risc disasm: %p [dma=0x%08lx]\n",
+	pr_debug("%s: risc disasm: %p [dma=0x%08lx]\n",
 	       dev->name, risc->cpu, (unsigned long)risc->dma);
 	for (i = 0; i < (risc->size >> 2); i += n) {
-		pr_info("%s:   %04d: ", dev->name, i);
+		pr_debug("%s:   %04d: ", dev->name, i);
 		n = cx23885_risc_decode(le32_to_cpu(risc->cpu[i]));
 		for (j = 1; j < n; j++)
-			pr_info("%s:   %04d: 0x%08x [ arg #%d ]\n",
+			pr_debug("%s:   %04d: 0x%08x [ arg #%d ]\n",
 				dev->name, i + j, risc->cpu[i + j], j);
 		if (risc->cpu[i] == cpu_to_le32(RISC_JUMP))
 			break;
@@ -855,7 +855,7 @@ static void cx23885_dev_checkrevision(struct cx23885_dev *dev)
 		       __func__, dev->hwrevision);
 	}
 	if (dev->hwrevision)
-		pr_info("%s() Hardware revision = 0x%02x\n",
+		pr_debug("%s() Hardware revision = 0x%02x\n",
 			__func__, dev->hwrevision);
 	else
 		pr_err("%s() Hardware revision unknown 0x%x\n",
@@ -1005,7 +1005,7 @@ static int cx23885_dev_setup(struct cx23885_dev *dev)
 
 	dev->bmmio = (u8 __iomem *)dev->lmmio;
 
-	pr_info("CORE %s: subsystem: %04x:%04x, board: %s [card=%d,%s]\n",
+	pr_debug("CORE %s: subsystem: %04x:%04x, board: %s [card=%d,%s]\n",
 		dev->name, dev->pci->subsystem_vendor,
 		dev->pci->subsystem_device, cx23885_boards[dev->board].name,
 		dev->board, card[dev->nr] == dev->board ?
@@ -2014,7 +2014,7 @@ void cx23885_gpio_set(struct cx23885_dev *dev, u32 mask)
 
 	/* TODO: 23-19 */
 	if (mask & 0x00f80000)
-		pr_info("%s: Unsupported\n", dev->name);
+		pr_debug("%s: Unsupported\n", dev->name);
 }
 
 void cx23885_gpio_clear(struct cx23885_dev *dev, u32 mask)
@@ -2031,7 +2031,7 @@ void cx23885_gpio_clear(struct cx23885_dev *dev, u32 mask)
 
 	/* TODO: 23-19 */
 	if (mask & 0x00f80000)
-		pr_info("%s: Unsupported\n", dev->name);
+		pr_debug("%s: Unsupported\n", dev->name);
 }
 
 u32 cx23885_gpio_get(struct cx23885_dev *dev, u32 mask)
@@ -2048,7 +2048,7 @@ u32 cx23885_gpio_get(struct cx23885_dev *dev, u32 mask)
 
 	/* TODO: 23-19 */
 	if (mask & 0x00f80000)
-		pr_info("%s: Unsupported\n", dev->name);
+		pr_debug("%s: Unsupported\n", dev->name);
 
 	return 0;
 }
@@ -2154,7 +2154,7 @@ static int cx23885_initdev(struct pci_dev *pci_dev,
 	/* print pci info */
 	dev->pci_rev = pci_dev->revision;
 	pci_read_config_byte(pci_dev, PCI_LATENCY_TIMER,  &dev->pci_lat);
-	pr_info("%s/0: found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
+	pr_debug("%s/0: found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
 	       dev->name,
 	       pci_name(pci_dev), dev->pci_rev, pci_dev->irq,
 	       dev->pci_lat,
@@ -2256,7 +2256,7 @@ static struct pci_driver cx23885_pci_driver = {
 
 static int __init cx23885_init(void)
 {
-	pr_info("cx23885 driver version %s loaded\n",
+	pr_debug("cx23885 driver version %s loaded\n",
 		CX23885_VERSION);
 	return pci_register_driver(&cx23885_pci_driver);
 }

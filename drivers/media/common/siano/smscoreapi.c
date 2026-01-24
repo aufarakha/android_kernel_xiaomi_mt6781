@@ -763,7 +763,7 @@ static int smscore_sendrequest_and_wait(struct smscore_device_t *coredev,
 
 	rc = coredev->sendrequest_handler(coredev->context, buffer, size);
 	if (rc < 0) {
-		pr_info("sendrequest returned error %d\n", rc);
+		pr_debug("sendrequest returned error %d\n", rc);
 		return rc;
 	}
 
@@ -815,7 +815,7 @@ static int smscore_init_ir(struct smscore_device_t *coredev)
 				pr_err("Sending IR initialization message failed\n");
 		}
 	} else
-		pr_info("IR port has not been detected\n");
+		pr_debug("IR port has not been detected\n");
 
 	return 0;
 }
@@ -889,12 +889,12 @@ int smscore_start_device(struct smscore_device_t *coredev)
 
 	rc = smscore_set_device_mode(coredev, mode);
 	if (rc < 0) {
-		pr_info("set device mode failed , rc %d\n", rc);
+		pr_debug("set device mode failed , rc %d\n", rc);
 		return rc;
 	}
 	rc = smscore_configure_board(coredev);
 	if (rc < 0) {
-		pr_info("configure board failed , rc %d\n", rc);
+		pr_debug("configure board failed , rc %d\n", rc);
 		return rc;
 	}
 
@@ -1222,7 +1222,7 @@ void smscore_unregister_device(struct smscore_device_t *coredev)
 		if (num_buffers == coredev->num_buffers)
 			break;
 		if (++retry > 10) {
-			pr_info("exiting although not all buffers released.\n");
+			pr_debug("exiting although not all buffers released.\n");
 			break;
 		}
 

@@ -375,7 +375,7 @@ static int __init sbc8360_init(void)
 		mseconds = (wd_margin + 1) * 100000;
 
 	/* My kingdom for the ability to print "0.5 seconds" in the kernel! */
-	pr_info("Timeout set at %ld ms\n", mseconds);
+	pr_debug("Timeout set at %ld ms\n", mseconds);
 
 	return 0;
 

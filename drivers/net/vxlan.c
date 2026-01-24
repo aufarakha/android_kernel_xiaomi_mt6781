@@ -910,7 +910,7 @@ static int vxlan_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
 	int err;
 
 	if (!(ndm->ndm_state & (NUD_PERMANENT|NUD_REACHABLE))) {
-		pr_info("RTM_NEWNEIGH with invalid state %#x\n",
+		pr_debug("RTM_NEWNEIGH with invalid state %#x\n",
 			ndm->ndm_state);
 		return -EINVAL;
 	}

@@ -15,7 +15,7 @@ static int venc_log_set_param(unsigned long handle,
 	int ret = 0;
 
 	if (enc_prm == NULL) {
-		pr_info("%s, enc_prm is null", __func__);
+		pr_debug("%s, enc_prm is null", __func__);
 		return -EINVAL;
 	}
 
@@ -24,7 +24,7 @@ static int venc_log_set_param(unsigned long handle,
 		ret = vcu_set_log(enc_prm->log);
 		break;
 	default:
-		pr_info("invalid set parameter type=%d\n", type);
+		pr_debug("invalid set parameter type=%d\n", type);
 		ret = -EINVAL;
 		break;
 	}

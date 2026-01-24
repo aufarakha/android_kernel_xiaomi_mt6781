@@ -261,7 +261,7 @@ static int __init advwdt_probe(struct platform_device *dev)
 	 * if not reset to the default */
 	if (advwdt_set_heartbeat(timeout)) {
 		advwdt_set_heartbeat(WATCHDOG_TIMEOUT);
-		pr_info("timeout value must be 1<=x<=63, using %d\n", timeout);
+		pr_debug("timeout value must be 1<=x<=63, using %d\n", timeout);
 	}
 
 	ret = misc_register(&advwdt_miscdev);
@@ -270,7 +270,7 @@ static int __init advwdt_probe(struct platform_device *dev)
 		       WATCHDOG_MINOR, ret);
 		goto unreg_regions;
 	}
-	pr_info("initialized. timeout=%d sec (nowayout=%d)\n",
+	pr_debug("initialized. timeout=%d sec (nowayout=%d)\n",
 		timeout, nowayout);
 out:
 	return ret;
@@ -310,7 +310,7 @@ static int __init advwdt_init(void)
 {
 	int err;
 
-	pr_info("WDT driver for Advantech single board computer initialising\n");
+	pr_debug("WDT driver for Advantech single board computer initialising\n");
 
 	advwdt_platform_device = platform_device_register_simple(DRV_NAME,
 								-1, NULL, 0);
@@ -332,7 +332,7 @@ static void __exit advwdt_exit(void)
 {
 	platform_device_unregister(advwdt_platform_device);
 	platform_driver_unregister(&advwdt_driver);
-	pr_info("Watchdog Module Unloaded\n");
+	pr_debug("Watchdog Module Unloaded\n");
 }
 
 module_init(advwdt_init);

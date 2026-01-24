@@ -160,10 +160,10 @@ static void it8712f_wdt_update_margin(void)
 	 */
 	if (units <= max_units) {
 		config |= WDT_UNIT_SEC; /* else UNIT is MINUTES */
-		pr_info("timer margin %d seconds\n", units);
+		pr_debug("timer margin %d seconds\n", units);
 	} else {
 		units /= 60;
-		pr_info("timer margin %d minutes\n", units);
+		pr_debug("timer margin %d minutes\n", units);
 	}
 	superio_outb(config, WDT_CONFIG);
 
@@ -394,7 +394,7 @@ static int __init it8712f_wdt_find(unsigned short *address)
 	if (margin > (max_units * 60))
 		margin = (max_units * 60);
 
-	pr_info("Found IT%04xF chip revision %d - using DogFood address 0x%x\n",
+	pr_debug("Found IT%04xF chip revision %d - using DogFood address 0x%x\n",
 		chip_type, revision, *address);
 
 exit:

@@ -118,7 +118,7 @@ static int _lcm_i2c_write_bytes(unsigned char addr, unsigned char value)
 	write_data[1] = value;
 	ret = i2c_master_send(client, write_data, 2);
 	if (ret < 0)
-		pr_info("[LCM][ERROR] _lcm_i2c write data fail !!\n");
+		pr_debug("[LCM][ERROR] _lcm_i2c write data fail !!\n");
 
 	return ret;
 }
@@ -200,11 +200,11 @@ static void jdi_panel_get_data(struct jdi *ctx)
 	u8 buffer[3] = { 0 };
 	static int ret;
 
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 
 	if (ret == 0) {
 		ret = jdi_dcs_read(ctx, 0x0A, buffer, 1);
-		pr_info("%s  0x%08x\n", __func__, buffer[0] | (buffer[1] << 8));
+		pr_debug("%s  0x%08x\n", __func__, buffer[0] | (buffer[1] << 8));
 		dev_info(ctx->dev, "return %d data(0x%08x) to dsi engine\n",
 			 ret, buffer[0] | (buffer[1] << 8));
 	}
@@ -577,7 +577,7 @@ static void jdi_panel_init(struct jdi *ctx)
 	jdi_dcs_write_seq_static(ctx, 0x29);
 	jdi_dcs_write_seq(ctx, bl_tb0[0], bl_tb0[1]);
 
-	pr_info("%s-\n", __func__);
+	pr_debug("%s-\n", __func__);
 }
 
 static int jdi_disable(struct drm_panel *panel)
@@ -602,7 +602,7 @@ static int jdi_unprepare(struct drm_panel *panel)
 
 	struct jdi *ctx = panel_to_jdi(panel);
 
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 
 	if (!ctx->prepared)
 		return 0;
@@ -653,7 +653,7 @@ static int jdi_prepare(struct drm_panel *panel)
 	struct jdi *ctx = panel_to_jdi(panel);
 	int ret;
 
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -712,7 +712,7 @@ static int jdi_prepare(struct drm_panel *panel)
 	lcd_queue_load_tp_fw();
 #endif
 
-	pr_info("%s-\n", __func__);
+	pr_debug("%s-\n", __func__);
 	return ret;
 }
 
@@ -961,7 +961,7 @@ static int jdi_setbacklight_cmdq(void *dsi, dcs_write_gce cb, void *handle,
 
 	if (level > 255)
 		level = 255;
-	pr_info("%s backlight = -%d\n", __func__, level);
+	pr_debug("%s backlight = -%d\n", __func__, level);
 	bl_tb0[1] = (u8)level;
 #if 0
 	char bl_tb0[] = {0x51, 0xf, 0xff};
@@ -1136,18 +1136,18 @@ static int jdi_probe(struct mipi_dsi_device *dsi)
 		if (endpoint) {
 			remote_node = of_graph_get_remote_port_parent(endpoint);
 			if (!remote_node) {
-				pr_info("No panel connected,skip probe lcm\n");
+				pr_debug("No panel connected,skip probe lcm\n");
 				return -ENODEV;
 			}
-			pr_info("device node name:%s\n", remote_node->name);
+			pr_debug("device node name:%s\n", remote_node->name);
 		}
 	}
 	if (remote_node != dev->of_node) {
-		pr_info("%s+ skip probe due to not current lcm\n", __func__);
+		pr_debug("%s+ skip probe due to not current lcm\n", __func__);
 		return -ENODEV;
 	}
 
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 	ctx = devm_kzalloc(dev, sizeof(struct jdi), GFP_KERNEL);
 	if (!ctx)
 		return -ENOMEM;
@@ -1215,7 +1215,7 @@ static int jdi_probe(struct mipi_dsi_device *dsi)
 
 #endif
 
-	pr_info("%s- jdi,nt36672c,cphy,vdo\n", __func__);
+	pr_debug("%s- jdi,nt36672c,cphy,vdo\n", __func__);
 
 	return ret;
 }

@@ -209,7 +209,7 @@ int gb_gbphy_register_driver(struct gbphy_driver *driver,
 	if (retval)
 		return retval;
 
-	pr_info("registered new driver %s\n", driver->name);
+	pr_debug("registered new driver %s\n", driver->name);
 	return 0;
 }
 EXPORT_SYMBOL_GPL(gb_gbphy_register_driver);

@@ -888,7 +888,7 @@ void HTSetConnectBwMode(struct rtllib_device *ieee,
 		Bandwidth = HT_CHANNEL_WIDTH_20;
 
 	if (pHTInfo->bSwBwInProgress) {
-		pr_info("%s: bSwBwInProgress!!\n", __func__);
+		pr_debug("%s: bSwBwInProgress!!\n", __func__);
 		return;
 	}
 	if (Bandwidth == HT_CHANNEL_WIDTH_20_40) {

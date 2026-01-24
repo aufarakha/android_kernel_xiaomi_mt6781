@@ -40,11 +40,11 @@ static void spi_slave_dump_packet(char *name, u8 *ptr, int len)
 {
 	int i;
 
-	pr_info("%s: ", name);
+	pr_debug("%s: ", name);
 	for (i = 0; i < len; i++)
-		pr_info(" %02x", ptr[i]);
+		pr_debug(" %02x", ptr[i]);
 
-	pr_info("\n");
+	pr_debug("\n");
 }
 
 int spis_loopback_check(struct spi_transfer *trans)
@@ -57,17 +57,17 @@ int spis_loopback_check(struct spi_transfer *trans)
 	}
 
 	if (err) {
-		pr_info("spis_len:%d, err %d\n", trans->len, err);
+		pr_debug("spis_len:%d, err %d\n", trans->len, err);
 		spi_slave_dump_packet("spis tx",
 			(char *)trans->tx_buf, trans->len);
 		spi_slave_dump_packet("spis rx", trans->rx_buf, trans->len);
-		pr_info("spis test fail.\n");
+		pr_debug("spis test fail.\n");
 		spis_auto_test_flag = false;
 		return -1;
 	}
 
-	pr_info("spis_len:%d, err %d\n", trans->len, err);
-	pr_info("spis test pass.\n");
+	pr_debug("spis_len:%d, err %d\n", trans->len, err);
+	pr_debug("spis test pass.\n");
 	spis_auto_test_flag = true;
 
 	return 0;
@@ -90,7 +90,7 @@ static int spi_slave_txrx_transfer(struct spi_device *spi, int len)
 
 	ret = spi_sync(spi, &msg);
 	if (ret < 0)
-		pr_info("Message transfer err,line(%d):%d\n", __LINE__, ret);
+		pr_debug("Message transfer err,line(%d):%d\n", __LINE__, ret);
 
 	spis_loopback_check(&trans);
 
@@ -116,7 +116,7 @@ static int spi_slave_tx_transfer(struct spi_device *spi, int len)
 
 	ret = spi_sync(spi, &msg);
 	if (ret < 0)
-		pr_info("Message transfer err,line(%d):%d\n", __LINE__, ret);
+		pr_debug("Message transfer err,line(%d):%d\n", __LINE__, ret);
 
 	spi_slave_dump_packet("spis tx", (char *)trans.tx_buf, len);
 
@@ -141,7 +141,7 @@ static int spi_slave_rx_transfer(struct spi_device *spi, int len)
 
 	ret = spi_sync(spi, &msg);
 	if (ret < 0)
-		pr_info("Message transfer err,line(%d):%d\n", __LINE__, ret);
+		pr_debug("Message transfer err,line(%d):%d\n", __LINE__, ret);
 
 	spi_slave_dump_packet("spis rx", trans.rx_buf, len);
 

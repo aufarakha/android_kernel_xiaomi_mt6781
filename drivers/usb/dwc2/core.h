@@ -48,7 +48,7 @@
 /*
  * Suggested defines for tracers:
  * - no_printk:    Disable tracing
- * - pr_info:      Print this info to the console
+ * - pr_debug:      Print this info to the console
  * - trace_printk: Print this info to trace buffer (good for verbose logging)
  */
 
@@ -1198,7 +1198,7 @@ static inline void dwc2_writel(struct dwc2_hsotg *hsotg, u32 value, u32 offset)
 		writel(value, hsotg->regs + offset);
 
 #ifdef DWC2_LOG_WRITES
-	pr_info("info:: wrote %08x to %p\n", value, hsotg->regs + offset);
+	pr_debug("info:: wrote %08x to %p\n", value, hsotg->regs + offset);
 #endif
 }
 

@@ -221,7 +221,7 @@ int hwmgr_hw_init(struct pp_hwmgr *hwmgr)
 	    !hwmgr->pptable_func->pptable_init ||
 	    !hwmgr->hwmgr_func->backend_init) {
 		hwmgr->pm_en = false;
-		pr_info("dpm not supported \n");
+		pr_debug("dpm not supported \n");
 		return 0;
 	}
 

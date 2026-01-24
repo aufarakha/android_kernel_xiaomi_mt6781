@@ -1280,7 +1280,7 @@ static int i2c_pxa_probe(struct platform_device *dev)
 	if (i2c->high_mode) {
 		if (i2c->rate) {
 			clk_set_rate(i2c->clk, i2c->rate);
-			pr_info("i2c: <%s> set rate to %ld\n",
+			pr_debug("i2c: <%s> set rate to %ld\n",
 				i2c->adap.name, clk_get_rate(i2c->clk));
 		} else
 			pr_warn("i2c: <%s> clock rate not set\n",

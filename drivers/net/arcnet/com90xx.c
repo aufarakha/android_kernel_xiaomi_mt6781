@@ -119,7 +119,7 @@ static void __init com90xx_probe(void)
 	}
 
 	if (BUGLVL(D_NORMAL))
-		pr_info("%s\n", "COM90xx chipset support");
+		pr_debug("%s\n", "COM90xx chipset support");
 
 	/* set up the arrays where we'll store the possible probe addresses */
 	numports = numshmems = 0;

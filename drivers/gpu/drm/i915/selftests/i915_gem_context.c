@@ -409,7 +409,7 @@ static int igt_ctx_exec(void *arg)
 		}
 		ncontexts++;
 	}
-	pr_info("Submitted %lu contexts (across %u engines), filling %lu dwords\n",
+	pr_debug("Submitted %lu contexts (across %u engines), filling %lu dwords\n",
 		ncontexts, INTEL_INFO(i915)->num_rings, ndwords);
 
 	dw = 0;
@@ -509,7 +509,7 @@ static int igt_ctx_readonly(void *arg)
 			ndwords++;
 		}
 	}
-	pr_info("Submitted %lu dwords (across %u engines)\n",
+	pr_debug("Submitted %lu dwords (across %u engines)\n",
 		ndwords, INTEL_INFO(i915)->num_rings);
 
 	dw = 0;

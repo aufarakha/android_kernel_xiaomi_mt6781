@@ -233,7 +233,7 @@ static int __init integrator_ap_timer_init_of(struct device_node *node)
 		return integrator_clockevent_init(rate, base, irq);
 	}
 
-	pr_info("Timer @%p unused\n", base);
+	pr_debug("Timer @%p unused\n", base);
 	clk_disable_unprepare(clk);
 
 	return 0;

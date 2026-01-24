@@ -532,7 +532,7 @@ static int __init acpi_pcc_probe(void)
 
 	pcc_mbox_ctrl.num_chans = count;
 
-	pr_info("Detected %d PCC Subspaces\n", pcc_mbox_ctrl.num_chans);
+	pr_debug("Detected %d PCC Subspaces\n", pcc_mbox_ctrl.num_chans);
 
 	return 0;
 
@@ -566,7 +566,7 @@ static int pcc_mbox_probe(struct platform_device *pdev)
 	pcc_mbox_ctrl.ops = &pcc_chan_ops;
 	pcc_mbox_ctrl.dev = &pdev->dev;
 
-	pr_info("Registering PCC driver as Mailbox controller\n");
+	pr_debug("Registering PCC driver as Mailbox controller\n");
 	ret = mbox_controller_register(&pcc_mbox_ctrl);
 
 	if (ret) {

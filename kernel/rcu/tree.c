@@ -602,12 +602,12 @@ void show_rcu_gp_kthreads(void)
 	struct rcu_state *rsp;
 
 	for_each_rcu_flavor(rsp) {
-		pr_info("%s: wait state: %d ->state: %#lx\n",
+		pr_debug("%s: wait state: %d ->state: %#lx\n",
 			rsp->name, rsp->gp_state, rsp->gp_kthread->state);
 		rcu_for_each_node_breadth_first(rsp, rnp) {
 			if (ULONG_CMP_GE(rsp->gp_seq, rnp->gp_seq_needed))
 				continue;
-			pr_info("\trcu_node %d:%d ->gp_seq %lu ->gp_seq_needed %lu\n",
+			pr_debug("\trcu_node %d:%d ->gp_seq %lu ->gp_seq_needed %lu\n",
 				rnp->grplo, rnp->grphi, rnp->gp_seq,
 				rnp->gp_seq_needed);
 			if (!rcu_is_leaf_node(rnp))
@@ -618,7 +618,7 @@ void show_rcu_gp_kthreads(void)
 				    ULONG_CMP_GE(rsp->gp_seq,
 						 rdp->gp_seq_needed))
 					continue;
-				pr_info("\tcpu %d ->gp_seq_needed %lu\n",
+				pr_debug("\tcpu %d ->gp_seq_needed %lu\n",
 					cpu, rdp->gp_seq_needed);
 			}
 		}
@@ -1159,7 +1159,7 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
 		struct rcu_node *rnp1;
 
 		WARN_ON(1);  /* Offline CPUs are supposed to report QS! */
-		pr_info("%s: grp: %d-%d level: %d ->gp_seq %ld ->completedqs %ld\n",
+		pr_debug("%s: grp: %d-%d level: %d ->gp_seq %ld ->completedqs %ld\n",
 			__func__, rnp->grplo, rnp->grphi, rnp->level,
 			(long)rnp->gp_seq, (long)rnp->completedqs);
 		for (rnp1 = rnp; rnp1; rnp1 = rnp1->parent)

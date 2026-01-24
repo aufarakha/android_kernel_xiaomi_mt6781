@@ -238,7 +238,7 @@ static void __init zynq_clk_setup(struct device_node *np)
 	const char *can_mio_mux_parents[NUM_MIO_PINS];
 	const char *dummy_nm = "dummy_name";
 
-	pr_info("Zynq clock init\n");
+	pr_debug("Zynq clock init\n");
 
 	/* get clock output names from DT */
 	for (i = 0; i < clk_max; i++) {
@@ -616,7 +616,7 @@ void __init zynq_clock_init(void)
 		goto np_err;
 	}
 
-	pr_info("%s: clkc starts at %p\n", __func__, zynq_clkc_base);
+	pr_debug("%s: clkc starts at %p\n", __func__, zynq_clkc_base);
 
 	of_node_put(slcr);
 	of_node_put(np);

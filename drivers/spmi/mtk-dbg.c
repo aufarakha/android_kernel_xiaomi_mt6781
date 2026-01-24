@@ -1362,7 +1362,7 @@ void spmi_dump_wdt_reg(void)
 	log_size += sprintf(wp + log_size, "\n");
 	if (log_size < 0)
 		pr_notice("sprintf failed\n");
-	pr_info("[PMIF] %s", wp);
+	pr_debug("[PMIF] %s", wp);
 }
 
 void spmi_dump_pmif_acc_vio_reg(void)
@@ -1391,7 +1391,7 @@ void spmi_dump_pmif_acc_vio_reg(void)
 	log_size += sprintf(wp + log_size, "\n");
 	if (log_size < 0)
 		pr_notice("sprintf failed\n");
-	pr_info("[PMIF] %s %s", __func__, wp);
+	pr_debug("[PMIF] %s %s", __func__, wp);
 }
 
 void spmi_dump_pmic_acc_vio_reg(void)
@@ -1413,7 +1413,7 @@ void spmi_dump_pmic_acc_vio_reg(void)
 	log_size += sprintf(wp + log_size, "\n");
 	if (log_size < 0)
 		pr_notice("sprintf failed\n");
-	pr_info("[PMIF] %s %s", __func__, wp);
+	pr_debug("[PMIF] %s %s", __func__, wp);
 }
 
 static char *get_pmif_busy_reg_dump(void)
@@ -1545,7 +1545,7 @@ static char *get_spmimst_all_reg_dump(void)
 
 void spmi_dump_pmif_busy_reg(void)
 {
-	pr_info("[PMIF] %s", get_pmif_busy_reg_dump());
+	pr_debug("[PMIF] %s", get_pmif_busy_reg_dump());
 }
 
 static void spmi_dump_pmif_busy_reg_d(struct seq_file *m)
@@ -1555,7 +1555,7 @@ static void spmi_dump_pmif_busy_reg_d(struct seq_file *m)
 
 void spmi_dump_pmif_swinf_reg(void)
 {
-	pr_info("[PMIF]\n%s", get_pmif_swinf_reg_dump());
+	pr_debug("[PMIF]\n%s", get_pmif_swinf_reg_dump());
 }
 
 static void spmi_dump_pmif_swinf_reg_d(struct seq_file *m)
@@ -1639,7 +1639,7 @@ void spmi_dump_pmif_record_reg(void)
 			"bytecnt:%d, (addr 0x%x=0x%x)]\n",
 			bytecnt, addr, wd_31_0);
 		if ((i + 1) % 8 == 0) {
-			pr_info("\n%s", wp);
+			pr_debug("\n%s", wp);
 			log_size = 0;
 		}
 	}
@@ -1827,9 +1827,9 @@ static ssize_t pmif_access_store(struct device_driver *ddri,
 	u32 offset = 0;
 	u32 value = 0;
 
-	pr_info("[%s]\n", __func__);
+	pr_debug("[%s]\n", __func__);
 	if (buf != NULL && count != 0) {
-		pr_info("[%s] size is %d, buf is %s\n",
+		pr_debug("[%s] size is %d, buf is %s\n",
 			__func__, (int)count, buf);
 
 		if (strlen(buf) < 3) {
@@ -1846,7 +1846,7 @@ static ssize_t pmif_access_store(struct device_driver *ddri,
 				pr_notice("%s() Illegal offset[0x%x]!!\n",
 					__func__, offset);
 			} else {
-				pr_info("%s() set offset[0x%x]=0x%x\n",
+				pr_debug("%s() set offset[0x%x]=0x%x\n",
 					__func__, arb->base + offset, value);
 				writel(value, arb->base + offset);
 			}
@@ -1881,9 +1881,9 @@ static ssize_t spmi_access_store(struct device_driver *ddri,
 	u32 offset = 0;
 	u32 value = 0;
 
-	pr_info("[%s]\n", __func__);
+	pr_debug("[%s]\n", __func__);
 	if (buf != NULL && count != 0) {
-		pr_info("[%s] size is %d, buf is %s\n",
+		pr_debug("[%s] size is %d, buf is %s\n",
 			__func__, (int)count, buf);
 
 		if (strlen(buf) < 3) {
@@ -1900,7 +1900,7 @@ static ssize_t spmi_access_store(struct device_driver *ddri,
 				pr_notice("%s() Illegal offset[0x%x]!!\n",
 					__func__, offset);
 			} else {
-				pr_info("%s() set offset[0x%x]=0x%x\n",
+				pr_debug("%s() set offset[0x%x]=0x%x\n",
 					__func__, arb->spmimst_base + offset,
 					value);
 				writel(value, arb->spmimst_base + offset);

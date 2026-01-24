@@ -432,7 +432,7 @@ static int __init n2_run(unsigned long io, unsigned long irq,
 	card->buff_offset = (valid0 + valid1) * sizeof(pkt_desc) *
 		(card->tx_ring_buffers + card->rx_ring_buffers);
 
-	pr_info("RISCom/N2 %u KB RAM, IRQ%u, using %u TX + %u RX packets rings\n",
+	pr_debug("RISCom/N2 %u KB RAM, IRQ%u, using %u TX + %u RX packets rings\n",
 		card->ram_size / 1024, card->irq,
 		card->tx_ring_buffers, card->rx_ring_buffers);
 
@@ -495,12 +495,12 @@ static int __init n2_init(void)
 {
 	if (hw==NULL) {
 #ifdef MODULE
-		pr_info("no card initialized\n");
+		pr_debug("no card initialized\n");
 #endif
 		return -EINVAL;	/* no parameters specified, abort */
 	}
 
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 
 	do {
 		unsigned long io, irq, ram;

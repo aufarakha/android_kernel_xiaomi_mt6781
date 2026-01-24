@@ -2382,7 +2382,7 @@ fst_init_card(struct fst_card_info *card)
 		}
 	}
 
-	pr_info("%s-%s: %s IRQ%d, %d ports\n",
+	pr_debug("%s-%s: %s IRQ%d, %d ports\n",
 		port_to_dev(&card->ports[0])->name,
 		port_to_dev(&card->ports[card->nports - 1])->name,
 		type_strings[card->type], card->irq, card->nports);
@@ -2426,7 +2426,7 @@ fst_add_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 		 */
 		for (i = 0; i < fst_excluded_cards; i++) {
 			if ((pdev->devfn) >> 3 == fst_excluded_list[i]) {
-				pr_info("FarSync PCI device %d not assigned\n",
+				pr_debug("FarSync PCI device %d not assigned\n",
 					(pdev->devfn) >> 3);
 				return -EBUSY;
 			}
@@ -2664,7 +2664,7 @@ fst_init(void)
 static void __exit
 fst_cleanup_module(void)
 {
-	pr_info("FarSync WAN driver unloading\n");
+	pr_debug("FarSync WAN driver unloading\n");
 	pci_unregister_driver(&fst_driver);
 }
 

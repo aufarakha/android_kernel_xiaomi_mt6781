@@ -981,21 +981,21 @@ static void show_parconfig_smsc37c669(int io, int key)
 	outb(0xaa, io);
 
 	if (verbose_probing) {
-		pr_info("SMSC 37c669 LPT Config: cr_1=0x%02x, 4=0x%02x, A=0x%2x, 23=0x%02x, 26=0x%02x, 27=0x%02x\n",
+		pr_debug("SMSC 37c669 LPT Config: cr_1=0x%02x, 4=0x%02x, A=0x%2x, 23=0x%02x, 26=0x%02x, 27=0x%02x\n",
 			cr1, cr4, cra, cr23, cr26, cr27);
 
 		/* The documentation calls DMA and IRQ-Lines by letters, so
 		   the board maker can/will wire them
 		   appropriately/randomly...  G=reserved H=IDE-irq, */
-		pr_info("SMSC LPT Config: io=0x%04x, irq=%c, dma=%c, fifo threshold=%d\n",
+		pr_debug("SMSC LPT Config: io=0x%04x, irq=%c, dma=%c, fifo threshold=%d\n",
 			cr23 * 4,
 			(cr27 & 0x0f) ? 'A' - 1 + (cr27 & 0x0f) : '-',
 			(cr26 & 0x0f) ? 'A' - 1 + (cr26 & 0x0f) : '-',
 			cra & 0x0f);
-		pr_info("SMSC LPT Config: enabled=%s power=%s\n",
+		pr_debug("SMSC LPT Config: enabled=%s power=%s\n",
 			(cr23 * 4 >= 0x100) ? "yes" : "no",
 			(cr1 & 4) ? "yes" : "no");
-		pr_info("SMSC LPT Config: Port mode=%s, EPP version =%s\n",
+		pr_debug("SMSC LPT Config: Port mode=%s, EPP version =%s\n",
 			(cr1 & 0x08) ? "Standard mode only (SPP)"
 			: modes[cr4 & 0x03],
 			(cr4 & 0x40) ? "1.7" : "1.9");
@@ -1008,7 +1008,7 @@ static void show_parconfig_smsc37c669(int io, int key)
 	if (cr23 * 4 >= 0x100) { /* if active */
 		s = find_free_superio();
 		if (s == NULL)
-			pr_info("Super-IO: too many chips!\n");
+			pr_debug("Super-IO: too many chips!\n");
 		else {
 			int d;
 			switch (cr23 * 4) {
@@ -1073,24 +1073,24 @@ static void show_parconfig_winbond(int io, int key)
 	outb(0xaa, io);
 
 	if (verbose_probing) {
-		pr_info("Winbond LPT Config: cr_30=%02x 60,61=%02x%02x 70=%02x 74=%02x, f0=%02x\n",
+		pr_debug("Winbond LPT Config: cr_30=%02x 60,61=%02x%02x 70=%02x 74=%02x, f0=%02x\n",
 			cr30, cr60, cr61, cr70, cr74, crf0);
-		pr_info("Winbond LPT Config: active=%s, io=0x%02x%02x irq=%d, ",
+		pr_debug("Winbond LPT Config: active=%s, io=0x%02x%02x irq=%d, ",
 			(cr30 & 0x01) ? "yes" : "no", cr60, cr61, cr70 & 0x0f);
 		if ((cr74 & 0x07) > 3)
 			pr_cont("dma=none\n");
 		else
 			pr_cont("dma=%d\n", cr74 & 0x07);
-		pr_info("Winbond LPT Config: irqtype=%s, ECP fifo threshold=%d\n",
+		pr_debug("Winbond LPT Config: irqtype=%s, ECP fifo threshold=%d\n",
 			irqtypes[crf0 >> 7], (crf0 >> 3) & 0x0f);
-		pr_info("Winbond LPT Config: Port mode=%s\n",
+		pr_debug("Winbond LPT Config: Port mode=%s\n",
 			modes[crf0 & 0x07]);
 	}
 
 	if (cr30 & 0x01) { /* the settings can be interrogated later ... */
 		s = find_free_superio();
 		if (s == NULL)
-			pr_info("Super-IO: too many chips!\n");
+			pr_debug("Super-IO: too many chips!\n");
 		else {
 			s->io = (cr60 << 8) | cr61;
 			s->irq = cr70 & 0x0f;
@@ -1144,7 +1144,7 @@ static void decode_winbond(int efer, int key, int devid, int devrev, int oldid)
 		progif = 0;
 
 	if (verbose_probing)
-		pr_info("Winbond chip at EFER=0x%x key=0x%02x devid=%02x devrev=%02x oldid=%02x type=%s\n",
+		pr_debug("Winbond chip at EFER=0x%x key=0x%02x devid=%02x devrev=%02x oldid=%02x type=%s\n",
 			efer, key, devid, devrev, oldid, type);
 
 	if (progif == 2)
@@ -1176,7 +1176,7 @@ static void decode_smsc(int efer, int key, int devid, int devrev)
 		type = "37c666GT";
 
 	if (verbose_probing)
-		pr_info("SMSC chip at EFER=0x%x key=0x%02x devid=%02x devrev=%02x type=%s\n",
+		pr_debug("SMSC chip at EFER=0x%x key=0x%02x devid=%02x devrev=%02x type=%s\n",
 			efer, key, devid, devrev, type);
 
 	if (func)
@@ -1349,7 +1349,7 @@ static void detect_and_report_it87(void)
 	dev |= inb(0x2f);
 	if (dev == 0x8712 || dev == 0x8705 || dev == 0x8715 ||
 	    dev == 0x8716 || dev == 0x8718 || dev == 0x8726) {
-		pr_info("IT%04X SuperIO detected\n", dev);
+		pr_debug("IT%04X SuperIO detected\n", dev);
 		outb(0x07, 0x2E);	/* Parallel Port */
 		outb(0x03, 0x2F);
 		outb(0xF0, 0x2E);	/* BOOT 0x80 off */
@@ -1436,7 +1436,7 @@ static int parport_SPP_supported(struct parport *pb)
 	if (user_specified)
 		/* That didn't work, but the user thinks there's a
 		 * port here. */
-		pr_info("parport 0x%lx (WARNING): CTR: wrote 0x%02x, read 0x%02x\n",
+		pr_debug("parport 0x%lx (WARNING): CTR: wrote 0x%02x, read 0x%02x\n",
 			pb->base, w, r);
 
 	/* Try the data register.  The data lines aren't tri-stated at
@@ -1455,9 +1455,9 @@ static int parport_SPP_supported(struct parport *pb)
 	if (user_specified) {
 		/* Didn't work, but the user is convinced this is the
 		 * place. */
-		pr_info("parport 0x%lx (WARNING): DATA: wrote 0x%02x, read 0x%02x\n",
+		pr_debug("parport 0x%lx (WARNING): DATA: wrote 0x%02x, read 0x%02x\n",
 			pb->base, w, r);
-		pr_info("parport 0x%lx: You gave this address, but there is probably no parallel port there!\n",
+		pr_debug("parport 0x%lx: You gave this address, but there is probably no parallel port there!\n",
 			pb->base);
 	}
 
@@ -1632,7 +1632,7 @@ static int parport_ECP_supported(struct parport *pb)
 
 	if (i <= priv->fifo_depth) {
 		if (verbose_probing)
-			pr_info("0x%lx: readIntrThreshold is %d\n",
+			pr_debug("0x%lx: readIntrThreshold is %d\n",
 				pb->base, i);
 	} else
 		/* Number of bytes we can read if we get an interrupt. */
@@ -2094,7 +2094,7 @@ struct parport *parport_pc_probe_port(unsigned long int base,
 
 	p->size = (p->modes & PARPORT_MODE_EPP) ? 8 : 3;
 
-	pr_info("%s: PC-style at 0x%lx", p->name, p->base);
+	pr_debug("%s: PC-style at 0x%lx", p->name, p->base);
 	if (p->base_hi && priv->ecr)
 		pr_cont(" (0x%lx)", p->base_hi);
 	if (p->irq == PARPORT_IRQ_AUTO) {
@@ -2163,7 +2163,7 @@ do {									\
 #endif /* CONFIG_PARPORT_1284 */
 	pr_cont("]\n");
 	if (probedirq != PARPORT_IRQ_NONE)
-		pr_info("%s: irq %d detected\n", p->name, probedirq);
+		pr_debug("%s: irq %d detected\n", p->name, probedirq);
 
 	/* If No ECP release the ports grabbed above. */
 	if (ECR_res && (p->modes & PARPORT_MODE_ECP) == 0) {
@@ -2311,7 +2311,7 @@ static int sio_ite_8872_probe(struct pci_dev *pdev, int autoirq, int autodma,
 		}
 	}
 	if (i >= 5) {
-		pr_info("parport_pc: cannot find ITE8872 INTA\n");
+		pr_debug("parport_pc: cannot find ITE8872 INTA\n");
 		return 0;
 	}
 
@@ -2320,28 +2320,28 @@ static int sio_ite_8872_probe(struct pci_dev *pdev, int autoirq, int autodma,
 
 	switch (type) {
 	case 0x2:
-		pr_info("parport_pc: ITE8871 found (1P)\n");
+		pr_debug("parport_pc: ITE8871 found (1P)\n");
 		ite8872set = 0x64200000;
 		break;
 	case 0xa:
-		pr_info("parport_pc: ITE8875 found (1P)\n");
+		pr_debug("parport_pc: ITE8875 found (1P)\n");
 		ite8872set = 0x64200000;
 		break;
 	case 0xe:
-		pr_info("parport_pc: ITE8872 found (2S1P)\n");
+		pr_debug("parport_pc: ITE8872 found (2S1P)\n");
 		ite8872set = 0x64e00000;
 		break;
 	case 0x6:
-		pr_info("parport_pc: ITE8873 found (1S)\n");
+		pr_debug("parport_pc: ITE8873 found (1S)\n");
 		release_region(inta_addr[i], 32);
 		return 0;
 	case 0x8:
-		pr_info("parport_pc: ITE8874 found (2S)\n");
+		pr_debug("parport_pc: ITE8874 found (2S)\n");
 		release_region(inta_addr[i], 32);
 		return 0;
 	default:
-		pr_info("parport_pc: unknown ITE887x\n");
-		pr_info("parport_pc: please mail 'lspci -nvv' output to Rich.Liu@ite.com.tw\n");
+		pr_debug("parport_pc: unknown ITE887x\n");
+		pr_debug("parport_pc: please mail 'lspci -nvv' output to Rich.Liu@ite.com.tw\n");
 		release_region(inta_addr[i], 32);
 		return 0;
 	}
@@ -2376,7 +2376,7 @@ static int sio_ite_8872_probe(struct pci_dev *pdev, int autoirq, int autodma,
 	release_region(inta_addr[i], 32);
 	if (parport_pc_probe_port(ite8872_lpt, ite8872_lpthi,
 				   irq, PARPORT_DMA_NONE, &pdev->dev, 0)) {
-		pr_info("parport_pc: ITE 8872 parallel port: io=0x%X",
+		pr_debug("parport_pc: ITE 8872 parallel port: io=0x%X",
 			ite8872_lpt);
 		if (irq != PARPORT_IRQ_NONE)
 			pr_cont(", irq=%d", irq);
@@ -2504,7 +2504,7 @@ static int sio_via_probe(struct pci_dev *pdev, int autoirq, int autodma,
 	pci_write_config_byte(pdev, via->via_pci_superio_config_reg, tmp);
 
 	if (siofunc == VIA_FUNCTION_PARPORT_DISABLE) {
-		pr_info("parport_pc: VIA parallel port disabled in BIOS\n");
+		pr_debug("parport_pc: VIA parallel port disabled in BIOS\n");
 		return 0;
 	}
 
@@ -2537,7 +2537,7 @@ static int sio_via_probe(struct pci_dev *pdev, int autoirq, int autodma,
 	case 0x278:
 		port2 = 0x678; break;
 	default:
-		pr_info("parport_pc: Weird VIA parport base 0x%X, ignoring\n",
+		pr_debug("parport_pc: Weird VIA parport base 0x%X, ignoring\n",
 			port1);
 		return 0;
 	}
@@ -2557,7 +2557,7 @@ static int sio_via_probe(struct pci_dev *pdev, int autoirq, int autodma,
 
 	/* finally, do the probe with values obtained */
 	if (parport_pc_probe_port(port1, port2, irq, dma, &pdev->dev, 0)) {
-		pr_info("parport_pc: VIA parallel port: io=0x%X", port1);
+		pr_debug("parport_pc: VIA parallel port: io=0x%X", port1);
 		if (irq != PARPORT_IRQ_NONE)
 			pr_cont(", irq=%d", irq);
 		if (dma != PARPORT_DMA_NONE)

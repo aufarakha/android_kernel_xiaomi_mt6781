@@ -48,7 +48,7 @@ int virtcrypto_devmgr_add_dev(struct virtio_crypto *vcrypto_dev)
 
 	mutex_lock(&table_lock);
 	if (num_devices == VIRTIO_CRYPTO_MAX_DEVICES) {
-		pr_info("virtio_crypto: only support up to %d devices\n",
+		pr_debug("virtio_crypto: only support up to %d devices\n",
 			    VIRTIO_CRYPTO_MAX_DEVICES);
 		mutex_unlock(&table_lock);
 		return -EFAULT;
@@ -216,7 +216,7 @@ struct virtio_crypto *virtcrypto_get_dev_node(int node, uint32_t service,
 	}
 
 	if (!vcrypto_dev) {
-		pr_info("virtio_crypto: Could not find a device on node %d\n",
+		pr_debug("virtio_crypto: Could not find a device on node %d\n",
 				node);
 		/* Get any started device */
 		list_for_each_entry(tmp_dev,

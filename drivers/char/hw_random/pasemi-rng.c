@@ -107,7 +107,7 @@ static int rng_probe(struct platform_device *pdev)
 
 	pasemi_rng.priv = (unsigned long)rng_regs;
 
-	pr_info("Registering PA Semi RNG\n");
+	pr_debug("Registering PA Semi RNG\n");
 	return devm_hwrng_register(&pdev->dev, &pasemi_rng);
 }
 

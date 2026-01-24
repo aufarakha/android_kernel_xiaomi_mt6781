@@ -640,7 +640,7 @@ static int rtllib_michael_mic_verify(struct sk_buff *skb, int keyidx,
 		netdev_dbg(skb->dev, "%d\n",
 			   memcmp(mic, skb->data + skb->len - 8, 8) != 0);
 		if (skb->dev) {
-			pr_info("skb->dev != NULL\n");
+			pr_debug("skb->dev != NULL\n");
 			rtllib_michael_mic_failure(skb->dev, hdr, keyidx);
 		}
 		tkey->dot11RSNAStatsTKIPLocalMICFailures++;

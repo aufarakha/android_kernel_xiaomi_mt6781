@@ -858,7 +858,7 @@ static int get_device_capabilities(struct drxk_state *state)
 	if (status < 0)
 		goto error;
 
-	pr_info("status = 0x%08x\n", sio_top_jtagid_lo);
+	pr_debug("status = 0x%08x\n", sio_top_jtagid_lo);
 
 	/* driver 0.9.0 */
 	switch ((sio_top_jtagid_lo >> 29) & 0xF) {
@@ -992,7 +992,7 @@ static int get_device_capabilities(struct drxk_state *state)
 		goto error2;
 	}
 
-	pr_info("detected a drx-39%02xk, spin %s, xtal %d.%03d MHz\n",
+	pr_debug("detected a drx-39%02xk, spin %s, xtal %d.%03d MHz\n",
 	       ((sio_top_jtagid_lo >> 12) & 0xFF), spin,
 	       state->m_osc_clock_freq / 1000,
 	       state->m_osc_clock_freq % 1000);
@@ -6197,7 +6197,7 @@ static int init_drxk(struct drxk_state *state)
 		if (status < 0)
 			goto error;
 
-		pr_info("DRXK driver version %d.%d.%d\n",
+		pr_debug("DRXK driver version %d.%d.%d\n",
 			DRXK_VERSION_MAJOR, DRXK_VERSION_MINOR,
 			DRXK_VERSION_PATCH);
 
@@ -6283,7 +6283,7 @@ static void load_firmware_cb(const struct firmware *fw,
 	if (!fw) {
 		pr_err("Could not load firmware file %s.\n",
 			state->microcode_name);
-		pr_info("Copy %s to your hotplug directory!\n",
+		pr_debug("Copy %s to your hotplug directory!\n",
 			state->microcode_name);
 		state->microcode_name = NULL;
 
@@ -6859,7 +6859,7 @@ struct dvb_frontend *drxk_attach(const struct drxk_config *config,
 	p->post_bit_error.stat[0].scale = FE_SCALE_NOT_AVAILABLE;
 	p->post_bit_count.stat[0].scale = FE_SCALE_NOT_AVAILABLE;
 
-	pr_info("frontend initialized.\n");
+	pr_debug("frontend initialized.\n");
 	return &state->frontend;
 
 error:

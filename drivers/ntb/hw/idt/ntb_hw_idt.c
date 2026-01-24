@@ -2689,7 +2689,7 @@ static struct pci_driver idt_pci_driver = {
 static int __init idt_pci_driver_init(void)
 {
 	int ret;
-	pr_info("%s %s\n", NTB_DESC, NTB_VER);
+	pr_debug("%s %s\n", NTB_DESC, NTB_VER);
 
 	/* Create the top DebugFS directory if the FS is initialized */
 	if (debugfs_initialized())

@@ -510,7 +510,7 @@ static void mips_cdmm_bus_discover(struct mips_cdmm_bus *bus)
 
 	/* Discover devices */
 	bus->discovered = true;
-	pr_info("cdmm%u discovery (%u blocks)\n", cpu, bus->drbs);
+	pr_debug("cdmm%u discovery (%u blocks)\n", cpu, bus->drbs);
 	for (; drb < bus->drbs; drb += size + 1) {
 		acsr = __raw_readl(cdmm + drb * CDMM_DRB_SIZE);
 		type = (acsr & CDMM_ACSR_DEVTYPE) >> CDMM_ACSR_DEVTYPE_SHIFT;
@@ -520,7 +520,7 @@ static void mips_cdmm_bus_discover(struct mips_cdmm_bus *bus)
 		if (!type)
 			continue;
 
-		pr_info("cdmm%u-%u: @%u (%#x..%#x), type 0x%02x, rev %u\n",
+		pr_debug("cdmm%u-%u: @%u (%#x..%#x), type 0x%02x, rev %u\n",
 			cpu, id, drb, drb * CDMM_DRB_SIZE,
 			(drb + size + 1) * CDMM_DRB_SIZE - 1,
 			type, rev);

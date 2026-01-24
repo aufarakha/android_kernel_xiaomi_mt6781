@@ -728,7 +728,7 @@ parport_register_device(struct parport *port, const char *name,
 
 	if (flags & PARPORT_DEV_LURK) {
 		if (!pf || !kf) {
-			pr_info("%s: refused to register lurking device (%s) without callbacks\n",
+			pr_debug("%s: refused to register lurking device (%s) without callbacks\n",
 				port->name, name);
 			return NULL;
 		}
@@ -860,7 +860,7 @@ parport_register_dev_model(struct parport *port, const char *name,
 
 	if (par_dev_cb->flags & PARPORT_DEV_LURK) {
 		if (!par_dev_cb->preempt || !par_dev_cb->wakeup) {
-			pr_info("%s: refused to register lurking device (%s) without callbacks\n",
+			pr_debug("%s: refused to register lurking device (%s) without callbacks\n",
 				port->name, name);
 			return NULL;
 		}
@@ -1139,7 +1139,7 @@ int parport_claim(struct pardevice *dev)
 	unsigned long flags;
 
 	if (port->cad == dev) {
-		pr_info("%s: %s already owner\n", dev->port->name, dev->name);
+		pr_debug("%s: %s already owner\n", dev->port->name, dev->name);
 		return 0;
 	}
 

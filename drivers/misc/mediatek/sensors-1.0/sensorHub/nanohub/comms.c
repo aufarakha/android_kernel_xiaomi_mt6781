@@ -514,7 +514,7 @@ static int nanohub_comms_download(struct nanohub_data *data,
 	} while (ret == sizeof(upload_reply) &&
 		 upload_reply == UPLOAD_REPLY_PROCESSING);
 
-	pr_info("nanohub: %s: ret=%d, upload_reply=%d\n", __func__,
+	pr_debug("nanohub: %s: ret=%d, upload_reply=%d\n", __func__,
 		ret, upload_reply);
 
 	return 0;

@@ -198,15 +198,15 @@ static int read_bbt(struct mtd_info *mtd, uint8_t *buf, int page, int num,
 		res = mtd_read(mtd, from, len, &retlen, buf);
 		if (res < 0) {
 			if (mtd_is_eccerr(res)) {
-				pr_info("nand_bbt: ECC error in BBT at 0x%012llx\n",
+				pr_debug("nand_bbt: ECC error in BBT at 0x%012llx\n",
 					from & ~mtd->writesize);
 				return res;
 			} else if (mtd_is_bitflip(res)) {
-				pr_info("nand_bbt: corrected error in BBT at 0x%012llx\n",
+				pr_debug("nand_bbt: corrected error in BBT at 0x%012llx\n",
 					from & ~mtd->writesize);
 				ret = res;
 			} else {
-				pr_info("nand_bbt: error reading BBT\n");
+				pr_debug("nand_bbt: error reading BBT\n");
 				return res;
 			}
 		}
@@ -219,7 +219,7 @@ static int read_bbt(struct mtd_info *mtd, uint8_t *buf, int page, int num,
 				if (tmp == msk)
 					continue;
 				if (reserved_block_code && (tmp == reserved_block_code)) {
-					pr_info("nand_read_bbt: reserved block at 0x%012llx\n",
+					pr_debug("nand_read_bbt: reserved block at 0x%012llx\n",
 						 (loff_t)(offs + act) <<
 						 this->bbt_erase_shift);
 					bbt_mark_entry(this, offs + act,
@@ -231,7 +231,7 @@ static int read_bbt(struct mtd_info *mtd, uint8_t *buf, int page, int num,
 				 * Leave it for now, if it's matured we can
 				 * move this message to pr_debug.
 				 */
-				pr_info("nand_read_bbt: bad block at 0x%012llx\n",
+				pr_debug("nand_read_bbt: bad block at 0x%012llx\n",
 					 (loff_t)(offs + act) <<
 					 this->bbt_erase_shift);
 				/* Factory marked bad or worn out? */
@@ -395,7 +395,7 @@ static void read_abs_bbts(struct mtd_info *mtd, uint8_t *buf,
 		scan_read(mtd, buf, (loff_t)td->pages[0] << this->page_shift,
 			      mtd->writesize, td);
 		td->version[0] = buf[bbt_get_ver_offs(mtd, td)];
-		pr_info("Bad block table at page %d, version 0x%02X\n",
+		pr_debug("Bad block table at page %d, version 0x%02X\n",
 			 td->pages[0], td->version[0]);
 	}
 
@@ -404,7 +404,7 @@ static void read_abs_bbts(struct mtd_info *mtd, uint8_t *buf,
 		scan_read(mtd, buf, (loff_t)md->pages[0] << this->page_shift,
 			      mtd->writesize, md);
 		md->version[0] = buf[bbt_get_ver_offs(mtd, md)];
-		pr_info("Bad block table at page %d, version 0x%02X\n",
+		pr_debug("Bad block table at page %d, version 0x%02X\n",
 			 md->pages[0], md->version[0]);
 	}
 }
@@ -459,7 +459,7 @@ static int create_bbt(struct mtd_info *mtd, uint8_t *buf,
 	int startblock;
 	loff_t from;
 
-	pr_info("Scanning device for bad blocks\n");
+	pr_debug("Scanning device for bad blocks\n");
 
 	if (bd->options & NAND_BBT_SCAN2NDPAGE)
 		numpages = 2;
@@ -577,7 +577,7 @@ static int search_bbt(struct mtd_info *mtd, uint8_t *buf, struct nand_bbt_descr 
 		if (td->pages[i] == -1)
 			pr_warn("Bad block table not found for chip %d\n", i);
 		else
-			pr_info("Bad block table found at page %d, version 0x%02X\n",
+			pr_debug("Bad block table found at page %d, version 0x%02X\n",
 				td->pages[i], td->version[i]);
 	}
 	return 0;
@@ -791,7 +791,7 @@ static int write_bbt(struct mtd_info *mtd, uint8_t *buf,
 			res = mtd_read(mtd, to, len, &retlen, buf);
 			if (res < 0) {
 				if (retlen != len) {
-					pr_info("nand_bbt: error reading block for writing the bad block table\n");
+					pr_debug("nand_bbt: error reading block for writing the bad block table\n");
 					return res;
 				}
 				pr_warn("nand_bbt: ECC error while reading block for writing bad block table\n");
@@ -872,7 +872,7 @@ static int write_bbt(struct mtd_info *mtd, uint8_t *buf,
 			continue;
 		}
 
-		pr_info("Bad block table written to 0x%012llx, version 0x%02X\n",
+		pr_debug("Bad block table written to 0x%012llx, version 0x%02X\n",
 			 (unsigned long long)to, td->version[chip]);
 
 		/* Mark it as used */

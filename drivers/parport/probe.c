@@ -38,7 +38,7 @@ static void pretty_print(struct parport *port, int device)
 {
 	struct parport_device_info *info = &port->probe_info[device + 1];
 
-	pr_info("%s", port->name);
+	pr_debug("%s", port->name);
 
 	if (device >= 0)
 		printk (" (addr %d)", device);

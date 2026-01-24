@@ -622,7 +622,7 @@ static int __init deflate_init(void)
 		return rc;
 	}
 
-	pr_info("PPP Deflate Compression module registered\n");
+	pr_debug("PPP Deflate Compression module registered\n");
 	return 0;
 }
 

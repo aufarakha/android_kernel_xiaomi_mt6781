@@ -1089,7 +1089,7 @@ int em28xx_register_extension(struct em28xx_ops *ops)
 		}
 	}
 	mutex_unlock(&em28xx_devlist_mutex);
-	pr_info("em28xx: Registered (%s) extension\n", ops->name);
+	pr_debug("em28xx: Registered (%s) extension\n", ops->name);
 	return 0;
 }
 EXPORT_SYMBOL(em28xx_register_extension);
@@ -1108,7 +1108,7 @@ void em28xx_unregister_extension(struct em28xx_ops *ops)
 	}
 	list_del(&ops->next);
 	mutex_unlock(&em28xx_devlist_mutex);
-	pr_info("em28xx: Removed (%s) extension\n", ops->name);
+	pr_debug("em28xx: Removed (%s) extension\n", ops->name);
 }
 EXPORT_SYMBOL(em28xx_unregister_extension);
 

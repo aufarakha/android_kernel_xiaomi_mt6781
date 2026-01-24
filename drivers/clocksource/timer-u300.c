@@ -379,7 +379,7 @@ static int __init u300_timer_init_of(struct device_node *np)
 		return -EINVAL;
 	}
 
-	pr_info("U300 GP1 timer @ base: %p, IRQ: %u\n", u300_timer_base, irq);
+	pr_debug("U300 GP1 timer @ base: %p, IRQ: %u\n", u300_timer_base, irq);
 
 	/* Clock the interrupt controller */
 	clk = of_clk_get(np, 0);

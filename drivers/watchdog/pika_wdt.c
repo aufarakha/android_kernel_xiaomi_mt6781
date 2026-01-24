@@ -277,7 +277,7 @@ static int __init pikawdt_init(void)
 		goto out;
 	}
 
-	pr_info("initialized. heartbeat=%d sec (nowayout=%d)\n",
+	pr_debug("initialized. heartbeat=%d sec (nowayout=%d)\n",
 		heartbeat, nowayout);
 	return 0;
 

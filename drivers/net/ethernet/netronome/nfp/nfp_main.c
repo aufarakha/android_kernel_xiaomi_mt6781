@@ -750,7 +750,7 @@ static int __init nfp_main_init(void)
 {
 	int err;
 
-	pr_info("%s: NFP PCIe Driver, Copyright (C) 2014-2017 Netronome Systems\n",
+	pr_debug("%s: NFP PCIe Driver, Copyright (C) 2014-2017 Netronome Systems\n",
 		nfp_driver_name);
 
 	nfp_net_debugfs_create();

@@ -396,7 +396,7 @@ static int __init gnss_module_init(void)
 	gnss_class->dev_groups = gnss_groups;
 	gnss_class->dev_uevent = gnss_uevent;
 
-	pr_info("GNSS driver registered with major %d\n", MAJOR(gnss_first));
+	pr_debug("GNSS driver registered with major %d\n", MAJOR(gnss_first));
 
 	return 0;
 

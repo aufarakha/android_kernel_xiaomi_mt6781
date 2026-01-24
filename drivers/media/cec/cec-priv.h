@@ -14,7 +14,7 @@
 #define dprintk(lvl, fmt, arg...)					\
 	do {								\
 		if (lvl <= cec_debug)					\
-			pr_info("cec-%s: " fmt, adap->name, ## arg);	\
+			pr_debug("cec-%s: " fmt, adap->name, ## arg);	\
 	} while (0)
 
 /* devnode to cec_adapter */

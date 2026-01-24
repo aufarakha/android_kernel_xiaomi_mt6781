@@ -183,7 +183,7 @@ static int wdt_startup(void)
 	/* Start the watchdog */
 	wdt_config(WDT_ENB | WDT_WRST_ENB | WDT_EXP_SEL_04);
 
-	pr_info("Watchdog timer is now enabled\n");
+	pr_debug("Watchdog timer is now enabled\n");
 	return 0;
 }
 
@@ -195,7 +195,7 @@ static int wdt_turnoff(void)
 	/* Stop the watchdog */
 	wdt_config(0);
 
-	pr_info("Watchdog timer is now disabled...\n");
+	pr_debug("Watchdog timer is now disabled...\n");
 	return 0;
 }
 
@@ -388,7 +388,7 @@ static int __init sc520_wdt_init(void)
 	   if not reset to the default */
 	if (wdt_set_heartbeat(timeout)) {
 		wdt_set_heartbeat(WATCHDOG_TIMEOUT);
-		pr_info("timeout value must be 1 <= timeout <= 3600, using %d\n",
+		pr_debug("timeout value must be 1 <= timeout <= 3600, using %d\n",
 			WATCHDOG_TIMEOUT);
 	}
 
@@ -412,7 +412,7 @@ static int __init sc520_wdt_init(void)
 		goto err_out_notifier;
 	}
 
-	pr_info("WDT driver for SC520 initialised. timeout=%d sec (nowayout=%d)\n",
+	pr_debug("WDT driver for SC520 initialised. timeout=%d sec (nowayout=%d)\n",
 		timeout, nowayout);
 
 	return 0;

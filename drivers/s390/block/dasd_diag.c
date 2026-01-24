@@ -449,7 +449,7 @@ dasd_diag_check_device(struct dasd_device *device)
 	} else {
 		if (rc == 4)
 			set_bit(DASD_FLAG_DEVICE_RO, &device->flags);
-		pr_info("%s: New DASD with %ld byte/block, total size %ld "
+		pr_debug("%s: New DASD with %ld byte/block, total size %ld "
 			"KB%s\n", dev_name(&device->cdev->dev),
 			(unsigned long) block->bp_block,
 			(unsigned long) (block->blocks <<
@@ -638,7 +638,7 @@ static int __init
 dasd_diag_init(void)
 {
 	if (!MACHINE_IS_VM) {
-		pr_info("Discipline %s cannot be used without z/VM\n",
+		pr_debug("Discipline %s cannot be used without z/VM\n",
 			dasd_diag_discipline.name);
 		return -ENODEV;
 	}

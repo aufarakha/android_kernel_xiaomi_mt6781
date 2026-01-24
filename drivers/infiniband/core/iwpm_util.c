@@ -262,7 +262,7 @@ int iwpm_get_remote_info(struct sockaddr_storage *mapped_loc_addr,
 	int ret = -EINVAL;
 
 	if (!iwpm_valid_client(nl_client)) {
-		pr_info("%s: Invalid client = %d\n", __func__, nl_client);
+		pr_debug("%s: Invalid client = %d\n", __func__, nl_client);
 		return ret;
 	}
 	spin_lock_irqsave(&iwpm_reminfo_lock, flags);
@@ -365,7 +365,7 @@ int iwpm_wait_complete_req(struct iwpm_nlmsg_request *nlmsg_request)
 	ret = down_timeout(&nlmsg_request->sem, IWPM_NL_TIMEOUT);
 	if (ret) {
 		ret = -EINVAL;
-		pr_info("%s: Timeout %d sec for netlink request (seq = %u)\n",
+		pr_debug("%s: Timeout %d sec for netlink request (seq = %u)\n",
 			__func__, (IWPM_NL_TIMEOUT/HZ), nlmsg_request->nlmsg_seq);
 	} else {
 		ret = nlmsg_request->err_code;
@@ -613,7 +613,7 @@ static int send_mapinfo_num(u32 mapping_num, u8 nl_client, int iwpm_pid)
 	pr_debug("%s: Sent mapping number = %d\n", __func__, mapping_num);
 	return 0;
 mapinfo_num_error:
-	pr_info("%s: %s\n", __func__, err_str);
+	pr_debug("%s: %s\n", __func__, err_str);
 	if (skb)
 		dev_kfree_skb(skb);
 	return ret;

@@ -177,7 +177,7 @@ static int npcm7xx_kcs_probe(struct platform_device *pdev)
 		return rc;
 	}
 
-	pr_info("channel=%u idr=0x%x odr=0x%x str=0x%x\n",
+	pr_debug("channel=%u idr=0x%x odr=0x%x str=0x%x\n",
 		chan,
 		kcs_bmc->ioreg.idr, kcs_bmc->ioreg.odr, kcs_bmc->ioreg.str);
 

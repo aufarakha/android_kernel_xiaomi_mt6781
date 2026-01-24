@@ -913,7 +913,7 @@ static void ipmi_wdog_msg_handler(struct ipmi_recv_msg *msg,
 {
 	if (msg->msg.cmd == IPMI_WDOG_RESET_TIMER &&
 			msg->msg.data[0] == IPMI_WDOG_TIMER_NOT_INIT_RESP)
-		pr_info(PFX "response: The IPMI controller appears to have been reset, will attempt to reinitialize the watchdog timer\n");
+		pr_debug(PFX "response: The IPMI controller appears to have been reset, will attempt to reinitialize the watchdog timer\n");
 	else if (msg->msg.data[0] != 0)
 		pr_err(PFX "response: Error %x on cmd %x\n",
 		       msg->msg.data[0],
@@ -1051,7 +1051,7 @@ static void ipmi_register_watchdog(int ipmi_intf)
 		start_now = 0; /* Disable this function after first startup. */
 		ipmi_watchdog_state = action_val;
 		ipmi_set_timeout(IPMI_SET_TIMEOUT_FORCE_HB);
-		pr_info(PFX "Starting now!\n");
+		pr_debug(PFX "Starting now!\n");
 	} else {
 		/* Stop the timer now. */
 		ipmi_watchdog_state = WDOG_TIMEOUT_NONE;
@@ -1312,19 +1312,19 @@ static int __init ipmi_wdog_init(void)
 
 	if (action_op_set_val(action)) {
 		action_op("reset", NULL);
-		pr_info(PFX "Unknown action '%s', defaulting to reset\n",
+		pr_debug(PFX "Unknown action '%s', defaulting to reset\n",
 			action);
 	}
 
 	if (preaction_op_set_val(preaction)) {
 		preaction_op("pre_none", NULL);
-		pr_info(PFX "Unknown preaction '%s', defaulting to none\n",
+		pr_debug(PFX "Unknown preaction '%s', defaulting to none\n",
 			preaction);
 	}
 
 	if (preop_op_set_val(preop)) {
 		preop_op("preop_none", NULL);
-		pr_info(PFX "Unknown preop '%s', defaulting to none\n", preop);
+		pr_debug(PFX "Unknown preop '%s', defaulting to none\n", preop);
 	}
 
 	check_parms();
@@ -1342,7 +1342,7 @@ static int __init ipmi_wdog_init(void)
 		return rv;
 	}
 
-	pr_info(PFX "driver initialized\n");
+	pr_debug(PFX "driver initialized\n");
 
 	return 0;
 }

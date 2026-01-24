@@ -2039,7 +2039,7 @@ static int omap_nand_attach_chip(struct nand_chip *chip)
 		break;
 
 	case OMAP_ECC_BCH4_CODE_HW_DETECTION_SW:
-		pr_info("nand: using OMAP_ECC_BCH4_CODE_HW_DETECTION_SW\n");
+		pr_debug("nand: using OMAP_ECC_BCH4_CODE_HW_DETECTION_SW\n");
 		chip->ecc.mode		= NAND_ECC_HW;
 		chip->ecc.size		= 512;
 		chip->ecc.bytes		= 7;
@@ -2059,7 +2059,7 @@ static int omap_nand_attach_chip(struct nand_chip *chip)
 		break;
 
 	case OMAP_ECC_BCH4_CODE_HW:
-		pr_info("nand: using OMAP_ECC_BCH4_CODE_HW ECC scheme\n");
+		pr_debug("nand: using OMAP_ECC_BCH4_CODE_HW ECC scheme\n");
 		chip->ecc.mode		= NAND_ECC_HW;
 		chip->ecc.size		= 512;
 		/* 14th bit is kept reserved for ROM-code compatibility */
@@ -2081,7 +2081,7 @@ static int omap_nand_attach_chip(struct nand_chip *chip)
 		break;
 
 	case OMAP_ECC_BCH8_CODE_HW_DETECTION_SW:
-		pr_info("nand: using OMAP_ECC_BCH8_CODE_HW_DETECTION_SW\n");
+		pr_debug("nand: using OMAP_ECC_BCH8_CODE_HW_DETECTION_SW\n");
 		chip->ecc.mode		= NAND_ECC_HW;
 		chip->ecc.size		= 512;
 		chip->ecc.bytes		= 13;
@@ -2101,7 +2101,7 @@ static int omap_nand_attach_chip(struct nand_chip *chip)
 		break;
 
 	case OMAP_ECC_BCH8_CODE_HW:
-		pr_info("nand: using OMAP_ECC_BCH8_CODE_HW ECC scheme\n");
+		pr_debug("nand: using OMAP_ECC_BCH8_CODE_HW ECC scheme\n");
 		chip->ecc.mode		= NAND_ECC_HW;
 		chip->ecc.size		= 512;
 		/* 14th bit is kept reserved for ROM-code compatibility */
@@ -2124,7 +2124,7 @@ static int omap_nand_attach_chip(struct nand_chip *chip)
 		break;
 
 	case OMAP_ECC_BCH16_CODE_HW:
-		pr_info("Using OMAP_ECC_BCH16_CODE_HW ECC scheme\n");
+		pr_debug("Using OMAP_ECC_BCH16_CODE_HW ECC scheme\n");
 		chip->ecc.mode		= NAND_ECC_HW;
 		chip->ecc.size		= 512;
 		chip->ecc.bytes		= 26;

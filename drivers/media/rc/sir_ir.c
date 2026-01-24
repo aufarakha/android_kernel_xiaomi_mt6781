@@ -368,7 +368,7 @@ static int sir_ir_probe(struct platform_device *dev)
 		return retval;
 	}
 
-	pr_info("I/O port 0x%.4x, IRQ %d.\n", io, irq);
+	pr_debug("I/O port 0x%.4x, IRQ %d.\n", io, irq);
 
 	retval = devm_rc_register_device(&sir_ir_dev->dev, rcdev);
 	if (retval < 0)

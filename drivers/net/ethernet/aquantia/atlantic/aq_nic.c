@@ -129,7 +129,7 @@ static int aq_nic_update_link_status(struct aq_nic_s *self)
 		return err;
 
 	if (self->link_status.mbps != self->aq_hw->aq_link_status.mbps) {
-		pr_info("%s: link change old %d new %d\n",
+		pr_debug("%s: link change old %d new %d\n",
 			AQ_CFG_DRV_NAME, self->link_status.mbps,
 			self->aq_hw->aq_link_status.mbps);
 		aq_nic_update_interrupt_moderation_settings(self);

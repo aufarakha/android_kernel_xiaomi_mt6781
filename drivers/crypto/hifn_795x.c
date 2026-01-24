@@ -1832,13 +1832,13 @@ static void hifn_work(struct work_struct *work)
 
 			dev_info(&dev->pdev->dev, "%s: res: ", __func__);
 			for (i = 0; i < HIFN_D_RES_RSIZE; ++i) {
-				pr_info("%x.%p ", dma->resr[i].l, dev->sa[i]);
+				pr_debug("%x.%p ", dma->resr[i].l, dev->sa[i]);
 				if (dev->sa[i]) {
 					hifn_process_ready(dev->sa[i], -ENODEV);
 					hifn_complete_sa(dev, i);
 				}
 			}
-			pr_info("\n");
+			pr_debug("\n");
 
 			hifn_reset_dma(dev, 1);
 			hifn_stop_device(dev);
@@ -2672,7 +2672,7 @@ static int __init hifn_init(void)
 		return -ENODEV;
 	}
 
-	pr_info("Driver for HIFN 795x crypto accelerator chip "
+	pr_debug("Driver for HIFN 795x crypto accelerator chip "
 		"has been successfully registered.\n");
 
 	return 0;
@@ -2682,7 +2682,7 @@ static void __exit hifn_fini(void)
 {
 	pci_unregister_driver(&hifn_pci_driver);
 
-	pr_info("Driver for HIFN 795x crypto accelerator chip "
+	pr_debug("Driver for HIFN 795x crypto accelerator chip "
 		"has been successfully unregistered.\n");
 }
 

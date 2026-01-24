@@ -43,7 +43,7 @@
 #define dprintk(level, fmt, arg...)				\
 do {								\
 	if (debug >= level)					\
-		pr_info("%s/1: " fmt, chip->dev->name, ##arg);	\
+		pr_debug("%s/1: " fmt, chip->dev->name, ##arg);	\
 } while (0)
 #define dprintk_core(level, fmt, arg...)				\
 do {									\
@@ -253,7 +253,7 @@ static int _cx25821_start_audio_dma(struct cx25821_audio_dev *chip)
 		 FLD_AUD_CLK_ENABLE);
 
 	/*
-	pr_info("DEBUG: Start audio DMA, %d B/line, cmds_start(0x%x)= %d lines/FIFO, %d periods, %d byte buffer\n",
+	pr_debug("DEBUG: Start audio DMA, %d B/line, cmds_start(0x%x)= %d lines/FIFO, %d periods, %d byte buffer\n",
 		buf->bpl, audio_ch->cmds_start,
 		cx_read(audio_ch->cmds_start + 12)>>1,
 		chip->num_periods, buf->bpl * chip->num_periods);
@@ -543,7 +543,7 @@ static int snd_cx25821_hw_params(struct snd_pcm_substream *substream,
 	ret = cx25821_risc_databuffer_audio(chip->pci, &buf->risc, buf->sglist,
 			chip->period_size, chip->num_periods, 1);
 	if (ret < 0) {
-		pr_info("DEBUG: ERROR after cx25821_risc_databuffer_audio()\n");
+		pr_debug("DEBUG: ERROR after cx25821_risc_databuffer_audio()\n");
 		goto error;
 	}
 
@@ -669,7 +669,7 @@ static int snd_cx25821_pcm(struct cx25821_audio_dev *chip, int device,
 
 	err = snd_pcm_new(chip->card, name, device, 0, 1, &pcm);
 	if (err < 0) {
-		pr_info("ERROR: FAILED snd_pcm_new() in %s\n", __func__);
+		pr_debug("ERROR: FAILED snd_pcm_new() in %s\n", __func__);
 		return err;
 	}
 	pcm->private_data = chip;
@@ -706,13 +706,13 @@ static int cx25821_audio_initdev(struct cx25821_dev *dev)
 	int err;
 
 	if (devno >= SNDRV_CARDS) {
-		pr_info("DEBUG ERROR: devno >= SNDRV_CARDS %s\n", __func__);
+		pr_debug("DEBUG ERROR: devno >= SNDRV_CARDS %s\n", __func__);
 		return -ENODEV;
 	}
 
 	if (!enable[devno]) {
 		++devno;
-		pr_info("DEBUG ERROR: !enable[devno] %s\n", __func__);
+		pr_debug("DEBUG ERROR: !enable[devno] %s\n", __func__);
 		return -ENOENT;
 	}
 
@@ -720,7 +720,7 @@ static int cx25821_audio_initdev(struct cx25821_dev *dev)
 			   THIS_MODULE,
 			   sizeof(struct cx25821_audio_dev), &card);
 	if (err < 0) {
-		pr_info("DEBUG ERROR: cannot create snd_card_new in %s\n",
+		pr_debug("DEBUG ERROR: cannot create snd_card_new in %s\n",
 			__func__);
 		return err;
 	}
@@ -749,7 +749,7 @@ static int cx25821_audio_initdev(struct cx25821_dev *dev)
 
 	err = snd_cx25821_pcm(chip, 0, "cx25821 Digital");
 	if (err < 0) {
-		pr_info("DEBUG ERROR: cannot create snd_cx25821_pcm %s\n",
+		pr_debug("DEBUG ERROR: cannot create snd_cx25821_pcm %s\n",
 			__func__);
 		goto error;
 	}
@@ -759,12 +759,12 @@ static int cx25821_audio_initdev(struct cx25821_dev *dev)
 		chip->iobase, chip->irq);
 	strcpy(card->mixername, "CX25821");
 
-	pr_info("%s/%i: ALSA support for cx25821 boards\n", card->driver,
+	pr_debug("%s/%i: ALSA support for cx25821 boards\n", card->driver,
 		devno);
 
 	err = snd_card_register(card);
 	if (err < 0) {
-		pr_info("DEBUG ERROR: cannot register sound card %s\n",
+		pr_debug("DEBUG ERROR: cannot register sound card %s\n",
 			__func__);
 		goto error;
 	}

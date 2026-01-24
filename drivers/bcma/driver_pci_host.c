@@ -536,7 +536,7 @@ static void bcma_core_pci_fixup_pcibridge(struct pci_dev *dev)
 	if (PCI_SLOT(dev->devfn) != 0)
 		return;
 
-	pr_info("PCI: Fixing up bridge %s\n", pci_name(dev));
+	pr_debug("PCI: Fixing up bridge %s\n", pci_name(dev));
 
 	/* Enable PCI bridge bus mastering and memory space */
 	pci_set_master(dev);
@@ -563,7 +563,7 @@ static void bcma_core_pci_fixup_addresses(struct pci_dev *dev)
 	if (PCI_SLOT(dev->devfn) == 0)
 		return;
 
-	pr_info("PCI: Fixing up addresses %s\n", pci_name(dev));
+	pr_debug("PCI: Fixing up addresses %s\n", pci_name(dev));
 
 	for (pos = 0; pos < 6; pos++) {
 		res = &dev->resource[pos];
@@ -591,7 +591,7 @@ int bcma_core_pci_plat_dev_init(struct pci_dev *dev)
 	pc_host = container_of(dev->bus->ops, struct bcma_drv_pci_host,
 			       pci_ops);
 
-	pr_info("PCI: Fixing up device %s\n", pci_name(dev));
+	pr_debug("PCI: Fixing up device %s\n", pci_name(dev));
 
 	/* Fix up interrupt lines */
 	dev->irq = bcma_core_irq(pc_host->pdev->core, 0);
@@ -599,7 +599,7 @@ int bcma_core_pci_plat_dev_init(struct pci_dev *dev)
 
 	readrq = pcie_get_readrq(dev);
 	if (readrq > 128) {
-		pr_info("change PCIe max read request size from %i to 128\n", readrq);
+		pr_debug("change PCIe max read request size from %i to 128\n", readrq);
 		pcie_set_readrq(dev, 128);
 	}
 	return 0;

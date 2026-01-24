@@ -662,12 +662,12 @@ static int gmux_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
 			ver_minor = (version >> 16) & 0xff;
 			ver_release = (version >> 8) & 0xff;
 		} else {
-			pr_info("gmux device not present\n");
+			pr_debug("gmux device not present\n");
 			ret = -ENODEV;
 			goto err_release;
 		}
 	}
-	pr_info("Found gmux version %d.%d.%d [%s]\n", ver_major, ver_minor,
+	pr_debug("Found gmux version %d.%d.%d [%s]\n", ver_major, ver_minor,
 		ver_release, (gmux_data->indexed ? "indexed" : "classic"));
 
 	memset(&props, 0, sizeof(props));

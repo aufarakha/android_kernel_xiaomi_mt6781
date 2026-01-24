@@ -228,26 +228,26 @@ static int __init dasd_parse_keyword(char *keyword)
 
 	if (strncmp("autodetect", keyword, length) == 0) {
 		dasd_autodetect = 1;
-		pr_info("The autodetection mode has been activated\n");
+		pr_debug("The autodetection mode has been activated\n");
 		return 0;
         }
 	if (strncmp("probeonly", keyword, length) == 0) {
 		dasd_probeonly = 1;
-		pr_info("The probeonly mode has been activated\n");
+		pr_debug("The probeonly mode has been activated\n");
 		return 0;
         }
 	if (strncmp("nopav", keyword, length) == 0) {
 		if (MACHINE_IS_VM)
-			pr_info("'nopav' is not supported on z/VM\n");
+			pr_debug("'nopav' is not supported on z/VM\n");
 		else {
 			dasd_nopav = 1;
-			pr_info("PAV support has be deactivated\n");
+			pr_debug("PAV support has be deactivated\n");
 		}
 		return 0;
 	}
 	if (strncmp("nofcx", keyword, length) == 0) {
 		dasd_nofcx = 1;
-		pr_info("High Performance FICON support has been "
+		pr_debug("High Performance FICON support has been "
 			"deactivated\n");
 		return 0;
 	}

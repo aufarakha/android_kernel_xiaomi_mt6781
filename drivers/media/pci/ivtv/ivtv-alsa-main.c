@@ -234,7 +234,7 @@ static int ivtv_alsa_load(struct ivtv *itv)
 
 static int __init ivtv_alsa_init(void)
 {
-	pr_info("ivtv-alsa: module loading...\n");
+	pr_debug("ivtv-alsa: module loading...\n");
 	ivtv_ext_init = &ivtv_alsa_load;
 	return 0;
 }
@@ -276,14 +276,14 @@ static void __exit ivtv_alsa_exit(void)
 	struct device_driver *drv;
 	int ret;
 
-	pr_info("ivtv-alsa: module unloading...\n");
+	pr_debug("ivtv-alsa: module unloading...\n");
 
 	drv = driver_find("ivtv", &pci_bus_type);
 	ret = driver_for_each_device(drv, NULL, NULL, ivtv_alsa_exit_callback);
 	(void)ret;	/* suppress compiler warning */
 
 	ivtv_ext_init = NULL;
-	pr_info("ivtv-alsa: module unload complete\n");
+	pr_debug("ivtv-alsa: module unload complete\n");
 }
 
 module_init(ivtv_alsa_init);

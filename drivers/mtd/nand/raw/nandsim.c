@@ -191,7 +191,7 @@ MODULE_PARM_DESC(bch,		 "Enable BCH ecc and set how many bits should "
 #define NS_ERR(args...) \
 	do { pr_err(" error: " args); } while(0)
 #define NS_INFO(args...) \
-	do { pr_info(" " args); } while(0)
+	do { pr_debug(" " args); } while(0)
 
 /* Busy-wait delay macros (microseconds, milliseconds) */
 #define NS_UDELAY(us) \

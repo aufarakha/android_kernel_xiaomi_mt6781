@@ -394,7 +394,7 @@ static int isl91302a_buck_set_ramp_dly(
 
 	switch (ramp_dly) {
 	default:
-		pr_info("%s Invalid ramp delay, set to default 2.5 mV/us\n",
+		pr_debug("%s Invalid ramp delay, set to default 2.5 mV/us\n",
 			__func__);
 		ret = isl91302a_set_ramp_val(mreg_desc, 0, 0);
 		break;

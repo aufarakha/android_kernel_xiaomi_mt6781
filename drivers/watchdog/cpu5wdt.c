@@ -237,7 +237,7 @@ static int cpu5wdt_init(void)
 	val = inb(port + CPU5WDT_STATUS_REG);
 	val = (val >> 2) & 1;
 	if (!val)
-		pr_info("sorry, was my fault\n");
+		pr_debug("sorry, was my fault\n");
 
 	err = misc_register(&cpu5wdt_misc);
 	if (err < 0) {
@@ -246,7 +246,7 @@ static int cpu5wdt_init(void)
 	}
 
 
-	pr_info("init success\n");
+	pr_debug("init success\n");
 	return 0;
 
 no_misc:

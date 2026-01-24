@@ -428,7 +428,7 @@ static int __init armada37xx_cpufreq_driver_init(void)
 
 	/* if AVS is not present don't use it but still try to setup dvfs */
 	if (IS_ERR(avs_base)) {
-		pr_info("Syscon failed for Adapting Voltage Scaling: skip it\n");
+		pr_debug("Syscon failed for Adapting Voltage Scaling: skip it\n");
 		avs_base = NULL;
 	}
 	/* Before doing any configuration on the DVFS first, disable it */

@@ -472,7 +472,7 @@ static int lcm_prepare(struct drm_panel *panel)
 	struct lcm *ctx = panel_to_lcm(panel);
 	int ret;
 
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -642,14 +642,14 @@ static int panel_ata_check(struct drm_panel *panel)
 		return 0;
 	}
 
-	pr_info("ATA read data %x %x %x\n", data[0], data[1], data[2]);
+	pr_debug("ATA read data %x %x %x\n", data[0], data[1], data[2]);
 
 	if (data[0] == id[0] &&
 	    data[1] == id[1] &&
 	    data[2] == id[2])
 		return 1;
 
-	pr_info("ATA expect data is %x %x %x\n", id[0], id[1], id[2]);
+	pr_debug("ATA expect data is %x %x %x\n", id[0], id[1], id[2]);
 
 	return 0;
 }
@@ -797,18 +797,18 @@ static int lcm_probe(struct mipi_dsi_device *dsi)
 		if (endpoint) {
 			remote_node = of_graph_get_remote_port_parent(endpoint);
 			if (!remote_node) {
-				pr_info("No panel connected,skip probe lcm\n");
+				pr_debug("No panel connected,skip probe lcm\n");
 				return -ENODEV;
 			}
-			pr_info("device node name:%s\n", remote_node->name);
+			pr_debug("device node name:%s\n", remote_node->name);
 		}
 	}
 	if (remote_node != dev->of_node) {
-		pr_info("%s+ skip probe due to not current lcm\n", __func__);
+		pr_debug("%s+ skip probe due to not current lcm\n", __func__);
 		return -ENODEV;
 	}
 
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 	ctx = devm_kzalloc(dev, sizeof(struct lcm), GFP_KERNEL);
 	if (!ctx)
 		return -ENOMEM;
@@ -877,7 +877,7 @@ static int lcm_probe(struct mipi_dsi_device *dsi)
 		return ret;
 #endif
 
-	pr_info("%s-\n", __func__);
+	pr_debug("%s-\n", __func__);
 
 	return ret;
 }

@@ -165,7 +165,7 @@ static int lis3lv02d_acpi_write(struct lis3lv02d *lis3, int reg, u8 val)
 static int lis3lv02d_dmi_matched(const struct dmi_system_id *dmi)
 {
 	lis3_dev.ac = *((union axis_conversion *)dmi->driver_data);
-	pr_info("hardware type %s found\n", dmi->ident);
+	pr_debug("hardware type %s found\n", dmi->ident);
 
 	return 1;
 }
@@ -362,10 +362,10 @@ static int lis3lv02d_add(struct acpi_device *device)
 
 	/* If possible use a "standard" axes order */
 	if (lis3_dev.ac.x && lis3_dev.ac.y && lis3_dev.ac.z) {
-		pr_info("Using custom axes %d,%d,%d\n",
+		pr_debug("Using custom axes %d,%d,%d\n",
 			lis3_dev.ac.x, lis3_dev.ac.y, lis3_dev.ac.z);
 	} else if (dmi_check_system(lis3lv02d_dmi_ids) == 0) {
-		pr_info("laptop model unknown, using default axes configuration\n");
+		pr_debug("laptop model unknown, using default axes configuration\n");
 		lis3_dev.ac = lis3lv02d_axis_normal;
 	}
 

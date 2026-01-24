@@ -550,7 +550,7 @@ static int pm8xxx_probe(struct platform_device *pdev)
 		pr_err("Failed to read hw rev reg %d:rc=%d\n", REG_HWREV, rc);
 		return rc;
 	}
-	pr_info("PMIC revision 1: %02X\n", val);
+	pr_debug("PMIC revision 1: %02X\n", val);
 	rev = val;
 
 	/* Read PMIC chip revision 2 */
@@ -560,7 +560,7 @@ static int pm8xxx_probe(struct platform_device *pdev)
 			REG_HWREV_2, rc);
 		return rc;
 	}
-	pr_info("PMIC revision 2: %02X\n", val);
+	pr_debug("PMIC revision 2: %02X\n", val);
 	rev |= val << BITS_PER_BYTE;
 
 	chip = devm_kzalloc(&pdev->dev,

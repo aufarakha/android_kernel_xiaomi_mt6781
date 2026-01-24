@@ -145,7 +145,7 @@ static int soc_dts_enable(struct thermal_zone_device *tzd)
 		aux_entry->mode = THERMAL_DEVICE_ENABLED;
 	} else {
 		aux_entry->mode = THERMAL_DEVICE_DISABLED;
-		pr_info("DTS is locked. Cannot enable DTS\n");
+		pr_debug("DTS is locked. Cannot enable DTS\n");
 		ret = -EPERM;
 	}
 
@@ -179,7 +179,7 @@ static int soc_dts_disable(struct thermal_zone_device *tzd)
 		aux_entry->mode = THERMAL_DEVICE_DISABLED;
 	} else {
 		aux_entry->mode = THERMAL_DEVICE_ENABLED;
-		pr_info("DTS is locked. Cannot disable DTS\n");
+		pr_debug("DTS is locked. Cannot disable DTS\n");
 		ret = -EPERM;
 	}
 

@@ -1773,10 +1773,10 @@ static int __init panel_init_module(void)
 	}
 
 	if (pprt)
-		pr_info("panel driver registered on parport%d (io=0x%lx).\n",
+		pr_debug("panel driver registered on parport%d (io=0x%lx).\n",
 			parport, pprt->port->base);
 	else
-		pr_info("panel driver not yet registered\n");
+		pr_debug("panel driver not yet registered\n");
 	return 0;
 }
 

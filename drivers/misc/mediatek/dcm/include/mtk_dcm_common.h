@@ -18,11 +18,11 @@
 #define dcm_pr_info_limit(fmt, args...)			\
 	pr_info_ratelimited(TAG fmt, ##args)
 #define dcm_pr_info(fmt, args...)			\
-	pr_info(TAG fmt, ##args)
+	pr_debug(TAG fmt, ##args)
 #define dcm_pr_dbg(fmt, args...)			\
 	do {						\
 		if (dcm_debug)				\
-			pr_info(TAG fmt, ##args);	\
+			pr_debug(TAG fmt, ##args);	\
 	} while (0)
 
 /** macro **/

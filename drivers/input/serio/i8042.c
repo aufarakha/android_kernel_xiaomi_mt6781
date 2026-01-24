@@ -713,7 +713,7 @@ static int i8042_check_mux(void)
 	if (i8042_set_mux_mode(true, &mux_version))
 		return -1;
 
-	pr_info("Detected active multiplexing controller, rev %d.%d\n",
+	pr_debug("Detected active multiplexing controller, rev %d.%d\n",
 		(mux_version >> 4) & 0xf, mux_version & 0xf);
 
 /*
@@ -927,7 +927,7 @@ static int i8042_check_aux(void)
 static int i8042_controller_check(void)
 {
 	if (i8042_flush()) {
-		pr_info("No controller found\n");
+		pr_debug("No controller found\n");
 		return -ENODEV;
 	}
 
@@ -965,7 +965,7 @@ static int i8042_controller_selftest(void)
 	 * and user will still get a working keyboard. This is especially
 	 * important on netbooks. On other arches we trust hardware more.
 	 */
-	pr_info("giving up on controller selftest, continuing anyway...\n");
+	pr_debug("giving up on controller selftest, continuing anyway...\n");
 	return 0;
 #else
 	pr_err("i8042 controller selftest failed\n");

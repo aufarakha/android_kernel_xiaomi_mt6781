@@ -249,10 +249,10 @@ static int synth_probe(struct spk_synth *synth)
 	unsigned int port_val = 0;
 	int i = 0;
 
-	pr_info("Probing for %s.\n", synth->long_name);
+	pr_debug("Probing for %s.\n", synth->long_name);
 	if (port_forced) {
 		speakup_info.port_tts = port_forced;
-		pr_info("probe forced to %x by kernel command line\n",
+		pr_debug("probe forced to %x by kernel command line\n",
 			speakup_info.port_tts);
 		if (synth_request_region(speakup_info.port_tts - 1,
 					 SYNTH_IO_EXTENT)) {
@@ -282,12 +282,12 @@ static int synth_probe(struct spk_synth *synth)
 	port_val &= 0xfffc;
 	if (port_val != 0x53fc) {
 		/* 'S' and out&input bits */
-		pr_info("%s: not found\n", synth->long_name);
+		pr_debug("%s: not found\n", synth->long_name);
 		synth_release_region(synth_port_control, SYNTH_IO_EXTENT);
 		synth_port_control = 0;
 		return -ENODEV;
 	}
-	pr_info("%s: %03x-%03x, driver version %s,\n", synth->long_name,
+	pr_debug("%s: %03x-%03x, driver version %s,\n", synth->long_name,
 		synth_port_control, synth_port_control + SYNTH_IO_EXTENT - 1,
 		synth->version);
 	synth->alive = 1;

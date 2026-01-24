@@ -1469,7 +1469,7 @@ static struct pci_driver nic_driver = {
 
 static int __init nic_init_module(void)
 {
-	pr_info("%s, ver %s\n", DRV_NAME, DRV_VERSION);
+	pr_debug("%s, ver %s\n", DRV_NAME, DRV_VERSION);
 
 	return pci_register_driver(&nic_driver);
 }

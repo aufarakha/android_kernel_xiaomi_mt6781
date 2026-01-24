@@ -300,7 +300,7 @@ static inline bool mlx5_eswitch_vlan_actions_supported(struct mlx5_core_dev *dev
 #define MLX5_DEBUG_ESWITCH_MASK BIT(3)
 
 #define esw_info(dev, format, ...)				\
-	pr_info("(%s): E-Switch: " format, (dev)->priv.name, ##__VA_ARGS__)
+	pr_debug("(%s): E-Switch: " format, (dev)->priv.name, ##__VA_ARGS__)
 
 #define esw_warn(dev, format, ...)				\
 	pr_warn("(%s): E-Switch: " format, (dev)->priv.name, ##__VA_ARGS__)

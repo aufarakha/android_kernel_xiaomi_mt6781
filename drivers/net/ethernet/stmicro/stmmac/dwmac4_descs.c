@@ -408,10 +408,10 @@ static void dwmac4_display_ring(void *head, unsigned int size, bool rx)
 	struct dma_desc *p = (struct dma_desc *)head;
 	int i;
 
-	pr_info("%s descriptor ring:\n", rx ? "RX" : "TX");
+	pr_debug("%s descriptor ring:\n", rx ? "RX" : "TX");
 
 	for (i = 0; i < size; i++) {
-		pr_info("%03d [0x%x]: 0x%x 0x%x 0x%x 0x%x\n",
+		pr_debug("%03d [0x%x]: 0x%x 0x%x 0x%x 0x%x\n",
 			i, (unsigned int)virt_to_phys(p),
 			le32_to_cpu(p->des0), le32_to_cpu(p->des1),
 			le32_to_cpu(p->des2), le32_to_cpu(p->des3));

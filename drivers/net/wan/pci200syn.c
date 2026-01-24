@@ -356,7 +356,7 @@ static int pci200_pci_init_one(struct pci_dev *pdev,
 	card->buff_offset = 2 * sizeof(pkt_desc) * (card->tx_ring_buffers +
 						    card->rx_ring_buffers);
 
-	pr_info("%u KB RAM at 0x%x, IRQ%u, using %u TX + %u RX packets rings\n",
+	pr_debug("%u KB RAM at 0x%x, IRQ%u, using %u TX + %u RX packets rings\n",
 		ramsize / 1024, ramphys,
 		pdev->irq, card->tx_ring_buffers, card->rx_ring_buffers);
 

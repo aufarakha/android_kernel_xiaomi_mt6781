@@ -875,7 +875,7 @@ static void glk_rpm_retune_wa(struct sdhci_pci_chip *chip, bool susp)
 	intel_host->rpm_retune_ok = true;
 	chip->rpm_retune = true;
 	mmc_retune_needed(host->mmc);
-	pr_info("%s: Requiring re-tune after rpm resume", mmc_hostname(host->mmc));
+	pr_debug("%s: Requiring re-tune after rpm resume", mmc_hostname(host->mmc));
 }
 
 static void glk_rpm_retune_chk(struct sdhci_pci_chip *chip, bool susp)

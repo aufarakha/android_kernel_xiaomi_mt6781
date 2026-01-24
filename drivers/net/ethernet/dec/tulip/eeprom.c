@@ -165,13 +165,13 @@ void tulip_parse_eeprom(struct net_device *dev)
 		if (ee_data[0] == 0xff) {
 			if (last_mediatable) {
 				controller_index++;
-				pr_info("%s: Controller %d of multiport board\n",
+				pr_debug("%s: Controller %d of multiport board\n",
 					dev->name, controller_index);
 				tp->mtable = last_mediatable;
 				ee_data = last_ee_data;
 				goto subsequent_board;
 			} else
-				pr_info("%s: Missing EEPROM, this interface may not work correctly!\n",
+				pr_debug("%s: Missing EEPROM, this interface may not work correctly!\n",
 					dev->name);
 			return;
 		}
@@ -184,13 +184,13 @@ void tulip_parse_eeprom(struct net_device *dev)
 			  i++;			/* An Accton EN1207, not an outlaw Maxtech. */
 		  memcpy(ee_data + 26, eeprom_fixups[i].newtable,
 				 sizeof(eeprom_fixups[i].newtable));
-		  pr_info("%s: Old format EEPROM on '%s' board.  Using substitute media control info\n",
+		  pr_debug("%s: Old format EEPROM on '%s' board.  Using substitute media control info\n",
 			  dev->name, eeprom_fixups[i].name);
 		  break;
 		}
 	  }
 	  if (eeprom_fixups[i].name == NULL) { /* No fixup found. */
-		  pr_info("%s: Old style EEPROM with no media selection information\n",
+		  pr_debug("%s: Old style EEPROM with no media selection information\n",
 			  dev->name);
 		return;
 	  }
@@ -236,7 +236,7 @@ subsequent_board:
 		mtable->has_nonmii = mtable->has_mii = mtable->has_reset = 0;
 		mtable->csr15dir = mtable->csr15val = 0;
 
-		pr_info("%s: EEPROM default media type %s\n",
+		pr_debug("%s: EEPROM default media type %s\n",
 			dev->name,
 			media & 0x0800 ? "Autosense"
 				       : medianame[media & MEDIA_MASK]);
@@ -302,13 +302,13 @@ subsequent_board:
 			}
 			if (tulip_debug > 1  &&  leaf->media == 11) {
 				unsigned char *bp = leaf->leafdata;
-				pr_info("%s: MII interface PHY %d, setup/reset sequences %d/%d long, capabilities %02x %02x\n",
+				pr_debug("%s: MII interface PHY %d, setup/reset sequences %d/%d long, capabilities %02x %02x\n",
 					dev->name,
 					bp[0], bp[1], bp[2 + bp[1]*2],
 					bp[5 + bp[2 + bp[1]*2]*2],
 					bp[4 + bp[2 + bp[1]*2]*2]);
 			}
-			pr_info("%s: Index #%d - Media %s (#%d) described by a %s (%d) block\n",
+			pr_debug("%s: Index #%d - Media %s (#%d) described by a %s (%d) block\n",
 				dev->name,
 				i, medianame[leaf->media & 15], leaf->media,
 				leaf->type < ARRAY_SIZE(block_name) ? block_name[leaf->type] : "<unknown>",

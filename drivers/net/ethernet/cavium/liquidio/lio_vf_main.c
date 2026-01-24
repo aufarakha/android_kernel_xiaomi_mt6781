@@ -160,7 +160,7 @@ static void cleanup_aer_uncorrect_error_status(struct pci_dev *dev)
 	u32 status, mask;
 	int pos = 0x100;
 
-	pr_info("%s :\n", __func__);
+	pr_debug("%s :\n", __func__);
 
 	pci_read_config_dword(dev, pos + PCI_ERR_UNCOR_STATUS, &status);
 	pci_read_config_dword(dev, pos + PCI_ERR_UNCOR_SEVER, &mask);
@@ -2419,7 +2419,7 @@ static void __exit liquidio_vf_exit(void)
 {
 	pci_unregister_driver(&liquidio_vf_pci_driver);
 
-	pr_info("LiquidIO_VF network module is now unloaded\n");
+	pr_debug("LiquidIO_VF network module is now unloaded\n");
 }
 
 module_init(liquidio_vf_init);

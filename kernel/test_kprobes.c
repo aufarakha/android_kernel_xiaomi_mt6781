@@ -288,7 +288,7 @@ int init_test_probes(void)
 		rand1 = prandom_u32();
 	} while (rand1 <= div_factor);
 
-	pr_info("started\n");
+	pr_debug("started\n");
 	num_tests++;
 	ret = test_kprobe();
 	if (ret < 0)
@@ -316,7 +316,7 @@ int init_test_probes(void)
 	else if (handler_errors)
 		pr_err("BUG: %d error(s) running handlers\n", handler_errors);
 	else
-		pr_info("passed successfully\n");
+		pr_debug("passed successfully\n");
 
 	return 0;
 }

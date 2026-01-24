@@ -770,12 +770,12 @@ static int __maybe_unused mt6370_is_dcd_tout_enable(
 #ifdef CONFIG_MACH_MT6771
 void __attribute__ ((weak)) Charger_Detect_Init(void)
 {
-	pr_info("%s not ready\n", __func__);
+	pr_debug("%s not ready\n", __func__);
 }
 
 void __attribute__ ((weak)) Charger_Detect_Release(void)
 {
-	pr_info("%s not ready\n", __func__);
+	pr_debug("%s not ready\n", __func__);
 }
 
 #endif
@@ -4505,7 +4505,7 @@ static int typec_attach_thread(void *data)
 	bool typec_attach = false, ignore_usb = false;
 	union power_supply_propval val = {.intval = 0};
 
-	pr_info("%s: ++\n", __func__);
+	pr_debug("%s: ++\n", __func__);
 	while (!kthread_should_stop()) {
 		wait_for_completion(&chg_data->chrdet_start);
 
@@ -4632,7 +4632,7 @@ static int mt6370_pmu_charger_probe(struct platform_device *pdev)
 	struct power_supply_config charger_cfg = {};
 	struct regulator_config config = { };
 
-	pr_info("%s: (%s)\n", __func__, MT6370_PMU_CHARGER_DRV_VERSION);
+	pr_debug("%s: (%s)\n", __func__, MT6370_PMU_CHARGER_DRV_VERSION);
 
 	chg_data = devm_kzalloc(&pdev->dev, sizeof(*chg_data), GFP_KERNEL);
 	if (!chg_data)

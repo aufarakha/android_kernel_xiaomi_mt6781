@@ -64,7 +64,7 @@ static irqreturn_t btmrvl_wake_irq_bt(int irq, void *priv)
 	struct btmrvl_sdio_card *card = priv;
 	struct btmrvl_plt_wake_cfg *cfg = card->plt_wake_cfg;
 
-	pr_info("%s: wake by bt\n", __func__);
+	pr_debug("%s: wake by bt\n", __func__);
 	cfg->wake_by_bt = true;
 	disable_irq_nosync(irq);
 

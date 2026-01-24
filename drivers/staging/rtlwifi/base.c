@@ -195,7 +195,7 @@ static void _rtl_init_hw_ht_capab(struct ieee80211_hw *hw,
 	 *highest supported RX rate
 	 */
 	if (rtlpriv->dm.supp_phymode_switch) {
-		pr_info("Support phy mode switch\n");
+		pr_debug("Support phy mode switch\n");
 
 		ht_cap->mcs.rx_mask[0] = 0xFF;
 		ht_cap->mcs.rx_mask[1] = 0xFF;
@@ -504,7 +504,7 @@ void rtl_init_rfkill(struct ieee80211_hw *hw)
 	radio_state = rtlpriv->cfg->ops->radio_onoff_checking(hw, &valid);
 
 	if (valid) {
-		pr_info("rtlwifi: wireless switch is %s\n",
+		pr_debug("rtlwifi: wireless switch is %s\n",
 			rtlpriv->rfkill.rfkill_state ? "on" : "off");
 
 		rtlpriv->rfkill.rfkill_state = radio_state;

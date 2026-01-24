@@ -214,7 +214,7 @@ module_param(rtc_show_alarm, int, 0644);
 
 void __attribute__((weak)) arch_reset(char mode, const char *cmd)
 {
-	pr_info("arch_reset is not ready\n");
+	pr_debug("arch_reset is not ready\n");
 }
 
 static int rtc_read(unsigned int reg, unsigned int *val)

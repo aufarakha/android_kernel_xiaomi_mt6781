@@ -222,7 +222,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 			 blk_head.sadr, blk_head.len, blk_head.d_key & 0xff);
 		left = blk_head.len;
 		if (cnt + left > size) {
-			pr_info("%s: firmware error have %d need %d words\n",
+			pr_debug("%s: firmware error have %d need %d words\n",
 				isar->name, size, cnt + left);
 			ret = -EINVAL;
 			goto reterrflg;
@@ -230,7 +230,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 		spin_lock_irqsave(isar->hwlock, flags);
 		if (!send_mbox(isar, ISAR_HIS_DKEY, blk_head.d_key & 0xff,
 			       0, NULL)) {
-			pr_info("ISAR send_mbox dkey failed\n");
+			pr_debug("ISAR send_mbox dkey failed\n");
 			ret = -ETIME;
 			goto reterror;
 		}
@@ -241,7 +241,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 		}
 		spin_unlock_irqrestore(isar->hwlock, flags);
 		if ((isar->iis != ISAR_IIS_DKEY) || isar->cmsb || isar->clsb) {
-			pr_info("ISAR wrong dkey response (%x,%x,%x)\n",
+			pr_debug("ISAR wrong dkey response (%x,%x,%x)\n",
 				isar->iis, isar->cmsb, isar->clsb);
 			ret = 1;
 			goto reterrflg;
@@ -270,19 +270,19 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 			}
 			spin_lock_irqsave(isar->hwlock, flags);
 			if (!send_mbox(isar, ISAR_HIS_FIRM, 0, nom, NULL)) {
-				pr_info("ISAR send_mbox prog failed\n");
+				pr_debug("ISAR send_mbox prog failed\n");
 				ret = -ETIME;
 				goto reterror;
 			}
 			if (!poll_mbox(isar, 1000)) {
-				pr_info("ISAR poll_mbox prog failed\n");
+				pr_debug("ISAR poll_mbox prog failed\n");
 				ret = -ETIME;
 				goto reterror;
 			}
 			spin_unlock_irqrestore(isar->hwlock, flags);
 			if ((isar->iis != ISAR_IIS_FIRM) ||
 			    isar->cmsb || isar->clsb) {
-				pr_info("ISAR wrong prog response (%x,%x,%x)\n",
+				pr_debug("ISAR wrong prog response (%x,%x,%x)\n",
 					isar->iis, isar->cmsb, isar->clsb);
 				ret = -EIO;
 				goto reterrflg;
@@ -301,17 +301,17 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 	isar->bstat = 0;
 	spin_lock_irqsave(isar->hwlock, flags);
 	if (!send_mbox(isar, ISAR_HIS_STDSP, 0, 2, NULL)) {
-		pr_info("ISAR send_mbox start dsp failed\n");
+		pr_debug("ISAR send_mbox start dsp failed\n");
 		ret = -ETIME;
 		goto reterror;
 	}
 	if (!poll_mbox(isar, 1000)) {
-		pr_info("ISAR poll_mbox start dsp failed\n");
+		pr_debug("ISAR poll_mbox start dsp failed\n");
 		ret = -ETIME;
 		goto reterror;
 	}
 	if ((isar->iis != ISAR_IIS_STDSP) || isar->cmsb || isar->clsb) {
-		pr_info("ISAR wrong start dsp response (%x,%x,%x)\n",
+		pr_debug("ISAR wrong start dsp response (%x,%x,%x)\n",
 			isar->iis, isar->cmsb, isar->clsb);
 		ret = -EIO;
 		goto reterror;
@@ -328,7 +328,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 		cnt--;
 	}
 	if (!cnt) {
-		pr_info("ISAR no general status event received\n");
+		pr_debug("ISAR no general status event received\n");
 		ret = -ETIME;
 		goto reterrflg;
 	} else
@@ -341,7 +341,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 	isar->iis = 0;
 	spin_lock_irqsave(isar->hwlock, flags);
 	if (!send_mbox(isar, ISAR_HIS_DIAG, ISAR_CTRL_STST, 0, NULL)) {
-		pr_info("ISAR send_mbox self tst failed\n");
+		pr_debug("ISAR send_mbox self tst failed\n");
 		ret = -ETIME;
 		goto reterror;
 	}
@@ -353,7 +353,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 	}
 	mdelay(1);
 	if (!cnt) {
-		pr_info("ISAR no self tst response\n");
+		pr_debug("ISAR no self tst response\n");
 		ret = -ETIME;
 		goto reterrflg;
 	}
@@ -361,7 +361,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 	    && (isar->buf[0] == 0))
 		pr_debug("%s: ISAR selftest OK\n", isar->name);
 	else {
-		pr_info("ISAR selftest not OK %x/%x/%x\n",
+		pr_debug("ISAR selftest not OK %x/%x/%x\n",
 			isar->cmsb, isar->clsb, isar->buf[0]);
 		ret = -EIO;
 		goto reterrflg;
@@ -369,7 +369,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 	spin_lock_irqsave(isar->hwlock, flags);
 	isar->iis = 0;
 	if (!send_mbox(isar, ISAR_HIS_DIAG, ISAR_CTRL_SWVER, 0, NULL)) {
-		pr_info("ISAR RQST SVN failed\n");
+		pr_debug("ISAR RQST SVN failed\n");
 		ret = -ETIME;
 		goto reterror;
 	}
@@ -381,7 +381,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 	}
 	mdelay(1);
 	if (!cnt) {
-		pr_info("ISAR no SVN response\n");
+		pr_debug("ISAR no SVN response\n");
 		ret = -ETIME;
 		goto reterrflg;
 	} else {
@@ -389,7 +389,7 @@ load_firmware(struct isar_hw *isar, const u8 *buf, int size)
 			pr_notice("%s: ISAR software version %#x\n",
 				  isar->name, isar->buf[0]);
 		} else {
-			pr_info("%s: ISAR wrong swver response (%x,%x)"
+			pr_debug("%s: ISAR wrong swver response (%x,%x)"
 				" cnt(%d)\n", isar->name, isar->cmsb,
 				isar->clsb, cnt);
 			ret = -EIO;
@@ -502,7 +502,7 @@ isar_rcv_frame(struct isar_ch *ch)
 			ch->bch.rx_skb = mI_alloc_skb(ch->bch.maxlen,
 						      GFP_ATOMIC);
 			if (unlikely(!ch->bch.rx_skb)) {
-				pr_info("%s: B receive out of memory\n",
+				pr_debug("%s: B receive out of memory\n",
 					__func__);
 				ch->is->write_reg(ch->is->hw, ISAR_IIA, 0);
 				break;
@@ -538,13 +538,13 @@ isar_rcv_frame(struct isar_ch *ch)
 		/* PCTRL_CMD_FRH */
 		if ((ch->bch.rx_skb->len + ch->is->clsb) >
 		    (ch->bch.maxlen + 2)) {
-			pr_info("%s: %s incoming packet too large\n",
+			pr_debug("%s: %s incoming packet too large\n",
 				ch->is->name, __func__);
 			ch->is->write_reg(ch->is->hw, ISAR_IIA, 0);
 			skb_trim(ch->bch.rx_skb, 0);
 			break;
 		}  else if (ch->is->cmsb & HDLC_ERROR) {
-			pr_info("%s: ISAR frame error %x len %d\n",
+			pr_debug("%s: ISAR frame error %x len %d\n",
 				ch->is->name, ch->is->cmsb, ch->is->clsb);
 			skb_trim(ch->bch.rx_skb, 0);
 			ch->is->write_reg(ch->is->hw, ISAR_IIA, 0);
@@ -556,7 +556,7 @@ isar_rcv_frame(struct isar_ch *ch)
 		rcv_mbox(ch->is, ptr);
 		if (ch->is->cmsb & HDLC_FED) {
 			if (ch->bch.rx_skb->len < 3) { /* last 2 are the FCS */
-				pr_info("%s: ISAR frame to short %d\n",
+				pr_debug("%s: ISAR frame to short %d\n",
 					ch->is->name, ch->bch.rx_skb->len);
 				skb_trim(ch->bch.rx_skb, 0);
 				break;
@@ -577,7 +577,7 @@ isar_rcv_frame(struct isar_ch *ch)
 		}
 		break;
 	default:
-		pr_info("isar_rcv_frame protocol (%x)error\n", ch->bch.state);
+		pr_debug("isar_rcv_frame protocol (%x)error\n", ch->bch.state);
 		ch->is->write_reg(ch->is->hw, ISAR_IIA, 0);
 		break;
 	}
@@ -638,7 +638,7 @@ isar_fill_fifo(struct isar_ch *ch)
 	ch->bch.tx_idx += count;
 	switch (ch->bch.state) {
 	case ISDN_P_NONE:
-		pr_info("%s: wrong protocol 0\n", __func__);
+		pr_debug("%s: wrong protocol 0\n", __func__);
 		break;
 	case ISDN_P_B_RAW:
 	case ISDN_P_B_L2DTMF:
@@ -663,7 +663,7 @@ isar_fill_fifo(struct isar_ch *ch)
 			pr_debug("%s: not FTH/FTM\n", ch->is->name);
 		break;
 	default:
-		pr_info("%s: protocol(%x) error\n",
+		pr_debug("%s: protocol(%x) error\n",
 			__func__, ch->bch.state);
 		break;
 	}
@@ -772,7 +772,7 @@ isar_pump_status_rsp(struct isar_ch *ch) {
 	if (!test_and_clear_bit(ISAR_RATE_REQ, &ch->is->Flags))
 		return;
 	if (ril > 14) {
-		pr_info("%s: wrong pstrsp ril=%d\n", ch->is->name, ril);
+		pr_debug("%s: wrong pstrsp ril=%d\n", ch->is->name, ril);
 		ril = 15;
 	}
 	switch (ch->is->buf[1]) {
@@ -864,7 +864,7 @@ isar_pump_statev_modem(struct isar_ch *ch, u8 devt) {
 		pr_debug("%s: pump stev GSTN CLEAR\n", ch->is->name);
 		break;
 	default:
-		pr_info("u%s: unknown pump stev %x\n", ch->is->name, devt);
+		pr_debug("u%s: unknown pump stev %x\n", ch->is->name, devt);
 		break;
 	}
 }
@@ -1305,7 +1305,7 @@ modeisar(struct isar_ch *ch, u32 bprotocol)
 						   &ch->is->Flags))
 				ch->dpath = 1;
 			else {
-				pr_info("modeisar both paths in use\n");
+				pr_debug("modeisar both paths in use\n");
 				return -EBUSY;
 			}
 			if (bprotocol == ISDN_P_B_HDLC)
@@ -1321,13 +1321,13 @@ modeisar(struct isar_ch *ch, u32 bprotocol)
 			if (!test_and_set_bit(ISAR_DP1_USE, &ch->is->Flags))
 				ch->dpath = 1;
 			else {
-				pr_info("%s: ISAR modeisar analog functions"
+				pr_debug("%s: ISAR modeisar analog functions"
 					"only with DP1\n", ch->is->name);
 				return -EBUSY;
 			}
 			break;
 		default:
-			pr_info("%s: protocol not known %x\n", ch->is->name,
+			pr_debug("%s: protocol not known %x\n", ch->is->name,
 				bprotocol);
 			return -ENOPROTOOPT;
 		}
@@ -1537,7 +1537,7 @@ isar_l2l1(struct mISDNchannel *ch, struct sk_buff *skb)
 				isar_pump_cmd(ich, PCTRL_CMD_TDTMF, tt);
 				spin_unlock_irqrestore(ich->is->hwlock, flags);
 			} else {
-				pr_info("%s: DTMF send wrong protocol %x\n",
+				pr_debug("%s: DTMF send wrong protocol %x\n",
 					__func__, bch->state);
 				return -EINVAL;
 			}
@@ -1552,20 +1552,20 @@ isar_l2l1(struct mISDNchannel *ch, struct sk_buff *skb)
 				isar_pump_cmd(ich, hh->id, *val);
 				ret = 0;
 			} else {
-				pr_info("%s: wrong modulation\n",
+				pr_debug("%s: wrong modulation\n",
 					ich->is->name);
 				ret = -EINVAL;
 			}
 		} else if (hh->id == HW_MOD_LASTDATA)
 			test_and_set_bit(FLG_DLEETX, &bch->Flags);
 		else {
-			pr_info("%s: unknown PH_CONTROL_REQ %x\n",
+			pr_debug("%s: unknown PH_CONTROL_REQ %x\n",
 				ich->is->name, hh->id);
 			ret = -EINVAL;
 		}
 		/* fall through */
 	default:
-		pr_info("%s: %s unknown prim(%x,%x)\n",
+		pr_debug("%s: %s unknown prim(%x,%x)\n",
 			ich->is->name, __func__, hh->prim, hh->id);
 		ret = -EINVAL;
 	}
@@ -1606,7 +1606,7 @@ isar_bctrl(struct mISDNchannel *ch, u32 cmd, void *arg)
 		ret = channel_bctrl(bch, arg);
 		break;
 	default:
-		pr_info("%s: %s unknown prim(%x)\n",
+		pr_debug("%s: %s unknown prim(%x)\n",
 			ich->is->name, __func__, cmd);
 	}
 	return ret;

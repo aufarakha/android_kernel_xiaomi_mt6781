@@ -26,7 +26,7 @@
 		if (file)\
 			seq_printf(file, fmat, ##args);\
 		else\
-			pr_info("[ION]" fmt, ##args);\
+			pr_debug("[ION]" fmt, ##args);\
 	} while (0)
 
 static gfp_t high_order_gfp_flags = (GFP_HIGHUSER | __GFP_ZERO | __GFP_NOWARN |

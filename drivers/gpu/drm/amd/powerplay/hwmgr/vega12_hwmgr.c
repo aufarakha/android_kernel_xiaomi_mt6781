@@ -1364,7 +1364,7 @@ int vega12_display_clock_voltage_request(struct pp_hwmgr *hwmgr,
 			clk_select = PPCLK_PHYCLK;
 			break;
 		default:
-			pr_info("[DisplayClockVoltageRequest]Invalid Clock Type!");
+			pr_debug("[DisplayClockVoltageRequest]Invalid Clock Type!");
 			result = -1;
 			break;
 		}
@@ -1411,7 +1411,7 @@ static int vega12_notify_smc_display_config_after_ps_adjustment(
 					"Attempt to set divider for DCEFCLK Failed!",
 					return -1);
 		} else {
-			pr_info("Attempt to set Hard Min for DCEFCLK Failed!");
+			pr_debug("Attempt to set Hard Min for DCEFCLK Failed!");
 		}
 	}
 

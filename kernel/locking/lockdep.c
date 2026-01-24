@@ -4694,7 +4694,7 @@ static void check_new_dependency(struct held_lock *prev, struct held_lock *next)
 		if (current->lockdep_depth != LOCK_DEPTH && LOCK_DEPTH > 0)
 			return;
 
-		pr_info("[Lockdep] new dependency: (%s) => (%s)\n",
+		pr_debug("[Lockdep] new dependency: (%s) => (%s)\n",
 			PREV_LOCK_NAME, NEXT_LOCK_NAME);
 		show_stack(current, NULL);
 		lockdep_print_held_locks(current);
@@ -5065,9 +5065,9 @@ static void lock_mon_msg(char *buf, int out)
 		trace_lock_monitor(buf);
 	/* check warn_msgs to avoid printing too much log */
 	if (out & T_KERNEL && warn_msgs++ < MAX_WARN_MSG) {
-		pr_info("%s\n", buf);
+		pr_debug("%s\n", buf);
 		if (warn_msgs == MAX_WARN_MSG)
-			pr_info(" See SYS_FTRACE for more log\n");
+			pr_debug(" See SYS_FTRACE for more log\n");
 	}
 #ifdef CONFIG_MTK_AEE_IPANIC
 	if (out & T_SRAM)
@@ -5221,9 +5221,9 @@ static void lockdep_print_held_locks(struct task_struct *p)
 	char name[MAX_LOCK_NAME];
 
 	if (!depth)
-		pr_info("no locks held by %s/%d.\n", p->comm, task_pid_nr(p));
+		pr_debug("no locks held by %s/%d.\n", p->comm, task_pid_nr(p));
 	else
-		pr_info("%d lock%s held by %s/%d:\n", depth,
+		pr_debug("%d lock%s held by %s/%d:\n", depth,
 			depth > 1 ? "s" : "", p->comm, task_pid_nr(p));
 	/*
 	 * It's not reliable to print a task's held locks if it's not sleeping
@@ -5241,7 +5241,7 @@ static void lockdep_print_held_locks(struct task_struct *p)
 		class = hlock_class(hlock);
 		get_lock_name(class, name);
 
-		pr_info("#%d: (%s), at: [<%p>] %pS\n", i, name,
+		pr_debug("#%d: (%s), at: [<%p>] %pS\n", i, name,
 			(void *)hlock->acquire_ip, (void *)hlock->acquire_ip);
 		/* MTK_LOCK_DEBUG_HELD_LOCK */
 		held_lock_show_trace(hlock, T_KERNEL);
@@ -5755,20 +5755,20 @@ static void show_debug_locks_state(void)
 		return;
 	pre_time_sec = time_sec;
 
-	pr_info("debug_locks is off at [%lld.%06lu]\n",
+	pr_debug("debug_locks is off at [%lld.%06lu]\n",
 		sec_high(debug_locks_off_ts),
 		sec_low(debug_locks_off_ts));
 
 	if (nr_lock_classes >= MAX_LOCKDEP_KEYS ||
 	    nr_list_entries >= MAX_LOCKDEP_ENTRIES ||
 	    nr_stack_trace_entries >= MAX_STACK_TRACE_ENTRIES - 1)
-		pr_info("lock_classes[%lu] list_entries[%lu] stack_trace_entries[%lu]\n",
+		pr_debug("lock_classes[%lu] list_entries[%lu] stack_trace_entries[%lu]\n",
 			nr_lock_classes, nr_list_entries,
 			nr_stack_trace_entries);
 #ifdef CONFIG_PROVE_LOCKING
 	if (nr_lock_chains >= MAX_LOCKDEP_CHAINS ||
 	    nr_chain_hlocks > MAX_LOCKDEP_CHAIN_HLOCKS)
-		pr_info("lock_chains[%lu] chain_hlocks[%d]\n",
+		pr_debug("lock_chains[%lu] chain_hlocks[%d]\n",
 			nr_lock_chains, nr_chain_hlocks);
 #endif
 }

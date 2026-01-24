@@ -1920,28 +1920,28 @@ static kal_uint32 feature_control(
 		if (pdaf_sensor_type == PDAF_NO_PDAF) {
 			ret = sprintf(feature_para, "configure as type 1");
 			if (ret < 0) {
-				pr_info("sprintf allocate error!, ret = %d\n",
+				pr_debug("sprintf allocate error!, ret = %d\n",
 				ret);
 				return ret;
 			}
 		} else if (pdaf_sensor_type == PDAF_VC_TYPE) {
 			ret = sprintf(feature_para, "configure as type 2");
 			if (ret < 0) {
-				pr_info("sprintf allocate error!, ret = %d",
+				pr_debug("sprintf allocate error!, ret = %d",
 				ret);
 				return ret;
 			}
 		} else if (pdaf_sensor_type == PDAF_RAW_TYPE) {
 			ret = sprintf(feature_para, "configure as type 3");
 			if (ret < 0) {
-				pr_info("sprintf allocate error!, ret = %d",
+				pr_debug("sprintf allocate error!, ret = %d",
 				ret);
 				return ret;
 			}
 		} else {
 			ret = sprintf(feature_para, "configure as unknown type");
 			if (ret < 0) {
-				pr_info("sprintf allocate error!, ret = %d",
+				pr_debug("sprintf allocate error!, ret = %d",
 				ret);
 				return ret;
 			}

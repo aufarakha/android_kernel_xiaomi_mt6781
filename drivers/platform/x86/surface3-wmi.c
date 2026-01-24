@@ -275,7 +275,7 @@ static int __init s3_wmi_init(void)
 	if (error)
 		goto err_device_del;
 
-	pr_info("Surface 3 WMI Extras loaded\n");
+	pr_debug("Surface 3 WMI Extras loaded\n");
 	return 0;
 
  err_device_del:

@@ -364,7 +364,7 @@ static int __init it87_gpio_init(void)
 
 	superio_exit();
 
-	pr_info("Found Chip IT%04x rev %x. %u GPIO lines starting at %04xh\n",
+	pr_debug("Found Chip IT%04x rev %x. %u GPIO lines starting at %04xh\n",
 		chip_type, chip_rev, it87_gpio->chip.ngpio,
 		it87_gpio->io_base);
 

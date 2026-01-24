@@ -284,10 +284,10 @@ static long subdev_do_ioctl(struct file *file, unsigned int cmd, void *arg)
 	case VIDIOC_LOG_STATUS: {
 		int ret;
 
-		pr_info("%s: =================  START STATUS  =================\n",
+		pr_debug("%s: =================  START STATUS  =================\n",
 			sd->name);
 		ret = v4l2_subdev_call(sd, core, log_status);
-		pr_info("%s: ==================  END STATUS  ==================\n",
+		pr_debug("%s: ==================  END STATUS  ==================\n",
 			sd->name);
 		return ret;
 	}

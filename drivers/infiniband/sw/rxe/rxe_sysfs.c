@@ -105,7 +105,7 @@ static int rxe_param_set_add(const char *val, const struct kernel_param *kp)
 	}
 
 	rxe_set_port_state(ndev);
-	pr_info("added %s to %s\n", rxe->ib_dev.name, intf);
+	pr_debug("added %s to %s\n", rxe->ib_dev.name, intf);
 err:
 	if (ndev)
 		dev_put(ndev);
@@ -125,7 +125,7 @@ static int rxe_param_set_remove(const char *val, const struct kernel_param *kp)
 	}
 
 	if (strncmp("all", intf, len) == 0) {
-		pr_info("rxe_sys: remove all");
+		pr_debug("rxe_sys: remove all");
 		rxe_remove_all();
 		return 0;
 	}

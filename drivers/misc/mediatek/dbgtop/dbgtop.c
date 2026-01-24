@@ -258,7 +258,7 @@ static int __init mtk_dbgtop_get_base_addr(void)
 	int found_dbgtop_base = 0;
 
 	for_each_matching_node(np_dbgtop, mtk_dbgtop_of_ids) {
-		pr_info("%s: compatible node found: %s\n",
+		pr_debug("%s: compatible node found: %s\n",
 			__func__, np_dbgtop->name);
 		found_dbgtop_base = 1;
 		break;

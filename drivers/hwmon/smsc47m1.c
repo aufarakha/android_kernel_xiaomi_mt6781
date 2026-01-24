@@ -560,19 +560,19 @@ static int __init smsc47m1_find(struct smsc47m1_sio_data *sio_data)
 	 */
 	switch (val) {
 	case 0x51:
-		pr_info("Found SMSC LPC47B27x\n");
+		pr_debug("Found SMSC LPC47B27x\n");
 		sio_data->type = smsc47m1;
 		break;
 	case 0x59:
-		pr_info("Found SMSC LPC47M10x/LPC47M112/LPC47M13x\n");
+		pr_debug("Found SMSC LPC47M10x/LPC47M112/LPC47M13x\n");
 		sio_data->type = smsc47m1;
 		break;
 	case 0x5F:
-		pr_info("Found SMSC LPC47M14x\n");
+		pr_debug("Found SMSC LPC47M14x\n");
 		sio_data->type = smsc47m1;
 		break;
 	case 0x60:
-		pr_info("Found SMSC LPC47M15x/LPC47M192/LPC47M997\n");
+		pr_debug("Found SMSC LPC47M15x/LPC47M192/LPC47M997\n");
 		sio_data->type = smsc47m1;
 		break;
 	case 0x6B:
@@ -582,7 +582,7 @@ static int __init smsc47m1_find(struct smsc47m1_sio_data *sio_data)
 			return -ENODEV;
 		}
 
-		pr_info("Found SMSC LPC47M292\n");
+		pr_debug("Found SMSC LPC47M292\n");
 		sio_data->type = smsc47m2;
 		break;
 	default:
@@ -594,7 +594,7 @@ static int __init smsc47m1_find(struct smsc47m1_sio_data *sio_data)
 	addr = (superio_inb(SUPERIO_REG_BASE) << 8)
 	      |  superio_inb(SUPERIO_REG_BASE + 1);
 	if (addr == 0) {
-		pr_info("Device address not set, will not use\n");
+		pr_debug("Device address not set, will not use\n");
 		superio_exit();
 		return -ENODEV;
 	}
@@ -605,7 +605,7 @@ static int __init smsc47m1_find(struct smsc47m1_sio_data *sio_data)
 	 */
 	sio_data->activate = superio_inb(SUPERIO_REG_ACT);
 	if ((sio_data->activate & 0x01) == 0) {
-		pr_info("Enabling device\n");
+		pr_debug("Enabling device\n");
 		superio_outb(SUPERIO_REG_ACT, sio_data->activate | 0x01);
 	}
 
@@ -619,7 +619,7 @@ static void smsc47m1_restore(const struct smsc47m1_sio_data *sio_data)
 	if ((sio_data->activate & 0x01) == 0) {
 		if (!superio_enter()) {
 			superio_select();
-			pr_info("Disabling device\n");
+			pr_debug("Disabling device\n");
 			superio_outb(SUPERIO_REG_ACT, sio_data->activate);
 			superio_exit();
 		} else {

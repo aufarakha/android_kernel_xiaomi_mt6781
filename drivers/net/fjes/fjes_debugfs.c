@@ -105,7 +105,7 @@ void fjes_dbg_init(void)
 {
 	fjes_debug_root = debugfs_create_dir(fjes_driver_name, NULL);
 	if (!fjes_debug_root)
-		pr_info("init of debugfs failed\n");
+		pr_debug("init of debugfs failed\n");
 }
 
 void fjes_dbg_exit(void)

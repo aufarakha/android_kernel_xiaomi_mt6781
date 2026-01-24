@@ -102,7 +102,7 @@ extern u32 phy_debug_level;
 
 #define phy_printk(level, fmt, args...) do { \
 		if (phy_debug_level & level) { \
-			pr_info("[MTKPHY]" fmt, ## args); \
+			pr_debug("[MTKPHY]" fmt, ## args); \
 		} \
 	} while (0)
 

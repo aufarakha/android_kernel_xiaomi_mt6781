@@ -362,7 +362,7 @@ static void do_i2c_scan(char *name, struct i2c_client *c)
 		rc = i2c_master_recv(c, &buf, 0);
 		if (rc < 0)
 			continue;
-		pr_info("%s: i2c scan: found device @ 0x%x  [%s]\n",
+		pr_debug("%s: i2c scan: found device @ 0x%x  [%s]\n",
 		       name, i << 1, i2c_devs[i] ? i2c_devs[i] : "???");
 	}
 }
@@ -393,11 +393,11 @@ int au0828_i2c_register(struct au0828_dev *dev)
 	dev->i2c_client.adapter = &dev->i2c_adap;
 
 	if (0 == dev->i2c_rc) {
-		pr_info("i2c bus registered\n");
+		pr_debug("i2c bus registered\n");
 		if (i2c_scan)
 			do_i2c_scan(KBUILD_MODNAME, &dev->i2c_client);
 	} else
-		pr_info("i2c bus register FAILED\n");
+		pr_debug("i2c bus register FAILED\n");
 
 	return dev->i2c_rc;
 }

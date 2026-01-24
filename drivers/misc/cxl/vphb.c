@@ -14,7 +14,7 @@
 static int cxl_dma_set_mask(struct pci_dev *pdev, u64 dma_mask)
 {
 	if (dma_mask < DMA_BIT_MASK(64)) {
-		pr_info("%s only 64bit DMA supported on CXL", __func__);
+		pr_debug("%s only 64bit DMA supported on CXL", __func__);
 		return -EIO;
 	}
 

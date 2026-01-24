@@ -514,13 +514,13 @@ int i40evf_register_client(struct i40e_client *client)
 	}
 
 	if (strlen(client->name) == 0) {
-		pr_info("i40evf: Failed to register client with no name\n");
+		pr_debug("i40evf: Failed to register client with no name\n");
 		ret = -EIO;
 		goto out;
 	}
 
 	if (vf_registered_client) {
-		pr_info("i40evf: Client %s has already been registered!\n",
+		pr_debug("i40evf: Client %s has already been registered!\n",
 			client->name);
 		ret = -EEXIST;
 		goto out;
@@ -528,9 +528,9 @@ int i40evf_register_client(struct i40e_client *client)
 
 	if ((client->version.major != I40EVF_CLIENT_VERSION_MAJOR) ||
 	    (client->version.minor != I40EVF_CLIENT_VERSION_MINOR)) {
-		pr_info("i40evf: Failed to register client %s due to mismatched client interface version\n",
+		pr_debug("i40evf: Failed to register client %s due to mismatched client interface version\n",
 			client->name);
-		pr_info("Client is using version: %02d.%02d.%02d while LAN driver supports %s\n",
+		pr_debug("Client is using version: %02d.%02d.%02d while LAN driver supports %s\n",
 			client->version.major, client->version.minor,
 			client->version.build,
 			i40evf_client_interface_version_str);
@@ -542,7 +542,7 @@ int i40evf_register_client(struct i40e_client *client)
 
 	i40evf_client_prepare(client);
 
-	pr_info("i40evf: Registered client %s with return code %d\n",
+	pr_debug("i40evf: Registered client %s with return code %d\n",
 		client->name, ret);
 out:
 	return ret;
@@ -566,13 +566,13 @@ int i40evf_unregister_client(struct i40e_client *client)
 	i40evf_client_release(client);
 
 	if (vf_registered_client != client) {
-		pr_info("i40evf: Client %s has not been registered\n",
+		pr_debug("i40evf: Client %s has not been registered\n",
 			client->name);
 		ret = -ENODEV;
 		goto out;
 	}
 	vf_registered_client = NULL;
-	pr_info("i40evf: Unregistered client %s\n", client->name);
+	pr_debug("i40evf: Unregistered client %s\n", client->name);
 out:
 	return ret;
 }

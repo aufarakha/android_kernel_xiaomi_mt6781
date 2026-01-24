@@ -143,7 +143,7 @@ static int sonic_probe1(struct net_device *dev)
 		i++;
 
 	if (known_revisions[i] == 0xffff) {
-		pr_info("SONIC ethernet controller not found (0x%4x)\n",
+		pr_debug("SONIC ethernet controller not found (0x%4x)\n",
 			silicon_revision);
 		return -ENODEV;
 	}
@@ -259,7 +259,7 @@ int xtsonic_probe(struct platform_device *pdev)
 	if ((err = sonic_probe1(dev)))
 		goto out;
 
-	pr_info("SONIC ethernet @%08lx, MAC %pM, IRQ %d\n",
+	pr_debug("SONIC ethernet @%08lx, MAC %pM, IRQ %d\n",
 		dev->base_addr, dev->dev_addr, dev->irq);
 
 	sonic_msg_init(dev);

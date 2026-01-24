@@ -4846,10 +4846,10 @@ static struct pci_driver ixgbevf_driver = {
  **/
 static int __init ixgbevf_init_module(void)
 {
-	pr_info("%s - version %s\n", ixgbevf_driver_string,
+	pr_debug("%s - version %s\n", ixgbevf_driver_string,
 		ixgbevf_driver_version);
 
-	pr_info("%s\n", ixgbevf_copyright);
+	pr_debug("%s\n", ixgbevf_copyright);
 	ixgbevf_wq = create_singlethread_workqueue(ixgbevf_driver_name);
 	if (!ixgbevf_wq) {
 		pr_err("%s: Failed to create workqueue\n", ixgbevf_driver_name);

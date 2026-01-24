@@ -939,7 +939,7 @@ static int __init nx842_powernv_probe(struct device_node *dn)
 	coproc->ci = ci;
 	nx842_add_coprocs_list(coproc, chip_id);
 
-	pr_info("coprocessor found on chip %d, CT %d CI %d\n", chip_id, ct, ci);
+	pr_debug("coprocessor found on chip %d, CT %d CI %d\n", chip_id, ct, ci);
 
 	if (!nx842_ct)
 		nx842_ct = ct;

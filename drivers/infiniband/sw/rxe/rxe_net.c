@@ -631,7 +631,7 @@ void rxe_port_up(struct rxe_dev *rxe)
 	port->attr.phys_state = IB_PHYS_STATE_LINK_UP;
 
 	rxe_port_event(rxe, IB_EVENT_PORT_ACTIVE);
-	pr_info("set %s active\n", rxe->ib_dev.name);
+	pr_debug("set %s active\n", rxe->ib_dev.name);
 }
 
 /* Caller must hold net_info_lock */
@@ -644,7 +644,7 @@ void rxe_port_down(struct rxe_dev *rxe)
 	port->attr.phys_state = IB_PHYS_STATE_LINK_DOWN;
 
 	rxe_port_event(rxe, IB_EVENT_PORT_ERR);
-	pr_info("set %s down\n", rxe->ib_dev.name);
+	pr_debug("set %s down\n", rxe->ib_dev.name);
 }
 
 static int rxe_notify(struct notifier_block *not_blk,
@@ -669,7 +669,7 @@ static int rxe_notify(struct notifier_block *not_blk,
 		rxe_port_down(rxe);
 		break;
 	case NETDEV_CHANGEMTU:
-		pr_info("%s changed mtu to %d\n", ndev->name, ndev->mtu);
+		pr_debug("%s changed mtu to %d\n", ndev->name, ndev->mtu);
 		rxe_set_mtu(rxe, ndev->mtu);
 		break;
 	case NETDEV_CHANGE:
@@ -684,7 +684,7 @@ static int rxe_notify(struct notifier_block *not_blk,
 	case NETDEV_CHANGENAME:
 	case NETDEV_FEAT_CHANGE:
 	default:
-		pr_info("ignoring netdev event = %ld for %s\n",
+		pr_debug("ignoring netdev event = %ld for %s\n",
 			event, ndev->name);
 		break;
 	}

@@ -441,7 +441,7 @@ static void __lb_other_process(struct hns_nic_ring_data *ring_data,
 			snprintf(buff + i % 16 * 2, 3, /* tailing \0*/
 				 "%02x", *(skb->data + i));
 			if ((i % 16 == 15) || (i == skb->len - 1))
-				pr_info("%s\n", buff);
+				pr_debug("%s\n", buff);
 		}
 	}
 	dev_kfree_skb_any(skb);

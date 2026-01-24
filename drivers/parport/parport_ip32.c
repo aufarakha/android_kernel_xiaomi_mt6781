@@ -1653,7 +1653,7 @@ static size_t parport_ip32_compat_write_data(struct parport *p,
 				       DSR_nBUSY | DSR_nFAULT)) {
 		/* Avoid to flood the logs */
 		if (ready_before)
-			pr_info(PPIP32 "%s: not ready in %s\n",
+			pr_debug(PPIP32 "%s: not ready in %s\n",
 				p->name, __func__);
 		ready_before = 0;
 		goto stop;
@@ -1734,7 +1734,7 @@ static size_t parport_ip32_ecp_write_data(struct parport *p,
 				       DSR_nBUSY | DSR_nFAULT)) {
 		/* Avoid to flood the logs */
 		if (ready_before)
-			pr_info(PPIP32 "%s: not ready in %s\n",
+			pr_debug(PPIP32 "%s: not ready in %s\n",
 				p->name, __func__);
 		ready_before = 0;
 		goto stop;
@@ -2141,7 +2141,7 @@ static __init struct parport *parport_ip32_probe_port(void)
 	parport_ip32_dump_state(p, "end init", 0);
 
 	/* Print out what we found */
-	pr_info("%s: SGI IP32 at 0x%lx (0x%lx)", p->name, p->base, p->base_hi);
+	pr_debug("%s: SGI IP32 at 0x%lx (0x%lx)", p->name, p->base, p->base_hi);
 	if (p->irq != PARPORT_IRQ_NONE)
 		printk(", irq %d", p->irq);
 	printk(" [");
@@ -2197,7 +2197,7 @@ static __exit void parport_ip32_unregister_port(struct parport *p)
  */
 static int __init parport_ip32_init(void)
 {
-	pr_info(PPIP32 "SGI IP32 built-in parallel port driver v0.6\n");
+	pr_debug(PPIP32 "SGI IP32 built-in parallel port driver v0.6\n");
 	this_port = parport_ip32_probe_port();
 	return PTR_ERR_OR_ZERO(this_port);
 }

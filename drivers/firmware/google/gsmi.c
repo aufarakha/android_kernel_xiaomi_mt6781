@@ -754,7 +754,7 @@ static __init int gsmi_system_valid(void)
 	if (hash == QUIRKY_BOARD_HASH) {
 		const char *bios_ver = dmi_get_system_info(DMI_BIOS_VERSION);
 		if (strncmp(bios_ver, "1.0", 3) == 0) {
-			pr_info("gsmi: disabled on this board's BIOS %s\n",
+			pr_debug("gsmi: disabled on this board's BIOS %s\n",
 				bios_ver);
 			return -ENODEV;
 		}
@@ -762,7 +762,7 @@ static __init int gsmi_system_valid(void)
 
 	/* check for valid SMI command port in ACPI FADT */
 	if (acpi_gbl_FADT.smi_command == 0) {
-		pr_info("gsmi: missing smi_command\n");
+		pr_debug("gsmi: missing smi_command\n");
 		return -ENODEV;
 	}
 
@@ -921,7 +921,7 @@ out_err:
 	gsmi_buf_free(gsmi_dev.name_buf);
 	dma_pool_destroy(gsmi_dev.dma_pool);
 	platform_device_unregister(gsmi_dev.pdev);
-	pr_info("gsmi: failed to load: %d\n", ret);
+	pr_debug("gsmi: failed to load: %d\n", ret);
 	return ret;
 }
 

@@ -456,7 +456,7 @@ int smsdvb_debugfs_create(struct smsdvb_client_t *client)
 	client->debugfs = debugfs_create_dir(coredev->devpath,
 					     smsdvb_debugfs_usb_root);
 	if (IS_ERR_OR_NULL(client->debugfs)) {
-		pr_info("Unable to create debugfs %s directory.\n",
+		pr_debug("Unable to create debugfs %s directory.\n",
 			coredev->devpath);
 		return -ENODEV;
 	}

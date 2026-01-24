@@ -962,7 +962,7 @@ int ttm_page_alloc_init(struct ttm_mem_global *glob, unsigned max_pages)
 
 	WARN_ON(_manager);
 
-	pr_info("Initializing pool allocator\n");
+	pr_debug("Initializing pool allocator\n");
 
 	_manager = kzalloc(sizeof(*_manager), GFP_KERNEL);
 	if (!_manager)
@@ -1014,7 +1014,7 @@ void ttm_page_alloc_fini(void)
 {
 	int i;
 
-	pr_info("Finalizing pool allocator\n");
+	pr_debug("Finalizing pool allocator\n");
 	ttm_pool_mm_shrink_fini(_manager);
 
 	/* OK to use static buffer since global mutex is no longer used. */

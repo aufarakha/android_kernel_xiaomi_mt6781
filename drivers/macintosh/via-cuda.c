@@ -309,7 +309,7 @@ static int __init via_cuda_start(void)
 	return -EAGAIN;
     }
 
-    pr_info("Macintosh Cuda and Egret driver.\n");
+    pr_debug("Macintosh Cuda and Egret driver.\n");
 
     cuda_fully_inited = 1;
     return 0;

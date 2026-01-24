@@ -299,7 +299,7 @@ static int __init ibwdt_probe(struct platform_device *dev)
 	 * if not reset to the default */
 	if (ibwdt_set_heartbeat(timeout)) {
 		ibwdt_set_heartbeat(WATCHDOG_TIMEOUT);
-		pr_info("timeout value must be 0<=x<=30, using %d\n", timeout);
+		pr_debug("timeout value must be 0<=x<=30, using %d\n", timeout);
 	}
 
 	res = misc_register(&ibwdt_miscdev);
@@ -347,7 +347,7 @@ static int __init ibwdt_init(void)
 {
 	int err;
 
-	pr_info("WDT driver for IB700 single board computer initialising\n");
+	pr_debug("WDT driver for IB700 single board computer initialising\n");
 
 	ibwdt_platform_device = platform_device_register_simple(DRV_NAME,
 								-1, NULL, 0);
@@ -369,7 +369,7 @@ static void __exit ibwdt_exit(void)
 {
 	platform_device_unregister(ibwdt_platform_device);
 	platform_driver_unregister(&ibwdt_driver);
-	pr_info("Watchdog Module Unloaded\n");
+	pr_debug("Watchdog Module Unloaded\n");
 }
 
 module_init(ibwdt_init);

@@ -549,20 +549,20 @@ void fts_test_save_data(char *name, int code, int *data, int datacnt,
 #define TXT_SUPPORT 1
 
 #define FTS_TEST_DBG(fmt, args...)                                             \
-		pr_info("[FTS_TS][TEST]%s:" fmt "\n", __func__, ##args)
+		pr_debug("[FTS_TS][TEST]%s:" fmt "\n", __func__, ##args)
 
 #define FTS_TEST_FUNC_ENTER()                                                  \
-		pr_info("[FTS_TS][TEST]%s: Enter\n", __func__)
+		pr_debug("[FTS_TS][TEST]%s: Enter\n", __func__)
 
 #define FTS_TEST_FUNC_EXIT()                                                   \
-		pr_info("[FTS_TS][TEST]%s: Exit(%d)\n", __func__, __LINE__)
+		pr_debug("[FTS_TS][TEST]%s: Exit(%d)\n", __func__, __LINE__)
 
 #define FTS_TEST_INFO(fmt, args...)                                            \
-		pr_info("[FTS_TS/I][TEST]%s:" fmt "\n", __func__, \
+		pr_debug("[FTS_TS/I][TEST]%s:" fmt "\n", __func__, \
 		       ##args)
 
 #define FTS_TEST_ERROR(fmt, args...)                    \
-		pr_info("[FTS_TS/E][TEST]%s:" fmt "\n", __func__, \
+		pr_debug("[FTS_TS/E][TEST]%s:" fmt "\n", __func__, \
 		       ##args)
 
 #define FTS_TEST_SAVE_INFO(fmt, args...)                                       \
@@ -584,7 +584,7 @@ void fts_test_save_data(char *name, int code, int *data, int datacnt,
 						 fts_ftest->testresult_len,    \
 					 TXT_BUFFER_LEN, fmt, ##args);         \
 		}                                                              \
-		pr_info("[FTS_TS/E][TEST]%s:" fmt "\n", __func__,      \
+		pr_debug("[FTS_TS/E][TEST]%s:" fmt "\n", __func__,      \
 		       ##args);                                                \
 	} while (0)
 #endif

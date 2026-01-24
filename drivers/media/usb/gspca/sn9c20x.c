@@ -1181,7 +1181,7 @@ static void mt9v_init_sensor(struct gspca_dev *gspca_dev)
 		sd->hstart = 2;
 		sd->vstart = 2;
 		sd->sensor = SENSOR_MT9V011;
-		pr_info("MT9V011 sensor detected\n");
+		pr_debug("MT9V011 sensor detected\n");
 		return;
 	}
 
@@ -1199,7 +1199,7 @@ static void mt9v_init_sensor(struct gspca_dev *gspca_dev)
 		sd->hstart = 2;
 		sd->vstart = 2;
 		sd->sensor = SENSOR_MT9V111;
-		pr_info("MT9V111 sensor detected\n");
+		pr_debug("MT9V111 sensor detected\n");
 		return;
 	}
 
@@ -1222,7 +1222,7 @@ static void mt9v_init_sensor(struct gspca_dev *gspca_dev)
 		sd->hstart = 6;
 		sd->vstart = 2;
 		sd->sensor = SENSOR_MT9V112;
-		pr_info("MT9V112 sensor detected\n");
+		pr_debug("MT9V112 sensor detected\n");
 		return;
 	}
 
@@ -1266,10 +1266,10 @@ static void mt9m001_init_sensor(struct gspca_dev *gspca_dev)
 	switch (id) {
 	case 0x8411:
 	case 0x8421:
-		pr_info("MT9M001 color sensor detected\n");
+		pr_debug("MT9M001 color sensor detected\n");
 		break;
 	case 0x8431:
-		pr_info("MT9M001 mono sensor detected\n");
+		pr_debug("MT9M001 mono sensor detected\n");
 		break;
 	default:
 		pr_err("No MT9M001 chip detected, ID = %x\n\n", id);
@@ -1822,49 +1822,49 @@ static int sd_init(struct gspca_dev *gspca_dev)
 		ov9650_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("OV9650 sensor detected\n");
+		pr_debug("OV9650 sensor detected\n");
 		break;
 	case SENSOR_OV9655:
 		ov9655_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("OV9655 sensor detected\n");
+		pr_debug("OV9655 sensor detected\n");
 		break;
 	case SENSOR_SOI968:
 		soi968_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("SOI968 sensor detected\n");
+		pr_debug("SOI968 sensor detected\n");
 		break;
 	case SENSOR_OV7660:
 		ov7660_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("OV7660 sensor detected\n");
+		pr_debug("OV7660 sensor detected\n");
 		break;
 	case SENSOR_OV7670:
 		ov7670_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("OV7670 sensor detected\n");
+		pr_debug("OV7670 sensor detected\n");
 		break;
 	case SENSOR_MT9VPRB:
 		mt9v_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("MT9VPRB sensor detected\n");
+		pr_debug("MT9VPRB sensor detected\n");
 		break;
 	case SENSOR_MT9M111:
 		mt9m111_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("MT9M111 sensor detected\n");
+		pr_debug("MT9M111 sensor detected\n");
 		break;
 	case SENSOR_MT9M112:
 		mt9m112_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("MT9M112 sensor detected\n");
+		pr_debug("MT9M112 sensor detected\n");
 		break;
 	case SENSOR_MT9M001:
 		mt9m001_init_sensor(gspca_dev);
@@ -1875,7 +1875,7 @@ static int sd_init(struct gspca_dev *gspca_dev)
 		hv7131r_init_sensor(gspca_dev);
 		if (gspca_dev->usb_err < 0)
 			break;
-		pr_info("HV7131R sensor detected\n");
+		pr_debug("HV7131R sensor detected\n");
 		break;
 	default:
 		pr_err("Unsupported sensor\n");
@@ -2010,19 +2010,19 @@ static int sd_start(struct gspca_dev *gspca_dev)
 	switch (mode & SCALE_MASK) {
 	case SCALE_1280x1024:
 		scale = 0xc0;
-		pr_info("Set 1280x1024\n");
+		pr_debug("Set 1280x1024\n");
 		break;
 	case SCALE_640x480:
 		scale = 0x80;
-		pr_info("Set 640x480\n");
+		pr_debug("Set 640x480\n");
 		break;
 	case SCALE_320x240:
 		scale = 0x90;
-		pr_info("Set 320x240\n");
+		pr_debug("Set 320x240\n");
 		break;
 	case SCALE_160x120:
 		scale = 0xa0;
-		pr_info("Set 160x120\n");
+		pr_debug("Set 160x120\n");
 		break;
 	}
 

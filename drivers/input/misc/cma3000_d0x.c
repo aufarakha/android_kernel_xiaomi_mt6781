@@ -358,7 +358,7 @@ struct cma3000_accl_data *cma3000_init(struct device *dev, int irq,
 		goto err_free_mem;
 	}
 
-	pr_info("CMA3000 Accelerometer: Revision %x\n", rev);
+	pr_debug("CMA3000 Accelerometer: Revision %x\n", rev);
 
 	error = request_threaded_irq(irq, NULL, cma3000_thread_irq,
 				     pdata->irqflags | IRQF_ONESHOT,

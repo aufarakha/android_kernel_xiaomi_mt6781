@@ -1533,7 +1533,7 @@ smsc9420_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	int result = 0;
 	u32 id_rev;
 
-	pr_info("%s version %s\n", DRV_DESCRIPTION, DRV_VERSION);
+	pr_debug("%s version %s\n", DRV_DESCRIPTION, DRV_VERSION);
 
 	/* First do the PCI initialisation */
 	result = pci_enable_device(pdev);

@@ -77,7 +77,7 @@ static int smu10_display_clock_voltage_request(struct pp_hwmgr *hwmgr,
 		msg = PPSMC_MSG_SetHardMinFclkByFreq;
 		break;
 	default:
-		pr_info("[DisplayClockVoltageRequest]Invalid Clock Type!");
+		pr_debug("[DisplayClockVoltageRequest]Invalid Clock Type!");
 		return -EINVAL;
 	}
 	smum_send_msg_to_smc_with_parameter(hwmgr, msg, clk_freq);
@@ -547,7 +547,7 @@ static int smu10_dpm_force_dpm_level(struct pp_hwmgr *hwmgr,
 	struct smu10_hwmgr *data = hwmgr->backend;
 
 	if (hwmgr->smu_version < 0x1E3700) {
-		pr_info("smu firmware version too old, can not set dpm level\n");
+		pr_debug("smu firmware version too old, can not set dpm level\n");
 		return 0;
 	}
 
@@ -809,7 +809,7 @@ static int smu10_force_clock_level(struct pp_hwmgr *hwmgr,
 	switch (type) {
 	case PP_SCLK:
 		if (low > 2 || high > 2) {
-			pr_info("Currently sclk only support 3 levels on RV\n");
+			pr_debug("Currently sclk only support 3 levels on RV\n");
 			return -EINVAL;
 		}
 

@@ -90,7 +90,7 @@ static unsigned int cbt_mode_rank[2];
 #define DRAMC_TAG "[DRAMC]"
 #define DRAMC_RSV_TAG "[DRAMC_RSV]"
 
-#define dramc_info(format, ...)	pr_info(DRAMC_TAG format, ##__VA_ARGS__)
+#define dramc_info(format, ...)	pr_debug(DRAMC_TAG format, ##__VA_ARGS__)
 
 __weak void *mt_spm_base_get(void)
 {
@@ -1749,7 +1749,7 @@ static int dram_probe(struct platform_device *pdev)
 	ret = of_property_read_s32(dramc_node, "enable_lp3_1333",
 		&enable_lp3_1333);
 	if (ret) {
-		pr_info("fail to read enable_lp3_1333\n");
+		pr_debug("fail to read enable_lp3_1333\n");
 		enable_lp3_1333 = 0;
 	}
 	dramc_info("lp3_1333 %s\n", (enable_lp3_1333) ? "enable" : "disable");

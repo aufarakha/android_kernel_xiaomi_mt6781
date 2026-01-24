@@ -1360,7 +1360,7 @@ static int bnxt_re_ib_reg(struct bnxt_re_dev *rdev)
 	if (!rdev->is_virtfn) {
 		rc = bnxt_re_setup_qos(rdev);
 		if (rc)
-			pr_info("RoCE priority not yet configured\n");
+			pr_debug("RoCE priority not yet configured\n");
 
 		INIT_DELAYED_WORK(&rdev->worker, bnxt_re_worker);
 		set_bit(BNXT_RE_FLAG_QOS_WORK_REG, &rdev->flags);
@@ -1604,7 +1604,7 @@ static int __init bnxt_re_mod_init(void)
 {
 	int rc = 0;
 
-	pr_info("%s: %s", ROCE_DRV_MODULE_NAME, version);
+	pr_debug("%s: %s", ROCE_DRV_MODULE_NAME, version);
 
 	bnxt_re_wq = create_singlethread_workqueue("bnxt_re");
 	if (!bnxt_re_wq)

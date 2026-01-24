@@ -386,7 +386,7 @@ static unsigned int min_odd(unsigned int x, unsigned int y)
 static void result(const char *err, unsigned int n, unsigned int src_off,
 		   unsigned int dst_off, unsigned int len, unsigned long data)
 {
-	pr_info("%s: result #%u: '%s' with src_off=0x%x dst_off=0x%x len=0x%x (%lu)\n",
+	pr_debug("%s: result #%u: '%s' with src_off=0x%x dst_off=0x%x len=0x%x (%lu)\n",
 		current->comm, n, err, src_off, dst_off, len, data);
 }
 
@@ -801,7 +801,7 @@ err_usrcs:
 err_srcs:
 	kfree(pq_coefs);
 err_thread_type:
-	pr_info("%s: summary %u tests, %u failures %llu iops %llu KB/s (%d)\n",
+	pr_debug("%s: summary %u tests, %u failures %llu iops %llu KB/s (%d)\n",
 		current->comm, total_tests, failed_tests,
 		dmatest_persec(runtime, total_tests),
 		dmatest_KBs(runtime, total_len), ret);
@@ -928,7 +928,7 @@ static int dmatest_add_channel(struct dmatest_info *info,
 		thread_count += cnt > 0 ? cnt : 0;
 	}
 
-	pr_info("Started %u threads using %s\n",
+	pr_debug("Started %u threads using %s\n",
 		thread_count, dma_chan_name(chan));
 
 	list_add_tail(&dtc->node, &info->channels);

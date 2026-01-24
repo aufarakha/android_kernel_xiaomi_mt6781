@@ -174,7 +174,7 @@ static int __init oxnas_rps_clockevent_init(struct oxnas_rps_timer *rps)
 					1,
 					TIMER_MAX_VAL);
 
-	pr_info("Registered clock event rate %luHz prescaler %x period %lu\n",
+	pr_debug("Registered clock event rate %luHz prescaler %x period %lu\n",
 			clk_rate,
 			rps->timer_prescaler,
 			rps->timer_period);
@@ -215,7 +215,7 @@ static int __init oxnas_rps_clocksource_init(struct oxnas_rps_timer *rps)
 		return ret;
 	}
 
-	pr_info("Registered clocksource rate %luHz\n", clk_rate);
+	pr_debug("Registered clocksource rate %luHz\n", clk_rate);
 
 	return 0;
 }

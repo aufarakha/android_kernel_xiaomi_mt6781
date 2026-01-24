@@ -595,7 +595,7 @@ inf_ctrl(struct inf_hw *hw, u32 cmd, u_long arg)
 		reset_inf(hw);
 		break;
 	default:
-		pr_info("%s: %s unknown command %x %lx\n",
+		pr_debug("%s: %s unknown command %x %lx\n",
 			hw->name, __func__, cmd, arg);
 		ret = -EINVAL;
 		break;
@@ -613,7 +613,7 @@ init_irq(struct inf_hw *hw)
 		return -EINVAL;
 	ret = request_irq(hw->irq, hw->ci->irqfunc, IRQF_SHARED, hw->name, hw);
 	if (ret) {
-		pr_info("%s: couldn't get interrupt %d\n", hw->name, hw->irq);
+		pr_debug("%s: couldn't get interrupt %d\n", hw->name, hw->irq);
 		return ret;
 	}
 	while (cnt--) {
@@ -622,7 +622,7 @@ init_irq(struct inf_hw *hw)
 		ret = hw->ipac.init(&hw->ipac);
 		if (ret) {
 			spin_unlock_irqrestore(&hw->lock, flags);
-			pr_info("%s: ISAC init failed with %d\n",
+			pr_debug("%s: ISAC init failed with %d\n",
 				hw->name, ret);
 			break;
 		}
@@ -632,7 +632,7 @@ init_irq(struct inf_hw *hw)
 			pr_notice("%s: IRQ %d count %d\n", hw->name,
 				  hw->irq, hw->irqcnt);
 		if (!hw->irqcnt) {
-			pr_info("%s: IRQ(%d) got no requests during init %d\n",
+			pr_debug("%s: IRQ(%d) got no requests during init %d\n",
 				hw->name, hw->irq, 3 - cnt);
 		} else
 			return 0;
@@ -682,7 +682,7 @@ setup_io(struct inf_hw *hw)
 				err = -EBUSY;
 		}
 		if (err) {
-			pr_info("mISDN: %s config port %lx (%lu bytes)"
+			pr_debug("mISDN: %s config port %lx (%lu bytes)"
 				"already in use\n", hw->name,
 				(ulong)hw->cfg.start, (ulong)hw->cfg.size);
 			return err;
@@ -712,7 +712,7 @@ setup_io(struct inf_hw *hw)
 				err = -EBUSY;
 		}
 		if (err) {
-			pr_info("mISDN: %s address port %lx (%lu bytes)"
+			pr_debug("mISDN: %s address port %lx (%lu bytes)"
 				"already in use\n", hw->name,
 				(ulong)hw->addr.start, (ulong)hw->addr.size);
 			return err;
@@ -1090,7 +1090,7 @@ inf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 	card = kzalloc(sizeof(struct inf_hw), GFP_KERNEL);
 	if (!card) {
-		pr_info("No memory for Infineon ISDN card\n");
+		pr_debug("No memory for Infineon ISDN card\n");
 		return err;
 	}
 	card->pdev = pdev;
@@ -1101,7 +1101,7 @@ inf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	}
 	card->ci = get_card_info(ent->driver_data);
 	if (!card->ci) {
-		pr_info("mISDN: do not have information about adapter at %s\n",
+		pr_debug("mISDN: do not have information about adapter at %s\n",
 			pci_name(pdev));
 		kfree(card);
 		pci_disable_device(pdev);

@@ -186,7 +186,7 @@ int __init register_intc_controller(struct intc_desc *desc)
 	struct intc_desc_int *d;
 	struct resource *res;
 
-	pr_info("Registered controller '%s' with %u IRQs\n",
+	pr_debug("Registered controller '%s' with %u IRQs\n",
 		desc->name, hw->nr_vectors);
 
 	d = kzalloc(sizeof(*d), GFP_NOWAIT);

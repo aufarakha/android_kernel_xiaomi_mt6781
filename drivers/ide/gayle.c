@@ -133,7 +133,7 @@ static int __init amiga_gayle_ide_probe(struct platform_device *pdev)
 		return -EBUSY;
 
 	pdata = dev_get_platdata(&pdev->dev);
-	pr_info("ide: Gayle IDE controller (A%u style%s)\n",
+	pr_debug("ide: Gayle IDE controller (A%u style%s)\n",
 		pdata->explicit_ack ? 1200 : 4000,
 		ide_doubler ? ", IDE doubler" : "");
 

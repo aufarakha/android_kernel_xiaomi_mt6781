@@ -354,7 +354,7 @@ static int __init rxe_module_init(void)
 	if (err)
 		return err;
 
-	pr_info("loaded\n");
+	pr_debug("loaded\n");
 	return 0;
 }
 
@@ -364,7 +364,7 @@ static void __exit rxe_module_exit(void)
 	rxe_net_exit();
 	rxe_cache_exit();
 
-	pr_info("unloaded\n");
+	pr_debug("unloaded\n");
 }
 
 late_initcall(rxe_module_init);

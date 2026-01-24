@@ -249,7 +249,7 @@ static int sd_config(struct gspca_dev *gspca_dev,
 	}
 
 	if (cd[3])
-		pr_info("ExtraFeatures: %d\n", cd[3]);
+		pr_debug("ExtraFeatures: %d\n", cd[3]);
 
 	n = cd[4] | (cd[5] << 8);
 	if (n > MAX_MODES) {
@@ -292,14 +292,14 @@ static int sd_config(struct gspca_dev *gspca_dev,
 			sd->fmts[i].pixelformat = V4L2_PIX_FMT_SBGGR8;
 			sd->fmts[i].bytesperline = widths[i];
 			sd->fmts[i].sizeimage = widths[i] * heights[i];
-			pr_info("Frame size: %dx%d bayer\n",
+			pr_debug("Frame size: %dx%d bayer\n",
 				widths[i], heights[i]);
 		} else {
 			/* Found a match use janggu compression */
 			sd->fmts[i].pixelformat = V4L2_PIX_FMT_SE401;
 			sd->fmts[i].bytesperline = 0;
 			sd->fmts[i].sizeimage = widths[i] * heights[i] * 3;
-			pr_info("Frame size: %dx%d 1/%dth janggu\n",
+			pr_debug("Frame size: %dx%d 1/%dth janggu\n",
 				widths[i], heights[i],
 				sd->fmts[i].priv * sd->fmts[i].priv);
 		}

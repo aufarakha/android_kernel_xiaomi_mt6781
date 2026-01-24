@@ -226,13 +226,13 @@ static const struct nand_ecc_test nand_ecc_test[] = {
 static void dump_data_ecc(void *error_data, void *error_ecc, void *correct_data,
 			void *correct_ecc, const size_t size)
 {
-	pr_info("hexdump of error data:\n");
+	pr_debug("hexdump of error data:\n");
 	print_hex_dump(KERN_INFO, "", DUMP_PREFIX_OFFSET, 16, 4,
 			error_data, size, false);
 	print_hex_dump(KERN_INFO, "hexdump of error ecc: ",
 			DUMP_PREFIX_NONE, 16, 1, error_ecc, 3, false);
 
-	pr_info("hexdump of correct data:\n");
+	pr_debug("hexdump of correct data:\n");
 	print_hex_dump(KERN_INFO, "", DUMP_PREFIX_OFFSET, 16, 4,
 			correct_data, size, false);
 	print_hex_dump(KERN_INFO, "hexdump of correct ecc: ",
@@ -274,7 +274,7 @@ static int nand_ecc_test_run(const size_t size)
 				correct_data, correct_ecc, size);
 			break;
 		}
-		pr_info("ok - %s-%zd\n",
+		pr_debug("ok - %s-%zd\n",
 			nand_ecc_test[i].name, size);
 
 		err = mtdtest_relax();

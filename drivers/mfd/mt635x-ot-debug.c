@@ -21,13 +21,13 @@ static irqreturn_t ot_int_handler(int irq, void *data)
 {
 	int ret, irq_index = (uintptr_t)data;
 
-	pr_info("%s with irq index=%d\n", __func__, irq_index);
+	pr_debug("%s with irq index=%d\n", __func__, irq_index);
 	ret = regmap_update_bits(g_regmap,
 				 PMIC_RG_RSV_SWREG_ADDR,
 				 1 << irq_index,
 				 1 << irq_index);
 	if (ret)
-		pr_info("%s error\n", __func__);
+		pr_debug("%s error\n", __func__);
 	/*
 	 * TODO: After kernel-4.19, pm_mutex change to
 	 * system_transition_mutex.

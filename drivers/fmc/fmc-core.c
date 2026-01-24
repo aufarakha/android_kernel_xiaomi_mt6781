@@ -26,7 +26,7 @@ static int fmc_check_version(unsigned long version, const char *name)
 	}
 
 	if (__FMC_MINOR(version) != FMC_MINOR)
-		pr_info("%s: \"%s\" has wrong minor (has %li, expected %i)\n",
+		pr_debug("%s: \"%s\" has wrong minor (has %li, expected %i)\n",
 		       __func__, name, __FMC_MINOR(version), FMC_MINOR);
 	return 0;
 }

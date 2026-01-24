@@ -1065,7 +1065,7 @@ static int __init videodev_init(void)
 	dev_t dev = MKDEV(VIDEO_MAJOR, 0);
 	int ret;
 
-	pr_info("Linux video capture interface: v2.00\n");
+	pr_debug("Linux video capture interface: v2.00\n");
 	ret = register_chrdev_region(dev, VIDEO_NUM_DEVICES, VIDEO_NAME);
 	if (ret < 0) {
 		pr_warn("videodev: unable to get major %d\n",

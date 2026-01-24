@@ -1009,7 +1009,7 @@ static int abituguru3_probe(struct platform_device *pdev)
 	}
 	data->sensors = abituguru3_motherboards[i].sensors;
 
-	pr_info("found Abit uGuru3, motherboard ID: %04X\n", (unsigned int)id);
+	pr_debug("found Abit uGuru3, motherboard ID: %04X\n", (unsigned int)id);
 
 	/* Fill the sysfs attr array */
 	sysfs_attr_i = 0;
@@ -1236,7 +1236,7 @@ static int __init abituguru3_detect(void)
 		"0x%02X\n", (unsigned int)data_val, (unsigned int)cmd_val);
 
 	if (force) {
-		pr_info("Assuming Abit uGuru3 is present because of \"force\" parameter\n");
+		pr_debug("Assuming Abit uGuru3 is present because of \"force\" parameter\n");
 		return 0;
 	}
 

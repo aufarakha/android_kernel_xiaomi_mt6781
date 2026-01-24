@@ -1033,7 +1033,7 @@ static void stmmac_display_rx_rings(struct stmmac_priv *priv)
 	for (queue = 0; queue < rx_cnt; queue++) {
 		struct stmmac_rx_queue *rx_q = &priv->rx_queue[queue];
 
-		pr_info("\tRX Queue %u rings\n", queue);
+		pr_debug("\tRX Queue %u rings\n", queue);
 
 		if (priv->extend_desc)
 			head_rx = (void *)rx_q->dma_erx;
@@ -1055,7 +1055,7 @@ static void stmmac_display_tx_rings(struct stmmac_priv *priv)
 	for (queue = 0; queue < tx_cnt; queue++) {
 		struct stmmac_tx_queue *tx_q = &priv->tx_queue[queue];
 
-		pr_info("\tTX Queue %d rings\n", queue);
+		pr_debug("\tTX Queue %d rings\n", queue);
 
 		if (priv->extend_desc)
 			head_tx = (void *)tx_q->dma_etx;
@@ -2878,9 +2878,9 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
 	}
 
 	if (netif_msg_tx_queued(priv)) {
-		pr_info("%s: tcphdrlen %d, hdr_len %d, pay_len %d, mss %d\n",
+		pr_debug("%s: tcphdrlen %d, hdr_len %d, pay_len %d, mss %d\n",
 			__func__, tcp_hdrlen(skb), proto_hdr_len, pay_len, mss);
-		pr_info("\tskb->len %d, skb->data_len %d\n", skb->len,
+		pr_debug("\tskb->len %d, skb->data_len %d\n", skb->len,
 			skb->data_len);
 	}
 
@@ -2997,13 +2997,13 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
 	wmb();
 
 	if (netif_msg_pktdata(priv)) {
-		pr_info("%s: curr=%d dirty=%d f=%d, e=%d, f_p=%p, nfrags %d\n",
+		pr_debug("%s: curr=%d dirty=%d f=%d, e=%d, f_p=%p, nfrags %d\n",
 			__func__, tx_q->cur_tx, tx_q->dirty_tx, first_entry,
 			tx_q->cur_tx, first, nfrags);
 
 		stmmac_display_ring(priv, (void *)tx_q->dma_tx, DMA_TX_SIZE, 0);
 
-		pr_info(">>> frame to be transmitted: ");
+		pr_debug(">>> frame to be transmitted: ");
 		print_pkt(skb->data, skb_headlen(skb));
 	}
 

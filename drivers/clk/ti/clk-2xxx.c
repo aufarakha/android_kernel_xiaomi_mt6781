@@ -238,7 +238,7 @@ static int __init omap2xxx_dt_clk_init(int soc_type)
 	omap2_clk_enable_init_clocks(enable_init_clks,
 				     ARRAY_SIZE(enable_init_clks));
 
-	pr_info("Clocking rate (Crystal/DPLL/MPU): %ld.%01ld/%ld/%ld MHz\n",
+	pr_debug("Clocking rate (Crystal/DPLL/MPU): %ld.%01ld/%ld/%ld MHz\n",
 		(clk_get_rate(clk_get_sys(NULL, "sys_ck")) / 1000000),
 		(clk_get_rate(clk_get_sys(NULL, "sys_ck")) / 100000) % 10,
 		(clk_get_rate(clk_get_sys(NULL, "dpll_ck")) / 1000000),

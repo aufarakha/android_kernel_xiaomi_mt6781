@@ -28,10 +28,10 @@
 #ifdef AUDIO_VERBOSE_DEBUG_ENABLE
 
 #define audio_debug(fmt, arg...) \
-	pr_info("%s:%d " fmt, __func__, __LINE__, ##arg)
+	pr_debug("%s:%d " fmt, __func__, __LINE__, ##arg)
 
 #define audio_info(fmt, arg...) \
-	pr_info("%s:%d " fmt, __func__, __LINE__, ##arg)
+	pr_debug("%s:%d " fmt, __func__, __LINE__, ##arg)
 
 #else
 

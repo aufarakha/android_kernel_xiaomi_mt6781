@@ -1042,7 +1042,7 @@ static int fs_enet_probe(struct platform_device *ofdev)
 	if (ret)
 		goto out_free_bd;
 
-	pr_info("%s: fs_enet: %pM\n", ndev->name, ndev->dev_addr);
+	pr_debug("%s: fs_enet: %pM\n", ndev->name, ndev->dev_addr);
 
 	return 0;
 

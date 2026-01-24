@@ -275,12 +275,12 @@ static struct mtk_ecc *mtk_ecc_get(struct device_node *np)
 	get_device(&pdev->dev);
 	ecc = platform_get_drvdata(pdev);
 	if (ecc == NULL) {
-		pr_info("failed to get ecc point.\n");
+		pr_debug("failed to get ecc point.\n");
 		return NULL;
 	}
 	ret = clk_prepare_enable(ecc->clk);
 	if (ret) {
-		pr_info("failed to enable clk.\n");
+		pr_debug("failed to enable clk.\n");
 		return NULL;
 	}
 	mtk_ecc_hw_init(ecc);

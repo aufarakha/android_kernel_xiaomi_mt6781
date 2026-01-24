@@ -594,22 +594,22 @@ static int gf_fb_notifier_callback(struct notifier_block *self,
 
 	if (evdata && evdata->data && event == FB_DRM_EARLY_EVENT_BLANK && gf_dev) {
 		blank = *(int *)evdata->data;
-		pr_info("[XMFP]: [%s] : enter, blank=0x%x\n", __func__, blank);
+		pr_debug("[XMFP]: [%s] : enter, blank=0x%x\n", __func__, blank);
 		switch (blank) {
 		case FB_BLANK_UNBLANK:
 			gf_dev->fb_black = 0;
-			pr_info("[XMFP]: [%s] : lcd on notify\n", __func__);
+			pr_debug("[XMFP]: [%s] : lcd on notify\n", __func__);
 			gf_netlink_send(gf_dev, GF_NETLINK_SCREEN_ON);
 			break;
 		case FB_BLANK_POWERDOWN:
 			gf_dev->fb_black = 1;
 			gf_dev->wait_finger_down = true;
-			pr_info("[XMFP]: [%s] : lcd off notify\n", __func__);
+			pr_debug("[XMFP]: [%s] : lcd off notify\n", __func__);
 			gf_netlink_send(gf_dev, GF_NETLINK_SCREEN_OFF);
 			break;
 
 		default:
-			pr_info("[XMFP]: [%s] : other notifier, ignore\n", __func__);
+			pr_debug("[XMFP]: [%s] : other notifier, ignore\n", __func__);
 			break;
 		}
  	}
@@ -714,7 +714,7 @@ static irqreturn_t gf_irq(int irq, void *handle)
 	gf_dev->sig_count++;
 	/*vdd by regultor,and not contrled by gpio. so don't need device_available*/
         if ((gf_dev->wait_finger_down == true) && (gf_dev->fb_black == 1)) {
-		pr_info("[XMFP]: %s enter fingerdown & fb_black then schedule_work\n", __func__);
+		pr_debug("[XMFP]: %s enter fingerdown & fb_black then schedule_work\n", __func__);
 		gf_dev->wait_finger_down = false;
 		schedule_work(&fp_display_work);
 	}
@@ -1814,7 +1814,7 @@ static int proc_show_ver(struct seq_file *file,void *v)
 
 static int proc_open(struct inode *inode,struct file *file)
 {
-	pr_info("goodix proc_open\n");
+	pr_debug("goodix proc_open\n");
 	single_open(file,proc_show_ver,NULL);
 	return 0;
 }
@@ -1827,7 +1827,7 @@ static const struct file_operations proc_file_goodix_ops = {
 };
 static void unblank_work(struct work_struct *work)
 {
-	pr_info("[XMFP]: entry %s \n", __func__);
+	pr_debug("[XMFP]: entry %s \n", __func__);
 	mtk_drm_early_resume(FP_UNLOCK_REJECTION_TIMEOUT);
 }
 

@@ -45,7 +45,7 @@ static const struct insert_mode {
 
 static int igt_sanitycheck(void *ignored)
 {
-	pr_info("%s - ok!\n", __func__);
+	pr_debug("%s - ok!\n", __func__);
 	return 0;
 }
 
@@ -1141,7 +1141,7 @@ static int igt_align64(void *ignored)
 
 static void show_scan(const struct drm_mm_scan *scan)
 {
-	pr_info("scan: hit [%llx, %llx], size=%lld, align=%lld, color=%ld\n",
+	pr_debug("scan: hit [%llx, %llx], size=%lld, align=%lld, color=%ld\n",
 		scan->hit_start, scan->hit_end,
 		scan->size, scan->alignment, scan->color);
 }
@@ -1165,7 +1165,7 @@ static void show_holes(const struct drm_mm *mm, int count)
 					  ", [%llx + %lld, color=%ld]",
 					  next->start, next->size, next->color);
 
-		pr_info("%sHole [%llx - %llx, size %lld]%s\n",
+		pr_debug("%sHole [%llx - %llx, size %lld]%s\n",
 			node1,
 			hole_start, hole_end, hole_end - hole_start,
 			node2);
@@ -2360,7 +2360,7 @@ static int __init test_drm_mm_init(void)
 	while (!random_seed)
 		random_seed = get_random_int();
 
-	pr_info("Testing DRM range manger (struct drm_mm), with random_seed=0x%x max_iterations=%u max_prime=%u\n",
+	pr_debug("Testing DRM range manger (struct drm_mm), with random_seed=0x%x max_iterations=%u max_prime=%u\n",
 		random_seed, max_iterations, max_prime);
 	err = run_selftests(selftests, ARRAY_SIZE(selftests), NULL);
 

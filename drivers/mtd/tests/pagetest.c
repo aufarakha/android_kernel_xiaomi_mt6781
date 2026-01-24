@@ -126,7 +126,7 @@ static int crosstest(void)
 	loff_t addr, addr0, addrn;
 	unsigned char *pp1, *pp2, *pp3, *pp4;
 
-	pr_info("crosstest\n");
+	pr_debug("crosstest\n");
 	pp1 = kcalloc(pgsize, 4, GFP_KERNEL);
 	if (!pp1)
 		return -ENOMEM;
@@ -160,7 +160,7 @@ static int crosstest(void)
 
 	/* Read first page to pp2 */
 	addr = addr0;
-	pr_info("reading page at %#llx\n", (long long)addr);
+	pr_debug("reading page at %#llx\n", (long long)addr);
 	err = mtdtest_read(mtd, addr, pgsize, pp2);
 	if (err) {
 		kfree(pp1);
@@ -169,7 +169,7 @@ static int crosstest(void)
 
 	/* Read last page to pp3 */
 	addr = addrn - pgsize;
-	pr_info("reading page at %#llx\n", (long long)addr);
+	pr_debug("reading page at %#llx\n", (long long)addr);
 	err = mtdtest_read(mtd, addr, pgsize, pp3);
 	if (err) {
 		kfree(pp1);
@@ -178,7 +178,7 @@ static int crosstest(void)
 
 	/* Read first page again to pp4 */
 	addr = addr0;
-	pr_info("reading page at %#llx\n", (long long)addr);
+	pr_debug("reading page at %#llx\n", (long long)addr);
 	err = mtdtest_read(mtd, addr, pgsize, pp4);
 	if (err) {
 		kfree(pp1);
@@ -186,13 +186,13 @@ static int crosstest(void)
 	}
 
 	/* pp2 and pp4 should be the same */
-	pr_info("verifying pages read at %#llx match\n",
+	pr_debug("verifying pages read at %#llx match\n",
 	       (long long)addr0);
 	if (memcmp(pp2, pp4, pgsize)) {
 		pr_err("verify failed!\n");
 		errcnt += 1;
 	} else if (!err)
-		pr_info("crosstest ok\n");
+		pr_debug("crosstest ok\n");
 	kfree(pp1);
 	return err;
 }
@@ -203,7 +203,7 @@ static int erasecrosstest(void)
 	loff_t addr0;
 	char *readbuf = twopages;
 
-	pr_info("erasecrosstest\n");
+	pr_debug("erasecrosstest\n");
 
 	ebnum = 0;
 	addr0 = 0;
@@ -216,55 +216,55 @@ static int erasecrosstest(void)
 	while (ebnum2 && bbt[ebnum2])
 		ebnum2 -= 1;
 
-	pr_info("erasing block %d\n", ebnum);
+	pr_debug("erasing block %d\n", ebnum);
 	err = mtdtest_erase_eraseblock(mtd, ebnum);
 	if (err)
 		return err;
 
-	pr_info("writing 1st page of block %d\n", ebnum);
+	pr_debug("writing 1st page of block %d\n", ebnum);
 	prandom_bytes_state(&rnd_state, writebuf, pgsize);
 	strcpy(writebuf, "There is no data like this!");
 	err = mtdtest_write(mtd, addr0, pgsize, writebuf);
 	if (err)
 		return err;
 
-	pr_info("reading 1st page of block %d\n", ebnum);
+	pr_debug("reading 1st page of block %d\n", ebnum);
 	memset(readbuf, 0, pgsize);
 	err = mtdtest_read(mtd, addr0, pgsize, readbuf);
 	if (err)
 		return err;
 
-	pr_info("verifying 1st page of block %d\n", ebnum);
+	pr_debug("verifying 1st page of block %d\n", ebnum);
 	if (memcmp(writebuf, readbuf, pgsize)) {
 		pr_err("verify failed!\n");
 		errcnt += 1;
 		return -1;
 	}
 
-	pr_info("erasing block %d\n", ebnum);
+	pr_debug("erasing block %d\n", ebnum);
 	err = mtdtest_erase_eraseblock(mtd, ebnum);
 	if (err)
 		return err;
 
-	pr_info("writing 1st page of block %d\n", ebnum);
+	pr_debug("writing 1st page of block %d\n", ebnum);
 	prandom_bytes_state(&rnd_state, writebuf, pgsize);
 	strcpy(writebuf, "There is no data like this!");
 	err = mtdtest_write(mtd, addr0, pgsize, writebuf);
 	if (err)
 		return err;
 
-	pr_info("erasing block %d\n", ebnum2);
+	pr_debug("erasing block %d\n", ebnum2);
 	err = mtdtest_erase_eraseblock(mtd, ebnum2);
 	if (err)
 		return err;
 
-	pr_info("reading 1st page of block %d\n", ebnum);
+	pr_debug("reading 1st page of block %d\n", ebnum);
 	memset(readbuf, 0, pgsize);
 	err = mtdtest_read(mtd, addr0, pgsize, readbuf);
 	if (err)
 		return err;
 
-	pr_info("verifying 1st page of block %d\n", ebnum);
+	pr_debug("verifying 1st page of block %d\n", ebnum);
 	if (memcmp(writebuf, readbuf, pgsize)) {
 		pr_err("verify failed!\n");
 		errcnt += 1;
@@ -272,7 +272,7 @@ static int erasecrosstest(void)
 	}
 
 	if (!err)
-		pr_info("erasecrosstest ok\n");
+		pr_debug("erasecrosstest ok\n");
 	return err;
 }
 
@@ -281,7 +281,7 @@ static int erasetest(void)
 	int err = 0, i, ebnum, ok = 1;
 	loff_t addr0;
 
-	pr_info("erasetest\n");
+	pr_debug("erasetest\n");
 
 	ebnum = 0;
 	addr0 = 0;
@@ -290,28 +290,28 @@ static int erasetest(void)
 		ebnum += 1;
 	}
 
-	pr_info("erasing block %d\n", ebnum);
+	pr_debug("erasing block %d\n", ebnum);
 	err = mtdtest_erase_eraseblock(mtd, ebnum);
 	if (err)
 		return err;
 
-	pr_info("writing 1st page of block %d\n", ebnum);
+	pr_debug("writing 1st page of block %d\n", ebnum);
 	prandom_bytes_state(&rnd_state, writebuf, pgsize);
 	err = mtdtest_write(mtd, addr0, pgsize, writebuf);
 	if (err)
 		return err;
 
-	pr_info("erasing block %d\n", ebnum);
+	pr_debug("erasing block %d\n", ebnum);
 	err = mtdtest_erase_eraseblock(mtd, ebnum);
 	if (err)
 		return err;
 
-	pr_info("reading 1st page of block %d\n", ebnum);
+	pr_debug("reading 1st page of block %d\n", ebnum);
 	err = mtdtest_read(mtd, addr0, pgsize, twopages);
 	if (err)
 		return err;
 
-	pr_info("verifying 1st page of block %d is all 0xff\n",
+	pr_debug("verifying 1st page of block %d is all 0xff\n",
 	       ebnum);
 	for (i = 0; i < pgsize; ++i)
 		if (twopages[i] != 0xff) {
@@ -323,7 +323,7 @@ static int erasetest(void)
 		}
 
 	if (ok && !err)
-		pr_info("erasetest ok\n");
+		pr_debug("erasetest ok\n");
 
 	return err;
 }
@@ -338,12 +338,12 @@ static int __init mtd_pagetest_init(void)
 	printk(KERN_INFO "=================================================\n");
 
 	if (dev < 0) {
-		pr_info("Please specify a valid mtd-device via module parameter\n");
+		pr_debug("Please specify a valid mtd-device via module parameter\n");
 		pr_crit("CAREFUL: This test wipes all data on the specified MTD device!\n");
 		return -EINVAL;
 	}
 
-	pr_info("MTD device: %d\n", dev);
+	pr_debug("MTD device: %d\n", dev);
 
 	mtd = get_mtd_device(NULL, dev);
 	if (IS_ERR(mtd)) {
@@ -353,7 +353,7 @@ static int __init mtd_pagetest_init(void)
 	}
 
 	if (!mtd_type_is_nand(mtd)) {
-		pr_info("this test requires NAND flash\n");
+		pr_debug("this test requires NAND flash\n");
 		goto out;
 	}
 
@@ -363,7 +363,7 @@ static int __init mtd_pagetest_init(void)
 	pgcnt = mtd->erasesize / mtd->writesize;
 	pgsize = mtd->writesize;
 
-	pr_info("MTD device size %llu, eraseblock size %u, "
+	pr_debug("MTD device size %llu, eraseblock size %u, "
 	       "page size %u, count of eraseblocks %u, pages per "
 	       "eraseblock %u, OOB size %u\n",
 	       (unsigned long long)mtd->size, mtd->erasesize,
@@ -389,15 +389,15 @@ static int __init mtd_pagetest_init(void)
 		goto out;
 
 	/* Erase all eraseblocks */
-	pr_info("erasing whole device\n");
+	pr_debug("erasing whole device\n");
 	err = mtdtest_erase_good_eraseblocks(mtd, bbt, 0, ebcnt);
 	if (err)
 		goto out;
-	pr_info("erased %u eraseblocks\n", ebcnt);
+	pr_debug("erased %u eraseblocks\n", ebcnt);
 
 	/* Write all eraseblocks */
 	prandom_seed_state(&rnd_state, 1);
-	pr_info("writing whole device\n");
+	pr_debug("writing whole device\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -405,17 +405,17 @@ static int __init mtd_pagetest_init(void)
 		if (err)
 			goto out;
 		if (i % 256 == 0)
-			pr_info("written up to eraseblock %u\n", i);
+			pr_debug("written up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			goto out;
 	}
-	pr_info("written %u eraseblocks\n", i);
+	pr_debug("written %u eraseblocks\n", i);
 
 	/* Check all eraseblocks */
 	prandom_seed_state(&rnd_state, 1);
-	pr_info("verifying all eraseblocks\n");
+	pr_debug("verifying all eraseblocks\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -423,13 +423,13 @@ static int __init mtd_pagetest_init(void)
 		if (err)
 			goto out;
 		if (i % 256 == 0)
-			pr_info("verified up to eraseblock %u\n", i);
+			pr_debug("verified up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			goto out;
 	}
-	pr_info("verified %u eraseblocks\n", i);
+	pr_debug("verified %u eraseblocks\n", i);
 
 	err = crosstest();
 	if (err)
@@ -440,14 +440,14 @@ static int __init mtd_pagetest_init(void)
 		if (err)
 			goto out;
 	} else {
-		pr_info("skipping erasecrosstest, 2 erase blocks needed\n");
+		pr_debug("skipping erasecrosstest, 2 erase blocks needed\n");
 	}
 
 	err = erasetest();
 	if (err)
 		goto out;
 
-	pr_info("finished with %d errors\n", errcnt);
+	pr_debug("finished with %d errors\n", errcnt);
 out:
 
 	kfree(bbt);
@@ -456,7 +456,7 @@ out:
 	kfree(writebuf);
 	put_mtd_device(mtd);
 	if (err)
-		pr_info("error %d occurred\n", err);
+		pr_debug("error %d occurred\n", err);
 	printk(KERN_INFO "=================================================\n");
 	return err;
 }

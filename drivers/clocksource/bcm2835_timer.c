@@ -139,7 +139,7 @@ static int __init bcm2835_timer_init(struct device_node *node)
 
 	clockevents_config_and_register(&timer->evt, freq, 0xf, 0xffffffff);
 
-	pr_info("bcm2835: system timer (irq = %d)\n", irq);
+	pr_debug("bcm2835: system timer (irq = %d)\n", irq);
 
 	return 0;
 

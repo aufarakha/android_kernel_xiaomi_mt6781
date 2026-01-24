@@ -916,7 +916,7 @@ static int __init usb_gigaset_init(void)
 		goto error;
 	}
 
-	pr_info(DRIVER_DESC "\n");
+	pr_debug(DRIVER_DESC "\n");
 	return 0;
 
 error:

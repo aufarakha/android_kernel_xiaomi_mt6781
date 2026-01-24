@@ -131,7 +131,7 @@ static int __init cps_cpuidle_init(void)
 
 	/* Inform the user if some states are unavailable */
 	if (cps_driver.state_count < STATE_COUNT) {
-		pr_info("cpuidle-cps: limited to ");
+		pr_debug("cpuidle-cps: limited to ");
 		switch (cps_driver.state_count - 1) {
 		case STATE_WAIT:
 			pr_cont("coherent wait\n");

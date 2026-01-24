@@ -650,11 +650,11 @@ void cx25821_sram_channel_dump_audio(struct cx25821_dev *dev,
 	u32 risc, value, tmp;
 	unsigned int i, j, n;
 
-	pr_info("\n%s: %s - dma Audio channel status dump\n",
+	pr_debug("\n%s: %s - dma Audio channel status dump\n",
 		dev->name, ch->name);
 
 	for (i = 0; i < ARRAY_SIZE(name); i++)
-		pr_info("%s: cmds + 0x%2x:   %-15s: 0x%08x\n",
+		pr_debug("%s: cmds + 0x%2x:   %-15s: 0x%08x\n",
 			dev->name, i * 4, name[i],
 			cx_read(ch->cmds_start + 4 * i));
 
@@ -842,7 +842,7 @@ static void cx25821_dev_checkrevision(struct cx25821_dev *dev)
 {
 	dev->hwrevision = cx_read(RDR_CFG2) & 0xff;
 
-	pr_info("Hardware revision = 0x%02x\n", dev->hwrevision);
+	pr_debug("Hardware revision = 0x%02x\n", dev->hwrevision);
 }
 
 static void cx25821_iounmap(struct cx25821_dev *dev)
@@ -872,11 +872,11 @@ static int cx25821_dev_setup(struct cx25821_dev *dev)
 		return -ENODEV;
 	}
 	if (dev->pci->device != 0x8210) {
-		pr_info("%s(): Exiting. Incorrect Hardware device = 0x%02x\n",
+		pr_debug("%s(): Exiting. Incorrect Hardware device = 0x%02x\n",
 			__func__, dev->pci->device);
 		return -ENODEV;
 	}
-	pr_info("Athena Hardware device = 0x%02x\n", dev->pci->device);
+	pr_debug("Athena Hardware device = 0x%02x\n", dev->pci->device);
 
 	/* Apply a sensible clock frequency for the PCIe bridge */
 	dev->clk_freq = 28000000;
@@ -931,7 +931,7 @@ static int cx25821_dev_setup(struct cx25821_dev *dev)
 
 	dev->bmmio = (u8 __iomem *) dev->lmmio;
 
-	pr_info("%s: subsystem: %04x:%04x, board: %s [card=%d,%s]\n",
+	pr_debug("%s: subsystem: %04x:%04x, board: %s [card=%d,%s]\n",
 		dev->name, dev->pci->subsystem_vendor,
 		dev->pci->subsystem_device, cx25821_boards[dev->board].name,
 		dev->board, card[dev->nr] == dev->board ?
@@ -1296,7 +1296,7 @@ static int cx25821_initdev(struct pci_dev *pci_dev,
 	if (pci_enable_device(pci_dev)) {
 		err = -EIO;
 
-		pr_info("pci enable failed!\n");
+		pr_debug("pci enable failed!\n");
 
 		goto fail_unregister_device;
 	}
@@ -1308,7 +1308,7 @@ static int cx25821_initdev(struct pci_dev *pci_dev,
 	/* print pci info */
 	pci_read_config_byte(pci_dev, PCI_CLASS_REVISION, &dev->pci_rev);
 	pci_read_config_byte(pci_dev, PCI_LATENCY_TIMER, &dev->pci_lat);
-	pr_info("%s/0: found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
+	pr_debug("%s/0: found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
 		dev->name, pci_name(pci_dev), dev->pci_rev, pci_dev->irq,
 		dev->pci_lat, (unsigned long long)dev->base_io_addr);
 
@@ -1331,7 +1331,7 @@ static int cx25821_initdev(struct pci_dev *pci_dev,
 	return 0;
 
 fail_irq:
-	pr_info("cx25821_initdev() can't get IRQ !\n");
+	pr_debug("cx25821_initdev() can't get IRQ !\n");
 	cx25821_dev_unregister(dev);
 
 fail_unregister_pci:
@@ -1393,7 +1393,7 @@ static struct pci_driver cx25821_pci_driver = {
 
 static int __init cx25821_init(void)
 {
-	pr_info("driver loaded\n");
+	pr_debug("driver loaded\n");
 	return pci_register_driver(&cx25821_pci_driver);
 }
 

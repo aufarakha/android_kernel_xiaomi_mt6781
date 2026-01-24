@@ -376,7 +376,7 @@ static int __init i2c_stub_init(void)
 			return -EINVAL;
 		}
 
-		pr_info("Virtual chip at 0x%02x\n", chip_addr[i]);
+		pr_debug("Virtual chip at 0x%02x\n", chip_addr[i]);
 	}
 
 	/* Allocate memory for all chips at once */

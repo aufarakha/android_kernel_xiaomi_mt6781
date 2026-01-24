@@ -476,7 +476,7 @@ static inline void brd_check_and_reset_par(void)
 		max_part = 1UL << fls(max_part);
 
 	if (max_part > DISK_MAX_PARTS) {
-		pr_info("brd: max_part can't be larger than %d, reset max_part = %d.\n",
+		pr_debug("brd: max_part can't be larger than %d, reset max_part = %d.\n",
 			DISK_MAX_PARTS, DISK_MAX_PARTS);
 		max_part = DISK_MAX_PARTS;
 	}
@@ -528,7 +528,7 @@ static int __init brd_init(void)
 	blk_register_region(MKDEV(RAMDISK_MAJOR, 0), 1UL << MINORBITS,
 				  THIS_MODULE, brd_probe, NULL, NULL);
 
-	pr_info("brd: module loaded\n");
+	pr_debug("brd: module loaded\n");
 	return 0;
 
 out_free:
@@ -538,7 +538,7 @@ out_free:
 	}
 	unregister_blkdev(RAMDISK_MAJOR, "ramdisk");
 
-	pr_info("brd: module NOT loaded !!!\n");
+	pr_debug("brd: module NOT loaded !!!\n");
 	return -ENOMEM;
 }
 
@@ -552,7 +552,7 @@ static void __exit brd_exit(void)
 	blk_unregister_region(MKDEV(RAMDISK_MAJOR, 0), 1UL << MINORBITS);
 	unregister_blkdev(RAMDISK_MAJOR, "ramdisk");
 
-	pr_info("brd: module unloaded\n");
+	pr_debug("brd: module unloaded\n");
 }
 
 module_init(brd_init);

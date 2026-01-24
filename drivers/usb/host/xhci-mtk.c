@@ -174,7 +174,7 @@ static ssize_t xhci_testmode_write(struct file *file,  const char __user *ubuf,
 		xhci->test_mode = testmode;
 		spin_unlock_irqrestore(&xhci->lock, flags);
 	} else {
-		pr_info("%s: invalid value\n", __func__);
+		pr_debug("%s: invalid value\n", __func__);
 		return -EINVAL;
 	}
 
@@ -197,7 +197,7 @@ static void xhci_mtk_dbg_init(struct xhci_hcd_mtk *mtk)
 
 	proc_files[idx] = proc_create_data("mtk_usb/testmode", 0644, NULL, &testmode_fops, mtk);
 	if (!proc_files[idx])
-		pr_info("%s: fail to create testmode node in procfs\n", __func__);
+		pr_debug("%s: fail to create testmode node in procfs\n", __func__);
 	idx++;
 }
 

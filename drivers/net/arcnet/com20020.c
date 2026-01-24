@@ -406,7 +406,7 @@ MODULE_LICENSE("GPL");
 static int __init com20020_module_init(void)
 {
 	if (BUGLVL(D_NORMAL))
-		pr_info("%s\n", "COM20020 chipset support (by David Woodhouse et al.)");
+		pr_debug("%s\n", "COM20020 chipset support (by David Woodhouse et al.)");
 	return 0;
 }
 

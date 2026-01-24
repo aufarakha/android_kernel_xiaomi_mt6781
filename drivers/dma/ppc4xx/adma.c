@@ -3865,7 +3865,7 @@ static void ppc440spe_adma_init_capabilities(struct ppc440spe_adma_device *adev)
 		adev->common.device_prep_dma_interrupt =
 			ppc440spe_adma_prep_dma_interrupt;
 	}
-	pr_info("%s: AMCC(R) PPC440SP(E) ADMA Engine: "
+	pr_debug("%s: AMCC(R) PPC440SP(E) ADMA Engine: "
 	  "( %s%s%s%s%s%s)\n",
 	  dev_name(adev->dev),
 	  dma_has_cap(DMA_PQ, adev->common.cap_mask) ? "pq " : "",
@@ -4348,11 +4348,11 @@ static ssize_t enable_store(struct device_driver *dev, const char *buf,
 
 	/* Verify whether it really works now */
 	if (ppc440spe_test_raid6(ppc440spe_r6_tchan) == 0) {
-		pr_info("PPC440SP(e) RAID-6 has been activated "
+		pr_debug("PPC440SP(e) RAID-6 has been activated "
 			"successfully\n");
 		ppc440spe_r6_enabled = 1;
 	} else {
-		pr_info("PPC440SP(e) RAID-6 hasn't been activated!"
+		pr_debug("PPC440SP(e) RAID-6 hasn't been activated!"
 			" Error key ?\n");
 		ppc440spe_r6_enabled = 0;
 	}

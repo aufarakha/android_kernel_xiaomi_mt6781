@@ -143,7 +143,7 @@ static void synth_interrogate(struct spk_synth *synth)
 			break;
 	}
 	rom_v[i] = 0;
-	pr_info("%s: ROM version: %s\n", synth->long_name, rom_v);
+	pr_debug("%s: ROM version: %s\n", synth->long_name, rom_v);
 }
 
 static int synth_probe(struct spk_synth *synth)

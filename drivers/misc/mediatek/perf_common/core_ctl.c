@@ -96,7 +96,7 @@ module_param_named(debug_enable, debug_enable, bool, 0600);
 #define core_ctl_debug(x...)		\
 	do {				\
 		if (debug_enable)	\
-			pr_info(x);	\
+			pr_debug(x);	\
 	} while (0)
 
 static DEFINE_SPINLOCK(state_lock);
@@ -1513,7 +1513,7 @@ static int cluster_init(const struct cpumask *mask)
 	core_ctl_debug("%s: Creating CPU group %d\n", TAG, first_cpu);
 
 	if (num_clusters == MAX_CLUSTERS) {
-		pr_info("%s: Unsupported number of clusters. Only %u supported\n",
+		pr_debug("%s: Unsupported number of clusters. Only %u supported\n",
 				TAG, MAX_CLUSTERS);
 		return -EINVAL;
 	}
@@ -1526,7 +1526,7 @@ static int cluster_init(const struct cpumask *mask)
 	cpumask_copy(&cluster->cpu_mask, mask);
 	cluster->num_cpus = cpumask_weight(mask);
 	if (cluster->num_cpus > MAX_CPUS_PER_CLUSTER) {
-		pr_info("%s: HW configuration not supported\n", TAG);
+		pr_debug("%s: HW configuration not supported\n", TAG);
 		return -EINVAL;
 	}
 	cluster->first_cpu = first_cpu;
@@ -1610,7 +1610,7 @@ static int __init core_ctl_init(void)
 		arch_get_cluster_cpus(&cluster_cpus, i);
 		ret = cluster_init(&cluster_cpus);
 		if (ret)
-			pr_info("%s: unable to create core ctl group: %d\n", TAG, ret);
+			pr_debug("%s: unable to create core ctl group: %d\n", TAG, ret);
 	}
 
 	initialized = true;

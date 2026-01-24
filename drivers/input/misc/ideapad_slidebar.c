@@ -278,7 +278,7 @@ static struct platform_driver slidebar_drv = {
 
 static int __init ideapad_dmi_check(const struct dmi_system_id *id)
 {
-	pr_info("Laptop model '%s'\n", id->ident);
+	pr_debug("Laptop model '%s'\n", id->ident);
 	return 1;
 }
 

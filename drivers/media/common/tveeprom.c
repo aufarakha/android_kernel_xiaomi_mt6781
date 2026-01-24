@@ -660,8 +660,8 @@ void tveeprom_hauppauge_analog(struct tveeprom *tvee,
 	}
 
 	if (hasRadioTuner(tuner1) && !tvee->has_radio) {
-		pr_info("The eeprom says no radio is present, but the tuner type\n");
-		pr_info("indicates otherwise. I will assume that radio is present.\n");
+		pr_debug("The eeprom says no radio is present, but the tuner type\n");
+		pr_debug("indicates otherwise. I will assume that radio is present.\n");
 		tvee->has_radio = 1;
 	}
 
@@ -696,46 +696,46 @@ void tveeprom_hauppauge_analog(struct tveeprom *tvee,
 		}
 	}
 
-	pr_info("Hauppauge model %d, rev %s, serial# %u\n",
+	pr_debug("Hauppauge model %d, rev %s, serial# %u\n",
 		tvee->model, tvee->rev_str, tvee->serial_number);
 	if (tvee->has_MAC_address == 1)
-		pr_info("MAC address is %pM\n", tvee->MAC_address);
-	pr_info("tuner model is %s (idx %d, type %d)\n",
+		pr_debug("MAC address is %pM\n", tvee->MAC_address);
+	pr_debug("tuner model is %s (idx %d, type %d)\n",
 		t_name1, tuner1, tvee->tuner_type);
-	pr_info("TV standards%s%s%s%s%s%s%s%s (eeprom 0x%02x)\n",
+	pr_debug("TV standards%s%s%s%s%s%s%s%s (eeprom 0x%02x)\n",
 		t_fmt_name1[0], t_fmt_name1[1], t_fmt_name1[2],
 		t_fmt_name1[3],	t_fmt_name1[4], t_fmt_name1[5],
 		t_fmt_name1[6], t_fmt_name1[7],	t_format1);
 	if (tuner2)
-		pr_info("second tuner model is %s (idx %d, type %d)\n",
+		pr_debug("second tuner model is %s (idx %d, type %d)\n",
 					t_name2, tuner2, tvee->tuner2_type);
 	if (t_format2)
-		pr_info("TV standards%s%s%s%s%s%s%s%s (eeprom 0x%02x)\n",
+		pr_debug("TV standards%s%s%s%s%s%s%s%s (eeprom 0x%02x)\n",
 			t_fmt_name2[0], t_fmt_name2[1], t_fmt_name2[2],
 			t_fmt_name2[3],	t_fmt_name2[4], t_fmt_name2[5],
 			t_fmt_name2[6], t_fmt_name2[7], t_format2);
 	if (audioic < 0) {
-		pr_info("audio processor is unknown (no idx)\n");
+		pr_debug("audio processor is unknown (no idx)\n");
 		tvee->audio_processor = TVEEPROM_AUDPROC_OTHER;
 	} else {
 		if (audioic < ARRAY_SIZE(audio_ic))
-			pr_info("audio processor is %s (idx %d)\n",
+			pr_debug("audio processor is %s (idx %d)\n",
 					audio_ic[audioic].name, audioic);
 		else
-			pr_info("audio processor is unknown (idx %d)\n",
+			pr_debug("audio processor is unknown (idx %d)\n",
 								audioic);
 	}
 	if (tvee->decoder_processor)
-		pr_info("decoder processor is %s (idx %d)\n",
+		pr_debug("decoder processor is %s (idx %d)\n",
 			STRM(decoderIC, tvee->decoder_processor),
 			tvee->decoder_processor);
 	if (tvee->has_ir)
-		pr_info("has %sradio, has %sIR receiver, has %sIR transmitter\n",
+		pr_debug("has %sradio, has %sIR receiver, has %sIR transmitter\n",
 				tvee->has_radio ? "" : "no ",
 				(tvee->has_ir & 2) ? "" : "no ",
 				(tvee->has_ir & 4) ? "" : "no ");
 	else
-		pr_info("has %sradio\n",
+		pr_debug("has %sradio\n",
 				tvee->has_radio ? "" : "no ");
 }
 EXPORT_SYMBOL(tveeprom_hauppauge_analog);
@@ -751,7 +751,7 @@ int tveeprom_read(struct i2c_client *c, unsigned char *eedata, int len)
 	buf = 0;
 	err = i2c_master_send(c, &buf, 1);
 	if (err != 1) {
-		pr_info("Huh, no eeprom present (err=%d)?\n", err);
+		pr_debug("Huh, no eeprom present (err=%d)?\n", err);
 		return -1;
 	}
 	err = i2c_master_recv(c, eedata, len);

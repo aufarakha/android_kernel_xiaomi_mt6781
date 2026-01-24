@@ -1320,7 +1320,7 @@ static int cx8800_initdev(struct pci_dev *pci_dev,
 	/* print pci info */
 	dev->pci_rev = pci_dev->revision;
 	pci_read_config_byte(pci_dev, PCI_LATENCY_TIMER,  &dev->pci_lat);
-	pr_info("found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
+	pr_debug("found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
 		pci_name(pci_dev), dev->pci_rev, pci_dev->irq,
 		dev->pci_lat,
 		(unsigned long long)pci_resource_start(pci_dev, 0));
@@ -1489,7 +1489,7 @@ static int cx8800_initdev(struct pci_dev *pci_dev,
 		pr_err("can't register video device\n");
 		goto fail_unreg;
 	}
-	pr_info("registered device %s [v4l2]\n",
+	pr_debug("registered device %s [v4l2]\n",
 		video_device_node_name(&dev->video_dev));
 
 	cx88_vdev_init(core, dev->pci, &dev->vbi_dev,
@@ -1502,7 +1502,7 @@ static int cx8800_initdev(struct pci_dev *pci_dev,
 		pr_err("can't register vbi device\n");
 		goto fail_unreg;
 	}
-	pr_info("registered device %s\n",
+	pr_debug("registered device %s\n",
 		video_device_node_name(&dev->vbi_dev));
 
 	if (core->board.radio.type == CX88_RADIO) {
@@ -1516,7 +1516,7 @@ static int cx8800_initdev(struct pci_dev *pci_dev,
 			pr_err("can't register radio device\n");
 			goto fail_unreg;
 		}
-		pr_info("registered device %s\n",
+		pr_debug("registered device %s\n",
 			video_device_node_name(&dev->radio_dev));
 	}
 
@@ -1588,11 +1588,11 @@ static int cx8800_suspend(struct pci_dev *pci_dev, pm_message_t state)
 	/* stop video+vbi capture */
 	spin_lock_irqsave(&dev->slock, flags);
 	if (!list_empty(&dev->vidq.active)) {
-		pr_info("suspend video\n");
+		pr_debug("suspend video\n");
 		stop_video_dma(dev);
 	}
 	if (!list_empty(&dev->vbiq.active)) {
-		pr_info("suspend vbi\n");
+		pr_debug("suspend vbi\n");
 		cx8800_stop_vbi_dma(dev);
 	}
 	spin_unlock_irqrestore(&dev->slock, flags);
@@ -1647,11 +1647,11 @@ static int cx8800_resume(struct pci_dev *pci_dev)
 	/* restart video+vbi capture */
 	spin_lock_irqsave(&dev->slock, flags);
 	if (!list_empty(&dev->vidq.active)) {
-		pr_info("resume video\n");
+		pr_debug("resume video\n");
 		restart_video_queue(dev, &dev->vidq);
 	}
 	if (!list_empty(&dev->vbiq.active)) {
-		pr_info("resume vbi\n");
+		pr_debug("resume vbi\n");
 		cx8800_restart_vbi_queue(dev, &dev->vbiq);
 	}
 	spin_unlock_irqrestore(&dev->slock, flags);

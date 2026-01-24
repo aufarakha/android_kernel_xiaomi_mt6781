@@ -597,7 +597,7 @@ static int applesmc_init_smcreg_try(void)
 	s->num_light_sensors = left_light_sensor + right_light_sensor;
 	s->init_complete = true;
 
-	pr_info("key=%d fan=%d temp=%d index=%d acc=%d lux=%d kbd=%d\n",
+	pr_debug("key=%d fan=%d temp=%d index=%d acc=%d lux=%d kbd=%d\n",
 	       s->key_count, s->fan_count, s->temp_count, s->index_count,
 	       s->has_accelerometer,
 	       s->num_light_sensors,
@@ -629,7 +629,7 @@ static int applesmc_init_smcreg(void)
 		ret = applesmc_init_smcreg_try();
 		if (!ret) {
 			if (ms)
-				pr_info("init_smcreg() took %d ms\n", ms);
+				pr_debug("init_smcreg() took %d ms\n", ms);
 			return 0;
 		}
 		msleep(INIT_WAIT_MSECS);
@@ -756,7 +756,7 @@ static ssize_t applesmc_light_show(struct device *dev,
 		if (entry->len > 10)
 			return -ENXIO;
 		data_length = entry->len;
-		pr_info("light sensor data length set to %d\n", data_length);
+		pr_debug("light sensor data length set to %d\n", data_length);
 	}
 
 	ret = applesmc_read_key(LIGHT_SENSOR_LEFT_KEY, buffer, data_length);

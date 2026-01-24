@@ -20,7 +20,7 @@ static ssize_t pmic_access_show(struct device *dev,
 {
 	struct mt63xx_consumer_data *data = dev_get_drvdata(dev);
 
-	pr_info("[%s] 0x%x\n", __func__, data->reg_value);
+	pr_debug("[%s] 0x%x\n", __func__, data->reg_value);
 	return sprintf(buf, "0x%x\n", data->reg_value);
 }
 
@@ -43,7 +43,7 @@ static ssize_t pmic_access_store(struct device *dev,
 		return -ENODEV;
 
 	if (buf != NULL && size != 0) {
-		pr_info("[%s] size is %d, buf is %s\n", __func__,
+		pr_debug("[%s] size is %d, buf is %s\n", __func__,
 			(int)size, buf);
 
 		pvalue = (char *)buf;
@@ -60,7 +60,7 @@ static ssize_t pmic_access_store(struct device *dev,
 					  reg_adr, &data->reg_value);
 		}
 		mutex_unlock(&data->lock);
-		pr_info("%s PMIC Reg[0x%x]=0x%x!\n",
+		pr_debug("%s PMIC Reg[0x%x]=0x%x!\n",
 			(val ? "write" : "read"), reg_adr,
 			(val ? reg_val : data->reg_value));
 	}
@@ -86,7 +86,7 @@ static int mt63xx_debug_probe(struct platform_device *pdev)
 	/* Create sysfs entry */
 	ret = device_create_file(&pdev->dev, &dev_attr_pmic_access);
 	if (ret < 0)
-		pr_info("%s failed to create sysfs file\n", __func__);
+		pr_debug("%s failed to create sysfs file\n", __func__);
 
 	return ret;
 }

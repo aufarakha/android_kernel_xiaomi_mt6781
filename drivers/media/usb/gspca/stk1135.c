@@ -428,7 +428,7 @@ static int sd_init(struct gspca_dev *gspca_dev)
 	default:
 		sensor_name = "unknown";
 	}
-	pr_info("Detected sensor type %s (0x%x)\n", sensor_name, sensor_id);
+	pr_debug("Detected sensor type %s (0x%x)\n", sensor_name, sensor_id);
 
 	stk1135_camera_disable(gspca_dev);
 

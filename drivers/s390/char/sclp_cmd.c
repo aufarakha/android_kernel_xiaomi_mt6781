@@ -374,7 +374,7 @@ static void __init align_to_block_size(unsigned long long *start,
 	start_align = roundup(*start, alignment);
 	size_align = rounddown(*start + *size, alignment) - start_align;
 
-	pr_info("Standby memory at 0x%llx (%lluM of %lluM usable)\n",
+	pr_debug("Standby memory at 0x%llx (%lluM of %lluM usable)\n",
 		*start, size_align >> 20, *size >> 20);
 	*start = start_align;
 	*size = size_align;

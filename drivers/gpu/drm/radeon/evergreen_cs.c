@@ -2776,7 +2776,7 @@ int evergreen_cs_parse(struct radeon_cs_parser *p)
 	} while (p->idx < p->chunk_ib->length_dw);
 #if 0
 	for (r = 0; r < p->ib.length_dw; r++) {
-		pr_info("%05d  0x%08X\n", r, p->ib.ptr[r]);
+		pr_debug("%05d  0x%08X\n", r, p->ib.ptr[r]);
 		mdelay(1);
 	}
 #endif
@@ -3215,7 +3215,7 @@ int evergreen_dma_cs_parse(struct radeon_cs_parser *p)
 	} while (p->idx < p->chunk_ib->length_dw);
 #if 0
 	for (r = 0; r < p->ib->length_dw; r++) {
-		pr_info("%05d  0x%08X\n", r, p->ib.ptr[r]);
+		pr_debug("%05d  0x%08X\n", r, p->ib.ptr[r]);
 		mdelay(1);
 	}
 #endif

@@ -236,7 +236,7 @@ static int cxgb_ulp_iscsi_ctl(struct adapter *adapter, unsigned int req,
 		if ((val >> S_MAXRXDATA) != 0x3f60) {
 			val &= (M_RXCOALESCESIZE << S_RXCOALESCESIZE);
 			val |= V_MAXRXDATA(0x3f60);
-			pr_info("%s, iscsi set MaxRxData to 16224 (0x%x)\n",
+			pr_debug("%s, iscsi set MaxRxData to 16224 (0x%x)\n",
 				adapter->name, val);
 			t3_write_reg(adapter, A_TP_PARA_REG2, val);
 		}
@@ -256,7 +256,7 @@ static int cxgb_ulp_iscsi_ctl(struct adapter *adapter, unsigned int req,
 		for (i = 0; i < 4; i++)
 			val |= (uiip->pgsz_factor[i] & 0xF) << (8 * i);
 		if (val && (val != t3_read_reg(adapter, A_ULPRX_ISCSI_PSZ))) {
-			pr_info("%s, setting iscsi pgsz 0x%x, %u,%u,%u,%u\n",
+			pr_debug("%s, setting iscsi pgsz 0x%x, %u,%u,%u,%u\n",
 				adapter->name, val, uiip->pgsz_factor[0],
 				uiip->pgsz_factor[1], uiip->pgsz_factor[2],
 				uiip->pgsz_factor[3]);

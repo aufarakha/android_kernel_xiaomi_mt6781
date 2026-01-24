@@ -284,7 +284,7 @@ int greybus_register_driver(struct greybus_driver *driver, struct module *owner,
 	if (retval)
 		return retval;
 
-	pr_info("registered new driver %s\n", driver->name);
+	pr_debug("registered new driver %s\n", driver->name);
 	return 0;
 }
 EXPORT_SYMBOL_GPL(greybus_register_driver);

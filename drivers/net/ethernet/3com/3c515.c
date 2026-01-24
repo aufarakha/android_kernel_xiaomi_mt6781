@@ -532,7 +532,7 @@ static struct net_device *corkscrew_scan(int unit)
 			if(corkscrew_debug)
 				pr_debug("ISAPNP reports %s at i/o 0x%x, irq %d\n",
 					(char*) corkscrew_isapnp_adapters[i].driver_data, ioaddr, irq);
-			pr_info("3c515 Resource configuration register %#4.4x, DCR %4.4x.\n",
+			pr_debug("3c515 Resource configuration register %#4.4x, DCR %4.4x.\n",
 		     		inl(ioaddr + 0x2002), inw(ioaddr + 0x2000));
 			/* irq = inw(ioaddr + 0x2002) & 15; */ /* Use the irq from isapnp */
 			SET_NETDEV_DEV(dev, &idev->dev);
@@ -551,7 +551,7 @@ no_pnp:
 		if (!check_device(ioaddr))
 			continue;
 
-		pr_info("3c515 Resource configuration register %#4.4x, DCR %4.4x.\n",
+		pr_debug("3c515 Resource configuration register %#4.4x, DCR %4.4x.\n",
 		     inl(ioaddr + 0x2002), inw(ioaddr + 0x2000));
 		err = corkscrew_setup(dev, ioaddr, NULL, cards_found++);
 		if (!err)
@@ -623,7 +623,7 @@ static int corkscrew_setup(struct net_device *dev, int ioaddr,
 	list_add(&vp->list, &root_corkscrew_dev);
 #endif
 
-	pr_info("%s: 3Com %s at %#3x,", dev->name, vp->product_name, ioaddr);
+	pr_debug("%s: 3Com %s at %#3x,", dev->name, vp->product_name, ioaddr);
 
 	spin_lock_init(&vp->lock);
 
@@ -671,9 +671,9 @@ static int corkscrew_setup(struct net_device *dev, int ioaddr,
 		vp->available_media = inw(ioaddr + Wn3_Options);
 		config = inl(ioaddr + Wn3_Config);
 		if (corkscrew_debug > 1)
-			pr_info("  Internal config register is %4.4x, transceivers %#x.\n",
+			pr_debug("  Internal config register is %4.4x, transceivers %#x.\n",
 				config, inw(ioaddr + Wn3_Options));
-		pr_info("  %dK %s-wide RAM %s Rx:Tx split, %s%s interface.\n",
+		pr_debug("  %dK %s-wide RAM %s Rx:Tx split, %s%s interface.\n",
 			8 << config & Ram_size,
 			config & Ram_width ? "word" : "byte",
 			ram_split[(config & Ram_split) >> Ram_split_shift],
@@ -684,7 +684,7 @@ static int corkscrew_setup(struct net_device *dev, int ioaddr,
 		dev->if_port = vp->default_media;
 	}
 	if (vp->media_override != 7) {
-		pr_info("  Media override to transceiver type %d (%s).\n",
+		pr_debug("  Media override to transceiver type %d (%s).\n",
 		       vp->media_override,
 		       media_tbl[vp->media_override].name);
 		dev->if_port = vp->media_override;
@@ -721,7 +721,7 @@ static int corkscrew_open(struct net_device *dev)
 
 	if (vp->media_override != 7) {
 		if (corkscrew_debug > 1)
-			pr_info("%s: Media override to transceiver %d (%s).\n",
+			pr_debug("%s: Media override to transceiver %d (%s).\n",
 				dev->name, vp->media_override,
 				media_tbl[vp->media_override].name);
 		dev->if_port = vp->media_override;

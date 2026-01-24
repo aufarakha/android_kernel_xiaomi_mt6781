@@ -188,9 +188,9 @@ extern int tpd_em_log;
 
 /*Log define*/
 #define GTP_INFO(fmt, arg...)           \
-	pr_info("<<GTP-INF>>[%s:%d] "fmt"\n", __func__, __LINE__, ##arg)
+	pr_debug("<<GTP-INF>>[%s:%d] "fmt"\n", __func__, __LINE__, ##arg)
 #define GTP_ERROR(fmt, arg...)          \
-	pr_info("<<GTP-ERR>>[%s:%d] "fmt"\n", __func__, __LINE__, ##arg)
+	pr_debug("<<GTP-ERR>>[%s:%d] "fmt"\n", __func__, __LINE__, ##arg)
 #define GTP_DEBUG(fmt, arg...)				\
 	do {								\
 		if (tpd_em_log)						\

@@ -96,13 +96,13 @@ void acpi_table_print_madt_entry(struct acpi_subtable_header *header)
 		{
 			struct acpi_madt_interrupt_override *p =
 			    (struct acpi_madt_interrupt_override *)header;
-			pr_info("INT_SRC_OVR (bus %d bus_irq %d global_irq %d %s %s)\n",
+			pr_debug("INT_SRC_OVR (bus %d bus_irq %d global_irq %d %s %s)\n",
 				p->bus, p->source_irq, p->global_irq,
 				mps_inti_flags_polarity[p->inti_flags & ACPI_MADT_POLARITY_MASK],
 				mps_inti_flags_trigger[(p->inti_flags & ACPI_MADT_TRIGGER_MASK) >> 2]);
 			if (p->inti_flags  &
 			    ~(ACPI_MADT_POLARITY_MASK | ACPI_MADT_TRIGGER_MASK))
-				pr_info("INT_SRC_OVR unexpected reserved flags: 0x%x\n",
+				pr_debug("INT_SRC_OVR unexpected reserved flags: 0x%x\n",
 					p->inti_flags  &
 					~(ACPI_MADT_POLARITY_MASK | ACPI_MADT_TRIGGER_MASK));
 		}
@@ -112,7 +112,7 @@ void acpi_table_print_madt_entry(struct acpi_subtable_header *header)
 		{
 			struct acpi_madt_nmi_source *p =
 			    (struct acpi_madt_nmi_source *)header;
-			pr_info("NMI_SRC (%s %s global_irq %d)\n",
+			pr_debug("NMI_SRC (%s %s global_irq %d)\n",
 				mps_inti_flags_polarity[p->inti_flags & ACPI_MADT_POLARITY_MASK],
 				mps_inti_flags_trigger[(p->inti_flags & ACPI_MADT_TRIGGER_MASK) >> 2],
 				p->global_irq);
@@ -123,7 +123,7 @@ void acpi_table_print_madt_entry(struct acpi_subtable_header *header)
 		{
 			struct acpi_madt_local_apic_nmi *p =
 			    (struct acpi_madt_local_apic_nmi *)header;
-			pr_info("LAPIC_NMI (acpi_id[0x%02x] %s %s lint[0x%x])\n",
+			pr_debug("LAPIC_NMI (acpi_id[0x%02x] %s %s lint[0x%x])\n",
 				p->processor_id,
 				mps_inti_flags_polarity[p->inti_flags & ACPI_MADT_POLARITY_MASK	],
 				mps_inti_flags_trigger[(p->inti_flags & ACPI_MADT_TRIGGER_MASK) >> 2],
@@ -140,7 +140,7 @@ void acpi_table_print_madt_entry(struct acpi_subtable_header *header)
 			polarity = p->inti_flags & ACPI_MADT_POLARITY_MASK;
 			trigger = (p->inti_flags & ACPI_MADT_TRIGGER_MASK) >> 2;
 
-			pr_info("X2APIC_NMI (uid[0x%02x] %s %s lint[0x%x])\n",
+			pr_debug("X2APIC_NMI (uid[0x%02x] %s %s lint[0x%x])\n",
 				p->uid,
 				mps_inti_flags_polarity[polarity],
 				mps_inti_flags_trigger[trigger],
@@ -152,7 +152,7 @@ void acpi_table_print_madt_entry(struct acpi_subtable_header *header)
 		{
 			struct acpi_madt_local_apic_override *p =
 			    (struct acpi_madt_local_apic_override *)header;
-			pr_info("LAPIC_ADDR_OVR (address[%p])\n",
+			pr_debug("LAPIC_ADDR_OVR (address[%p])\n",
 				(void *)(unsigned long)p->address);
 		}
 		break;
@@ -181,7 +181,7 @@ void acpi_table_print_madt_entry(struct acpi_subtable_header *header)
 		{
 			struct acpi_madt_interrupt_source *p =
 			    (struct acpi_madt_interrupt_source *)header;
-			pr_info("PLAT_INT_SRC (%s %s type[0x%x] id[0x%04x] eid[0x%x] iosapic_vector[0x%x] global_irq[0x%x]\n",
+			pr_debug("PLAT_INT_SRC (%s %s type[0x%x] id[0x%04x] eid[0x%x] iosapic_vector[0x%x] global_irq[0x%x]\n",
 				mps_inti_flags_polarity[p->inti_flags & ACPI_MADT_POLARITY_MASK],
 				mps_inti_flags_trigger[(p->inti_flags & ACPI_MADT_TRIGGER_MASK) >> 2],
 				p->type, p->id, p->eid, p->io_sapic_vector,
@@ -521,7 +521,7 @@ void __init acpi_table_upgrade(void)
 			continue;
 		}
 
-		pr_info("%4.4s ACPI table found in initrd [%s%s][0x%x]\n",
+		pr_debug("%4.4s ACPI table found in initrd [%s%s][0x%x]\n",
 			table->signature, cpio_path, file.name, table->length);
 
 		all_tables_size += table->length;
@@ -628,7 +628,7 @@ acpi_table_initrd_override(struct acpi_table_header *existing_table,
 
 		*length = table_length;
 		*address = acpi_tables_addr + table_offset;
-		pr_info("Table Upgrade: override [%4.4s-%6.6s-%8.8s]\n",
+		pr_debug("Table Upgrade: override [%4.4s-%6.6s-%8.8s]\n",
 			table->signature, table->oem_id,
 			table->oem_table_id);
 		acpi_os_unmap_memory(table, ACPI_HEADER_SIZE);
@@ -678,7 +678,7 @@ static void __init acpi_table_initrd_scan(void)
 			goto next_table;
 		}
 
-		pr_info("Table Upgrade: install [%4.4s-%6.6s-%8.8s]\n",
+		pr_debug("Table Upgrade: install [%4.4s-%6.6s-%8.8s]\n",
 			table->signature, table->oem_id,
 			table->oem_table_id);
 		acpi_os_unmap_memory(table, ACPI_HEADER_SIZE);
@@ -745,10 +745,10 @@ int __init acpi_locate_initial_tables(void)
 	acpi_status status;
 
 	if (acpi_verify_table_checksum) {
-		pr_info("Early table checksum verification enabled\n");
+		pr_debug("Early table checksum verification enabled\n");
 		acpi_gbl_enable_table_validation = TRUE;
 	} else {
-		pr_info("Early table checksum verification disabled\n");
+		pr_debug("Early table checksum verification disabled\n");
 		acpi_gbl_enable_table_validation = FALSE;
 	}
 
@@ -771,7 +771,7 @@ void __init acpi_reserve_initial_tables(void)
 		if (!start || !size)
 			break;
 
-		pr_info("Reserving %4s table memory at [mem 0x%llx-0x%llx]\n",
+		pr_debug("Reserving %4s table memory at [mem 0x%llx-0x%llx]\n",
 			table_desc->signature.ascii, start, start + size - 1);
 
 		memblock_reserve(start, size);
@@ -823,7 +823,7 @@ early_param("acpi_force_table_verification", acpi_force_table_verification_setup
 
 static int __init acpi_force_32bit_fadt_addr(char *s)
 {
-	pr_info("Forcing 32 Bit FADT addresses\n");
+	pr_debug("Forcing 32 Bit FADT addresses\n");
 	acpi_gbl_use32_bit_fadt_addresses = TRUE;
 
 	return 0;

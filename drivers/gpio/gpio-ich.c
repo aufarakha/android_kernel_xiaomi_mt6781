@@ -485,7 +485,7 @@ init:
 		return err;
 	}
 
-	pr_info("GPIO from %d to %d on %s\n", ichx_priv.chip.base,
+	pr_debug("GPIO from %d to %d on %s\n", ichx_priv.chip.base,
 	       ichx_priv.chip.base + ichx_priv.chip.ngpio - 1, DRV_NAME);
 
 	return 0;

@@ -114,7 +114,7 @@ static void tianma_dcs_write(struct tianma *ctx, const void *data, size_t len)
 	else
 		ret = mipi_dsi_generic_write(dsi, data, len);
 	if (ret < 0) {
-		pr_info("error %zd writing seq: %ph\n", ret, data);
+		pr_debug("error %zd writing seq: %ph\n", ret, data);
 		ctx->error = ret;
 	}
 	udelay(100);
@@ -287,7 +287,7 @@ static int tianma_prepare(struct drm_panel *panel)
 	struct tianma *ctx = panel_to_tianma(panel);
 	int ret;
 
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 	if (ctx->prepared)
 		return 0;
 #if defined(CONFIG_RT4831A_I2C)
@@ -890,7 +890,7 @@ static int tianma_get_modes(struct drm_panel *panel)
 
 	mode_1 = drm_mode_duplicate(panel->drm, &default_mode);
 	if (!mode_1) {
-		pr_info("failed to add mode %ux%ux@%u\n",
+		pr_debug("failed to add mode %ux%ux@%u\n",
 			default_mode.hdisplay, default_mode.vdisplay,
 			default_mode.vrefresh);
 		return -ENOMEM;
@@ -902,7 +902,7 @@ static int tianma_get_modes(struct drm_panel *panel)
 
 	mode_2 = drm_mode_duplicate(panel->drm, &switch_mode_1);
 	if (!mode_2) {
-		pr_info("failed to add mode %ux%ux@%u\n",
+		pr_debug("failed to add mode %ux%ux@%u\n",
 			switch_mode_1.hdisplay,
 			switch_mode_1.vdisplay,
 			switch_mode_1.vrefresh);
@@ -953,18 +953,18 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 		if (endpoint) {
 			remote_node = of_graph_get_remote_port_parent(endpoint);
 			if (!remote_node) {
-				pr_info("No panel connected,skip probe lcm\n");
+				pr_debug("No panel connected,skip probe lcm\n");
 				return -ENODEV;
 			}
-			pr_info("tianma_r66451_cmd_120_6382 %s\n", remote_node->name);
+			pr_debug("tianma_r66451_cmd_120_6382 %s\n", remote_node->name);
 		}
 	}
 	if (remote_node != dev->of_node) {
-		pr_info("tianma_r66451_cmd_120hz_6382 isn't current lcm\n");
+		pr_debug("tianma_r66451_cmd_120hz_6382 isn't current lcm\n");
 		return -ENODEV;
 	}
 
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 	ctx = devm_kzalloc(dev, sizeof(struct tianma), GFP_KERNEL);
 
 	if (!ctx)
@@ -990,7 +990,7 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
 
 	if (IS_ERR(ctx->reset_gpio)) {
-		pr_info("cannot get reset-gpios %ld\n",
+		pr_debug("cannot get reset-gpios %ld\n",
 			PTR_ERR(ctx->reset_gpio));
 		return PTR_ERR(ctx->reset_gpio);
 	}
@@ -1037,7 +1037,7 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 		return ret;
 #endif
 
-	pr_info("%s-\n", __func__);
+	pr_debug("%s-\n", __func__);
 
 	return ret;
 }

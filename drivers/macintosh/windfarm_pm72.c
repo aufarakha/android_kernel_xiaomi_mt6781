@@ -525,7 +525,7 @@ static void backside_setup_pid(void)
 	wf_pid_init(&backside_pid, &param);
 	backside_tick = 1;
 
-	pr_info("wf_pm72: Backside control loop started.\n");
+	pr_debug("wf_pm72: Backside control loop started.\n");
 }
 
 /* Drive bay fan */
@@ -591,7 +591,7 @@ static void drives_setup_pid(void)
 	wf_pid_init(&drives_pid, &param);
 	drives_tick = 1;
 
-	pr_info("wf_pm72: Drive bay control loop started.\n");
+	pr_debug("wf_pm72: Drive bay control loop started.\n");
 }
 
 static void set_fail_state(void)
@@ -706,7 +706,7 @@ static void pm72_new_control(struct wf_control *ct)
 	have_all_controls = all_controls;
 
 	if ((cpu_pumps[0] || cpu_pumps[1]) && !had_pump) {
-		pr_info("wf_pm72: Liquid cooling pump(s) detected,"
+		pr_debug("wf_pm72: Liquid cooling pump(s) detected,"
 			" using new algorithm !\n");
 		cpu_pid_combined = true;
 	}
@@ -808,7 +808,7 @@ static int __init wf_pm72_init(void)
 	if (nr_chips > NR_CHIPS)
 		nr_chips = NR_CHIPS;
 
-	pr_info("windfarm: Initializing for desktop G5 with %d chips\n",
+	pr_debug("windfarm: Initializing for desktop G5 with %d chips\n",
 		nr_chips);
 
 	/* Get MPU data for each CPU */

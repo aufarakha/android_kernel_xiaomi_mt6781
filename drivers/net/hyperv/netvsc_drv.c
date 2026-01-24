@@ -2603,7 +2603,7 @@ static int __init netvsc_drv_init(void)
 
 	if (ring_size < RING_SIZE_MIN) {
 		ring_size = RING_SIZE_MIN;
-		pr_info("Increased ring_size to %u (min allowed)\n",
+		pr_debug("Increased ring_size to %u (min allowed)\n",
 			ring_size);
 	}
 	netvsc_ring_bytes = ring_size * PAGE_SIZE;

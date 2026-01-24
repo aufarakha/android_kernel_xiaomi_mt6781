@@ -360,7 +360,7 @@ static ssize_t ffs_ep0_write(struct file *file, const char __user *buf,
 
 		/* Handle data */
 		if (ffs->state == FFS_READ_DESCRIPTORS) {
-			pr_info("read descriptors\n");
+			pr_debug("read descriptors\n");
 			ret = __ffs_data_got_descs(ffs, data, len);
 			if (unlikely(ret < 0))
 				break;
@@ -368,7 +368,7 @@ static ssize_t ffs_ep0_write(struct file *file, const char __user *buf,
 			ffs->state = FFS_READ_STRINGS;
 			ret = len;
 		} else {
-			pr_info("read strings\n");
+			pr_debug("read strings\n");
 			ret = __ffs_data_got_strings(ffs, data, len);
 			if (unlikely(ret < 0))
 				break;
@@ -1142,7 +1142,7 @@ ffs_epfile_open(struct inode *inode, struct file *file)
 	/* to get updated opened atomic variable value */
 	smp_mb__before_atomic();
 	if (atomic_read(&epfile->opened)) {
-		pr_info("%s(): ep(%s) is already opened.\n",
+		pr_debug("%s(): ep(%s) is already opened.\n",
 					__func__, epfile->name);
 		return -EBUSY;
 	}
@@ -1154,7 +1154,7 @@ ffs_epfile_open(struct inode *inode, struct file *file)
 		while (i <= mask) {
 			if (i & mask) {
 				cpumask_set_cpu(idx, &cpu_mask);
-				pr_info("Set CPU[%d] On\n", idx);
+				pr_debug("Set CPU[%d] On\n", idx);
 			}
 			idx++;
 			i = i << 1;
@@ -1684,7 +1684,7 @@ static int functionfs_init(void)
 
 	ret = register_filesystem(&ffs_fs_type);
 	if (likely(!ret))
-		pr_info("file system registered\n");
+		pr_debug("file system registered\n");
 	else
 		pr_err("failed registering file system (%d)\n", ret);
 
@@ -1695,7 +1695,7 @@ static void functionfs_cleanup(void)
 {
 	ENTER();
 
-	pr_info("unloading\n");
+	pr_debug("unloading\n");
 	unregister_filesystem(&ffs_fs_type);
 }
 
@@ -1734,7 +1734,7 @@ static void ffs_data_put(struct ffs_data *ffs)
 	/* to get updated ref atomic variable value */
 	smp_mb__before_atomic();
 	if (unlikely(refcount_dec_and_test(&ffs->ref))) {
-		pr_info("%s(): freeing\n", __func__);
+		pr_debug("%s(): freeing\n", __func__);
 		ffs_data_clear(ffs);
 		ffs_release_dev(ffs->private_data);
 		BUG_ON(waitqueue_active(&ffs->ev.waitq) ||

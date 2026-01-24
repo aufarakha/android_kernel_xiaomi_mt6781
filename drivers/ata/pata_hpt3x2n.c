@@ -582,7 +582,7 @@ hpt372n:
 		return -ENODEV;
 	}
 
-	pr_info("bus clock %dMHz, using 66MHz DPLL\n", pci_mhz);
+	pr_debug("bus clock %dMHz, using 66MHz DPLL\n", pci_mhz);
 
 	/*
 	 * Set our private data up. We only need a few flags

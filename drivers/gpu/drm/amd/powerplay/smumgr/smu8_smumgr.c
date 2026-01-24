@@ -660,7 +660,7 @@ static int smu8_request_smu_load_fw(struct pp_hwmgr *hwmgr)
 	uint32_t smc_address;
 
 	if (!hwmgr->reload_fw) {
-		pr_info("skip reloading...\n");
+		pr_debug("skip reloading...\n");
 		return 0;
 	}
 

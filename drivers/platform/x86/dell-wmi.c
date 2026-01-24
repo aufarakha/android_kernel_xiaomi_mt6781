@@ -338,7 +338,7 @@ static void dell_wmi_process_key(struct wmi_device *wdev, int type, int code)
 	key = sparse_keymap_entry_from_scancode(priv->input_dev,
 						(type << 16) | code);
 	if (!key) {
-		pr_info("Unknown key with type 0x%04x and code 0x%04x pressed\n",
+		pr_debug("Unknown key with type 0x%04x and code 0x%04x pressed\n",
 			type, code);
 		return;
 	}
@@ -426,7 +426,7 @@ static void dell_wmi_notify(struct wmi_device *wdev,
 						     buffer_entry[i]);
 			break;
 		default: /* Unknown event */
-			pr_info("Unknown WMI event type 0x%x\n",
+			pr_debug("Unknown WMI event type 0x%x\n",
 				(int)buffer_entry[1]);
 			break;
 		}
@@ -500,7 +500,7 @@ static void handle_dmi_entry(const struct dmi_header *dm, void *opaque)
 		 * the entry means and add it to bios_to_linux_keycode.
 		 */
 		if (keycode == KEY_RESERVED) {
-			pr_info("firmware scancode 0x%x maps to unrecognized keycode 0x%x\n",
+			pr_debug("firmware scancode 0x%x maps to unrecognized keycode 0x%x\n",
 				bios_entry->scancode, bios_entry->keycode);
 			continue;
 		}

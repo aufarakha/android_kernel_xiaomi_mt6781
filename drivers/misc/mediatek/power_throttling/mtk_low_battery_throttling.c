@@ -35,7 +35,7 @@ int register_low_battery_notify(low_battery_callback lb_cb,
 		return -EINVAL;
 	}
 	lbcb_tb[prio_val].lbcb = lb_cb;
-	pr_info("[%s] prio_val=%d\n", __func__, prio_val);
+	pr_debug("[%s] prio_val=%d\n", __func__, prio_val);
 	return 0;
 }
 EXPORT_SYMBOL(register_low_battery_notify);
@@ -45,7 +45,7 @@ void exec_low_battery_callback(unsigned int thd)
 	int i = 0;
 
 	if (g_low_battery_stop == 1) {
-		pr_info("[%s] g_low_battery_stop=%d\n"
+		pr_debug("[%s] g_low_battery_stop=%d\n"
 			, __func__, g_low_battery_stop);
 	} else {
 		switch (thd) {
@@ -67,7 +67,7 @@ void exec_low_battery_callback(unsigned int thd)
 			if (lbcb_tb[i].lbcb)
 				lbcb_tb[i].lbcb(g_low_battery_level);
 		}
-		pr_info("[%s] low_battery_level=%d\n", __func__,
+		pr_debug("[%s] low_battery_level=%d\n", __func__,
 			g_low_battery_level);
 	}
 }
@@ -93,10 +93,10 @@ static ssize_t low_battery_protect_ut_store(
 	unsigned int val = 0;
 	unsigned int thd;
 
-	pr_info("[%s]\n", __func__);
+	pr_debug("[%s]\n", __func__);
 
 	if (buf != NULL && size != 0) {
-		pr_info("[%s] buf is %s and size is %zu\n",
+		pr_debug("[%s] buf is %s and size is %zu\n",
 			__func__, buf, size);
 		pvalue = (char *)buf;
 		ret = kstrtou32(pvalue, 16, (unsigned int *)&val);
@@ -108,10 +108,10 @@ static ssize_t low_battery_protect_ut_store(
 			else if (val == LOW_BATTERY_LEVEL_2)
 				thd = POWER_INT2_VOLT;
 			exec_low_battery_callback(thd);
-			pr_info("[%s] your input is %d(%d)\n",
+			pr_debug("[%s] your input is %d(%d)\n",
 				__func__, val, thd);
 		} else {
-			pr_info("[%s] wrong number (%d)\n", __func__, val);
+			pr_debug("[%s] wrong number (%d)\n", __func__, val);
 		}
 	}
 	return size;
@@ -137,17 +137,17 @@ static ssize_t low_battery_protect_stop_store(struct device *dev,
 	char *pvalue = NULL;
 	unsigned int val = 0;
 
-	pr_info("[%s]\n", __func__);
+	pr_debug("[%s]\n", __func__);
 
 	if (buf != NULL && size != 0) {
-		pr_info("[%s] buf is %s and size is %zu\n",
+		pr_debug("[%s] buf is %s and size is %zu\n",
 			__func__, buf, size);
 		pvalue = (char *)buf;
 		ret = kstrtou32(pvalue, 16, (unsigned int *)&val);
 		if ((val != 0) && (val != 1))
 			val = 0;
 		g_low_battery_stop = val;
-		pr_info("[%s] g_low_battery_stop=%d\n",
+		pr_debug("[%s] g_low_battery_stop=%d\n",
 			__func__, g_low_battery_stop);
 	}
 	return size;

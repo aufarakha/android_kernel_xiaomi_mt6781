@@ -4088,12 +4088,12 @@ static int sd_init(struct gspca_dev *gspca_dev)
 		}
 	}
 	if (sd->sensor == SENSOR_SOI763A) {
-		pr_info("Sensor soi763a\n");
+		pr_debug("Sensor soi763a\n");
 		if (sd->bridge == BRIDGE_TP6810) {
 			soi763a_6810_init(gspca_dev);
 		}
 	} else {
-		pr_info("Sensor cx0342\n");
+		pr_debug("Sensor cx0342\n");
 		if (sd->bridge == BRIDGE_TP6810) {
 			cx0342_6810_init(gspca_dev);
 		}

@@ -159,7 +159,7 @@ static __init int exynos4_pm_init_power_domain(void)
 			pr_warn("%pOF failed to add subdomain: %pOF\n",
 				parent.np, child.np);
 		else
-			pr_info("%pOF has as child subdomain: %pOF.\n",
+			pr_debug("%pOF has as child subdomain: %pOF.\n",
 				parent.np, child.np);
 	}
 

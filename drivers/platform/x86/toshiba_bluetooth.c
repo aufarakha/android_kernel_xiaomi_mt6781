@@ -83,7 +83,7 @@ static int toshiba_bluetooth_present(acpi_handle handle)
 	}
 
 	if (!bt_present) {
-		pr_info("Bluetooth device not present\n");
+		pr_debug("Bluetooth device not present\n");
 		return -ENODEV;
 	}
 
@@ -244,7 +244,7 @@ static int toshiba_bt_rfkill_add(struct acpi_device *device)
 	if (result)
 		return result;
 
-	pr_info("Toshiba ACPI Bluetooth device driver\n");
+	pr_debug("Toshiba ACPI Bluetooth device driver\n");
 
 	bt_dev = kzalloc(sizeof(*bt_dev), GFP_KERNEL);
 	if (!bt_dev)

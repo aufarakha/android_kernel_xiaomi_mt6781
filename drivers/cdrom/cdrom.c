@@ -480,7 +480,7 @@ static int cdrom_mrw_bgformat(struct cdrom_device_info *cdi, int cont)
 	unsigned char buffer[12];
 	int ret;
 
-	pr_info("%sstarting format\n", cont ? "Re" : "");
+	pr_debug("%sstarting format\n", cont ? "Re" : "");
 
 	/*
 	 * FmtData bit set (bit 4), format type is 1
@@ -510,7 +510,7 @@ static int cdrom_mrw_bgformat(struct cdrom_device_info *cdi, int cont)
 
 	ret = cdi->ops->generic_packet(cdi, &cgc);
 	if (ret)
-		pr_info("bgformat failed\n");
+		pr_debug("bgformat failed\n");
 
 	return ret;
 }
@@ -544,7 +544,7 @@ static int cdrom_mrw_exit(struct cdrom_device_info *cdi)
 
 	ret = 0;
 	if (di.mrw_status == CDM_MRW_BGFORMAT_ACTIVE) {
-		pr_info("issuing MRW background format suspend\n");
+		pr_debug("issuing MRW background format suspend\n");
 		ret = cdrom_mrw_bgformat_susp(cdi, 0);
 	}
 
@@ -581,7 +581,7 @@ static int cdrom_mrw_set_lba_space(struct cdrom_device_info *cdi, int space)
 	if (ret)
 		return ret;
 
-	pr_info("%s: mrw address space %s selected\n",
+	pr_debug("%s: mrw address space %s selected\n",
 		cdi->name, mrw_address_space[space]);
 	return 0;
 }
@@ -596,7 +596,7 @@ int register_cdrom(struct cdrom_device_info *cdi)
 	if (cdo->open == NULL || cdo->release == NULL)
 		return -EINVAL;
 	if (!banner_printed) {
-		pr_info("Uniform CD-ROM driver " REVISION "\n");
+		pr_debug("Uniform CD-ROM driver " REVISION "\n");
 		banner_printed = 1;
 		cdrom_sysctl_register();
 	}
@@ -801,7 +801,7 @@ static int cdrom_mrw_open_write(struct cdrom_device_info *cdi)
 	 * 3	-	MRW formatting complete
 	 */
 	ret = 0;
-	pr_info("open: mrw_status '%s'\n", mrw_format_status[di.mrw_status]);
+	pr_debug("open: mrw_status '%s'\n", mrw_format_status[di.mrw_status]);
 	if (!di.mrw_status)
 		ret = 1;
 	else if (di.mrw_status == CDM_MRW_BGFORMAT_INACTIVE &&
@@ -952,7 +952,7 @@ static void cdrom_dvd_rw_close_write(struct cdrom_device_info *cdi)
 		return;
 	}
 
-	pr_info("%s: dirty DVD+RW media, \"finalizing\"\n", cdi->name);
+	pr_debug("%s: dirty DVD+RW media, \"finalizing\"\n", cdi->name);
 
 	init_cdrom_command(&cgc, NULL, 0, CGC_DATA_NONE);
 	cgc.cmd[0] = GPCMD_FLUSH_CACHE;
@@ -2274,7 +2274,7 @@ retry:
 	 * frame dma, so drop to single frame dma if we need to
 	 */
 	if (cdi->cdda_method == CDDA_BPC_FULL && nframes > 1) {
-		pr_info("dropping to single frame dma\n");
+		pr_debug("dropping to single frame dma\n");
 		cdi->cdda_method = CDDA_BPC_SINGLE;
 		goto retry;
 	}
@@ -2287,7 +2287,7 @@ retry:
 	if (cdi->last_sense != 0x04 && cdi->last_sense != 0x0b)
 		return ret;
 
-	pr_info("dropping to old style cdda (sense=%x)\n", cdi->last_sense);
+	pr_debug("dropping to old style cdda (sense=%x)\n", cdi->last_sense);
 	cdi->cdda_method = CDDA_OLD;
 	return cdrom_read_cdda_old(cdi, ubuf, lba, nframes);	
 }
@@ -3483,7 +3483,7 @@ static int cdrom_print_info(const char *header, int val, char *info,
 					"\t%d", CDROM_CAN(val) != 0);
 			break;
 		default:
-			pr_info("invalid option%d\n", option);
+			pr_debug("invalid option%d\n", option);
 			return 1;
 		}
 		if (!ret)
@@ -3573,7 +3573,7 @@ doit:
 	mutex_unlock(&cdrom_mutex);
 	return proc_dostring(ctl, write, buffer, lenp, ppos);
 done:
-	pr_info("info buffer too small\n");
+	pr_debug("info buffer too small\n");
 	goto doit;
 }
 
@@ -3745,7 +3745,7 @@ static int __init cdrom_init(void)
 
 static void __exit cdrom_exit(void)
 {
-	pr_info("Uniform CD-ROM driver unloaded\n");
+	pr_debug("Uniform CD-ROM driver unloaded\n");
 	cdrom_sysctl_unregister();
 }
 

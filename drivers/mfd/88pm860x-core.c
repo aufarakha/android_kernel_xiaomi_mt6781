@@ -1150,7 +1150,7 @@ static int pm860x_probe(struct i2c_client *client)
 		if (ret)
 			return ret;
 	} else if (!pdata) {
-		pr_info("No platform data in %s!\n", __func__);
+		pr_debug("No platform data in %s!\n", __func__);
 		return -EINVAL;
 	}
 

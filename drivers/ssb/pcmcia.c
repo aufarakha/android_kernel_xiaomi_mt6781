@@ -152,7 +152,7 @@ static int ssb_pcmcia_switch_core(struct ssb_bus *bus, struct ssb_device *dev)
 	int err;
 
 #if SSB_VERBOSE_PCMCIACORESWITCH_DEBUG
-	pr_info("Switching to %s core, index %d\n",
+	pr_debug("Switching to %s core, index %d\n",
 		ssb_core_name(dev->id.coreid), dev->core_index);
 #endif
 

@@ -434,7 +434,7 @@ static void backside_setup_pid(void)
 
 	backside_tick = 1;
 
-	pr_info("wf_rm31: Backside control loop started.\n");
+	pr_debug("wf_rm31: Backside control loop started.\n");
 }
 
 /* Slots fan */
@@ -496,7 +496,7 @@ static void slots_setup_pid(void)
 	wf_pid_init(&slots_pid, &param);
 	slots_tick = 1;
 
-	pr_info("wf_rm31: Slots control loop started.\n");
+	pr_debug("wf_rm31: Slots control loop started.\n");
 }
 
 static void set_fail_state(void)
@@ -700,7 +700,7 @@ static int __init wf_rm31_init(void)
 	if (nr_chips > NR_CHIPS)
 		nr_chips = NR_CHIPS;
 
-	pr_info("windfarm: Initializing for desktop G5 with %d chips\n",
+	pr_debug("windfarm: Initializing for desktop G5 with %d chips\n",
 		nr_chips);
 
 	/* Get MPU data for each CPU */

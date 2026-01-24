@@ -135,18 +135,18 @@ retry:
 		if (retries++ < RETRIES) {
 			/* Try read again */
 			yield();
-			pr_info("re-try reading data from EB %d\n",
+			pr_debug("re-try reading data from EB %d\n",
 			       ebnum);
 			goto retry;
 		} else {
-			pr_info("retried %d times, still errors, "
+			pr_debug("retried %d times, still errors, "
 			       "give-up\n", RETRIES);
 			return -EINVAL;
 		}
 	}
 
 	if (retries != 0)
-		pr_info("only attempt number %d was OK (!!!)\n",
+		pr_debug("only attempt number %d was OK (!!!)\n",
 		       retries);
 
 	return 0;
@@ -170,7 +170,7 @@ static inline int write_pattern(int ebnum, void *buf)
 		return err;
 	}
 	if (written != len) {
-		pr_info("written only %zd bytes of %zd, but no error"
+		pr_debug("written only %zd bytes of %zd, but no error"
 		       " reported\n", written, len);
 		return -EIO;
 	}
@@ -185,22 +185,22 @@ static int __init tort_init(void)
 
 	printk(KERN_INFO "\n");
 	printk(KERN_INFO "=================================================\n");
-	pr_info("Warning: this program is trying to wear out your "
+	pr_debug("Warning: this program is trying to wear out your "
 	       "flash, stop it if this is not wanted.\n");
 
 	if (dev < 0) {
-		pr_info("Please specify a valid mtd-device via module parameter\n");
+		pr_debug("Please specify a valid mtd-device via module parameter\n");
 		pr_crit("CAREFUL: This test wipes all data on the specified MTD device!\n");
 		return -EINVAL;
 	}
 
-	pr_info("MTD device: %d\n", dev);
-	pr_info("torture %d eraseblocks (%d-%d) of mtd%d\n",
+	pr_debug("MTD device: %d\n", dev);
+	pr_debug("torture %d eraseblocks (%d-%d) of mtd%d\n",
 	       ebcnt, eb, eb + ebcnt - 1, dev);
 	if (pgcnt)
-		pr_info("torturing just %d pages per eraseblock\n",
+		pr_debug("torturing just %d pages per eraseblock\n",
 			pgcnt);
-	pr_info("write verify %s\n", check ? "enabled" : "disabled");
+	pr_debug("write verify %s\n", check ? "enabled" : "disabled");
 
 	mtd = get_mtd_device(NULL, dev);
 	if (IS_ERR(mtd)) {
@@ -210,7 +210,7 @@ static int __init tort_init(void)
 	}
 
 	if (mtd->writesize == 1) {
-		pr_info("not NAND flash, assume page size is 512 "
+		pr_debug("not NAND flash, assume page size is 512 "
 		       "bytes.\n");
 		pgsize = 512;
 	} else
@@ -276,7 +276,7 @@ static int __init tort_init(void)
 					continue;
 				err = check_eraseblock(i, patt_FF);
 				if (err) {
-					pr_info("verify failed"
+					pr_debug("verify failed"
 					       " for 0xFF... pattern\n");
 					goto out;
 				}
@@ -315,7 +315,7 @@ static int __init tort_init(void)
 					patt = patt_A5A;
 				err = check_eraseblock(i, patt);
 				if (err) {
-					pr_info("verify failed for %s"
+					pr_debug("verify failed for %s"
 					       " pattern\n",
 					       ((eb + erase_cycles) & 1) ?
 					       "0x55AA55..." : "0xAA55AA...");
@@ -335,7 +335,7 @@ static int __init tort_init(void)
 
 			stop_timing();
 			ms = ktime_ms_delta(finish, start);
-			pr_info("%08u erase cycles done, took %lu "
+			pr_debug("%08u erase cycles done, took %lu "
 			       "milliseconds (%lu seconds)\n",
 			       erase_cycles, ms, ms / 1000);
 			start_timing();
@@ -346,7 +346,7 @@ static int __init tort_init(void)
 	}
 out:
 
-	pr_info("finished after %u erase cycles\n",
+	pr_debug("finished after %u erase cycles\n",
 	       erase_cycles);
 	kfree(bad_ebs);
 out_check_buf:
@@ -360,7 +360,7 @@ out_patt_5A5:
 out_mtd:
 	put_mtd_device(mtd);
 	if (err)
-		pr_info("error %d occurred during torturing\n", err);
+		pr_debug("error %d occurred during torturing\n", err);
 	printk(KERN_INFO "=================================================\n");
 	return err;
 }
@@ -398,9 +398,9 @@ static void report_corrupt(unsigned char *read, unsigned char *written)
 			       &bits) >= 0)
 			pages++;
 
-	pr_info("verify fails on %d pages, %d bytes/%d bits\n",
+	pr_debug("verify fails on %d pages, %d bytes/%d bits\n",
 	       pages, bytes, bits);
-	pr_info("The following is a list of all differences between"
+	pr_debug("The following is a list of all differences between"
 	       " what was read from flash and what was expected\n");
 
 	for (i = 0; i < check_len; i += pgsize) {
@@ -414,7 +414,7 @@ static void report_corrupt(unsigned char *read, unsigned char *written)
 		printk("-------------------------------------------------------"
 		       "----------------------------------\n");
 
-		pr_info("Page %zd has %d bytes/%d bits failing verify,"
+		pr_debug("Page %zd has %d bytes/%d bits failing verify,"
 		       " starting at offset 0x%x\n",
 		       (mtd->erasesize - check_len + i) / pgsize,
 		       bytes, bits, first);

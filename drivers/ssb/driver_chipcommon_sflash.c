@@ -151,7 +151,7 @@ int ssb_sflash_init(struct ssb_chipcommon *cc)
 	sflash->size = sflash->blocksize * sflash->numblocks;
 	sflash->present = true;
 
-	pr_info("Found %s serial flash (size: %dKiB, blocksize: 0x%X, blocks: %d)\n",
+	pr_debug("Found %s serial flash (size: %dKiB, blocksize: 0x%X, blocks: %d)\n",
 		e->name, sflash->size / 1024, e->blocksize, e->numblocks);
 
 	/* Prepare platform device, but don't register it yet. It's too early,

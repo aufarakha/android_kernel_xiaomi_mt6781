@@ -1398,7 +1398,7 @@ static int __init ioat_init_module(void)
 {
 	int err = -ENOMEM;
 
-	pr_info("%s: Intel(R) QuickData Technology Driver %s\n",
+	pr_debug("%s: Intel(R) QuickData Technology Driver %s\n",
 		DRV_NAME, IOAT_DMA_VERSION);
 
 	ioat_cache = kmem_cache_create("ioat", sizeof(struct ioat_ring_ent),

@@ -199,7 +199,7 @@ static int __init m54xx_wdt_init(void)
 		pr_warn("I/O region busy\n");
 		return -EBUSY;
 	}
-	pr_info("driver is loaded\n");
+	pr_debug("driver is loaded\n");
 
 	return misc_register(&m54xx_wdt_miscdev);
 }

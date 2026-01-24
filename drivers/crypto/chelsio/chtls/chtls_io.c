@@ -259,7 +259,7 @@ static int tls_copy_ivs(struct sock *sk, struct sk_buff *skb)
 		skb_shinfo(skb)->nr_frags--;
 		page = alloc_pages(sk->sk_allocation | __GFP_COMP, 0);
 		if (!page) {
-			pr_info("%s : Page allocation for IVs failed\n",
+			pr_debug("%s : Page allocation for IVs failed\n",
 				__func__);
 			err = -ENOMEM;
 			goto out;
@@ -1641,7 +1641,7 @@ static int peekmsg(struct sock *sk, struct msghdr *msg,
 
 		if (unlikely(peek_seq != tp->copied_seq)) {
 			if (net_ratelimit())
-				pr_info("TCP(%s:%d), race in MSG_PEEK.\n",
+				pr_debug("TCP(%s:%d), race in MSG_PEEK.\n",
 					current->comm, current->pid);
 			peek_seq = tp->copied_seq;
 		}

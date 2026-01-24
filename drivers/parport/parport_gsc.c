@@ -287,7 +287,7 @@ struct parport *parport_gsc_probe_port(unsigned long base,
 	p->size = (p->modes & PARPORT_MODE_EPP)?8:3;
 	p->private_data = priv;
 
-	pr_info("%s: PC-style at 0x%lx", p->name, p->base);
+	pr_debug("%s: PC-style at 0x%lx", p->name, p->base);
 	p->irq = irq;
 	if (p->irq == PARPORT_IRQ_AUTO) {
 		p->irq = PARPORT_IRQ_NONE;

@@ -281,11 +281,11 @@ static int cm_mgr_check_dram_type(void)
 		cm_mgr_idx = CM_MGR_LP4X_2CH_3200;
 	else if (ddr_type == TYPE_LPDDR3)
 		cm_mgr_idx = CM_MGR_LP3_1CH_1866;
-	pr_info("#@# %s(%d) ddr_type 0x%x, ddr_hz %d, cm_mgr_idx 0x%x\n",
+	pr_debug("#@# %s(%d) ddr_type 0x%x, ddr_hz %d, cm_mgr_idx 0x%x\n",
 			__func__, __LINE__, ddr_type, ddr_hz, cm_mgr_idx);
 #else
 	cm_mgr_idx = 0;
-	pr_info("#@# %s(%d) NO CONFIG_MTK_DRAMC_LEGACY !!! set cm_mgr_idx to 0x%x\n",
+	pr_debug("#@# %s(%d) NO CONFIG_MTK_DRAMC_LEGACY !!! set cm_mgr_idx to 0x%x\n",
 			__func__, __LINE__, cm_mgr_idx);
 #endif /* CONFIG_MTK_DRAMC_LEGACY */
 
@@ -736,7 +736,7 @@ static int cm_mgr_check_up_status(int level, int *cpu_ratio_idx)
 		if (vcore_dram_opp != CM_MGR_EMI_OPP) {
 			vcore_dram_opp = CM_MGR_EMI_OPP;
 #ifdef DEBUG_CM_MGR
-			pr_info("#@# %s(%d) vcore_dram_opp %d->%d\n",
+			pr_debug("#@# %s(%d) vcore_dram_opp %d->%d\n",
 					__func__, __LINE__,
 					vcore_dram_opp_cur, vcore_dram_opp);
 #endif /* DEBUG_CM_MGR */
@@ -750,7 +750,7 @@ static int cm_mgr_check_up_status(int level, int *cpu_ratio_idx)
 	idx = level;
 	vcore_power_up = vcore_power_gain(vcore_power_gain, total_bw, idx);
 #ifdef DEBUG_CM_MGR
-	pr_info("#@# vcore_power_up %d < cpu_power_total %d\n",
+	pr_debug("#@# vcore_power_up %d < cpu_power_total %d\n",
 			vcore_power_up, cpu_power_total);
 #endif /* DEBUG_CM_MGR */
 	if ((vcore_power_up * vcore_power_ratio_up[idx]) <
@@ -761,7 +761,7 @@ static int cm_mgr_check_up_status(int level, int *cpu_ratio_idx)
 				debounce_times_up = 0;
 			vcore_dram_opp = vcore_dram_opp_cur - 1;
 #ifdef DEBUG_CM_MGR
-			pr_info("#@# %s(%d) vcore_dram_opp up %d->%d\n",
+			pr_debug("#@# %s(%d) vcore_dram_opp up %d->%d\n",
 					__func__, __LINE__,
 					vcore_dram_opp_cur, vcore_dram_opp);
 #endif /* DEBUG_CM_MGR */
@@ -822,7 +822,7 @@ static int cm_mgr_check_down_status(int level, int *cpu_ratio_idx)
 		if (vcore_dram_opp != CM_MGR_EMI_OPP) {
 			vcore_dram_opp = CM_MGR_EMI_OPP;
 #ifdef DEBUG_CM_MGR
-			pr_info("#@# %s(%d) vcore_dram_opp %d->%d\n",
+			pr_debug("#@# %s(%d) vcore_dram_opp %d->%d\n",
 					__func__, __LINE__,
 					vcore_dram_opp_cur, vcore_dram_opp);
 #endif /* DEBUG_CM_MGR */
@@ -836,7 +836,7 @@ static int cm_mgr_check_down_status(int level, int *cpu_ratio_idx)
 	idx = level - 1;
 	vcore_power_down = vcore_power_gain(vcore_power_gain, total_bw, idx);
 #ifdef DEBUG_CM_MGR
-	pr_info("#@# vcore_power_down %d > cpu_power_total %d\n",
+	pr_debug("#@# vcore_power_down %d > cpu_power_total %d\n",
 			vcore_power_down, cpu_power_total);
 #endif /* DEBUG_CM_MGR */
 	if ((vcore_power_down * vcore_power_ratio_down[idx]) >
@@ -847,7 +847,7 @@ static int cm_mgr_check_down_status(int level, int *cpu_ratio_idx)
 				debounce_times_down = 0;
 			vcore_dram_opp = vcore_dram_opp_cur + 1;
 #ifdef DEBUG_CM_MGR
-			pr_info("#@# %s(%d) vcore_dram_opp down %d->%d\n",
+			pr_debug("#@# %s(%d) vcore_dram_opp down %d->%d\n",
 					__func__, __LINE__,
 					vcore_dram_opp_cur, vcore_dram_opp);
 #endif /* DEBUG_CM_MGR */
@@ -1209,7 +1209,7 @@ static int platform_cm_mgr_probe(struct platform_device *pdev)
 
 	ret = cm_mgr_common_init();
 	if (ret) {
-		pr_info("[CM_MGR] FAILED TO INIT(%d)\n", ret);
+		pr_debug("[CM_MGR] FAILED TO INIT(%d)\n", ret);
 		return ret;
 	}
 
@@ -1218,7 +1218,7 @@ static int platform_cm_mgr_probe(struct platform_device *pdev)
 	/* required-opps */
 	cm_mgr_num_perf = of_count_phandle_with_args(node,
 			"required-opps", NULL);
-	pr_info("#@# %s(%d) cm_mgr_num_perf %d\n",
+	pr_debug("#@# %s(%d) cm_mgr_num_perf %d\n",
 			__func__, __LINE__, cm_mgr_num_perf);
 
 	if (cm_mgr_num_perf > 0) {
@@ -1241,18 +1241,18 @@ static int platform_cm_mgr_probe(struct platform_device *pdev)
 		cm_mgr_num_array = cm_mgr_num_perf - 1;
 	} else
 		cm_mgr_num_array = 0;
-	pr_info("#@# %s(%d) cm_mgr_num_array %d\n",
+	pr_debug("#@# %s(%d) cm_mgr_num_array %d\n",
 			__func__, __LINE__, cm_mgr_num_array);
 
 	ret = cm_mgr_check_dts_setting(pdev);
 	if (ret) {
-		pr_info("[CM_MGR] FAILED TO GET DTS DATA(%d)\n", ret);
+		pr_debug("[CM_MGR] FAILED TO GET DTS DATA(%d)\n", ret);
 		return ret;
 	}
 
 	cm_mgr_pdev = pdev;
 
-	pr_info("[CM_MGR] platform-cm_mgr_probe Done.\n");
+	pr_debug("[CM_MGR] platform-cm_mgr_probe Done.\n");
 
 	spin_lock_init(&cm_mgr_cpu_mask_lock);
 
@@ -1340,7 +1340,7 @@ static int __init platform_cm_mgr_init(void)
 static void __exit platform_cm_mgr_exit(void)
 {
 	platform_driver_unregister(&mtk_platform_cm_mgr_driver);
-	pr_info("[CM_MGR] platform-cm_mgr Exit.\n");
+	pr_debug("[CM_MGR] platform-cm_mgr Exit.\n");
 }
 
 late_initcall(platform_cm_mgr_init);

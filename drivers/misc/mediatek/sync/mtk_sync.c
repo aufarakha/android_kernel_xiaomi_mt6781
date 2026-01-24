@@ -155,7 +155,7 @@ static void timeline_fence_release(struct dma_fence *fence)
 	unsigned long flags;
 
 	if (!pt) {
-		pr_info("%s:pt is null\n", __func__);
+		pr_debug("%s:pt is null\n", __func__);
 		return;
 	}
 	if (!list_empty(&pt->link)) {
@@ -189,7 +189,7 @@ static void timeline_fence_value_str(struct dma_fence *fence,
 
 	n = snprintf(str, size, "%d", fence->seqno);
 	if (n < 0 || n >= size)
-		pr_info("%s:overflow\n", __func__);
+		pr_debug("%s:overflow\n", __func__);
 }
 
 static void timeline_fence_timeline_value_str(struct dma_fence *fence,
@@ -200,7 +200,7 @@ static void timeline_fence_timeline_value_str(struct dma_fence *fence,
 
 	n = snprintf(str, size, "%d", parent->value);
 	if (n < 0 || n >= size)
-		pr_info("%s:overflow\n", __func__);
+		pr_debug("%s:overflow\n", __func__);
 }
 
 static const struct dma_fence_ops timeline_fence_ops = {

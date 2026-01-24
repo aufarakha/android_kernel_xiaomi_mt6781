@@ -295,7 +295,7 @@ static struct platform_driver oaktrail_driver = {
 
 static int dmi_check_cb(const struct dmi_system_id *id)
 {
-	pr_info("Identified model '%s'\n", id->ident);
+	pr_debug("Identified model '%s'\n", id->ident);
 	return 0;
 }
 
@@ -356,7 +356,7 @@ static int __init oaktrail_init(void)
 		goto err_rfkill;
 	}
 
-	pr_info("Driver "DRIVER_VERSION" successfully loaded\n");
+	pr_debug("Driver "DRIVER_VERSION" successfully loaded\n");
 	return 0;
 
 err_rfkill:
@@ -379,7 +379,7 @@ static void __exit oaktrail_cleanup(void)
 	platform_device_unregister(oaktrail_device);
 	platform_driver_unregister(&oaktrail_driver);
 
-	pr_info("Driver unloaded\n");
+	pr_debug("Driver unloaded\n");
 }
 
 module_init(oaktrail_init);

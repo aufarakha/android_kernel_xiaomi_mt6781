@@ -169,7 +169,7 @@ static int regulator_oc_notify(struct notifier_block *nb, unsigned long event,
 
 	ret = snprintf(oc_str, 30, "PMIC OC:%s", reg_oc_dbg->name);
 	if (ret < 0)
-		pr_info("%s error\n", __func__);
+		pr_debug("%s error\n", __func__);
 	pr_notice("regulator:%s OC %d times\n",
 		  reg_oc_dbg->name, reg_oc_dbg->times);
 	if (reg_oc_dbg->is_md_reg) {

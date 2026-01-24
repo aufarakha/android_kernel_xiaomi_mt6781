@@ -96,7 +96,7 @@ static int dvb_usb_lme2510_debug;
 #define deb_info(level, args...) lme_debug(dvb_usb_lme2510_debug, level, args)
 #define debug_data_snipet(level, name, p) \
 	 deb_info(level, name" (%8phN)", p);
-#define info(args...) pr_info(DVB_USB_LOG_PREFIX": "args)
+#define info(args...) pr_debug(DVB_USB_LOG_PREFIX": "args)
 
 module_param_named(debug, dvb_usb_lme2510_debug, int, 0644);
 MODULE_PARM_DESC(debug, "set debugging level (1=info (or-able)).");

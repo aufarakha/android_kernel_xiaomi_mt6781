@@ -233,7 +233,7 @@ static int mxl1x1sf_get_chip_info(struct mxl111sf_state *state)
 		mxl_rev = "UNKNOWN REVISION";
 		break;
 	}
-	pr_info("%s detected, %s (0x%x)", mxl_chip, mxl_rev, ver);
+	pr_debug("%s detected, %s (0x%x)", mxl_chip, mxl_rev, ver);
 fail:
 	return ret;
 }

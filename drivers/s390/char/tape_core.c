@@ -227,13 +227,13 @@ tape_med_state_work_handler(struct work_struct *work)
 
 	switch (p->state) {
 	case MS_UNLOADED:
-		pr_info("%s: The tape cartridge has been successfully "
+		pr_debug("%s: The tape cartridge has been successfully "
 			"unloaded\n", dev_name(&device->cdev->dev));
 		envp[0] = env_state_unloaded;
 		kobject_uevent_env(&device->cdev->dev.kobj, KOBJ_CHANGE, envp);
 		break;
 	case MS_LOADED:
-		pr_info("%s: A tape cartridge has been mounted\n",
+		pr_debug("%s: A tape cartridge has been mounted\n",
 			dev_name(&device->cdev->dev));
 		envp[0] = env_state_loaded;
 		kobject_uevent_env(&device->cdev->dev.kobj, KOBJ_CHANGE, envp);

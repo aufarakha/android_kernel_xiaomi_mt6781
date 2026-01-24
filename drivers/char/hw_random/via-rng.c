@@ -199,7 +199,7 @@ static int __init mod_init(void)
 	if (!boot_cpu_has(X86_FEATURE_XSTORE))
 		return -ENODEV;
 
-	pr_info("VIA RNG detected\n");
+	pr_debug("VIA RNG detected\n");
 	err = hwrng_register(&via_rng);
 	if (err) {
 		pr_err(PFX "RNG registering failed (%d)\n",

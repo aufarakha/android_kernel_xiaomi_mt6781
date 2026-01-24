@@ -155,12 +155,12 @@ static int __init mtd_stresstest_init(void)
 	printk(KERN_INFO "=================================================\n");
 
 	if (dev < 0) {
-		pr_info("Please specify a valid mtd-device via module parameter\n");
+		pr_debug("Please specify a valid mtd-device via module parameter\n");
 		pr_crit("CAREFUL: This test wipes all data on the specified MTD device!\n");
 		return -EINVAL;
 	}
 
-	pr_info("MTD device: %d\n", dev);
+	pr_debug("MTD device: %d\n", dev);
 
 	mtd = get_mtd_device(NULL, dev);
 	if (IS_ERR(mtd)) {
@@ -170,7 +170,7 @@ static int __init mtd_stresstest_init(void)
 	}
 
 	if (mtd->writesize == 1) {
-		pr_info("not NAND flash, assume page size is 512 "
+		pr_debug("not NAND flash, assume page size is 512 "
 		       "bytes.\n");
 		pgsize = 512;
 	} else
@@ -181,7 +181,7 @@ static int __init mtd_stresstest_init(void)
 	ebcnt = tmp;
 	pgcnt = mtd->erasesize / pgsize;
 
-	pr_info("MTD device size %llu, eraseblock size %u, "
+	pr_debug("MTD device size %llu, eraseblock size %u, "
 	       "page size %u, count of eraseblocks %u, pages per "
 	       "eraseblock %u, OOB size %u\n",
 	       (unsigned long long)mtd->size, mtd->erasesize,
@@ -214,10 +214,10 @@ static int __init mtd_stresstest_init(void)
 		goto out;
 
 	/* Do operations */
-	pr_info("doing operations\n");
+	pr_debug("doing operations\n");
 	for (op = 0; op < count; op++) {
 		if ((op & 1023) == 0)
-			pr_info("%d operations done\n", op);
+			pr_debug("%d operations done\n", op);
 		err = do_operation();
 		if (err)
 			goto out;
@@ -226,7 +226,7 @@ static int __init mtd_stresstest_init(void)
 		if (err)
 			goto out;
 	}
-	pr_info("finished, %d operations done\n", op);
+	pr_debug("finished, %d operations done\n", op);
 
 out:
 	kfree(offsets);
@@ -236,7 +236,7 @@ out:
 out_put_mtd:
 	put_mtd_device(mtd);
 	if (err)
-		pr_info("error %d occurred\n", err);
+		pr_debug("error %d occurred\n", err);
 	printk(KERN_INFO "=================================================\n");
 	return err;
 }

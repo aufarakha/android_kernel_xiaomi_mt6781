@@ -76,7 +76,7 @@ static const struct acpi_table_wdat *acpi_watchdog_get_wdat(void)
 	}
 
 	if (acpi_watchdog_uses_rtc(wdat)) {
-		pr_info("Skipping WDAT on this system because it uses RTC SRAM\n");
+		pr_debug("Skipping WDAT on this system because it uses RTC SRAM\n");
 		return NULL;
 	}
 

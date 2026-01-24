@@ -849,7 +849,7 @@ static void check_thread_timers(struct task_struct *tsk,
 			 * No need to calculate anything else now.
 			 */
 			if (print_fatal_signals) {
-				pr_info("CPU Watchdog Timeout (hard): %s[%d]\n",
+				pr_debug("CPU Watchdog Timeout (hard): %s[%d]\n",
 					tsk->comm, task_pid_nr(tsk));
 			}
 			__group_send_sig_info(SIGKILL, SEND_SIG_PRIV, tsk);
@@ -865,7 +865,7 @@ static void check_thread_timers(struct task_struct *tsk,
 					soft;
 			}
 			if (print_fatal_signals) {
-				pr_info("RT Watchdog Timeout (soft): %s[%d]\n",
+				pr_debug("RT Watchdog Timeout (soft): %s[%d]\n",
 					tsk->comm, task_pid_nr(tsk));
 			}
 			__group_send_sig_info(SIGXCPU, SEND_SIG_PRIV, tsk);
@@ -967,7 +967,7 @@ static void check_process_timers(struct task_struct *tsk,
 			 * No need to calculate anything else now.
 			 */
 			if (print_fatal_signals) {
-				pr_info("RT Watchdog Timeout (hard): %s[%d]\n",
+				pr_debug("RT Watchdog Timeout (hard): %s[%d]\n",
 					tsk->comm, task_pid_nr(tsk));
 			}
 			__group_send_sig_info(SIGKILL, SEND_SIG_PRIV, tsk);
@@ -978,7 +978,7 @@ static void check_process_timers(struct task_struct *tsk,
 			 * At the soft limit, send a SIGXCPU every second.
 			 */
 			if (print_fatal_signals) {
-				pr_info("CPU Watchdog Timeout (soft): %s[%d]\n",
+				pr_debug("CPU Watchdog Timeout (soft): %s[%d]\n",
 					tsk->comm, task_pid_nr(tsk));
 			}
 			__group_send_sig_info(SIGXCPU, SEND_SIG_PRIV, tsk);

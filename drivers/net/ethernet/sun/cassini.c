@@ -3346,7 +3346,7 @@ use_random_mac_addr:
 #endif
 
 	/* Sun MAC prefix then 3 random bytes. */
-	pr_info("MAC address not found in ROM VPD\n");
+	pr_debug("MAC address not found in ROM VPD\n");
 	dev_addr[0] = 0x08;
 	dev_addr[1] = 0x00;
 	dev_addr[2] = 0x20;
@@ -4911,7 +4911,7 @@ static int cas_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 	u8 orig_cacheline_size = 0, cas_cacheline_size = 0;
 
 	if (cas_version_printed++ == 0)
-		pr_info("%s", version);
+		pr_debug("%s", version);
 
 	err = pci_enable_device(pdev);
 	if (err) {

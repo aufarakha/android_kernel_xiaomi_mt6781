@@ -2286,7 +2286,7 @@ static struct pci_driver nicvf_driver = {
 
 static int __init nicvf_init_module(void)
 {
-	pr_info("%s, ver %s\n", DRV_NAME, DRV_VERSION);
+	pr_debug("%s, ver %s\n", DRV_NAME, DRV_VERSION);
 	nicvf_rx_mode_wq = alloc_ordered_workqueue("nicvf_generic",
 						   WQ_MEM_RECLAIM);
 	return pci_register_driver(&nicvf_driver);

@@ -187,7 +187,7 @@ static int __init jent_mod_init(void)
 
 	ret = jent_entropy_init();
 	if (ret) {
-		pr_info("jitterentropy: Initialization failed with host not compliant with requirements: %d\n", ret);
+		pr_debug("jitterentropy: Initialization failed with host not compliant with requirements: %d\n", ret);
 		return -EFAULT;
 	}
 	return crypto_register_rng(&jent_alg);

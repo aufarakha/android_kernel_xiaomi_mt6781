@@ -1402,7 +1402,7 @@ static int __init switchtec_init(void)
 	if (rc)
 		goto err_pci_register;
 
-	pr_info(KBUILD_MODNAME ": loaded.\n");
+	pr_debug(KBUILD_MODNAME ": loaded.\n");
 
 	return 0;
 
@@ -1423,6 +1423,6 @@ static void __exit switchtec_exit(void)
 	unregister_chrdev_region(switchtec_devt, max_devices);
 	ida_destroy(&switchtec_minor_ida);
 
-	pr_info(KBUILD_MODNAME ": unloaded.\n");
+	pr_debug(KBUILD_MODNAME ": unloaded.\n");
 }
 module_exit(switchtec_exit);

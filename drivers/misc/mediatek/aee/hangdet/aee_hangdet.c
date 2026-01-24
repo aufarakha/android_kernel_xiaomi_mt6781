@@ -112,7 +112,7 @@ static unsigned int cpus_skip_bit;
 
 __weak void mt_irq_dump_status(unsigned int irq)
 {
-	pr_info("empty gic dump\n");
+	pr_debug("empty gic dump\n");
 };
 
 static unsigned int get_check_bit(void)
@@ -140,7 +140,7 @@ void wk_start_kick_cpu(int cpu)
 		pr_debug("[wdk] wk_task[%d] is NULL\n", cpu);
 	} else {
 		kthread_bind(wk_tsk[cpu], cpu);
-		pr_info("[wdk] bind thread %d to cpu %d\n",
+		pr_debug("[wdk] bind thread %d to cpu %d\n",
 			wk_tsk[cpu]->pid, cpu);
 		wake_up_process(wk_tsk[cpu]);
 	}
@@ -153,7 +153,7 @@ void tick_broadcast_mtk_aee_dump(void)
 {
 	int i, ret = -1;
 
-	pr_info("[name:bc&]%s\n", bc_dump_buf.buf);
+	pr_debug("[name:bc&]%s\n", bc_dump_buf.buf);
 
 	/* tick_broadcast_oneshot_mask */
 
@@ -230,7 +230,7 @@ void dump_wdk_bind_info(bool to_aee_sram)
 	aee_rr_rec_check(('B' << 24) | get_check_bit());
 #endif
 
-	pr_info("%s", wk_tsk_buf);
+	pr_debug("%s", wk_tsk_buf);
 #if IS_ENABLED(CONFIG_MTK_AEE_IPANIC)
 	if (to_aee_sram) {
 		aee_sram_fiq_log("\n");
@@ -250,7 +250,7 @@ void dump_wdk_bind_info(bool to_aee_sram)
 				aee_sram_fiq_log(wk_tsk_buf);
 #endif
 			if (!to_aee_sram)
-				pr_info("%s", wk_tsk_buf);
+				pr_debug("%s", wk_tsk_buf);
 		}
 	}
 #if IS_ENABLED(CONFIG_MTK_AEE_IPANIC)
@@ -315,7 +315,7 @@ static void kwdt_time_sync(void)
 	rtc_time64_to_tm(tv.tv_sec, &tm);
 	tv_android.tv_sec -= (uint64_t)sys_tz.tz_minuteswest * 60;
 	rtc_time64_to_tm(tv_android.tv_sec, &tm_android);
-	pr_info("[thread:%d] %d-%02d-%02d %02d:%02d:%02d.%u UTC;"
+	pr_debug("[thread:%d] %d-%02d-%02d %02d:%02d:%02d.%u UTC;"
 		"android time %d-%02d-%02d %02d:%02d:%02d.%03d\n",
 		current->pid, tm.tm_year + 1900, tm.tm_mon + 1,
 		tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,
@@ -333,7 +333,7 @@ static void kwdt_dump_func(void)
 	for_each_process_thread(g, t) {
 		if (!strcmp(t->comm, "watchdogd")) {
 #ifdef CONFIG_ARM64
-			pr_info("watchdogd on CPU %d\n", t->cpu);
+			pr_debug("watchdogd on CPU %d\n", t->cpu);
 #endif
 			sched_show_task(t);
 			break;
@@ -343,7 +343,7 @@ static void kwdt_dump_func(void)
 	for (i = 0; i < CPU_NR; i++) {
 		struct rq *rq;
 
-		pr_info("task on CPU%d\n", i);
+		pr_debug("task on CPU%d\n", i);
 		rq = cpu_rq(i);
 		if (cpu_rq(i))
 			sched_show_task(rq->curr);
@@ -433,7 +433,7 @@ static void kwdt_process_kick(int local_bit, int cpu,
 			snprintf(msg_buf, WK_MAX_MSG_SIZE, "wdtk-et %s %d cpu=%d o_k=%d\n",
 				  __func__, __LINE__, cpu, original_kicker);
 			spin_unlock_bh(&lock);
-			pr_info("%s", msg_buf);
+			pr_debug("%s", msg_buf);
 			kwdt_dump_func();
 			return;
 		}
@@ -443,7 +443,7 @@ static void kwdt_process_kick(int local_bit, int cpu,
 			cpu, original_kicker);
 
 		spin_unlock_bh(&lock);
-		pr_info("%s", msg_buf);
+		pr_debug("%s", msg_buf);
 		return;
 	}
 
@@ -523,7 +523,7 @@ static void kwdt_process_kick(int local_bit, int cpu,
 
 	spin_unlock_bh(&lock);
 
-	pr_info("%s", msg_buf);
+	pr_debug("%s", msg_buf);
 
 	if (dump_timeout) {
 #if IS_ENABLED(CONFIG_MTK_TICK_BROADCAST_DEBUG)
@@ -534,7 +534,7 @@ static void kwdt_process_kick(int local_bit, int cpu,
 		dump_wdk_bind_info(false);
 
 		if (systimer_base)
-			pr_info("SYST0 CON%x VAL%x\n",
+			pr_debug("SYST0 CON%x VAL%x\n",
 				ioread32(systimer_base + SYST0_CON),
 				ioread32(systimer_base + SYST0_VAL));
 #if CHG_TMO_EN
@@ -566,7 +566,7 @@ static void kwdt_process_kick(int local_bit, int cpu,
 	}
 
 	if (rgu_fiq)
-		pr_info("RGU IRQ triggered, but not raise FIQ\n");
+		pr_debug("RGU IRQ triggered, but not raise FIQ\n");
 }
 
 static int kwdt_thread(void *arg)
@@ -582,7 +582,7 @@ static int kwdt_thread(void *arg)
 
 	for (;;) {
 		if (kthread_should_stop()) {
-			pr_info("[wdk] kthread_should_stop do !!\n");
+			pr_debug("[wdk] kthread_should_stop do !!\n");
 			break;
 		}
 		msg_buf[0] = '\0';
@@ -636,7 +636,7 @@ static int start_kicker(void)
 				int ret = PTR_ERR(wk_tsk[i]);
 
 				wk_tsk[i] = NULL;
-				pr_info("[wdk]kthread_create failed, wdtk-%d\n", i);
+				pr_debug("[wdk]kthread_create failed, wdtk-%d\n", i);
 				return ret;
 			}
 			/* wk_cpu_update_bit_flag(i,1); */
@@ -646,7 +646,7 @@ static int start_kicker(void)
 			atomic_andnot(1 << i, &plug_mask);
 	}
 	g_kicker_init = 1;
-	pr_info("[wdk] WDT start kicker done CPU_NR=%d online cpu NR%d\n",
+	pr_debug("[wdk] WDT start kicker done CPU_NR=%d online cpu NR%d\n",
 		CPU_NR, num_online_cpus());
 	return 0;
 }
@@ -664,7 +664,7 @@ static int wk_cpu_callback_online(unsigned int cpu)
 	if (g_kicker_init == 1)
 		kicker_cpu_bind(cpu);
 	else
-		pr_info("kicker was not bound to CPU%d\n", cpu);
+		pr_debug("kicker was not bound to CPU%d\n", cpu);
 
 	return 0;
 }
@@ -687,12 +687,12 @@ static void wdk_work_callback(struct work_struct *work)
 	res = cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN,
 		"watchdog:wdkctrl:online", wk_cpu_callback_online, NULL);
 	if (res < 0)
-		pr_info("[wdk]setup CPUHP_AP_ONLINE_DYN fail %d\n", res);
+		pr_debug("[wdk]setup CPUHP_AP_ONLINE_DYN fail %d\n", res);
 
 	res = cpuhp_setup_state_nocalls(CPUHP_BP_PREPARE_DYN,
 		"watchdog:wdkctrl:offline", NULL, wk_cpu_callback_offline);
 	if (res < 0)
-		pr_info("[wdk]setup CPUHP_BP_PREPARE_DYN fail %d\n", res);
+		pr_debug("[wdk]setup CPUHP_BP_PREPARE_DYN fail %d\n", res);
 
 	for (i = 0; i < CPU_NR; i++) {
 		if (cpu_online(i)) {
@@ -708,7 +708,7 @@ static void wdk_work_callback(struct work_struct *work)
 
 	cpu_hotplug_enable();
 
-	pr_info("[wdk]init_wk done late_initcall cpus_kick_bit=0x%x -----\n",
+	pr_debug("[wdk]init_wk done late_initcall cpus_kick_bit=0x%x -----\n",
 		cpus_kick_bit);
 
 }
@@ -804,7 +804,7 @@ static int __init hangdet_init(void)
 	struct device_node *np_toprgu, *np_systimer;
 
 	for_each_matching_node(np_toprgu, toprgu_of_match) {
-		pr_info("%s: compatible node found: %s\n",
+		pr_debug("%s: compatible node found: %s\n",
 			 __func__, np_toprgu->name);
 		break;
 	}
@@ -816,7 +816,7 @@ static int __init hangdet_init(void)
 		wdt_mark_stage(WDT_STAGE_KERNEL);
 
 	for_each_matching_node(np_systimer, systimer_of_match) {
-		pr_info("%s: compatible node found: %s\n",
+		pr_debug("%s: compatible node found: %s\n",
 			 __func__, np_systimer->name);
 		break;
 	}
@@ -840,7 +840,7 @@ static int __init hangdet_init(void)
 	res = queue_work(wdk_workqueue, &wdk_work);
 
 	if (!res)
-		pr_info("[wdk]wdk_work start return:%d!\n", res);
+		pr_debug("[wdk]wdk_work start return:%d!\n", res);
 
 	wdt_pm_nb.notifier_call = wdt_pm_notify;
 	register_pm_notifier(&wdt_pm_nb);
@@ -855,13 +855,13 @@ static int __init hangdet_init(void)
 #if IS_ENABLED(CONFIG_MTK_AEE_IPANIC)
 		aee_rr_rec_wdk_systimer_cnt(cnt);
 #endif
-		pr_info("%s systimer_cnt %lld\n", __func__, cnt);
+		pr_debug("%s systimer_cnt %lld\n", __func__, cnt);
 
 		cnt = sched_clock();
 #if IS_ENABLED(CONFIG_MTK_AEE_IPANIC)
 		aee_rr_rec_wdk_ktime(cnt);
 #endif
-		pr_info("%s set wdk_ktime %lld\n", __func__, cnt);
+		pr_debug("%s set wdk_ktime %lld\n", __func__, cnt);
 	}
 
 	timer_setup(&aee_dump_timer, aee_dump_timer_func, 0);

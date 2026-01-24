@@ -123,7 +123,7 @@ int get_md1_power(enum mdpm_power_type power_type, bool need_update)
 		&mdpm_power_sta);
 
 	if (mt_mdpm_debug)
-		pr_info("[md1_power] scenario_power=%d tx_power=%d total=%d\n",
+		pr_debug("[md1_power] scenario_power=%d tx_power=%d total=%d\n",
 			scenario_power, tx_power, scenario_power + tx_power);
 
 	return scenario_power + tx_power;
@@ -234,14 +234,14 @@ static int mt_mdpm_create_procfs(void)
 	dir = proc_mkdir("mdpm", NULL);
 
 	if (!dir) {
-		pr_info("fail to create /proc/mdpm @ %s()\n", __func__);
+		pr_debug("fail to create /proc/mdpm @ %s()\n", __func__);
 		return -ENOMEM;
 	}
 
 	for (i = 0; i < ARRAY_SIZE(entries); i++) {
 		if (!proc_create
 		    (entries[i].name, 0664, dir, entries[i].fops))
-			pr_info("@%s: create /proc/mdpm/%s failed\n", __func__,
+			pr_debug("@%s: create /proc/mdpm/%s failed\n", __func__,
 				    entries[i].name);
 	}
 

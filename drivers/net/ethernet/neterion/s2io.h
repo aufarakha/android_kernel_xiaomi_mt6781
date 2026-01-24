@@ -66,7 +66,7 @@ static int debug_level = ERR_DBG;
 /* DEBUG message print. */
 #define DBG_PRINT(dbg_level, fmt, args...) do {			\
 	if (dbg_level <= debug_level)				\
-		pr_info(fmt, ##args);				\
+		pr_debug(fmt, ##args);				\
 	} while (0)
 
 /* Protocol assist features of the NIC */

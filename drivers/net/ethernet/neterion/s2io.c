@@ -6987,7 +6987,7 @@ static int s2io_add_isr(struct s2io_nic *sp)
 			}
 		}
 		if (!err) {
-			pr_info("MSI-X-RX %d entries enabled\n", --msix_rx_cnt);
+			pr_debug("MSI-X-RX %d entries enabled\n", --msix_rx_cnt);
 			DBG_PRINT(INFO_DBG,
 				  "MSI-X-TX entries enabled through alarm vector\n");
 		}

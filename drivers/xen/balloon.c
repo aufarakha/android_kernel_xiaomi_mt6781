@@ -737,7 +737,7 @@ static int __init balloon_init(void)
 	if (!xen_domain())
 		return -ENODEV;
 
-	pr_info("Initialising balloon driver\n");
+	pr_debug("Initialising balloon driver\n");
 
 #ifdef CONFIG_XEN_PV
 	balloon_stats.current_pages = xen_pv_domain()

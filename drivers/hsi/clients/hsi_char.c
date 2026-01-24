@@ -782,7 +782,7 @@ static int __init hsc_init(void)
 		return ret;
 	}
 
-	pr_info("HSI/SSI char device loaded\n");
+	pr_debug("HSI/SSI char device loaded\n");
 
 	return 0;
 }
@@ -791,7 +791,7 @@ module_init(hsc_init);
 static void __exit hsc_exit(void)
 {
 	hsi_unregister_client_driver(&hsc_driver);
-	pr_info("HSI char device removed\n");
+	pr_debug("HSI char device removed\n");
 }
 module_exit(hsc_exit);
 

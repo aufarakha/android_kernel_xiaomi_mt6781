@@ -267,7 +267,7 @@ static int tw686x_probe(struct pci_dev *pci_dev,
 		goto free_video;
 	}
 
-	pr_info("%s: PCI %s, IRQ %d, MMIO 0x%lx (%s mode)\n", dev->name,
+	pr_debug("%s: PCI %s, IRQ %d, MMIO 0x%lx (%s mode)\n", dev->name,
 		pci_name(pci_dev), pci_dev->irq,
 		(unsigned long)pci_resource_start(pci_dev, 0),
 		dma_mode_name(dma_mode));

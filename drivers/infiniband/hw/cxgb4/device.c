@@ -325,7 +325,7 @@ static int qp_release(struct inode *inode, struct file *file)
 {
 	struct c4iw_debugfs_data *qpd = file->private_data;
 	if (!qpd) {
-		pr_info("%s null qpd?\n", __func__);
+		pr_debug("%s null qpd?\n", __func__);
 		return 0;
 	}
 	vfree(qpd->buf);
@@ -413,7 +413,7 @@ static int stag_release(struct inode *inode, struct file *file)
 {
 	struct c4iw_debugfs_data *stagd = file->private_data;
 	if (!stagd) {
-		pr_info("%s null stagd?\n", __func__);
+		pr_debug("%s null stagd?\n", __func__);
 		return 0;
 	}
 	vfree(stagd->buf);
@@ -664,7 +664,7 @@ static int ep_release(struct inode *inode, struct file *file)
 {
 	struct c4iw_debugfs_data *epd = file->private_data;
 	if (!epd) {
-		pr_info("%s null qpd?\n", __func__);
+		pr_debug("%s null qpd?\n", __func__);
 		return 0;
 	}
 	vfree(epd->buf);
@@ -963,12 +963,12 @@ static struct c4iw_dev *c4iw_alloc(const struct cxgb4_lld_info *infop)
 	int ret;
 
 	if (!rdma_supported(infop)) {
-		pr_info("%s: RDMA not supported on this device\n",
+		pr_debug("%s: RDMA not supported on this device\n",
 			pci_name(infop->pdev));
 		return ERR_PTR(-ENOSYS);
 	}
 	if (!ocqp_supported(infop))
-		pr_info("%s: On-Chip Queues not supported on this device\n",
+		pr_debug("%s: On-Chip Queues not supported on this device\n",
 			pci_name(infop->pdev));
 
 	devp = (struct c4iw_dev *)ib_alloc_device(sizeof(*devp));
@@ -1069,7 +1069,7 @@ static void *c4iw_uld_add(const struct cxgb4_lld_info *infop)
 	int i;
 
 	if (!vers_printed++)
-		pr_info("Chelsio T4/T5 RDMA Driver - version %s\n",
+		pr_debug("Chelsio T4/T5 RDMA Driver - version %s\n",
 			DRV_VERSION);
 
 	ctx = kzalloc(sizeof *ctx, GFP_KERNEL);
@@ -1148,7 +1148,7 @@ static inline int recv_rx_pkt(struct c4iw_dev *dev, const struct pkt_gl *gl,
 		goto out;
 
 	if (c4iw_handlers[opcode] == NULL) {
-		pr_info("%s no handler opcode 0x%x...\n", __func__, opcode);
+		pr_debug("%s no handler opcode 0x%x...\n", __func__, opcode);
 		kfree_skb(skb);
 		goto out;
 	}
@@ -1185,7 +1185,7 @@ static int c4iw_uld_rx_handler(void *handle, const __be64 *rsp,
 		if (recv_rx_pkt(dev, gl, rsp))
 			return 0;
 
-		pr_info("%s: unexpected FL contents at %p, RSS %#llx, FL %#llx, len %u\n",
+		pr_debug("%s: unexpected FL contents at %p, RSS %#llx, FL %#llx, len %u\n",
 			pci_name(ctx->lldi.pdev), gl->va,
 			be64_to_cpu(*rsp),
 			be64_to_cpu(*(__force __be64 *)gl->va),
@@ -1202,7 +1202,7 @@ static int c4iw_uld_rx_handler(void *handle, const __be64 *rsp,
 	if (c4iw_handlers[opcode]) {
 		c4iw_handlers[opcode](dev, skb);
 	} else {
-		pr_info("%s no handler opcode 0x%x...\n", __func__, opcode);
+		pr_debug("%s no handler opcode 0x%x...\n", __func__, opcode);
 		kfree_skb(skb);
 	}
 
@@ -1218,7 +1218,7 @@ static int c4iw_uld_state_change(void *handle, enum cxgb4_state new_state)
 	pr_debug("new_state %u\n", new_state);
 	switch (new_state) {
 	case CXGB4_STATE_UP:
-		pr_info("%s: Up\n", pci_name(ctx->lldi.pdev));
+		pr_debug("%s: Up\n", pci_name(ctx->lldi.pdev));
 		if (!ctx->dev) {
 			ctx->dev = c4iw_alloc(&ctx->lldi);
 			if (IS_ERR(ctx->dev)) {
@@ -1234,13 +1234,13 @@ static int c4iw_uld_state_change(void *handle, enum cxgb4_state new_state)
 		}
 		break;
 	case CXGB4_STATE_DOWN:
-		pr_info("%s: Down\n", pci_name(ctx->lldi.pdev));
+		pr_debug("%s: Down\n", pci_name(ctx->lldi.pdev));
 		if (ctx->dev)
 			c4iw_remove(ctx);
 		break;
 	case CXGB4_STATE_FATAL_ERROR:
 	case CXGB4_STATE_START_RECOVERY:
-		pr_info("%s: Fatal Error\n", pci_name(ctx->lldi.pdev));
+		pr_debug("%s: Fatal Error\n", pci_name(ctx->lldi.pdev));
 		if (ctx->dev) {
 			struct ib_event event;
 
@@ -1253,7 +1253,7 @@ static int c4iw_uld_state_change(void *handle, enum cxgb4_state new_state)
 		}
 		break;
 	case CXGB4_STATE_DETACH:
-		pr_info("%s: Detach\n", pci_name(ctx->lldi.pdev));
+		pr_debug("%s: Detach\n", pci_name(ctx->lldi.pdev));
 		if (ctx->dev)
 			c4iw_remove(ctx);
 		break;

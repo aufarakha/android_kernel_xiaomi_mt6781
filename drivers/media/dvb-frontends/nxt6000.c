@@ -222,28 +222,28 @@ static void nxt6000_dump_status(struct nxt6000_state *state)
 	u8 val;
 
 #if 0
-	pr_info("RS_COR_STAT: 0x%02X\n",
+	pr_debug("RS_COR_STAT: 0x%02X\n",
 		nxt6000_readreg(fe, RS_COR_STAT));
-	pr_info("VIT_SYNC_STATUS: 0x%02X\n",
+	pr_debug("VIT_SYNC_STATUS: 0x%02X\n",
 		nxt6000_readreg(fe, VIT_SYNC_STATUS));
-	pr_info("OFDM_COR_STAT: 0x%02X\n",
+	pr_debug("OFDM_COR_STAT: 0x%02X\n",
 		nxt6000_readreg(fe, OFDM_COR_STAT));
-	pr_info("OFDM_SYR_STAT: 0x%02X\n",
+	pr_debug("OFDM_SYR_STAT: 0x%02X\n",
 		nxt6000_readreg(fe, OFDM_SYR_STAT));
-	pr_info("OFDM_TPS_RCVD_1: 0x%02X\n",
+	pr_debug("OFDM_TPS_RCVD_1: 0x%02X\n",
 		nxt6000_readreg(fe, OFDM_TPS_RCVD_1));
-	pr_info("OFDM_TPS_RCVD_2: 0x%02X\n",
+	pr_debug("OFDM_TPS_RCVD_2: 0x%02X\n",
 		nxt6000_readreg(fe, OFDM_TPS_RCVD_2));
-	pr_info("OFDM_TPS_RCVD_3: 0x%02X\n",
+	pr_debug("OFDM_TPS_RCVD_3: 0x%02X\n",
 		nxt6000_readreg(fe, OFDM_TPS_RCVD_3));
-	pr_info("OFDM_TPS_RCVD_4: 0x%02X\n",
+	pr_debug("OFDM_TPS_RCVD_4: 0x%02X\n",
 		nxt6000_readreg(fe, OFDM_TPS_RCVD_4));
-	pr_info("OFDM_TPS_RESERVED_1: 0x%02X\n",
+	pr_debug("OFDM_TPS_RESERVED_1: 0x%02X\n",
 		nxt6000_readreg(fe, OFDM_TPS_RESERVED_1));
-	pr_info("OFDM_TPS_RESERVED_2: 0x%02X\n",
+	pr_debug("OFDM_TPS_RESERVED_2: 0x%02X\n",
 		nxt6000_readreg(fe, OFDM_TPS_RESERVED_2));
 #endif
-	pr_info("NXT6000 status:");
+	pr_debug("NXT6000 status:");
 
 	val = nxt6000_readreg(state, RS_COR_STAT);
 

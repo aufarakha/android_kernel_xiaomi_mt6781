@@ -179,7 +179,7 @@ int s5k83a_probe(struct sd *sd)
 
 	if (force_sensor) {
 		if (force_sensor == S5K83A_SENSOR) {
-			pr_info("Forcing a %s sensor\n", s5k83a.name);
+			pr_debug("Forcing a %s sensor\n", s5k83a.name);
 			goto sensor_found;
 		}
 		/* If we want to force another sensor, don't try to probe this
@@ -212,7 +212,7 @@ int s5k83a_probe(struct sd *sd)
 	if ((prod_id == 0xff) || (ver_id == 0xff))
 		return -ENODEV;
 	else
-		pr_info("Detected a s5k83a sensor\n");
+		pr_debug("Detected a s5k83a sensor\n");
 
 sensor_found:
 	sd->gspca_dev.cam.cam_mode = s5k83a_modes;
@@ -251,7 +251,7 @@ int s5k83a_init(struct sd *sd)
 				init_s5k83a[i][1], data, 2);
 			break;
 		default:
-			pr_info("Invalid stream command, exiting init\n");
+			pr_debug("Invalid stream command, exiting init\n");
 			return -EINVAL;
 		}
 	}
@@ -308,7 +308,7 @@ static int rotation_thread_function(void *data)
 		s5k83a_get_rotation(sd, &reg);
 		if (previous_rotation != reg) {
 			previous_rotation = reg;
-			pr_info("Camera was flipped\n");
+			pr_debug("Camera was flipped\n");
 
 			hflip = sd->hflip->val;
 			vflip = sd->vflip->val;
@@ -548,19 +548,19 @@ static void s5k83a_dump_registers(struct sd *sd)
 
 	for (page = 0; page < 16; page++) {
 		m5602_write_sensor(sd, S5K83A_PAGE_MAP, &page, 1);
-		pr_info("Dumping the s5k83a register state for page 0x%x\n",
+		pr_debug("Dumping the s5k83a register state for page 0x%x\n",
 			page);
 		for (address = 0; address <= 0xff; address++) {
 			u8 val = 0;
 			m5602_read_sensor(sd, address, &val, 1);
-			pr_info("register 0x%x contains 0x%x\n", address, val);
+			pr_debug("register 0x%x contains 0x%x\n", address, val);
 		}
 	}
-	pr_info("s5k83a register state dump complete\n");
+	pr_debug("s5k83a register state dump complete\n");
 
 	for (page = 0; page < 16; page++) {
 		m5602_write_sensor(sd, S5K83A_PAGE_MAP, &page, 1);
-		pr_info("Probing for which registers that are read/write for page 0x%x\n",
+		pr_debug("Probing for which registers that are read/write for page 0x%x\n",
 			page);
 		for (address = 0; address <= 0xff; address++) {
 			u8 old_val, ctrl_val, test_val = 0xff;
@@ -570,16 +570,16 @@ static void s5k83a_dump_registers(struct sd *sd)
 			m5602_read_sensor(sd, address, &ctrl_val, 1);
 
 			if (ctrl_val == test_val)
-				pr_info("register 0x%x is writeable\n",
+				pr_debug("register 0x%x is writeable\n",
 					address);
 			else
-				pr_info("register 0x%x is read only\n",
+				pr_debug("register 0x%x is read only\n",
 					address);
 
 			/* Restore original val */
 			m5602_write_sensor(sd, address, &old_val, 1);
 		}
 	}
-	pr_info("Read/write register probing complete\n");
+	pr_debug("Read/write register probing complete\n");
 	m5602_write_sensor(sd, S5K83A_PAGE_MAP, &old_page, 1);
 }

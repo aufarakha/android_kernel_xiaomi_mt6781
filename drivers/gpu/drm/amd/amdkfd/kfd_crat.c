@@ -491,7 +491,7 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
 	num_nodes = crat_table->num_domains;
 	image_len = crat_table->length;
 
-	pr_info("Parsing CRAT table with %d nodes\n", num_nodes);
+	pr_debug("Parsing CRAT table with %d nodes\n", num_nodes);
 
 	for (node_id = 0; node_id < num_nodes; node_id++) {
 		top_dev = kfd_create_topology_device(device_list);
@@ -733,7 +733,7 @@ int kfd_create_crat_image_acpi(void **crat_image, size_t *size)
 	/* Fetch the CRAT table from ACPI */
 	status = acpi_get_table(CRAT_SIGNATURE, 0, &crat_table);
 	if (status == AE_NOT_FOUND) {
-		pr_info("CRAT table not found\n");
+		pr_debug("CRAT table not found\n");
 		return -ENODATA;
 	} else if (ACPI_FAILURE(status)) {
 		const char *err = acpi_format_exception(status);
@@ -743,7 +743,7 @@ int kfd_create_crat_image_acpi(void **crat_image, size_t *size)
 	}
 
 	if (ignore_crat) {
-		pr_info("CRAT table disabled by module option\n");
+		pr_debug("CRAT table disabled by module option\n");
 		return -ENODATA;
 	}
 
@@ -994,7 +994,7 @@ static int kfd_create_vcrat_image_cpu(void *pcrat_image, size_t *size)
 	 */
 
 	*size = crat_table->length;
-	pr_info("Virtual CRAT table created for CPU\n");
+	pr_debug("Virtual CRAT table created for CPU\n");
 
 	return 0;
 }
@@ -1222,7 +1222,7 @@ static int kfd_create_vcrat_image_gpu(void *pcrat_image,
 	crat_table->total_entries++;
 
 	*size = crat_table->length;
-	pr_info("Virtual CRAT table created for GPU\n");
+	pr_debug("Virtual CRAT table created for GPU\n");
 
 	return ret;
 }

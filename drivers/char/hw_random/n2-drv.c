@@ -688,7 +688,7 @@ static void n2rng_driver_version(void)
 	static int n2rng_version_printed;
 
 	if (n2rng_version_printed++ == 0)
-		pr_info("%s", version);
+		pr_debug("%s", version);
 }
 
 static const struct of_device_id n2rng_match[];

@@ -1153,14 +1153,14 @@ static int __init pc87360_find(int sioaddr, u8 *devid,
 
 		val = superio_inb(sioaddr, ACT);
 		if (!(val & 0x01)) {
-			pr_info("Device 0x%02x not activated\n", logdev[i]);
+			pr_debug("Device 0x%02x not activated\n", logdev[i]);
 			continue;
 		}
 
 		val = (superio_inb(sioaddr, BASE) << 8)
 		    | superio_inb(sioaddr, BASE + 1);
 		if (!val) {
-			pr_info("Base address not set for device 0x%02x\n",
+			pr_debug("Base address not set for device 0x%02x\n",
 				logdev[i]);
 			continue;
 		}
@@ -1192,10 +1192,10 @@ static int __init pc87360_find(int sioaddr, u8 *devid,
 				confreg[3] = superio_inb(sioaddr, 0x25);
 
 				if (confreg[2] & 0x40) {
-					pr_info("Using thermistors for temperature monitoring\n");
+					pr_debug("Using thermistors for temperature monitoring\n");
 				}
 				if (confreg[3] & 0xE0) {
-					pr_info("VID inputs routed (mode %u)\n",
+					pr_debug("VID inputs routed (mode %u)\n",
 						confreg[3] >> 5);
 				}
 			}

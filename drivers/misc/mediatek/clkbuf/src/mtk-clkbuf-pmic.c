@@ -82,7 +82,7 @@ static inline struct pmic_clkbuf_dts *find_pmic_dts_node(u32 dts)
 			return node;
 	}
 
-	pr_info("[%s]: no %s property, function not support or something wrong\n",
+	pr_debug("[%s]: no %s property, function not support or something wrong\n",
 			__func__, pmic_clkbuf_prop[dts]);
 
 	return NULL;
@@ -95,7 +95,7 @@ static inline void pmic_clkbuf_read(u32 dts, u32 id, u32 *val)
 
 	node = find_pmic_dts_node(dts);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
@@ -110,13 +110,13 @@ static inline void pmic_clkbuf_write(u32 dts, u32 id, u32 val)
 
 	node = find_pmic_dts_node(dts);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
 
 	val <<= node->cfg.bit[id];
-	pr_info("offset: 0x%x\n", node->cfg.ofs[id]);
+	pr_debug("offset: 0x%x\n", node->cfg.ofs[id]);
 	regmap_write(node->cfg.regmap, node->cfg.ofs[id], val);
 }
 
@@ -126,7 +126,7 @@ static inline void pmic_clkbuf_set(u32 dts, u32 id, u32 val)
 
 	node = find_pmic_dts_node(dts);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
@@ -141,7 +141,7 @@ static inline void pmic_clkbuf_clr(u32 dts, u32 id, u32 val)
 
 	node = find_pmic_dts_node(dts);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
@@ -158,7 +158,7 @@ static inline void pmic_clkbuf_update(u32 dts, u32 id, u32 val)
 
 	node = find_pmic_dts_node(dts);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
@@ -173,43 +173,43 @@ static inline void pmic_clkbuf_update(u32 dts, u32 id, u32 val)
 	regmap_read(node->cfg.regmap, node->cfg.ofs[id], &out);
 
 	if (_is_pmic_clk_buf_debug_enable()) {
-		pr_info("[%s]: val: 0x%x, shift val: 0x%x\n",
+		pr_debug("[%s]: val: 0x%x, shift val: 0x%x\n",
 				__func__, node->cfg.bit[id], val);
-		pr_info("[%s]: mask: 0x%x, shift mask: 0x%x\n",
+		pr_debug("[%s]: mask: 0x%x, shift mask: 0x%x\n",
 				__func__, node->mask, mask);
-		pr_info("%s: update value: 0x%x\n", __func__, out);
+		pr_debug("%s: update value: 0x%x\n", __func__, out);
 	}
 }
 
 static void _dummy_clk_buf_set_bblpm_hw_msk(enum clk_buf_id id, bool onoff)
 {
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("%s: HW BBLPM not support\n", __func__);
+		pr_debug("%s: HW BBLPM not support\n", __func__);
 }
 
 static int _dummy_clk_buf_bblpm_hw_en(bool on)
 {
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("%s: HW BBLPM not support\n", __func__);
+		pr_debug("%s: HW BBLPM not support\n", __func__);
 	return 0;
 }
 
 static void _dummy_clk_buf_get_drv_curr(u32 *drvcurr)
 {
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("%s: Driving current not support\n", __func__);
+		pr_debug("%s: Driving current not support\n", __func__);
 }
 
 static void _dummy_clk_buf_set_drv_curr(u32 *drvcurr)
 {
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("%s: Driving current not support\n", __func__);
+		pr_debug("%s: Driving current not support\n", __func__);
 }
 
 static int _dummy_clk_buf_dump_misc_log(char *buf)
 {
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("%s: Dump misc log for clkbuf not support\n", __func__);
+		pr_debug("%s: Dump misc log for clkbuf not support\n", __func__);
 	return 0;
 }
 
@@ -243,21 +243,21 @@ static void _pmic_clk_buf_get_drv_curr(u32 *drvcurr)
 
 	node = find_pmic_dts_node(PMIC_AUXOUT_SEL);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
 
 	out_node = find_pmic_dts_node(PMIC_AUXOUT_DRV_CURR);
 	if (!out_node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
 
 	for (i = 0; i < max; i++) {
 		if (_is_pmic_clk_buf_debug_enable())
-			pr_info("%s: AUXOUT drv curr idx: %d, value: %d\n",
+			pr_debug("%s: AUXOUT drv curr idx: %d, value: %d\n",
 					__func__,
 					i,
 					node->cfg.bit[i + 1]);
@@ -288,7 +288,7 @@ static void _pmic_clk_buf_set_drv_curr(u32 *drvcurr)
 
 	node = find_pmic_dts_node(PMIC_AUXOUT_DRV_CURR);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
@@ -305,13 +305,13 @@ static void mt6357_clk_buf_get_xo_en(u32 *stat)
 
 	node = find_pmic_dts_node(PMIC_AUXOUT_SEL);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
 
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("[%s]: idx: %d, AUXOUT write: %u\n",
+		pr_debug("[%s]: idx: %d, AUXOUT write: %u\n",
 			__func__, 1, node->cfg.bit[1]);
 	pmic_clkbuf_write(PMIC_AUXOUT_SEL, 0, node->cfg.bit[1]);
 
@@ -319,7 +319,7 @@ static void mt6357_clk_buf_get_xo_en(u32 *stat)
 	pmic_clkbuf_read(PMIC_AUXOUT_XO, 1, &(stat[1]));
 
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("[%s]: idx: %d, AUXOUT write: %u\n",
+		pr_debug("[%s]: idx: %d, AUXOUT write: %u\n",
 			__func__, 2, node->cfg.bit[2]);
 	pmic_clkbuf_write(PMIC_AUXOUT_SEL, 0, node->cfg.bit[2]);
 
@@ -327,14 +327,14 @@ static void mt6357_clk_buf_get_xo_en(u32 *stat)
 	pmic_clkbuf_read(PMIC_AUXOUT_XO, 3, &(stat[3]));
 
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("[%s]: idx: %d, AUXOUT write: %u\n",
+		pr_debug("[%s]: idx: %d, AUXOUT write: %u\n",
 			__func__, 3, node->cfg.bit[3]);
 	pmic_clkbuf_write(PMIC_AUXOUT_SEL, 0, node->cfg.bit[3]);
 
 	pmic_clkbuf_read(PMIC_AUXOUT_XO, 5, &(stat[5]));
 
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("[%s]: idx: %d, AUXOUT write: %u\n",
+		pr_debug("[%s]: idx: %d, AUXOUT write: %u\n",
 			__func__, 4, node->cfg.bit[4]);
 	pmic_clkbuf_write(PMIC_AUXOUT_SEL, 0, node->cfg.bit[4]);
 
@@ -348,7 +348,7 @@ static void mt6359_clk_buf_get_xo_en(u32 *stat)
 
 	node = find_pmic_dts_node(PMIC_AUXOUT_SEL);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
@@ -359,7 +359,7 @@ static void mt6359_clk_buf_get_xo_en(u32 *stat)
 		if (node->cfg.ofs[i] != NOT_VALID)
 			pmic_clkbuf_read(PMIC_AUXOUT_XO, i, &(stat[i]));
 
-	pr_info("[%s]: EN_STAT=%u %u %u %u %u %u\n",
+	pr_debug("[%s]: EN_STAT=%u %u %u %u %u %u\n",
 		__func__,
 		stat[XO_SOC],
 		stat[XO_WCN],
@@ -375,13 +375,13 @@ static void mt6357_clk_buf_get_bblpm_en(u32 *stat)
 
 	node = find_pmic_dts_node(PMIC_AUXOUT_SEL);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
 
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("[%s]: auxout bblpm idx: %u\n",
+		pr_debug("[%s]: auxout bblpm idx: %u\n",
 			__func__, node->cfg.bit[5]);
 	pmic_clkbuf_write(PMIC_AUXOUT_SEL, 0, node->cfg.bit[5]);
 	pmic_clkbuf_read(PMIC_AUXOUT_BBLPM_EN, 0, &(stat[0]));
@@ -442,13 +442,13 @@ static void mt6359_clk_buf_get_bblpm_en(u32 *stat)
 
 	node = find_pmic_dts_node(PMIC_AUXOUT_SEL);
 	if (!node) {
-		pr_info("%s: pmic node property not stored, something wrong!\n",
+		pr_debug("%s: pmic node property not stored, something wrong!\n",
 				__func__);
 		return;
 	}
 
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("[%s]: auxout bblpm idx: %u\n",
+		pr_debug("[%s]: auxout bblpm idx: %u\n",
 			__func__, node->cfg.bit[2]);
 	pmic_clkbuf_write(PMIC_AUXOUT_SEL, 0, node->cfg.bit[2]);
 	pmic_clkbuf_read(PMIC_AUXOUT_BBLPM_EN, 0, &(stat[0]));
@@ -465,7 +465,7 @@ static int mt6359_clk_buf_dump_misc_log(char *buf)
 	for (i = 0; i < 2; i++) {
 		node = find_pmic_dts_node(node_idx[i]);
 		if (!node) {
-			pr_info("%s: pmic node property not stored, something wrong!\n",
+			pr_debug("%s: pmic node property not stored, something wrong!\n",
 					__func__);
 			return 0;
 		}
@@ -485,7 +485,7 @@ static inline int _pmic_clk_buf_find_mask(const char *pmic_prop,
 	u32 idx = 0;
 
 	if (!pmic_dts_node) {
-		pr_info("[%s]: no pmic clkbuf dts node, find mask failed!\n",
+		pr_debug("[%s]: no pmic clkbuf dts node, find mask failed!\n",
 				__func__);
 		return -1;
 	}
@@ -494,14 +494,14 @@ static inline int _pmic_clk_buf_find_mask(const char *pmic_prop,
 		if (!strcmp(pmic_prop, pmic_clkbuf_prop[idx])) {
 			pmic_dts_node->mask = PMIC_CLKBUF_MASK[idx];
 			if (_is_pmic_clk_buf_debug_enable())
-				pr_info("[%s]: find %s mask: 0x%x\n",
+				pr_debug("[%s]: find %s mask: 0x%x\n",
 						__func__,
 						pmic_prop,
 						pmic_dts_node->mask);
 			return 0;
 		}
 	}
-	pr_info("[%s]: find %s mask failed\n", __func__, pmic_prop);
+	pr_debug("[%s]: find %s mask failed\n", __func__, pmic_prop);
 	return -1;
 }
 
@@ -532,7 +532,7 @@ static int _pmic_clk_buf_dts_get_property(struct device_node *node,
 
 	ret = of_property_read_u32(node, n_pmic_prop, &n_prop);
 	if (ret) {
-		pr_info("[%s]: find %s failed\n", __func__, n_pmic_prop);
+		pr_debug("[%s]: find %s failed\n", __func__, n_pmic_prop);
 		goto no_property;
 	}
 
@@ -542,14 +542,14 @@ static int _pmic_clk_buf_dts_get_property(struct device_node *node,
 
 	pmic_dts_node->cfg.ofs = kcalloc(n_prop, sizeof(u32), GFP_KERNEL);
 	if (!(pmic_dts_node->cfg.ofs)) {
-		pr_info("[%s]: allocate cfg offset memory failed\n",
+		pr_debug("[%s]: allocate cfg offset memory failed\n",
 				__func__);
 		goto no_cfg_offset_mem;
 	}
 
 	pmic_dts_node->cfg.bit = kcalloc(n_prop, sizeof(u32), GFP_KERNEL);
 	if (!(pmic_dts_node->cfg.bit)) {
-		pr_info("[%s]: allocate cfg offset memory failed\n",
+		pr_debug("[%s]: allocate cfg offset memory failed\n",
 				__func__);
 		goto no_cfg_bit_mem;
 	}
@@ -558,7 +558,7 @@ static int _pmic_clk_buf_dts_get_property(struct device_node *node,
 			sizeof(pmic_dts_node->name) - 1);
 
 	if (_is_pmic_clk_buf_debug_enable())
-		pr_info("[%s]: node name: %s\n",
+		pr_debug("[%s]: node name: %s\n",
 			__func__, pmic_dts_node->name);
 
 	pmic_dts_node->cfg.regmap = regmap;
@@ -573,13 +573,13 @@ static int _pmic_clk_buf_dts_get_property(struct device_node *node,
 					(idx * 2),
 					&(pmic_dts_node->cfg.ofs[idx]));
 		if (ret) {
-			pr_info("[%s]: find %s cfg offset index %u failed\n",
+			pr_debug("[%s]: find %s cfg offset index %u failed\n",
 				__func__, pmic_prop, idx);
 			goto offset_not_found;
 		}
 
 		if (_is_pmic_clk_buf_debug_enable())
-			pr_info("[%s]: find %s cfg offset index %u: %u\n",
+			pr_debug("[%s]: find %s cfg offset index %u: %u\n",
 					__func__,
 					pmic_prop,
 					idx,
@@ -590,13 +590,13 @@ static int _pmic_clk_buf_dts_get_property(struct device_node *node,
 					(idx * 2 + 1),
 					&(pmic_dts_node->cfg.bit[idx]));
 		if (ret) {
-			pr_info("[%s]: find %s cfg bit index %u failed\n",
+			pr_debug("[%s]: find %s cfg bit index %u failed\n",
 				__func__, pmic_prop, idx);
 			goto bit_not_found;
 		}
 
 		if (_is_pmic_clk_buf_debug_enable())
-			pr_info("[%s]: find %s cfg bit index %u: %u\n",
+			pr_debug("[%s]: find %s cfg bit index %u: %u\n",
 					__func__,
 					pmic_prop,
 					idx,
@@ -635,7 +635,7 @@ static int _pmic_clk_buf_dts_init(struct device_node *node,
 			"n-clkbuf-pmic-dependent",
 			&n_prop);
 	if (ret) {
-		pr_info("[%s]: read number of pmic clkbuf dependent failed\n",
+		pr_debug("[%s]: read number of pmic clkbuf dependent failed\n",
 				__func__);
 		goto no_property;
 	}
@@ -647,9 +647,9 @@ static int _pmic_clk_buf_dts_init(struct device_node *node,
 				&prop);
 
 		if (_is_pmic_clk_buf_debug_enable())
-			pr_info("[%s]: find property %s\n", __func__, prop);
+			pr_debug("[%s]: find property %s\n", __func__, prop);
 		if (ret) {
-			pr_info("[%s]: read pmic clkbuf dependent failed\n",
+			pr_debug("[%s]: read pmic clkbuf dependent failed\n",
 					__func__);
 			goto dependent_property_failed;
 		}
@@ -657,13 +657,13 @@ static int _pmic_clk_buf_dts_init(struct device_node *node,
 		ret = _pmic_clk_buf_dts_get_property(node, regmap, prop);
 
 		if (ret) {
-			pr_info("[%s]: find property %s failed\n",
+			pr_debug("[%s]: find property %s failed\n",
 				__func__,
 				prop);
 			goto find_property_internal_failed;
 		}
 	}
-	pr_info("[%s]: pmic dts init done\n", __func__);
+	pr_debug("[%s]: pmic dts init done\n", __func__);
 
 	return 0;
 

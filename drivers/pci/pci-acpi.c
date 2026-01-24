@@ -848,12 +848,12 @@ static int __init acpi_pci_init(void)
 	int ret;
 
 	if (acpi_gbl_FADT.boot_flags & ACPI_FADT_NO_MSI) {
-		pr_info("ACPI FADT declares the system doesn't support MSI, so disable it\n");
+		pr_debug("ACPI FADT declares the system doesn't support MSI, so disable it\n");
 		pci_no_msi();
 	}
 
 	if (acpi_gbl_FADT.boot_flags & ACPI_FADT_NO_ASPM) {
-		pr_info("ACPI FADT declares the system doesn't support PCIe ASPM, so disable it\n");
+		pr_debug("ACPI FADT declares the system doesn't support PCIe ASPM, so disable it\n");
 		pcie_no_aspm();
 	}
 

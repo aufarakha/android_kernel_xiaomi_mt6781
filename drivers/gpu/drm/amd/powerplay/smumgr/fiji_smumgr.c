@@ -205,7 +205,7 @@ static int fiji_start_avfs_btc(struct pp_hwmgr *hwmgr)
 	if (0 != smu_data->avfs_btc_param) {
 		if (0 != smu7_send_msg_to_smc_with_parameter(hwmgr,
 				PPSMC_MSG_PerformBtc, smu_data->avfs_btc_param)) {
-			pr_info("[AVFS][Fiji_PerformBtc] PerformBTC SMU msg failed");
+			pr_debug("[AVFS][Fiji_PerformBtc] PerformBTC SMU msg failed");
 			result = -EINVAL;
 		}
 	}

@@ -1344,10 +1344,10 @@ static void mlxsw_sx_pude_ib_event_func(struct mlxsw_sx_port *mlxsw_sx_port,
 					enum mlxsw_reg_pude_oper_status status)
 {
 	if (status == MLXSW_PORT_OPER_STATUS_UP)
-		pr_info("ib link for port %d - up\n",
+		pr_debug("ib link for port %d - up\n",
 			mlxsw_sx_port->mapping.module + 1);
 	else
-		pr_info("ib link for port %d - down\n",
+		pr_debug("ib link for port %d - down\n",
 			mlxsw_sx_port->mapping.module + 1);
 }
 

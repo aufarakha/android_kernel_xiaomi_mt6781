@@ -847,7 +847,7 @@ static int __init ps3vram_init(void)
 	}
 	ps3vram_major = error;
 
-	pr_info("%s: registered block device major %d\n", DEVICE_NAME,
+	pr_debug("%s: registered block device major %d\n", DEVICE_NAME,
 		ps3vram_major);
 
 	error = ps3_system_bus_driver_register(&ps3vram);

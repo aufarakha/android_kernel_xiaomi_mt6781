@@ -75,7 +75,7 @@ struct ibm_rtl_table {
 #define RTL_DEBUG(fmt, ...)				\
 do {							\
 	if (debug)					\
-		pr_info(fmt, ##__VA_ARGS__);		\
+		pr_debug(fmt, ##__VA_ARGS__);		\
 } while (0)
 
 static DEFINE_MUTEX(rtl_lock);

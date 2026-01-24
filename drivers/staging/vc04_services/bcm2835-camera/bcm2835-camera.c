@@ -1505,7 +1505,7 @@ static int get_num_cameras(struct vchiq_mmal_instance *instance,
 					  MMAL_PARAMETER_CAMERA_INFO,
 					  &cam_info,
 					  &param_size)) {
-		pr_info("Failed to get camera info\n");
+		pr_debug("Failed to get camera info\n");
 	}
 	for (i = 0;
 	     i < min_t(unsigned int, cam_info.num_cameras, num_resolutions);
@@ -1957,7 +1957,7 @@ cleanup_gdev:
 		bcm2835_cleanup_instance(gdev[i]);
 		gdev[i] = NULL;
 	}
-	pr_info("%s: error %d while loading driver\n",
+	pr_debug("%s: error %d while loading driver\n",
 		BM2835_MMAL_MODULE_NAME, ret);
 
 cleanup_mmal:

@@ -257,11 +257,11 @@ static int __init wafwdt_init(void)
 {
 	int ret;
 
-	pr_info("WDT driver for Wafer 5823 single board computer initialising\n");
+	pr_debug("WDT driver for Wafer 5823 single board computer initialising\n");
 
 	if (timeout < 1 || timeout > 255) {
 		timeout = WD_TIMO;
-		pr_info("timeout value must be 1 <= x <= 255, using %d\n",
+		pr_debug("timeout value must be 1 <= x <= 255, using %d\n",
 			timeout);
 	}
 
@@ -292,7 +292,7 @@ static int __init wafwdt_init(void)
 		goto error4;
 	}
 
-	pr_info("initialized. timeout=%d sec (nowayout=%d)\n",
+	pr_debug("initialized. timeout=%d sec (nowayout=%d)\n",
 		timeout, nowayout);
 
 	return ret;

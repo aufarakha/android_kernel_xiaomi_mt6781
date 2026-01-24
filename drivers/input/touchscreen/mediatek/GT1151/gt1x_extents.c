@@ -137,7 +137,7 @@ s32 gesture_event_handler(struct input_dev *dev)
 			  doze_buf[2], doze_buf[3]);
 		if (ret == 0 && doze_buf[0] != 0) {
 			if (!QUERYBIT(gestures_flag, doze_buf[0])) {
-				pr_info("Sorry, this gesture has been disabled.");
+				pr_debug("Sorry, this gesture has been disabled.");
 				doze_buf[0] = 0x00;
 				gt1x_i2c_write(GTP_REG_WAKEUP_GESTURE,
 					doze_buf, 1);
@@ -147,7 +147,7 @@ s32 gesture_event_handler(struct input_dev *dev)
 			mutex_lock(&gesture_data_mutex);
 			len = doze_buf[1];
 			if (len > GESTURE_MAX_POINT_COUNT) {
-				pr_info("Gesture contain too many points!(%d)",
+				pr_debug("Gesture contain too many points!(%d)",
 					len);
 				len = GESTURE_MAX_POINT_COUNT;
 			}
@@ -163,7 +163,7 @@ s32 gesture_event_handler(struct input_dev *dev)
 			}
 			extra_len = doze_buf[3];
 			if (extra_len > 80) {
-				pr_info("Gesture contain too many extra data!(%d)",
+				pr_debug("Gesture contain too many extra data!(%d)",
 					extra_len);
 				extra_len = 80;
 			}
@@ -173,7 +173,7 @@ s32 gesture_event_handler(struct input_dev *dev)
 					&gesture_data.data[4 + len * 4],
 						  extra_len);
 				if (ret < 0) {
-					pr_info("Read extra gesture data failed.");
+					pr_debug("Read extra gesture data failed.");
 					mutex_unlock(&gesture_data_mutex);
 					return 0;
 				}
@@ -387,7 +387,7 @@ static s32 hotknot_block_rw(u8 rqst_hotknot_state, s32 wait_hotknot_timeout)
 	s32 ret = 0;
 
 	wait_hotknot_state |= rqst_hotknot_state;
-	pr_info("Goodix tool received wait polling state:0x%x,timeout:%d, all wait state:0x%x",
+	pr_debug("Goodix tool received wait polling state:0x%x,timeout:%d, all wait state:0x%x",
 		rqst_hotknot_state,
 		wait_hotknot_timeout, wait_hotknot_state);
 	got_hotknot_state &= (~rqst_hotknot_state);
@@ -447,7 +447,7 @@ s32 hotknot_event_handler(u8 *data)
 #endif
 			GTP_DEBUG("HotKnot paired!");
 			if (wait_hotknot_state & HN_DEVICE_PAIRED) {
-				pr_info("INT wakeup HN_DEVICE_PAIRED block polling waiter");
+				pr_debug("INT wakeup HN_DEVICE_PAIRED block polling waiter");
 				got_hotknot_state |= HN_DEVICE_PAIRED;
 				wake_up_interruptible(&bp_waiter);
 			}
@@ -479,7 +479,7 @@ s32 hotknot_event_handler(u8 *data)
 			if ((hn_state_buf[0] == 0x03)
 				|| (hn_state_buf[0] == 0x04)
 			    || (hn_state_buf[0] == 0x07)) {
-				pr_info("Wakeup HN_MASTER_SEND block polling waiter");
+				pr_debug("Wakeup HN_MASTER_SEND block polling waiter");
 				got_hotknot_state |= HN_MASTER_SEND;
 				got_hotknot_extra_state = hn_state_buf[0];
 				wake_up_interruptible(&bp_waiter);
@@ -488,7 +488,7 @@ s32 hotknot_event_handler(u8 *data)
 			if ((hn_state_buf[1] == 0x03)
 				|| (hn_state_buf[1] == 0x04)
 			    || (hn_state_buf[1] == 0x07)) {
-				pr_info("Wakeup HN_SLAVE_RECEIVED block polling waiter:0x%x",
+				pr_debug("Wakeup HN_SLAVE_RECEIVED block polling waiter:0x%x",
 					hn_state_buf[1]);
 				got_hotknot_state |= HN_SLAVE_RECEIVED;
 				got_hotknot_extra_state = hn_state_buf[1];
@@ -496,13 +496,13 @@ s32 hotknot_event_handler(u8 *data)
 			}
 		} else if (wait_hotknot_state & HN_MASTER_DEPARTED) {
 			if (hn_state_buf[0] == 0x07) {
-				pr_info("Wakeup HN_MASTER_DEPARTED block polling waiter");
+				pr_debug("Wakeup HN_MASTER_DEPARTED block polling waiter");
 				got_hotknot_state |= HN_MASTER_DEPARTED;
 				wake_up_interruptible(&bp_waiter);
 			}
 		} else if (wait_hotknot_state & HN_SLAVE_DEPARTED) {
 			if (hn_state_buf[1] == 0x07) {
-				pr_info("Wakeup HN_SLAVE_DEPARTED block polling waiter");
+				pr_debug("Wakeup HN_SLAVE_DEPARTED block polling waiter");
 				got_hotknot_state |= HN_SLAVE_DEPARTED;
 				wake_up_interruptible(&bp_waiter);
 			}
@@ -632,7 +632,7 @@ static s32 io_iic_read(u8 *data, int buf_size, void __user *arg)
 		err = copy_to_user(&((u8 __user *) arg)[CMD_HEAD_LENGTH],
 			&data[CMD_HEAD_LENGTH], data_length);
 		if (err) {
-			pr_info("ERROR when copy to user.[addr: %04x], [read length:%d]",
+			pr_debug("ERROR when copy to user.[addr: %04x], [read length:%d]",
 				addr, data_length);
 			return ERROR_MEM;
 		}
@@ -786,7 +786,7 @@ static long gt1x_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 	case GESTURE_ENABLE_PARTLY:
 		SETBIT(gestures_flag, (u8) value);
 		gesture_enabled = 1;
-		pr_info("ENABLE_GESTURE_PARTLY, gesture = 0x%02X, gesture_enabled = %d",
+		pr_debug("ENABLE_GESTURE_PARTLY, gesture = 0x%02X, gesture_enabled = %d",
 			value, gesture_enabled);
 		break;
 
@@ -797,7 +797,7 @@ static long gt1x_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		CLEARBIT(gestures_flag, (u8) value);
 		if (is_all_dead(gestures_flag, sizeof(gestures_flag)))
 			gesture_enabled = 0;
-		pr_info("DISABLE_GESTURE_PARTLY, gesture = 0x%02X, gesture_enabled = %d",
+		pr_debug("DISABLE_GESTURE_PARTLY, gesture = 0x%02X, gesture_enabled = %d",
 			value, gesture_enabled);
 		break;
 

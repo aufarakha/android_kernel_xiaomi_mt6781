@@ -1399,7 +1399,7 @@ static int __init atk0110_init(void)
 
 	ret = acpi_bus_register_driver(&atk_driver);
 	if (ret)
-		pr_info("acpi_bus_register_driver failed: %d\n", ret);
+		pr_debug("acpi_bus_register_driver failed: %d\n", ret);
 
 	return ret;
 }

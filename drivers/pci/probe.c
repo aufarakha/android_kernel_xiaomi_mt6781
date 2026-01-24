@@ -848,7 +848,7 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
 	if (parent)
 		dev_info(parent, "PCI host bridge to bus %s\n", name);
 	else
-		pr_info("PCI host bridge to bus %s\n", name);
+		pr_debug("PCI host bridge to bus %s\n", name);
 
 	/* Add initial resources to the bus */
 	resource_list_for_each_entry_safe(window, n, &resources) {
@@ -2232,7 +2232,7 @@ static bool pci_bus_wait_crs(struct pci_bus *bus, int devfn, u32 *l,
 			return false;
 		}
 		if (delay >= 1000)
-			pr_info("pci %04x:%02x:%02x.%d: not ready after %dms; waiting\n",
+			pr_debug("pci %04x:%02x:%02x.%d: not ready after %dms; waiting\n",
 				pci_domain_nr(bus), bus->number,
 				PCI_SLOT(devfn), PCI_FUNC(devfn), delay - 1);
 
@@ -2244,7 +2244,7 @@ static bool pci_bus_wait_crs(struct pci_bus *bus, int devfn, u32 *l,
 	}
 
 	if (delay >= 1000)
-		pr_info("pci %04x:%02x:%02x.%d: ready after %dms\n",
+		pr_debug("pci %04x:%02x:%02x.%d: ready after %dms\n",
 			pci_domain_nr(bus), bus->number,
 			PCI_SLOT(devfn), PCI_FUNC(devfn), delay - 1);
 

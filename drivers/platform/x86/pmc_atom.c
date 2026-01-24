@@ -248,7 +248,7 @@ static void pmc_power_off(void)
 	u16	pm1_cnt_port;
 	u32	pm1_cnt_value;
 
-	pr_info("Preparing to enter system sleep state S5\n");
+	pr_debug("Preparing to enter system sleep state S5\n");
 
 	pm1_cnt_port = acpi_base_addr + PM1_CNT;
 
@@ -462,7 +462,7 @@ static int pmc_setup_clks(struct pci_dev *pdev, void __iomem *pmc_regmap,
 	clk_data->clks = pmc_data->clks;
 	if (d) {
 		clk_data->critical = true;
-		pr_info("%s critclks quirk enabled\n", d->ident);
+		pr_debug("%s critclks quirk enabled\n", d->ident);
 	}
 
 	clkdev = platform_device_register_data(&pdev->dev, "clk-pmc-atom",

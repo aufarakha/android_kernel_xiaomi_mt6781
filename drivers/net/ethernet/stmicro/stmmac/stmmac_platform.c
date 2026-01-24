@@ -54,7 +54,7 @@ static int dwmac1000_validate_mcast_bins(int mcast_bins)
 		break;
 	default:
 		x = 0;
-		pr_info("Hash table entries set to unexpected value %d",
+		pr_debug("Hash table entries set to unexpected value %d",
 			mcast_bins);
 		break;
 	}
@@ -83,7 +83,7 @@ static int dwmac1000_validate_ucast_entries(int ucast_entries)
 		break;
 	default:
 		x = 1;
-		pr_info("Unicast table entries set to unexpected value %d\n",
+		pr_debug("Unicast table entries set to unexpected value %d\n",
 			ucast_entries);
 		break;
 	}

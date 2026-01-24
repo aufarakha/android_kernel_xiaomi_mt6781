@@ -123,7 +123,7 @@ static int gelic_card_set_link_mode(struct gelic_card *card, int mode)
 				 GELIC_LV1_SET_NEGOTIATION_MODE,
 				 GELIC_LV1_PHY_ETHERNET_0, mode, 0, &v1, &v2);
 	if (status) {
-		pr_info("%s: failed setting negotiation mode %d\n", __func__,
+		pr_debug("%s: failed setting negotiation mode %d\n", __func__,
 			status);
 		return -EBUSY;
 	}
@@ -1010,7 +1010,7 @@ static int gelic_card_decode_one_descr(struct gelic_card *card)
 			}
 		}
 		if (GELIC_PORT_MAX <= i) {
-			pr_info("%s: unknown packet vid=%x\n", __func__, vid);
+			pr_debug("%s: unknown packet vid=%x\n", __func__, vid);
 			goto refill;
 		}
 	} else
@@ -1233,7 +1233,7 @@ static int gelic_ether_get_link_ksettings(struct net_device *netdev,
 		cmd->base.speed = SPEED_1000;
 		break;
 	default:
-		pr_info("%s: speed unknown\n", __func__);
+		pr_debug("%s: speed unknown\n", __func__);
 		cmd->base.speed = SPEED_10;
 		break;
 	}
@@ -1286,7 +1286,7 @@ gelic_ether_set_link_ksettings(struct net_device *netdev,
 		if (cmd->base.duplex == DUPLEX_FULL) {
 			mode |= GELIC_LV1_ETHER_FULL_DUPLEX;
 		} else if (cmd->base.speed == SPEED_1000) {
-			pr_info("1000 half duplex is not supported.\n");
+			pr_debug("1000 half duplex is not supported.\n");
 			return -EINVAL;
 		}
 	}
@@ -1332,7 +1332,7 @@ static int gelic_net_set_wol(struct net_device *netdev,
 					 0, GELIC_LV1_WOL_MP_ENABLE,
 					 &v1, &v2);
 		if (status) {
-			pr_info("%s: enabling WOL failed %d\n", __func__,
+			pr_debug("%s: enabling WOL failed %d\n", __func__,
 				status);
 			status = -EIO;
 			goto done;
@@ -1345,7 +1345,7 @@ static int gelic_net_set_wol(struct net_device *netdev,
 		if (!status)
 			ps3_sys_manager_set_wol(1);
 		else {
-			pr_info("%s: enabling WOL filter failed %d\n",
+			pr_debug("%s: enabling WOL filter failed %d\n",
 				__func__, status);
 			status = -EIO;
 		}
@@ -1356,7 +1356,7 @@ static int gelic_net_set_wol(struct net_device *netdev,
 					 0, GELIC_LV1_WOL_MP_DISABLE,
 					 &v1, &v2);
 		if (status) {
-			pr_info("%s: disabling WOL failed %d\n", __func__,
+			pr_debug("%s: disabling WOL failed %d\n", __func__,
 				status);
 			status = -EIO;
 			goto done;
@@ -1369,7 +1369,7 @@ static int gelic_net_set_wol(struct net_device *netdev,
 		if (!status)
 			ps3_sys_manager_set_wol(0);
 		else {
-			pr_info("%s: removing WOL filter failed %d\n",
+			pr_debug("%s: removing WOL filter failed %d\n",
 				__func__, status);
 			status = -EIO;
 		}

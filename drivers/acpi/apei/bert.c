@@ -112,7 +112,7 @@ static int __init bert_init(void)
 		return 0;
 
 	if (bert_disable) {
-		pr_info("Boot Error Record Table support is disabled.\n");
+		pr_debug("Boot Error Record Table support is disabled.\n");
 		return 0;
 	}
 

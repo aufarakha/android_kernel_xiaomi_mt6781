@@ -444,7 +444,7 @@ i915_gem_shrinker_oom(struct notifier_block *nb, unsigned long event, void *ptr)
 	spin_unlock(&i915->mm.obj_lock);
 
 	if (freed_pages || unbound || bound)
-		pr_info("Purging GPU memory, %lu pages freed, "
+		pr_debug("Purging GPU memory, %lu pages freed, "
 			"%lu pages still pinned.\n",
 			freed_pages, unevictable);
 	if (unbound || bound)

@@ -238,7 +238,7 @@ static int __init asr_get_base_address(void)
 		return -EBUSY;
 	}
 
-	pr_info("found %sASR @ addr %#x\n", type, asr_base);
+	pr_debug("found %sASR @ addr %#x\n", type, asr_base);
 
 	return 0;
 }

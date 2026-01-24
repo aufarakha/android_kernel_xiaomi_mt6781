@@ -25,7 +25,7 @@ static int __sgm4151x_read_byte(struct sgm4151x_device *sgm, u8 reg, u8 *data)
 
 	ret = i2c_smbus_read_byte_data(sgm->client, reg);
 	if (ret < 0) {
-		pr_info("i2c read fail: can't read from reg 0x%02X\n", reg);
+		pr_debug("i2c read fail: can't read from reg 0x%02X\n", reg);
 		return ret;
 	}
 
@@ -40,7 +40,7 @@ static int __sgm4151x_write_byte(struct sgm4151x_device *sgm, int reg, u8 val)
 
 	ret = i2c_smbus_write_byte_data(sgm->client, reg, val);
 	if (ret < 0) {
-		pr_info("i2c write fail: can't write 0x%02X to reg 0x%02X: %d\n",
+		pr_debug("i2c write fail: can't write 0x%02X to reg 0x%02X: %d\n",
 				val, reg, ret);
 		return ret;
 	}
@@ -67,7 +67,7 @@ static int sgm4151x_update_bits(struct sgm4151x_device *sgm, u8 reg,
 	mutex_lock(&sgm->i2c_rw_lock);
 	ret = __sgm4151x_read_byte(sgm, reg, &tmp);
 	if (ret) {
-		pr_info("Failed: reg=%02X, ret=%d\n", reg, ret);
+		pr_debug("Failed: reg=%02X, ret=%d\n", reg, ret);
 		goto out;
 	}
 
@@ -76,7 +76,7 @@ static int sgm4151x_update_bits(struct sgm4151x_device *sgm, u8 reg,
 
 	ret = __sgm4151x_write_byte(sgm, reg, tmp);
 	if (ret)
-		pr_info("Failed: reg=%02X, ret=%d\n", reg, ret);
+		pr_debug("Failed: reg=%02X, ret=%d\n", reg, ret);
 
 out:
 	mutex_unlock(&sgm->i2c_rw_lock);
@@ -243,7 +243,7 @@ static int sgm4151x_dump_register(struct charger_device *chg_dev)
 
 	for (i = 0; i <= SGM4151x_CHRG_CTRL_B; i++) {
 		sgm4151x_read_reg(sgm, i, &reg);
-		pr_info("%s REG%02x  %02x\n", __func__, i, reg);
+		pr_debug("%s REG%02x  %02x\n", __func__, i, reg);
 	}
 	return 0;
 }
@@ -395,7 +395,7 @@ static int sgm4151x_probe(struct i2c_client *client,
 	int ret = 0;
 	struct sgm4151x_device *sgm;
 
-	pr_info("sgm4151x start probe\n");
+	pr_debug("sgm4151x start probe\n");
 	sgm = devm_kzalloc(&client->dev, sizeof(struct sgm4151x_device), GFP_KERNEL);
 	if (!sgm)
 		return -ENOMEM;
@@ -418,7 +418,7 @@ static int sgm4151x_probe(struct i2c_client *client,
 	sgm->chg_dev = charger_device_register("primary_divider_chg",
 			sgm->dev, sgm, &sgm4151x_chg_ops, &sgm->sgm4151x_chg_props);
 	if (IS_ERR_OR_NULL(sgm->chg_dev)) {
-		pr_info("%s: register charger device  failed\n", __func__);
+		pr_debug("%s: register charger device  failed\n", __func__);
 		ret = PTR_ERR(sgm->chg_dev);
 		return ret;
 	}

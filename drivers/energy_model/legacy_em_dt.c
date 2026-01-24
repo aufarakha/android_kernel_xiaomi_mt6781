@@ -145,7 +145,7 @@ static int init_em_dt_callback(struct notifier_block *nb, unsigned long val,
 		per_cpu(cpu_em, i) = em;
 	}
 
-	pr_info("Registering EM of %*pbl\n", cpumask_pr_args(policy->cpus));
+	pr_debug("Registering EM of %*pbl\n", cpumask_pr_args(policy->cpus));
 	em_register_perf_domain(policy->cpus, nstates, &em_cb);
 
 	/* Finish the work when all possible CPUs have been registered. */

@@ -201,7 +201,7 @@ static int platform_ipmi_probe(struct platform_device *pdev)
 
 	io.dev = &pdev->dev;
 
-	pr_info("ipmi_si: %s: %s %#lx regsize %d spacing %d irq %d\n",
+	pr_debug("ipmi_si: %s: %s %#lx regsize %d spacing %d irq %d\n",
 		ipmi_addr_src_to_str(addr_source),
 		(io.addr_type == IPMI_IO_ADDR_SPACE) ? "io" : "mem",
 		io.addr_data, io.regsize, io.regspacing, io.irq);

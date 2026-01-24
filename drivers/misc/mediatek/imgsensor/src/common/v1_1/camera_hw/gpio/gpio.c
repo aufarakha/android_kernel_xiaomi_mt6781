@@ -70,7 +70,7 @@ static enum IMGSENSOR_RETURN gpio_init(
 				j,
 				lookup_names);
 				if (ret < 0)
-					pr_info(
+					pr_debug(
 						"ERROR:%s, snprintf err, %d\n",
 						__func__,
 						ret);
@@ -83,7 +83,7 @@ static enum IMGSENSOR_RETURN gpio_init(
 
 			if (pgpio->ppinctrl_state_cam[j][i] == NULL ||
 				IS_ERR(pgpio->ppinctrl_state_cam[j][i])) {
-				pr_info(
+				pr_debug(
 					"ERROR: %s : pinctrl err, %s\n",
 					__func__,
 					str_pinctrl_name);

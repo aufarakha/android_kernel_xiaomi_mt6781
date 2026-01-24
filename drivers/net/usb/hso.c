@@ -112,7 +112,7 @@
 #define hso_dbg(lvl, fmt, ...)						\
 do {									\
 	if ((lvl) & debug)						\
-		pr_info("[%d:%s] " fmt,					\
+		pr_debug("[%d:%s] " fmt,					\
 			__LINE__, __func__, ##__VA_ARGS__);		\
 } while (0)
 
@@ -3245,7 +3245,7 @@ static int __init hso_init(void)
 	int result;
 
 	/* put it in the log */
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 
 	/* Initialise the serial table semaphore and table */
 	spin_lock_init(&serial_table_lock);
@@ -3299,7 +3299,7 @@ err_free_tty:
 
 static void __exit hso_exit(void)
 {
-	pr_info("unloaded\n");
+	pr_debug("unloaded\n");
 
 	tty_unregister_driver(tty_drv);
 	/* deregister the usb driver */

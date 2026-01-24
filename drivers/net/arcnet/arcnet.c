@@ -116,7 +116,7 @@ static int __init arcnet_init(void)
 
 	arcnet_debug = debug;
 
-	pr_info("arcnet loaded\n");
+	pr_debug("arcnet loaded\n");
 
 	/* initialize the protocol map */
 	arc_raw_proto = arc_proto_default = arc_bcast_proto = &arc_proto_null;
@@ -124,7 +124,7 @@ static int __init arcnet_init(void)
 		arc_proto_map[count] = arc_proto_default;
 
 	if (BUGLVL(D_DURING))
-		pr_info("struct sizes: %zd %zd %zd %zd %zd\n",
+		pr_debug("struct sizes: %zd %zd %zd %zd %zd\n",
 			sizeof(struct arc_hardware),
 			sizeof(struct arc_rfc1201),
 			sizeof(struct arc_rfc1051),

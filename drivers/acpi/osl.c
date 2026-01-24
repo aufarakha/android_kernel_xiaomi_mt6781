@@ -1401,7 +1401,7 @@ __setup("acpi_os_name=", acpi_os_name_setup);
 static int __init acpi_no_auto_serialize_setup(char *str)
 {
 	acpi_gbl_auto_serialize_methods = FALSE;
-	pr_info("ACPI: auto-serialization disabled\n");
+	pr_debug("ACPI: auto-serialization disabled\n");
 
 	return 1;
 }
@@ -1699,7 +1699,7 @@ acpi_status acpi_os_release_object(acpi_cache_t * cache, void *object)
 static int __init acpi_no_static_ssdt_setup(char *s)
 {
 	acpi_gbl_disable_ssdt_table_install = TRUE;
-	pr_info("ACPI: static SSDT installation disabled\n");
+	pr_debug("ACPI: static SSDT installation disabled\n");
 
 	return 0;
 }

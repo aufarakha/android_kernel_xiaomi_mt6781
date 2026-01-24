@@ -561,8 +561,8 @@ static int sch5627_probe(struct platform_device *pdev)
 	if (err)
 		goto error;
 
-	pr_info("found %s chip at %#hx\n", DEVNAME, data->addr);
-	pr_info("firmware build: code 0x%02X, id 0x%04X, hwmon: rev 0x%02X\n",
+	pr_debug("found %s chip at %#hx\n", DEVNAME, data->addr);
+	pr_debug("firmware build: code 0x%02X, id 0x%04X, hwmon: rev 0x%02X\n",
 		build_code, build_id, hwmon_rev);
 
 	/* Register sysfs interface files */

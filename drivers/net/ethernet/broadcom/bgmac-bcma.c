@@ -339,7 +339,7 @@ static int __init bgmac_init(void)
 	err = bcma_driver_register(&bgmac_bcma_driver);
 	if (err)
 		return err;
-	pr_info("Broadcom 47xx GBit MAC driver loaded\n");
+	pr_debug("Broadcom 47xx GBit MAC driver loaded\n");
 
 	return 0;
 }

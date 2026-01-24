@@ -87,7 +87,7 @@ static int wdt_disable(void)
 		write_wdtcr(IOP_WDTCR_DIS);
 		clear_bit(WDT_ENABLED, &wdt_status);
 		spin_unlock(&wdt_lock);
-		pr_info("Disabled\n");
+		pr_debug("Disabled\n");
 		return 0;
 	} else
 		return 1;
@@ -240,7 +240,7 @@ static int __init iop_wdt_init(void)
 	   with an open */
 	ret = misc_register(&iop_wdt_miscdev);
 	if (ret == 0)
-		pr_info("timeout %lu sec\n", iop_watchdog_timeout());
+		pr_debug("timeout %lu sec\n", iop_watchdog_timeout());
 
 	return ret;
 }

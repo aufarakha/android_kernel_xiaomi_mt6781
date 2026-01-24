@@ -338,7 +338,7 @@ static int adm1029_detect(struct i2c_client *client,
 		 * There are no "official" CHIP ID, so actually
 		 * we use Major/Minor revision for that
 		 */
-		pr_info("Unknown major revision %x, please let us know\n",
+		pr_debug("Unknown major revision %x, please let us know\n",
 			chip_id);
 		return -ENODEV;
 	}

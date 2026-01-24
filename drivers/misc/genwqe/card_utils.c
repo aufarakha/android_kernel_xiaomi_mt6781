@@ -423,7 +423,7 @@ int genwqe_setup_sgl(struct genwqe_dev *cd, struct genwqe_sgl *sgl,
 			if (prev_daddr == daddr) {
 				u32 prev_len = be32_to_cpu(last_s->len);
 
-				/* pr_info("daddr combining: "
+				/* pr_debug("daddr combining: "
 					"%016llx/%08x -> %016llx\n",
 					prev_daddr, prev_len, daddr); */
 

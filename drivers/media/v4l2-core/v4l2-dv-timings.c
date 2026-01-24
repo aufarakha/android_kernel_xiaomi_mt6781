@@ -315,28 +315,28 @@ void v4l2_print_dv_timings(const char *dev_prefix, const char *prefix,
 	if (prefix == NULL)
 		prefix = "";
 
-	pr_info("%s: %s%ux%u%s%u.%u (%ux%u)\n", dev_prefix, prefix,
+	pr_debug("%s: %s%ux%u%s%u.%u (%ux%u)\n", dev_prefix, prefix,
 		bt->width, bt->height, bt->interlaced ? "i" : "p",
 		fps / 100, fps % 100, htot, vtot);
 
 	if (!detailed)
 		return;
 
-	pr_info("%s: horizontal: fp = %u, %ssync = %u, bp = %u\n",
+	pr_debug("%s: horizontal: fp = %u, %ssync = %u, bp = %u\n",
 			dev_prefix, bt->hfrontporch,
 			(bt->polarities & V4L2_DV_HSYNC_POS_POL) ? "+" : "-",
 			bt->hsync, bt->hbackporch);
-	pr_info("%s: vertical: fp = %u, %ssync = %u, bp = %u\n",
+	pr_debug("%s: vertical: fp = %u, %ssync = %u, bp = %u\n",
 			dev_prefix, bt->vfrontporch,
 			(bt->polarities & V4L2_DV_VSYNC_POS_POL) ? "+" : "-",
 			bt->vsync, bt->vbackporch);
 	if (bt->interlaced)
-		pr_info("%s: vertical bottom field: fp = %u, %ssync = %u, bp = %u\n",
+		pr_debug("%s: vertical bottom field: fp = %u, %ssync = %u, bp = %u\n",
 			dev_prefix, bt->il_vfrontporch,
 			(bt->polarities & V4L2_DV_VSYNC_POS_POL) ? "+" : "-",
 			bt->il_vsync, bt->il_vbackporch);
-	pr_info("%s: pixelclock: %llu\n", dev_prefix, bt->pixelclock);
-	pr_info("%s: flags (0x%x):%s%s%s%s%s%s%s%s%s%s\n",
+	pr_debug("%s: pixelclock: %llu\n", dev_prefix, bt->pixelclock);
+	pr_debug("%s: flags (0x%x):%s%s%s%s%s%s%s%s%s%s\n",
 			dev_prefix, bt->flags,
 			(bt->flags & V4L2_DV_FL_REDUCED_BLANKING) ?
 			" REDUCED_BLANKING" : "",
@@ -358,20 +358,20 @@ void v4l2_print_dv_timings(const char *dev_prefix, const char *prefix,
 			" HAS_CEA861_VIC" : "",
 			(bt->flags & V4L2_DV_FL_HAS_HDMI_VIC) ?
 			" HAS_HDMI_VIC" : "");
-	pr_info("%s: standards (0x%x):%s%s%s%s%s\n", dev_prefix, bt->standards,
+	pr_debug("%s: standards (0x%x):%s%s%s%s%s\n", dev_prefix, bt->standards,
 			(bt->standards & V4L2_DV_BT_STD_CEA861) ?  " CEA" : "",
 			(bt->standards & V4L2_DV_BT_STD_DMT) ?  " DMT" : "",
 			(bt->standards & V4L2_DV_BT_STD_CVT) ?  " CVT" : "",
 			(bt->standards & V4L2_DV_BT_STD_GTF) ?  " GTF" : "",
 			(bt->standards & V4L2_DV_BT_STD_SDI) ?  " SDI" : "");
 	if (bt->flags & V4L2_DV_FL_HAS_PICTURE_ASPECT)
-		pr_info("%s: picture aspect (hor:vert): %u:%u\n", dev_prefix,
+		pr_debug("%s: picture aspect (hor:vert): %u:%u\n", dev_prefix,
 			bt->picture_aspect.numerator,
 			bt->picture_aspect.denominator);
 	if (bt->flags & V4L2_DV_FL_HAS_CEA861_VIC)
-		pr_info("%s: CEA-861 VIC: %u\n", dev_prefix, bt->cea861_vic);
+		pr_debug("%s: CEA-861 VIC: %u\n", dev_prefix, bt->cea861_vic);
 	if (bt->flags & V4L2_DV_FL_HAS_HDMI_VIC)
-		pr_info("%s: HDMI VIC: %u\n", dev_prefix, bt->hdmi_vic);
+		pr_debug("%s: HDMI VIC: %u\n", dev_prefix, bt->hdmi_vic);
 }
 EXPORT_SYMBOL_GPL(v4l2_print_dv_timings);
 

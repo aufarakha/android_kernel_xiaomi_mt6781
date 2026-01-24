@@ -327,7 +327,7 @@ static int __init apanel_init(void)
 	iounmap(bios);
 
 	if (found == 0) {
-		pr_info(APANEL ": no input devices reported by BIOS\n");
+		pr_debug(APANEL ": no input devices reported by BIOS\n");
 		return -EIO;
 	}
 

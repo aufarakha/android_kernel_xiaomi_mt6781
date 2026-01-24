@@ -14524,7 +14524,7 @@ static int __init bnx2x_init(void)
 {
 	int ret;
 
-	pr_info("%s", version);
+	pr_debug("%s", version);
 
 	bnx2x_wq = create_singlethread_workqueue("bnx2x");
 	if (bnx2x_wq == NULL) {

@@ -65,7 +65,7 @@ static void gb_audio_module_release(struct kobject *kobj)
 {
 	struct gb_audio_manager_module *module = to_gb_audio_module(kobj);
 
-	pr_info("Destroying audio module #%d\n", module->id);
+	pr_debug("Destroying audio module #%d\n", module->id);
 	/* TODO -> delete from list */
 	kfree(module);
 }
@@ -225,13 +225,13 @@ int gb_audio_manager_module_create(
 	send_add_uevent(m);
 
 	*module = m;
-	pr_info("Created audio module #%d\n", id);
+	pr_debug("Created audio module #%d\n", id);
 	return 0;
 }
 
 void gb_audio_manager_module_dump(struct gb_audio_manager_module *module)
 {
-	pr_info("audio module #%d name=%s vid=%d pid=%d intf_id=%d i/p devices=0x%X o/p devices=0x%X\n",
+	pr_debug("audio module #%d name=%s vid=%d pid=%d intf_id=%d i/p devices=0x%X o/p devices=0x%X\n",
 		module->id,
 		module->desc.name,
 		module->desc.vid,

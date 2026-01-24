@@ -393,7 +393,7 @@ modehdlc(struct bchannel *bch, int protocol)
 		test_and_set_bit(FLG_HDLC, &bch->Flags);
 		break;
 	default:
-		pr_info("%s: protocol not known %x\n", fc->name, protocol);
+		pr_debug("%s: protocol not known %x\n", fc->name, protocol);
 		return -ENOPROTOOPT;
 	}
 	return 0;
@@ -799,7 +799,7 @@ init_card(struct fritzcard *fc)
 		ret = request_irq(fc->irq, avm_fritz_interrupt,
 				  IRQF_SHARED, fc->name, fc);
 	if (ret) {
-		pr_info("%s: couldn't get interrupt %d\n",
+		pr_debug("%s: couldn't get interrupt %d\n",
 			fc->name, fc->irq);
 		return ret;
 	}
@@ -808,7 +808,7 @@ init_card(struct fritzcard *fc)
 		ret = fc->isac.init(&fc->isac);
 		if (ret) {
 			spin_unlock_irqrestore(&fc->lock, flags);
-			pr_info("%s: ISAC init failed with %d\n",
+			pr_debug("%s: ISAC init failed with %d\n",
 				fc->name, ret);
 			break;
 		}
@@ -830,7 +830,7 @@ init_card(struct fritzcard *fc)
 			pr_notice("%s: IRQ %d count %d\n", fc->name,
 				  fc->irq, fc->irqcnt);
 		if (!fc->irqcnt) {
-			pr_info("%s: IRQ(%d) getting no IRQs during init %d\n",
+			pr_debug("%s: IRQ(%d) getting no IRQs during init %d\n",
 				fc->name, fc->irq, 3 - cnt);
 			reset_avm(fc);
 		} else
@@ -872,7 +872,7 @@ avm_bctrl(struct mISDNchannel *ch, u32 cmd, void *arg)
 		ret = channel_bctrl(bch, arg);
 		break;
 	default:
-		pr_info("%s: %s unknown prim(%x)\n", fc->name, __func__, cmd);
+		pr_debug("%s: %s unknown prim(%x)\n", fc->name, __func__, cmd);
 	}
 	return ret;
 }
@@ -898,7 +898,7 @@ channel_ctrl(struct fritzcard  *fc, struct mISDN_ctrl_req *cq)
 		ret = fc->isac.ctrl(&fc->isac, HW_TIMER3_VALUE, cq->p1);
 		break;
 	default:
-		pr_info("%s: %s unknown Op %x\n", fc->name, __func__, cq->op);
+		pr_debug("%s: %s unknown Op %x\n", fc->name, __func__, cq->op);
 		ret = -EINVAL;
 		break;
 	}
@@ -945,7 +945,7 @@ avm_dctrl(struct mISDNchannel *ch, u32 cmd, void *arg)
 		if (err)
 			break;
 		if (!try_module_get(THIS_MODULE))
-			pr_info("%s: cannot get module\n", fc->name);
+			pr_debug("%s: cannot get module\n", fc->name);
 		break;
 	case CLOSE_CHANNEL:
 		pr_debug("%s: dev(%d) close from %p\n", fc->name, dch->dev.id,
@@ -969,7 +969,7 @@ setup_fritz(struct fritzcard *fc)
 	u32 val, ver;
 
 	if (!request_region(fc->addr, 32, fc->name)) {
-		pr_info("%s: AVM config port %x-%x already in use\n",
+		pr_debug("%s: AVM config port %x-%x already in use\n",
 			fc->name, fc->addr, fc->addr + 31);
 		return -EIO;
 	}
@@ -1001,7 +1001,7 @@ setup_fritz(struct fritzcard *fc)
 		break;
 	default:
 		release_region(fc->addr, 32);
-		pr_info("%s: AVM unknown type %d\n", fc->name, fc->type);
+		pr_debug("%s: AVM unknown type %d\n", fc->name, fc->type);
 		return -ENODEV;
 	}
 	pr_notice("%s: %s config irq:%d base:0x%X\n", fc->name,
@@ -1105,7 +1105,7 @@ fritzpci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 	card = kzalloc(sizeof(struct fritzcard), GFP_KERNEL);
 	if (!card) {
-		pr_info("No kmem for fritzcard\n");
+		pr_debug("No kmem for fritzcard\n");
 		return err;
 	}
 	if (pdev->device == PCI_DEVICE_ID_AVM_A1_V2)
@@ -1140,7 +1140,7 @@ fritz_remove_pci(struct pci_dev *pdev)
 		release_card(card);
 	else
 		if (debug)
-			pr_info("%s: drvdata already removed\n", __func__);
+			pr_debug("%s: drvdata already removed\n", __func__);
 }
 
 static const struct pci_device_id fcpci_ids[] = {

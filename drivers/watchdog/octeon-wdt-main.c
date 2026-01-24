@@ -561,7 +561,7 @@ static int __init octeon_wdt_init(void)
 
 	octeon_wdt_calc_parameters(heartbeat);
 
-	pr_info("Initial granularity %d Sec\n", timeout_sec);
+	pr_debug("Initial granularity %d Sec\n", timeout_sec);
 
 	octeon_wdt.timeout	= timeout_sec;
 	octeon_wdt.max_timeout	= UINT_MAX;

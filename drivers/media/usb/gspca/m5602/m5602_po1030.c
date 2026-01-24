@@ -164,7 +164,7 @@ int po1030_probe(struct sd *sd)
 
 	if (force_sensor) {
 		if (force_sensor == PO1030_SENSOR) {
-			pr_info("Forcing a %s sensor\n", po1030.name);
+			pr_debug("Forcing a %s sensor\n", po1030.name);
 			goto sensor_found;
 		}
 		/* If we want to force another sensor, don't try to probe this
@@ -191,7 +191,7 @@ int po1030_probe(struct sd *sd)
 		return -ENODEV;
 
 	if (dev_id_h == 0x30) {
-		pr_info("Detected a po1030 sensor\n");
+		pr_debug("Detected a po1030 sensor\n");
 		goto sensor_found;
 	}
 	return -ENODEV;
@@ -225,7 +225,7 @@ int po1030_init(struct sd *sd)
 			break;
 
 		default:
-			pr_info("Invalid stream command, exiting init\n");
+			pr_debug("Invalid stream command, exiting init\n");
 			return -EINVAL;
 		}
 	}
@@ -599,15 +599,15 @@ static void po1030_dump_registers(struct sd *sd)
 	int address;
 	u8 value = 0;
 
-	pr_info("Dumping the po1030 sensor core registers\n");
+	pr_debug("Dumping the po1030 sensor core registers\n");
 	for (address = 0; address < 0x7f; address++) {
 		m5602_read_sensor(sd, address, &value, 1);
-		pr_info("register 0x%x contains 0x%x\n", address, value);
+		pr_debug("register 0x%x contains 0x%x\n", address, value);
 	}
 
-	pr_info("po1030 register state dump complete\n");
+	pr_debug("po1030 register state dump complete\n");
 
-	pr_info("Probing for which registers that are read/write\n");
+	pr_debug("Probing for which registers that are read/write\n");
 	for (address = 0; address < 0xff; address++) {
 		u8 old_value, ctrl_value;
 		u8 test_value[2] = {0xff, 0xff};
@@ -617,9 +617,9 @@ static void po1030_dump_registers(struct sd *sd)
 		m5602_read_sensor(sd, address, &ctrl_value, 1);
 
 		if (ctrl_value == test_value[0])
-			pr_info("register 0x%x is writeable\n", address);
+			pr_debug("register 0x%x is writeable\n", address);
 		else
-			pr_info("register 0x%x is read only\n", address);
+			pr_debug("register 0x%x is read only\n", address);
 
 		/* Restore original value */
 		m5602_write_sensor(sd, address, &old_value, 1);

@@ -136,7 +136,7 @@ static const struct key_entry topstar_keymap[] = {
 static void topstar_input_notify(struct topstar_laptop *topstar, int event)
 {
 	if (!sparse_keymap_report_event(topstar->input, event, 1, true))
-		pr_info("unknown event = 0x%02x\n", event);
+		pr_debug("unknown event = 0x%02x\n", event);
 }
 
 static int topstar_input_init(struct topstar_laptop *topstar)
@@ -377,7 +377,7 @@ static int __init topstar_laptop_init(void)
 	if (ret < 0)
 		goto err_driver_unreg;
 
-	pr_info("ACPI extras driver loaded\n");
+	pr_debug("ACPI extras driver loaded\n");
 	return 0;
 
 err_driver_unreg:

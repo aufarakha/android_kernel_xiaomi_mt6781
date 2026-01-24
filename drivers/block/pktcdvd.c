@@ -77,7 +77,7 @@
 #define pkt_notice(pd, fmt, ...)					\
 	pr_notice("%s: " fmt, pd->name, ##__VA_ARGS__)
 #define pkt_info(pd, fmt, ...)						\
-	pr_info("%s: " fmt, pd->name, ##__VA_ARGS__)
+	pr_debug("%s: " fmt, pd->name, ##__VA_ARGS__)
 
 #define pkt_dbg(level, pd, fmt, ...)					\
 do {									\

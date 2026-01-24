@@ -858,7 +858,7 @@ subsys_initcall(mcdi_sysram_init);
 static int __init mcdi_init(void)
 {
 	/* Activate MCDI after SMP */
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 
 	/* Register CPU up/down callbacks */
 	mcdi_hotplug_cb_init();

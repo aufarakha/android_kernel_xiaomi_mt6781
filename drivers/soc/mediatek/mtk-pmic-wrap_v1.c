@@ -4589,7 +4589,7 @@ static int pwrap_probe(struct platform_device *pdev)
 	} else
 		dev_notice(wrp->dev, "[PWRAP] Write Test pass\n");
 
-	pr_info("pwrap_probe success............");
+	pr_debug("pwrap_probe success............");
 	return 0;
 
 err_out_clk:

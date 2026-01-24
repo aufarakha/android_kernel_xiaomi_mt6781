@@ -209,7 +209,7 @@ sfax_ctrl(struct sfax_hw  *sf, u32 cmd, u_long arg)
 		outb(sf->aux_data, sf->cfg + TIGER_AUX_DATA);
 		break;
 	default:
-		pr_info("%s: %s unknown command %x %lx\n",
+		pr_debug("%s: %s unknown command %x %lx\n",
 			sf->name, __func__, cmd, arg);
 		ret = -EINVAL;
 		break;
@@ -238,7 +238,7 @@ channel_ctrl(struct sfax_hw  *sf, struct mISDN_ctrl_req *cq)
 		ret = sf->isac.ctrl(&sf->isac, HW_TIMER3_VALUE, cq->p1);
 		break;
 	default:
-		pr_info("%s: unknown Op %x\n", sf->name, cq->op);
+		pr_debug("%s: unknown Op %x\n", sf->name, cq->op);
 		ret = -EINVAL;
 		break;
 	}
@@ -265,7 +265,7 @@ sfax_dctrl(struct mISDNchannel *ch, u32 cmd, void *arg)
 		if (err)
 			break;
 		if (!try_module_get(THIS_MODULE))
-			pr_info("%s: cannot get module\n", sf->name);
+			pr_debug("%s: cannot get module\n", sf->name);
 		break;
 	case CLOSE_CHANNEL:
 		pr_debug("%s: dev(%d) close from %p\n", sf->name,
@@ -290,7 +290,7 @@ init_card(struct sfax_hw *sf)
 
 	ret = request_irq(sf->irq, speedfax_irq, IRQF_SHARED, sf->name, sf);
 	if (ret) {
-		pr_info("%s: couldn't get interrupt %d\n", sf->name, sf->irq);
+		pr_debug("%s: couldn't get interrupt %d\n", sf->name, sf->irq);
 		return ret;
 	}
 	while (cnt--) {
@@ -298,7 +298,7 @@ init_card(struct sfax_hw *sf)
 		ret = sf->isac.init(&sf->isac);
 		if (ret) {
 			spin_unlock_irqrestore(&sf->lock, flags);
-			pr_info("%s: ISAC init failed with %d\n",
+			pr_debug("%s: ISAC init failed with %d\n",
 				sf->name, ret);
 			break;
 		}
@@ -311,7 +311,7 @@ init_card(struct sfax_hw *sf)
 			pr_notice("%s: IRQ %d count %d\n", sf->name,
 				  sf->irq, sf->irqcnt);
 		if (!sf->irqcnt) {
-			pr_info("%s: IRQ(%d) got no requests during init %d\n",
+			pr_debug("%s: IRQ(%d) got no requests during init %d\n",
 				sf->name, sf->irq, 3 - cnt);
 		} else
 			return 0;
@@ -327,7 +327,7 @@ setup_speedfax(struct sfax_hw *sf)
 	u_long flags;
 
 	if (!request_region(sf->cfg, 256, sf->name)) {
-		pr_info("mISDN: %s config port %x-%x already in use\n",
+		pr_debug("mISDN: %s config port %x-%x already in use\n",
 			sf->name, sf->cfg, sf->cfg + 255);
 		return -EIO;
 	}
@@ -393,7 +393,7 @@ setup_instance(struct sfax_hw *card)
 
 	err = request_firmware(&firmware, "isdn/ISAR.BIN", &card->pdev->dev);
 	if (err < 0) {
-		pr_info("%s: firmware request failed %d\n",
+		pr_debug("%s: firmware request failed %d\n",
 			card->name, err);
 		goto error_fw;
 	}
@@ -458,7 +458,7 @@ sfaxpci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	struct sfax_hw *card = kzalloc(sizeof(struct sfax_hw), GFP_KERNEL);
 
 	if (!card) {
-		pr_info("No memory for Speedfax+ PCI\n");
+		pr_debug("No memory for Speedfax+ PCI\n");
 		return err;
 	}
 	card->pdev = pdev;

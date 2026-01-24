@@ -157,7 +157,7 @@ void i40evf_debug_d(void *hw, u32 mask, char *fmt_str, ...)
 	va_end(argptr);
 
 	/* the debug string is already formatted with a newline */
-	pr_info("%s", buf);
+	pr_debug("%s", buf);
 }
 
 /**
@@ -3956,10 +3956,10 @@ static int __init i40evf_init_module(void)
 {
 	int ret;
 
-	pr_info("i40evf: %s - version %s\n", i40evf_driver_string,
+	pr_debug("i40evf: %s - version %s\n", i40evf_driver_string,
 		i40evf_driver_version);
 
-	pr_info("%s\n", i40evf_copyright);
+	pr_debug("%s\n", i40evf_copyright);
 
 	i40evf_wq = alloc_workqueue("%s", WQ_UNBOUND | WQ_MEM_RECLAIM, 1,
 				    i40evf_driver_name);

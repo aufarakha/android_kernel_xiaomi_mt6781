@@ -1554,11 +1554,11 @@ int cx23885_417_register(struct cx23885_dev *dev)
 	err = video_register_device(dev->v4l_device,
 		VFL_TYPE_GRABBER, -1);
 	if (err < 0) {
-		pr_info("%s: can't register mpeg device\n", dev->name);
+		pr_debug("%s: can't register mpeg device\n", dev->name);
 		return err;
 	}
 
-	pr_info("%s: registered device %s [mpeg]\n",
+	pr_debug("%s: registered device %s [mpeg]\n",
 	       dev->name, video_device_node_name(dev->v4l_device));
 
 	/* ST: Configure the encoder paramaters, but don't begin

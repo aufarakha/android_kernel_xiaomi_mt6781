@@ -569,7 +569,7 @@ static ssize_t extbuck_access_show(struct device *dev,
 {
 	struct mt6315_chip *chip = dev_get_drvdata(dev);
 
-	pr_info("[%s] 0x%x\n", __func__, chip->reg_value);
+	pr_debug("[%s] 0x%x\n", __func__, chip->reg_value);
 
 	return sprintf(buf, "0x%x\n", chip->reg_value);
 }
@@ -594,7 +594,7 @@ static ssize_t extbuck_access_store(struct device *dev,
 		return -ENODEV;
 
 	if (buf != NULL && size != 0) {
-		pr_info("[%s] size is %d, buf is %s\n", __func__,
+		pr_debug("[%s] size is %d, buf is %s\n", __func__,
 			(int)size, buf);
 
 		pvalue = (char *)buf;
@@ -605,7 +605,7 @@ static ssize_t extbuck_access_store(struct device *dev,
 			ret = kstrtou32(addr, 16, (unsigned int *)&reg_adr);
 		if (val) {
 			ret = kstrtou32(val, 16, (unsigned int *)&reg_val);
-			pr_info("write MT6315_S%d Reg[0x%x] to 0x%x!\n",
+			pr_debug("write MT6315_S%d Reg[0x%x] to 0x%x!\n",
 				sid, reg_adr, reg_val);
 			ret = regmap_write(chip->regmap, reg_adr, reg_val);
 		} else {
@@ -613,7 +613,7 @@ static ssize_t extbuck_access_store(struct device *dev,
 			ret = regmap_read(chip->regmap,
 					  reg_adr, &chip->reg_value);
 			mutex_unlock(&chip->lock);
-			pr_info("read MT6315_S%d Reg[0x%x]=0x%x!\n",
+			pr_debug("read MT6315_S%d Reg[0x%x]=0x%x!\n",
 				sid, reg_adr, chip->reg_value);
 		}
 	}
@@ -656,7 +656,7 @@ static ssize_t dump_rec_pmic_show(struct device *dev,
 				    sid, (rdata3 & 0x3),
 				    (rdata1 << 0x8) | rdata0, rdata2);
 	}
-	pr_info("\n[SPMISLV] %s", buf);
+	pr_debug("\n[SPMISLV] %s", buf);
 
 	return log_size;
 }

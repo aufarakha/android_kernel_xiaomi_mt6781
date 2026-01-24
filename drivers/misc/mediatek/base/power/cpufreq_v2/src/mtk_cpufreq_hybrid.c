@@ -132,7 +132,7 @@ int Ripi_cpu_dvfs_thread(void *data)
 		&cpudvfs_lock, &cpufreq_act);
 
 	if (ret != 0) {
-		pr_info("Error: ipi_recv_registration CPU DVFS error: %d\n",
+		pr_debug("Error: ipi_recv_registration CPU DVFS error: %d\n",
 			ret);
 		do {
 			msleep(1000);
@@ -314,7 +314,7 @@ int dvfs_to_spm2_command(u32 cmd, struct cdvfs_data *cdvfs_d)
 	case IPI_DVFS_INIT_PTBL:
 		cdvfs_d->cmd = cmd;
 
-		pr_info("I'd like to initialize sspm DVFS, segment code = %d\n",
+		pr_debug("I'd like to initialize sspm DVFS, segment code = %d\n",
 			cdvfs_d->u.set_fv.arg[0]);
 
 		ret = sspm_ipi_send_sync_new(IPI_ID_CPU_DVFS,
@@ -332,7 +332,7 @@ int dvfs_to_spm2_command(u32 cmd, struct cdvfs_data *cdvfs_d)
 	case IPI_DVFS_INIT:
 		cdvfs_d->cmd = cmd;
 
-		pr_info("I'd like to initialize sspm DVFS, segment code = %d\n",
+		pr_debug("I'd like to initialize sspm DVFS, segment code = %d\n",
 			cdvfs_d->u.set_fv.arg[0]);
 
 		ret = sspm_ipi_send_sync_new(IPI_ID_CPU_DVFS,

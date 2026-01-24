@@ -1341,7 +1341,7 @@ static int __init w83627hf_find(int sioaddr, unsigned short *addr,
 	}
 
 	err = 0;
-	pr_info(DRVNAME ": Found %s chip at %#x\n",
+	pr_debug(DRVNAME ": Found %s chip at %#x\n",
 		names[sio_data->type], *addr);
 
  exit:

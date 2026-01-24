@@ -3305,7 +3305,7 @@ static struct pci_driver jme_driver = {
 static int __init
 jme_init_module(void)
 {
-	pr_info("JMicron JMC2XX ethernet driver version %s\n", DRV_VERSION);
+	pr_debug("JMicron JMC2XX ethernet driver version %s\n", DRV_VERSION);
 	return pci_register_driver(&jme_driver);
 }
 

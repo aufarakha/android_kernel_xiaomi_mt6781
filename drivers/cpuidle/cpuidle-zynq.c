@@ -62,7 +62,7 @@ static struct cpuidle_driver zynq_idle_driver = {
 /* Initialize CPU idle by registering the idle states */
 static int zynq_cpuidle_probe(struct platform_device *pdev)
 {
-	pr_info("Xilinx Zynq CpuIdle Driver started\n");
+	pr_debug("Xilinx Zynq CpuIdle Driver started\n");
 
 	return cpuidle_register(&zynq_idle_driver, NULL);
 }

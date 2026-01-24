@@ -55,7 +55,7 @@ static int __init com20020isa_probe(struct net_device *dev)
 	int err;
 
 	if (BUGLVL(D_NORMAL))
-		pr_info("%s\n", "COM20020 ISA support (by David Woodhouse et al.)");
+		pr_debug("%s\n", "COM20020 ISA support (by David Woodhouse et al.)");
 
 	ioaddr = dev->base_addr;
 	if (!ioaddr) {
@@ -196,7 +196,7 @@ static int __init com20020isa_setup(char *s)
 
 	switch (ints[0]) {
 	default:		/* ERROR */
-		pr_info("Too many arguments\n");
+		pr_debug("Too many arguments\n");
 	case 6:		/* Timeout */
 		timeout = ints[6];
 	case 5:		/* CKP value */

@@ -615,7 +615,7 @@ int saa7146_register_device(struct video_device *vfd, struct saa7146_dev *dev,
 		return err;
 	}
 
-	pr_info("%s: registered device %s [v4l2]\n",
+	pr_debug("%s: registered device %s [v4l2]\n",
 		dev->name, video_device_node_name(vfd));
 	return 0;
 }

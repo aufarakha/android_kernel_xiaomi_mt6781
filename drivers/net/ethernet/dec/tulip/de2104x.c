@@ -1842,7 +1842,7 @@ static void de21041_get_srom_info(struct de_private *de)
 	}
 
 	if (netif_msg_probe(de))
-		pr_info("de%d: SROM leaf offset %u, default media %s\n",
+		pr_debug("de%d: SROM leaf offset %u, default media %s\n",
 		       de->board_idx, ofs, media_name[de->media_type]);
 
 	/* init SIA register values to defaults */
@@ -1890,7 +1890,7 @@ static void de21041_get_srom_info(struct de_private *de)
 		de->media[idx].type = idx;
 
 		if (netif_msg_probe(de))
-			pr_info("de%d:   media block #%u: %s",
+			pr_debug("de%d:   media block #%u: %s",
 				de->board_idx, i,
 				media_name[de->media[idx].type]);
 
@@ -1979,7 +1979,7 @@ static int de_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 #ifndef MODULE
 	if (board_idx == 0)
-		pr_info("%s\n", version);
+		pr_debug("%s\n", version);
 #endif
 
 	/* allocate a new ethernet device structure, and fill in defaults */
@@ -2194,7 +2194,7 @@ static struct pci_driver de_driver = {
 static int __init de_init (void)
 {
 #ifdef MODULE
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 #endif
 	return pci_register_driver(&de_driver);
 }

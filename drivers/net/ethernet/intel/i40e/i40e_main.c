@@ -11780,7 +11780,7 @@ static int i40e_ndo_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
 		return -EOPNOTSUPP;
 
 	if (vid) {
-		pr_info("%s: vlans aren't supported yet for dev_uc|mc_add()\n", dev->name);
+		pr_debug("%s: vlans aren't supported yet for dev_uc|mc_add()\n", dev->name);
 		return -EINVAL;
 	}
 
@@ -14717,9 +14717,9 @@ static struct pci_driver i40e_driver = {
  **/
 static int __init i40e_init_module(void)
 {
-	pr_info("%s: %s - version %s\n", i40e_driver_name,
+	pr_debug("%s: %s - version %s\n", i40e_driver_name,
 		i40e_driver_string, i40e_driver_version_str);
-	pr_info("%s: %s\n", i40e_driver_name, i40e_copyright);
+	pr_debug("%s: %s\n", i40e_driver_name, i40e_copyright);
 
 	/* There is no need to throttle the number of active tasks because
 	 * each device limits its own task using a state bit for scheduling

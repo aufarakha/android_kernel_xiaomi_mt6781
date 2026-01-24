@@ -55,13 +55,13 @@ void __iomem *clk_mcucfg_base;
 #define TAG     "[Power/clkmgr] "
 
 #define clk_err(fmt, args...)       \
-	pr_info(TAG fmt, ##args)
+	pr_debug(TAG fmt, ##args)
 #define clk_warn(fmt, args...)      \
-	pr_info(TAG fmt, ##args)
+	pr_debug(TAG fmt, ##args)
 #define clk_info(fmt, args...)      \
-	pr_info(TAG fmt, ##args)
+	pr_debug(TAG fmt, ##args)
 #define clk_dbg(fmt, args...)       \
-	pr_info(TAG fmt, ##args)
+	pr_debug(TAG fmt, ##args)
 
 /************************************************
  **********      register access       **********
@@ -129,22 +129,22 @@ void __iomem *clk_mcucfg_base;
 #if 0
 static void clk_dump(void)
 {
-	pr_info("[ARMPLL1_CON0]=0x%08x\n", clk_readl(ARMPLL1_CON0));
-	pr_info("[ARMPLL1_CON1]=0x%08x\n", clk_readl(ARMPLL1_CON1));
-	pr_info("[MP0_PLL_DIV_CFG]=0x%08x\n", clk_readl(MP0_PLL_DIV_CFG));
-	pr_info("[CCF] ARMPLL1(M): %d\n", mt_get_abist_freq(35));
-	pr_info("[ARMPLL2_CON0]=0x%08x\n", clk_readl(ARMPLL2_CON0));
-	pr_info("[ARMPLL2_CON1]=0x%08x\n", clk_readl(ARMPLL2_CON1));
-	pr_info("[MP1_PLL_DIV_CFG]=0x%08x\n", clk_readl(MP1_PLL_DIV_CFG));
-	pr_info("[CCF] ARMPLL2(L): %d\n", mt_get_abist_freq(34));
-	pr_info("[ARMPLL3_CON0]=0x%08x\n", clk_readl(ARMPLL3_CON0));
-	pr_info("[ARMPLL3_CON1]=0x%08x\n", clk_readl(ARMPLL3_CON1));
-	pr_info("[MP2_PLL_DIV_CFG]=0x%08x\n", clk_readl(MP2_PLL_DIV_CFG));
-	pr_info("[CCF] ARMPLL3(B): %d\n", mt_get_abist_freq(36));
-	pr_info("[CCIPLL_CON0]=0x%08x\n", clk_readl(CCIPLL_CON0));
-	pr_info("[CCIPLL_CON1]=0x%08x\n", clk_readl(CCIPLL_CON1));
-	pr_info("[BUS_PLL_DIV_CFG]=0x%08x\n", clk_readl(BUS_PLL_DIV_CFG));
-	pr_info("[CCF] CCIPLL: %d\n", mt_get_abist_freq(11));
+	pr_debug("[ARMPLL1_CON0]=0x%08x\n", clk_readl(ARMPLL1_CON0));
+	pr_debug("[ARMPLL1_CON1]=0x%08x\n", clk_readl(ARMPLL1_CON1));
+	pr_debug("[MP0_PLL_DIV_CFG]=0x%08x\n", clk_readl(MP0_PLL_DIV_CFG));
+	pr_debug("[CCF] ARMPLL1(M): %d\n", mt_get_abist_freq(35));
+	pr_debug("[ARMPLL2_CON0]=0x%08x\n", clk_readl(ARMPLL2_CON0));
+	pr_debug("[ARMPLL2_CON1]=0x%08x\n", clk_readl(ARMPLL2_CON1));
+	pr_debug("[MP1_PLL_DIV_CFG]=0x%08x\n", clk_readl(MP1_PLL_DIV_CFG));
+	pr_debug("[CCF] ARMPLL2(L): %d\n", mt_get_abist_freq(34));
+	pr_debug("[ARMPLL3_CON0]=0x%08x\n", clk_readl(ARMPLL3_CON0));
+	pr_debug("[ARMPLL3_CON1]=0x%08x\n", clk_readl(ARMPLL3_CON1));
+	pr_debug("[MP2_PLL_DIV_CFG]=0x%08x\n", clk_readl(MP2_PLL_DIV_CFG));
+	pr_debug("[CCF] ARMPLL3(B): %d\n", mt_get_abist_freq(36));
+	pr_debug("[CCIPLL_CON0]=0x%08x\n", clk_readl(CCIPLL_CON0));
+	pr_debug("[CCIPLL_CON1]=0x%08x\n", clk_readl(CCIPLL_CON1));
+	pr_debug("[BUS_PLL_DIV_CFG]=0x%08x\n", clk_readl(BUS_PLL_DIV_CFG));
+	pr_debug("[CCF] CCIPLL: %d\n", mt_get_abist_freq(11));
 
 }
 
@@ -576,18 +576,18 @@ void iomap(void)
 /*apmixed*/
 	node = of_find_compatible_node(NULL, NULL, "mediatek,apmixed");
 	if (!node)
-		pr_info("[CLK_APMIXED] find node failed\n");
+		pr_debug("[CLK_APMIXED] find node failed\n");
 	clk_apmixed_base = of_iomap(node, 0);
 	if (!clk_apmixed_base)
-		pr_info("[CLK_APMIXED] base failed\n");
+		pr_debug("[CLK_APMIXED] base failed\n");
 #if 0
 /*mcucfg*/
 	node = of_find_compatible_node(NULL, NULL, "mediatek,mcucfg");
 	if (!node)
-		pr_info("[CLK_MCUCFG] find node failed\n");
+		pr_debug("[CLK_MCUCFG] find node failed\n");
 	clk_mcucfg_base = of_iomap(node, 0);
 	if (!clk_mcucfg_base)
-		pr_info("[CLK_MCUCFG] base failed\n");
+		pr_debug("[CLK_MCUCFG] base failed\n");
 #endif
 }
 #endif

@@ -311,7 +311,7 @@ static int __init sbwdog_init(void)
 
 	ret = misc_register(&sbwdog_miscdev);
 	if (ret == 0) {
-		pr_info("%s: timeout is %ld.%ld secs\n",
+		pr_debug("%s: timeout is %ld.%ld secs\n",
 			ident.identity,
 			timeout / 1000000, (timeout / 100000) % 10);
 		return 0;

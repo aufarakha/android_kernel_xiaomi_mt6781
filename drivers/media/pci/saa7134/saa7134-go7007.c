@@ -173,7 +173,7 @@ static int saa7134_go7007_interface_reset(struct go7007 *go)
 		saa_clearb(SAA7134_GPIO_GPMODE3, SAA7134_GPIO_GPRESCAN);
 		saa_setb(SAA7134_GPIO_GPMODE3, SAA7134_GPIO_GPRESCAN);
 		saa_readb(SAA7134_GPIO_GPSTATUS2);
-		/*pr_info("gpio is %08x\n", saa_readl(SAA7134_GPIO_GPSTATUS0 >> 2)); */
+		/*pr_debug("gpio is %08x\n", saa_readl(SAA7134_GPIO_GPSTATUS0 >> 2)); */
 	} while (--count > 0);
 
 	/* Wait for an interrupt to indicate successful hardware reset */
@@ -466,7 +466,7 @@ static int saa7134_go7007_init(struct saa7134_dev *dev)
 
 	/* Register the subdevice interface with the go7007 device */
 	if (v4l2_device_register_subdev(&go->v4l2_dev, sd) < 0)
-		pr_info("saa7134-go7007: register subdev failed\n");
+		pr_debug("saa7134-go7007: register subdev failed\n");
 
 	dev->empress_dev = &go->vdev;
 

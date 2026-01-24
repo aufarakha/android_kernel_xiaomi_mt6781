@@ -253,7 +253,7 @@ do {\
 	if (file)\
 		seq_printf(file, fmat, ##args);\
 	else\
-		pr_info(fmt, ##args);\
+		pr_debug(fmt, ##args);\
 } while (0)
 
 static void ion_fb_chunk_show(struct gen_pool *pool,

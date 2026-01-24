@@ -1865,7 +1865,7 @@ u8 rtw_hal_get_def_var(
 		{
 			struct odm_dm_struct *dm_ocm = &haldata->odmpriv;
 
-			pr_info("dm_ocm->DebugComponents = 0x%llx\n", dm_ocm->DebugComponents);
+			pr_debug("dm_ocm->DebugComponents = 0x%llx\n", dm_ocm->DebugComponents);
 		}
 		break;
 	case HAL_DEF_DBG_DUMP_RXPKT:

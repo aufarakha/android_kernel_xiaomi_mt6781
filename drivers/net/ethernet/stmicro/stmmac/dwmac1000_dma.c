@@ -31,7 +31,7 @@ static void dwmac1000_dma_axi(void __iomem *ioaddr, struct stmmac_axi *axi)
 	u32 value = readl(ioaddr + DMA_AXI_BUS_MODE);
 	int i;
 
-	pr_info("dwmac1000: Master AXI performs %s burst length\n",
+	pr_debug("dwmac1000: Master AXI performs %s burst length\n",
 		!(value & DMA_AXI_UNDEF) ? "fixed" : "any");
 
 	if (axi->axi_lpi_en)

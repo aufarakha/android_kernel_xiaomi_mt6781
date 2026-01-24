@@ -1172,6 +1172,6 @@ static void __exit ath9k_exit(void)
 	is_ath9k_unloaded = true;
 	ath_ahb_exit();
 	ath_pci_exit();
-	pr_info("%s: Driver unloaded\n", dev_info);
+	pr_debug("%s: Driver unloaded\n", dev_info);
 }
 module_exit(ath9k_exit);

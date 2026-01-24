@@ -138,7 +138,7 @@ static int verify_eraseblock(int ebnum)
 	err = mtd_read(mtd, addr, subpgsize, &read, readbuf);
 	if (unlikely(err || read != subpgsize)) {
 		if (mtd_is_bitflip(err) && read == subpgsize) {
-			pr_info("ECC correction at %#llx\n",
+			pr_debug("ECC correction at %#llx\n",
 			       (long long)addr);
 			err = 0;
 		} else {
@@ -150,11 +150,11 @@ static int verify_eraseblock(int ebnum)
 	if (unlikely(memcmp(readbuf, writebuf, subpgsize))) {
 		pr_err("error: verify failed at %#llx\n",
 		       (long long)addr);
-		pr_info("------------- written----------------\n");
+		pr_debug("------------- written----------------\n");
 		print_subpage(writebuf);
-		pr_info("------------- read ------------------\n");
+		pr_debug("------------- read ------------------\n");
 		print_subpage(readbuf);
-		pr_info("-------------------------------------\n");
+		pr_debug("-------------------------------------\n");
 		errcnt += 1;
 	}
 
@@ -165,7 +165,7 @@ static int verify_eraseblock(int ebnum)
 	err = mtd_read(mtd, addr, subpgsize, &read, readbuf);
 	if (unlikely(err || read != subpgsize)) {
 		if (mtd_is_bitflip(err) && read == subpgsize) {
-			pr_info("ECC correction at %#llx\n",
+			pr_debug("ECC correction at %#llx\n",
 			       (long long)addr);
 			err = 0;
 		} else {
@@ -175,13 +175,13 @@ static int verify_eraseblock(int ebnum)
 		}
 	}
 	if (unlikely(memcmp(readbuf, writebuf, subpgsize))) {
-		pr_info("error: verify failed at %#llx\n",
+		pr_debug("error: verify failed at %#llx\n",
 		       (long long)addr);
-		pr_info("------------- written----------------\n");
+		pr_debug("------------- written----------------\n");
 		print_subpage(writebuf);
-		pr_info("------------- read ------------------\n");
+		pr_debug("------------- read ------------------\n");
 		print_subpage(readbuf);
-		pr_info("-------------------------------------\n");
+		pr_debug("-------------------------------------\n");
 		errcnt += 1;
 	}
 
@@ -202,7 +202,7 @@ static int verify_eraseblock2(int ebnum)
 		err = mtd_read(mtd, addr, subpgsize * k, &read, readbuf);
 		if (unlikely(err || read != subpgsize * k)) {
 			if (mtd_is_bitflip(err) && read == subpgsize * k) {
-				pr_info("ECC correction at %#llx\n",
+				pr_debug("ECC correction at %#llx\n",
 				       (long long)addr);
 				err = 0;
 			} else {
@@ -235,7 +235,7 @@ static int verify_eraseblock_ff(int ebnum)
 		err = mtd_read(mtd, addr, subpgsize, &read, readbuf);
 		if (unlikely(err || read != subpgsize)) {
 			if (mtd_is_bitflip(err) && read == subpgsize) {
-				pr_info("ECC correction at %#llx\n",
+				pr_debug("ECC correction at %#llx\n",
 				       (long long)addr);
 				err = 0;
 			} else {
@@ -260,7 +260,7 @@ static int verify_all_eraseblocks_ff(void)
 	int err;
 	unsigned int i;
 
-	pr_info("verifying all eraseblocks for 0xff\n");
+	pr_debug("verifying all eraseblocks for 0xff\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -268,13 +268,13 @@ static int verify_all_eraseblocks_ff(void)
 		if (err)
 			return err;
 		if (i % 256 == 0)
-			pr_info("verified up to eraseblock %u\n", i);
+			pr_debug("verified up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			return err;
 	}
-	pr_info("verified %u eraseblocks\n", i);
+	pr_debug("verified %u eraseblocks\n", i);
 	return 0;
 }
 
@@ -288,12 +288,12 @@ static int __init mtd_subpagetest_init(void)
 	printk(KERN_INFO "=================================================\n");
 
 	if (dev < 0) {
-		pr_info("Please specify a valid mtd-device via module parameter\n");
+		pr_debug("Please specify a valid mtd-device via module parameter\n");
 		pr_crit("CAREFUL: This test wipes all data on the specified MTD device!\n");
 		return -EINVAL;
 	}
 
-	pr_info("MTD device: %d\n", dev);
+	pr_debug("MTD device: %d\n", dev);
 
 	mtd = get_mtd_device(NULL, dev);
 	if (IS_ERR(mtd)) {
@@ -303,7 +303,7 @@ static int __init mtd_subpagetest_init(void)
 	}
 
 	if (!mtd_type_is_nand(mtd)) {
-		pr_info("this test requires NAND flash\n");
+		pr_debug("this test requires NAND flash\n");
 		goto out;
 	}
 
@@ -313,7 +313,7 @@ static int __init mtd_subpagetest_init(void)
 	ebcnt = tmp;
 	pgcnt = mtd->erasesize / mtd->writesize;
 
-	pr_info("MTD device size %llu, eraseblock size %u, "
+	pr_debug("MTD device size %llu, eraseblock size %u, "
 	       "page size %u, subpage size %u, count of eraseblocks %u, "
 	       "pages per eraseblock %u, OOB size %u\n",
 	       (unsigned long long)mtd->size, mtd->erasesize,
@@ -339,7 +339,7 @@ static int __init mtd_subpagetest_init(void)
 	if (err)
 		goto out;
 
-	pr_info("writing whole device\n");
+	pr_debug("writing whole device\n");
 	prandom_seed_state(&rnd_state, 1);
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
@@ -348,16 +348,16 @@ static int __init mtd_subpagetest_init(void)
 		if (unlikely(err))
 			goto out;
 		if (i % 256 == 0)
-			pr_info("written up to eraseblock %u\n", i);
+			pr_debug("written up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			goto out;
 	}
-	pr_info("written %u eraseblocks\n", i);
+	pr_debug("written %u eraseblocks\n", i);
 
 	prandom_seed_state(&rnd_state, 1);
-	pr_info("verifying all eraseblocks\n");
+	pr_debug("verifying all eraseblocks\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -365,13 +365,13 @@ static int __init mtd_subpagetest_init(void)
 		if (unlikely(err))
 			goto out;
 		if (i % 256 == 0)
-			pr_info("verified up to eraseblock %u\n", i);
+			pr_debug("verified up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			goto out;
 	}
-	pr_info("verified %u eraseblocks\n", i);
+	pr_debug("verified %u eraseblocks\n", i);
 
 	err = mtdtest_erase_good_eraseblocks(mtd, bbt, 0, ebcnt);
 	if (err)
@@ -383,7 +383,7 @@ static int __init mtd_subpagetest_init(void)
 
 	/* Write all eraseblocks */
 	prandom_seed_state(&rnd_state, 3);
-	pr_info("writing whole device\n");
+	pr_debug("writing whole device\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -391,17 +391,17 @@ static int __init mtd_subpagetest_init(void)
 		if (unlikely(err))
 			goto out;
 		if (i % 256 == 0)
-			pr_info("written up to eraseblock %u\n", i);
+			pr_debug("written up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			goto out;
 	}
-	pr_info("written %u eraseblocks\n", i);
+	pr_debug("written %u eraseblocks\n", i);
 
 	/* Check all eraseblocks */
 	prandom_seed_state(&rnd_state, 3);
-	pr_info("verifying all eraseblocks\n");
+	pr_debug("verifying all eraseblocks\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -409,13 +409,13 @@ static int __init mtd_subpagetest_init(void)
 		if (unlikely(err))
 			goto out;
 		if (i % 256 == 0)
-			pr_info("verified up to eraseblock %u\n", i);
+			pr_debug("verified up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			goto out;
 	}
-	pr_info("verified %u eraseblocks\n", i);
+	pr_debug("verified %u eraseblocks\n", i);
 
 	err = mtdtest_erase_good_eraseblocks(mtd, bbt, 0, ebcnt);
 	if (err)
@@ -425,7 +425,7 @@ static int __init mtd_subpagetest_init(void)
 	if (err)
 		goto out;
 
-	pr_info("finished with %d errors\n", errcnt);
+	pr_debug("finished with %d errors\n", errcnt);
 
 out:
 	kfree(bbt);
@@ -433,7 +433,7 @@ out:
 	kfree(writebuf);
 	put_mtd_device(mtd);
 	if (err)
-		pr_info("error %d occurred\n", err);
+		pr_debug("error %d occurred\n", err);
 	printk(KERN_INFO "=================================================\n");
 	return err;
 }

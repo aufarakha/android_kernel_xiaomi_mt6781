@@ -140,7 +140,7 @@ int rtl92ee_init_sw_vars(struct ieee80211_hw *hw)
 	rtlpriv->psc.fwctrl_lps = rtlpriv->cfg->mod_params->fwctrl_lps;
 	rtlpci->msi_support = rtlpriv->cfg->mod_params->msi_support;
 	if (rtlpriv->cfg->mod_params->disable_watchdog)
-		pr_info("watchdog disabled\n");
+		pr_debug("watchdog disabled\n");
 	rtlpriv->psc.reg_fwctrl_lps = 3;
 	rtlpriv->psc.reg_max_lps_awakeintvl = 5;
 	/* for ASPM, you can close aspm through
@@ -172,7 +172,7 @@ int rtl92ee_init_sw_vars(struct ieee80211_hw *hw)
 	fw_name = "rtlwifi/rtl8192eefw.bin";
 
 	rtlpriv->max_fw_size = 0x8000;
-	pr_info("Using firmware %s\n", fw_name);
+	pr_debug("Using firmware %s\n", fw_name);
 	err = request_firmware_nowait(THIS_MODULE, 1, fw_name,
 				      rtlpriv->io.dev, GFP_KERNEL, hw,
 				      rtl_fw_cb);

@@ -60,7 +60,7 @@ static int __init spmfw_init(void)
 	else if (ddr_type == TYPE_LPDDR3)
 		spmfw_idx = SPMFW_LP3_1CH_1866;
 
-	pr_info("#@# %s(%d) __spmfw_idx 0x%x, ddr=[%d][%d]\n",
+	pr_debug("#@# %s(%d) __spmfw_idx 0x%x, ddr=[%d][%d]\n",
 		__func__, __LINE__, spmfw_idx, ddr_type, ddr_hz);
 
 	arm_smccc_smc(MTK_SIP_KERNEL_SPM_ARGS, 0,

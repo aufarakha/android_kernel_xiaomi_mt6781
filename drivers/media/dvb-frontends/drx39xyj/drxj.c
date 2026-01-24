@@ -11696,7 +11696,7 @@ static int drx_check_firmware(struct drx_demod_instance *demod, u8 *mc_data,
 				DRX_ATTR_MCRECORD(demod).mc_version = mc_version;
 				DRX_ATTR_MCRECORD(demod).mc_base_version = mc_base_version;
 
-				pr_info("Firmware dev %x, ver %x, base ver %x\n",
+				pr_debug("Firmware dev %x, ver %x, base ver %x\n",
 					mc_dev_type, mc_version, mc_base_version);
 
 			}
@@ -11766,7 +11766,7 @@ static int drx_ctrl_u_code(struct drx_demod_instance *demod,
 			goto release;
 		}
 
-		pr_info("Firmware %s, size %zu\n",
+		pr_debug("Firmware %s, size %zu\n",
 			mc_file, demod->firmware->size);
 	}
 
@@ -11790,9 +11790,9 @@ static int drx_ctrl_u_code(struct drx_demod_instance *demod,
 		rc = drx_check_firmware(demod, (u8 *)mc_data_init, size);
 		if (rc)
 			goto release;
-		pr_info("Uploading firmware %s\n", mc_file);
+		pr_debug("Uploading firmware %s\n", mc_file);
 	} else {
-		pr_info("Verifying if firmware upload was ok.\n");
+		pr_debug("Verifying if firmware upload was ok.\n");
 	}
 
 	/* Process microcode blocks */

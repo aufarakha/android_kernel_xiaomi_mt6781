@@ -337,7 +337,7 @@ static ssize_t enabled_store(struct config_item *item,
 	if (enabled < 0 || enabled > 1)
 		goto out_unlock;
 	if ((bool)enabled == nt->enabled) {
-		pr_info("network logging has already %s\n",
+		pr_debug("network logging has already %s\n",
 			nt->enabled ? "started" : "stopped");
 		goto out_unlock;
 	}
@@ -358,7 +358,7 @@ static ssize_t enabled_store(struct config_item *item,
 		if (err)
 			goto out_unlock;
 
-		pr_info("network logging started\n");
+		pr_debug("network logging started\n");
 	} else {	/* false */
 		/* We need to disable the netconsole before cleaning it up
 		 * otherwise we might end up in write_msg() with
@@ -756,7 +756,7 @@ restart:
 			msg = "is joining a master device";
 			break;
 		}
-		pr_info("network logging stopped on interface %s as it %s\n",
+		pr_debug("network logging stopped on interface %s as it %s\n",
 			dev->name, msg);
 	}
 
@@ -929,7 +929,7 @@ static int __init init_netconsole(void)
 	if (netconsole_ext.flags & CON_ENABLED)
 		register_console(&netconsole_ext);
 	register_console(&netconsole);
-	pr_info("network logging started\n");
+	pr_debug("network logging started\n");
 
 	return err;
 

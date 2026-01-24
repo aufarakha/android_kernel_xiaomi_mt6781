@@ -250,18 +250,18 @@ static long tpd_compat_ioctl(
 	switch (cmd) {
 	case COMPAT_TPD_GET_FILTER_PARA:
 		if (arg32 == NULL) {
-			pr_info("invalid argument.");
+			pr_debug("invalid argument.");
 			return -EINVAL;
 		}
 		ret = file->f_op->unlocked_ioctl(file, TPD_GET_FILTER_PARA,
 					   (unsigned long)arg32);
 		if (ret) {
-			pr_info("TPD_GET_FILTER_PARA unlocked_ioctl failed.");
+			pr_debug("TPD_GET_FILTER_PARA unlocked_ioctl failed.");
 			return ret;
 		}
 		break;
 	default:
-		pr_info("tpd: unknown IOCTL: 0x%08x\n", cmd);
+		pr_debug("tpd: unknown IOCTL: 0x%08x\n", cmd);
 		ret = -ENOIOCTLCMD;
 		break;
 	}
@@ -283,7 +283,7 @@ static long tpd_unlocked_ioctl(struct file *file,
 		err = !access_ok(VERIFY_READ,
 			(void __user *)arg, _IOC_SIZE(cmd));
 	if (err) {
-		pr_info("tpd: access error: %08X, (%2d, %2d)\n",
+		pr_debug("tpd: access error: %08X, (%2d, %2d)\n",
 			cmd, _IOC_DIR(cmd), _IOC_SIZE(cmd));
 		return -EFAULT;
 	}
@@ -337,7 +337,7 @@ static long tpd_unlocked_ioctl(struct file *file,
 			}
 			break;
 	default:
-		pr_info("tpd: unknown IOCTL: 0x%08x\n", cmd);
+		pr_debug("tpd: unknown IOCTL: 0x%08x\n", cmd);
 		err = -ENOIOCTLCMD;
 		break;
 
@@ -522,7 +522,7 @@ static void tpd_create_attributes(struct device *dev, struct tpd_attrs *attrs)
 
 	for (; num > 0;) {
 		if (device_create_file(dev, attrs->attr[--num]))
-			pr_info("mtk_tpd: tpd create attributes file failed\n");
+			pr_debug("mtk_tpd: tpd create attributes file failed\n");
 	}
 }
 
@@ -541,7 +541,7 @@ static int tpd_probe(struct platform_device *pdev)
 	TPD_DMESG("enter %s, %d\n", __func__, __LINE__);
 
 	if (misc_register(&tpd_misc_device))
-		pr_info("mtk_tpd: tpd_misc_device register failed\n");
+		pr_debug("mtk_tpd: tpd_misc_device register failed\n");
 	tpd_get_gpio_info(pdev);
 	tpd = kmalloc(sizeof(struct tpd_device), GFP_KERNEL);
 	if (tpd == NULL)
@@ -584,13 +584,13 @@ static int tpd_probe(struct platform_device *pdev)
 #ifdef CONFIG_LCM_WIDTH
 		ret = kstrtoul(CONFIG_LCM_WIDTH, 0, &tpd_res_x);
 		if (ret < 0) {
-			pr_info("Touch down get lcm_x failed");
+			pr_debug("Touch down get lcm_x failed");
 			return ret;
 		}
 		TPD_RES_X = tpd_res_x;
 		ret = kstrtoul(CONFIG_LCM_HEIGHT, 0, &tpd_res_x);
 		if (ret < 0) {
-			pr_info("Touch down get lcm_y failed");
+			pr_debug("Touch down get lcm_y failed");
 			return ret;
 		}
 		TPD_RES_Y = tpd_res_y;
@@ -731,7 +731,7 @@ static int __init tpd_device_init(void)
 
 	res = queue_work(tpd_init_workqueue, &tpd_init_work);
 	if (!res)
-		pr_info("tpd : touch device init failed res:%d\n", res);
+		pr_debug("tpd : touch device init failed res:%d\n", res);
 	return 0;
 }
 /* should never be called */

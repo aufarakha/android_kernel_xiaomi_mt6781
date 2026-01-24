@@ -938,7 +938,7 @@ static int zorro_esp_probe(struct zorro_dev *z,
 	board = zorro_resource_start(z);
 	zdd = &zorro_esp_boards[ent->driver_data];
 
-	pr_info("%s found at address 0x%lx.\n", zdd->name, board);
+	pr_debug("%s found at address 0x%lx.\n", zdd->name, board);
 
 	zep = kzalloc(sizeof(*zep), GFP_KERNEL);
 	if (!zep) {
@@ -968,7 +968,7 @@ static int zorro_esp_probe(struct zorro_dev *z,
 	 * for presence of ESP chip later, but don't try to fix up yet.
 	 */
 	if (zep->zorro3 && ent->driver_data == ZORRO_BLZ1230II) {
-		pr_info("%s at address 0x%lx is Fastlane Z3, fixing data!\n",
+		pr_debug("%s at address 0x%lx is Fastlane Z3, fixing data!\n",
 			zdd->name, board);
 		zdd = &zorro_esp_boards[ZORRO_FASTLANE];
 	}

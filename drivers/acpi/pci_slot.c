@@ -168,7 +168,7 @@ void acpi_pci_slot_remove(struct pci_bus *bus)
 
 static int do_sta_before_sun(const struct dmi_system_id *d)
 {
-	pr_info("%s detected: will evaluate _STA before calling _SUN\n",
+	pr_debug("%s detected: will evaluate _STA before calling _SUN\n",
 		d->ident);
 	check_sta_before_sun = 1;
 	return 0;

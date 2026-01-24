@@ -26,7 +26,7 @@
 #include <linux/module.h>
 
 #undef pr
-#define pr(fmt, args...) pr_info("raid6test: " fmt, ##args)
+#define pr(fmt, args...) pr_debug("raid6test: " fmt, ##args)
 
 #define NDISKS 64 /* Including P and Q */
 

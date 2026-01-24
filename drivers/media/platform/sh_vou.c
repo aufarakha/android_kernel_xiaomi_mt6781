@@ -880,26 +880,26 @@ static int sh_vou_log_status(struct file *file, void *priv)
 {
 	struct sh_vou_device *vou_dev = video_drvdata(file);
 
-	pr_info("VOUER:   0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUER));
-	pr_info("VOUCR:   0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUCR));
-	pr_info("VOUSTR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUSTR));
-	pr_info("VOUVCR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUVCR));
-	pr_info("VOUISR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUISR));
-	pr_info("VOUBCR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUBCR));
-	pr_info("VOUDPR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUDPR));
-	pr_info("VOUDSR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUDSR));
-	pr_info("VOUVPR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUVPR));
-	pr_info("VOUIR:   0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUIR));
-	pr_info("VOUSRR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUSRR));
-	pr_info("VOUMSR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUMSR));
-	pr_info("VOUHIR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUHIR));
-	pr_info("VOUDFR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUDFR));
-	pr_info("VOUAD1R: 0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUAD1R));
-	pr_info("VOUAD2R: 0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUAD2R));
-	pr_info("VOUAIR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUAIR));
-	pr_info("VOUSWR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUSWR));
-	pr_info("VOURCR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOURCR));
-	pr_info("VOURPR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOURPR));
+	pr_debug("VOUER:   0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUER));
+	pr_debug("VOUCR:   0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUCR));
+	pr_debug("VOUSTR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUSTR));
+	pr_debug("VOUVCR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUVCR));
+	pr_debug("VOUISR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUISR));
+	pr_debug("VOUBCR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUBCR));
+	pr_debug("VOUDPR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUDPR));
+	pr_debug("VOUDSR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUDSR));
+	pr_debug("VOUVPR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUVPR));
+	pr_debug("VOUIR:   0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUIR));
+	pr_debug("VOUSRR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUSRR));
+	pr_debug("VOUMSR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUMSR));
+	pr_debug("VOUHIR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUHIR));
+	pr_debug("VOUDFR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUDFR));
+	pr_debug("VOUAD1R: 0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUAD1R));
+	pr_debug("VOUAD2R: 0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUAD2R));
+	pr_debug("VOUAIR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUAIR));
+	pr_debug("VOUSWR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOUSWR));
+	pr_debug("VOURCR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOURCR));
+	pr_debug("VOURPR:  0x%08x\n", sh_vou_reg_a_read(vou_dev, VOURPR));
 	return 0;
 }
 

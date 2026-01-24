@@ -1703,7 +1703,7 @@ static int cci_pmu_probe(struct platform_device *pdev)
 	if (ret)
 		goto error_pmu_init;
 
-	pr_info("ARM %s PMU driver probed", cci_pmu->model->name);
+	pr_debug("ARM %s PMU driver probed", cci_pmu->model->name);
 	return 0;
 
 error_pmu_init:

@@ -52,7 +52,7 @@ const struct old_serial_port *spk_serial_init(int index)
 	int err;
 
 	if (index >= ARRAY_SIZE(rs_table)) {
-		pr_info("no port info for ttyS%d\n", index);
+		pr_debug("no port info for ttyS%d\n", index);
 		return NULL;
 	}
 	ser = rs_table + index;
@@ -71,7 +71,7 @@ const struct old_serial_port *spk_serial_init(int index)
 		cval |= UART_LCR_EPAR;
 	if (synth_request_region(ser->port, 8)) {
 		/* try to take it back. */
-		pr_info("Ports not available, trying to steal them\n");
+		pr_debug("Ports not available, trying to steal them\n");
 		__release_region(&ioport_resource, ser->port, 8);
 		err = synth_request_region(ser->port, 8);
 		if (err) {
@@ -186,10 +186,10 @@ int spk_serial_synth_probe(struct spk_synth *synth)
 		pr_warn("ttyS%i is an invalid port\n", synth->ser);
 	}
 	if (failed) {
-		pr_info("%s: not found\n", synth->long_name);
+		pr_debug("%s: not found\n", synth->long_name);
 		return -ENODEV;
 	}
-	pr_info("%s: ttyS%i, Driver Version %s\n",
+	pr_debug("%s: ttyS%i, Driver Version %s\n",
 		synth->long_name, synth->ser, synth->version);
 	synth->alive = 1;
 	return 0;

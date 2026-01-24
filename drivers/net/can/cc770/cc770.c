@@ -893,7 +893,7 @@ static __init int cc770_init(void)
 		cc770_obj_flags[CC770_OBJ_RX1] &= ~CC770_OBJ_FLAG_EFF;
 	}
 
-	pr_info("CAN netdevice driver\n");
+	pr_debug("CAN netdevice driver\n");
 
 	return 0;
 }
@@ -901,6 +901,6 @@ module_init(cc770_init);
 
 static __exit void cc770_exit(void)
 {
-	pr_info("driver removed\n");
+	pr_debug("driver removed\n");
 }
 module_exit(cc770_exit);

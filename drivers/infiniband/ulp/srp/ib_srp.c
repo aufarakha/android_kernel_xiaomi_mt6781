@@ -453,7 +453,7 @@ static struct srp_fr_pool *srp_create_fr_pool(struct ib_device *device,
 		if (IS_ERR(mr)) {
 			ret = PTR_ERR(mr);
 			if (ret == -ENOMEM)
-				pr_info("%s: ib_alloc_mr() failed. Try to reduce max_cmd_per_lun, max_sect or ch_count\n",
+				pr_debug("%s: ib_alloc_mr() failed. Try to reduce max_cmd_per_lun, max_sect or ch_count\n",
 					dev_name(&device->dev));
 			goto destroy_pool;
 		}

@@ -839,7 +839,7 @@ static void set_pll(struct bttv *btv)
 		if (btv->pll.pll_current == 0)
 			return;
 		if (bttv_verbose)
-			pr_info("%d: PLL can sleep, using XTAL (%d)\n",
+			pr_debug("%d: PLL can sleep, using XTAL (%d)\n",
 				btv->c.nr, btv->pll.pll_ifreq);
 		btwrite(0x00,BT848_TGCTRL);
 		btwrite(0x00,BT848_PLL_XCI);
@@ -848,7 +848,7 @@ static void set_pll(struct bttv *btv)
 	}
 
 	if (bttv_verbose)
-		pr_info("%d: Setting PLL: %d => %d (needs up to 100ms)\n",
+		pr_debug("%d: Setting PLL: %d => %d (needs up to 100ms)\n",
 			btv->c.nr,
 			btv->pll.pll_ifreq, btv->pll.pll_ofreq);
 	set_pll_freq(btv, btv->pll.pll_ifreq, btv->pll.pll_ofreq);
@@ -863,13 +863,13 @@ static void set_pll(struct bttv *btv)
 			btwrite(0x08,BT848_TGCTRL);
 			btv->pll.pll_current = btv->pll.pll_ofreq;
 			if (bttv_verbose)
-				pr_info("PLL set ok\n");
+				pr_debug("PLL set ok\n");
 			return;
 		}
 	}
 	btv->pll.pll_current = -1;
 	if (bttv_verbose)
-		pr_info("Setting PLL failed\n");
+		pr_debug("Setting PLL failed\n");
 	return;
 }
 
@@ -1268,7 +1268,7 @@ static void bttv_reinit_bt848(struct bttv *btv)
 	unsigned long flags;
 
 	if (bttv_verbose)
-		pr_info("%d: reset, reinitialize\n", btv->c.nr);
+		pr_debug("%d: reset, reinitialize\n", btv->c.nr);
 	spin_lock_irqsave(&btv->s_lock,flags);
 	btv->errors=0;
 	bttv_set_dma(btv,0);
@@ -3423,15 +3423,15 @@ static void bttv_risc_disasm(struct bttv *btv,
 {
 	unsigned int i,j,n;
 
-	pr_info("%s: risc disasm: %p [dma=0x%08lx]\n",
+	pr_debug("%s: risc disasm: %p [dma=0x%08lx]\n",
 		btv->c.v4l2_dev.name, risc->cpu, (unsigned long)risc->dma);
 	for (i = 0; i < (risc->size >> 2); i += n) {
-		pr_info("%s:   0x%lx: ",
+		pr_debug("%s:   0x%lx: ",
 			btv->c.v4l2_dev.name,
 			(unsigned long)(risc->dma + (i<<2)));
 		n = bttv_risc_decode(le32_to_cpu(risc->cpu[i]));
 		for (j = 1; j < n; j++)
-			pr_info("%s:   0x%lx: 0x%08x [ arg #%d ]\n",
+			pr_debug("%s:   0x%lx: 0x%08x [ arg #%d ]\n",
 				btv->c.v4l2_dev.name,
 				(unsigned long)(risc->dma + ((i+j)<<2)),
 				risc->cpu[i+j], j);
@@ -3442,16 +3442,16 @@ static void bttv_risc_disasm(struct bttv *btv,
 
 static void bttv_print_riscaddr(struct bttv *btv)
 {
-	pr_info("  main: %08llx\n", (unsigned long long)btv->main.dma);
-	pr_info("  vbi : o=%08llx e=%08llx\n",
+	pr_debug("  main: %08llx\n", (unsigned long long)btv->main.dma);
+	pr_debug("  vbi : o=%08llx e=%08llx\n",
 		btv->cvbi ? (unsigned long long)btv->cvbi->top.dma : 0,
 		btv->cvbi ? (unsigned long long)btv->cvbi->bottom.dma : 0);
-	pr_info("  cap : o=%08llx e=%08llx\n",
+	pr_debug("  cap : o=%08llx e=%08llx\n",
 		btv->curr.top
 		? (unsigned long long)btv->curr.top->top.dma : 0,
 		btv->curr.bottom
 		? (unsigned long long)btv->curr.bottom->bottom.dma : 0);
-	pr_info("  scr : o=%08llx e=%08llx\n",
+	pr_debug("  scr : o=%08llx e=%08llx\n",
 		btv->screen ? (unsigned long long)btv->screen->top.dma : 0,
 		btv->screen ? (unsigned long long)btv->screen->bottom.dma : 0);
 	bttv_risc_disasm(btv, &btv->main);
@@ -3661,7 +3661,7 @@ static void bttv_irq_timeout(struct timer_list *t)
 	unsigned long flags;
 
 	if (bttv_verbose) {
-		pr_info("%d: timeout: drop=%d irq=%d/%d, risc=%08x, ",
+		pr_debug("%d: timeout: drop=%d irq=%d/%d, risc=%08x, ",
 			btv->c.nr, btv->framedrop, btv->irq_me, btv->irq_total,
 			btread(BT848_RISC_COUNT));
 		bttv_print_irqbits(btread(BT848_INT_STAT),0);
@@ -3873,7 +3873,7 @@ static irqreturn_t bttv_irq(int irq, void *dev_id)
 			audio_mux_gpio(btv, btv->audio_input, btv->mute);
 
 		if (astat & (BT848_INT_SCERR|BT848_INT_OCERR)) {
-			pr_info("%d: %s%s @ %08x,",
+			pr_debug("%d: %s%s @ %08x,",
 				btv->c.nr,
 				(astat & BT848_INT_SCERR) ? "SCERR" : "",
 				(astat & BT848_INT_OCERR) ? "OCERR" : "",
@@ -3884,7 +3884,7 @@ static irqreturn_t bttv_irq(int irq, void *dev_id)
 				bttv_print_riscaddr(btv);
 		}
 		if (fdsr && astat & BT848_INT_FDSR) {
-			pr_info("%d: FDSR @ %08x\n",
+			pr_debug("%d: FDSR @ %08x\n",
 				btv->c.nr, btread(BT848_RISC_COUNT));
 			if (bttv_debug)
 				bttv_print_riscaddr(btv);
@@ -3960,7 +3960,7 @@ static int bttv_register_video(struct bttv *btv)
 	if (video_register_device(&btv->video_dev, VFL_TYPE_GRABBER,
 				  video_nr[btv->c.nr]) < 0)
 		goto err;
-	pr_info("%d: registered device %s\n",
+	pr_debug("%d: registered device %s\n",
 		btv->c.nr, video_device_node_name(&btv->video_dev));
 	if (device_create_file(&btv->video_dev.dev,
 				     &dev_attr_card)<0) {
@@ -3974,7 +3974,7 @@ static int bttv_register_video(struct bttv *btv)
 	if (video_register_device(&btv->vbi_dev, VFL_TYPE_VBI,
 				  vbi_nr[btv->c.nr]) < 0)
 		goto err;
-	pr_info("%d: registered device %s\n",
+	pr_debug("%d: registered device %s\n",
 		btv->c.nr, video_device_node_name(&btv->vbi_dev));
 
 	if (!btv->has_radio)
@@ -3985,7 +3985,7 @@ static int bttv_register_video(struct bttv *btv)
 	if (video_register_device(&btv->radio_dev, VFL_TYPE_RADIO,
 				  radio_nr[btv->c.nr]) < 0)
 		goto err;
-	pr_info("%d: registered device %s\n",
+	pr_debug("%d: registered device %s\n",
 		btv->c.nr, video_device_node_name(&btv->radio_dev));
 
 	/* all done */
@@ -4024,7 +4024,7 @@ static int bttv_probe(struct pci_dev *dev, const struct pci_device_id *pci_id)
 
 	if (bttv_num == BTTV_MAX)
 		return -ENOMEM;
-	pr_info("Bt8xx card found (%d)\n", bttv_num);
+	pr_debug("Bt8xx card found (%d)\n", bttv_num);
 	bttvs[bttv_num] = btv = kzalloc(sizeof(*btv), GFP_KERNEL);
 	if (btv == NULL) {
 		pr_err("out of memory\n");
@@ -4087,7 +4087,7 @@ static int bttv_probe(struct pci_dev *dev, const struct pci_device_id *pci_id)
 
 	btv->revision = dev->revision;
 	pci_read_config_byte(dev, PCI_LATENCY_TIMER, &lat);
-	pr_info("%d: Bt%d (rev %d) at %s, irq: %d, latency: %d, mmio: 0x%llx\n",
+	pr_debug("%d: Bt%d (rev %d) at %s, irq: %d, latency: %d, mmio: 0x%llx\n",
 		bttv_num, btv->id, btv->revision, pci_name(dev),
 		btv->c.pci->irq, lat,
 		(unsigned long long)pci_resource_start(dev, 0));
@@ -4269,7 +4269,7 @@ static void bttv_remove(struct pci_dev *pci_dev)
 	struct bttv *btv = to_bttv(v4l2_dev);
 
 	if (bttv_verbose)
-		pr_info("%d: unloading\n", btv->c.nr);
+		pr_debug("%d: unloading\n", btv->c.nr);
 
 	if (bttv_tvcards[btv->c.type].has_dvb)
 		flush_request_modules(btv);
@@ -4424,14 +4424,14 @@ static int __init bttv_init_module(void)
 
 	bttv_num = 0;
 
-	pr_info("driver version %s loaded\n", BTTV_VERSION);
+	pr_debug("driver version %s loaded\n", BTTV_VERSION);
 	if (gbuffers < 2 || gbuffers > VIDEO_MAX_FRAME)
 		gbuffers = 2;
 	if (gbufsize > BTTV_MAX_FBUF)
 		gbufsize = BTTV_MAX_FBUF;
 	gbufsize = (gbufsize + PAGE_SIZE - 1) & PAGE_MASK;
 	if (bttv_verbose)
-		pr_info("using %d buffers with %dk (%d pages) each for capture\n",
+		pr_debug("using %d buffers with %dk (%d pages) each for capture\n",
 			gbuffers, gbufsize >> 10, gbufsize >> PAGE_SHIFT);
 
 	bttv_check_chipset();

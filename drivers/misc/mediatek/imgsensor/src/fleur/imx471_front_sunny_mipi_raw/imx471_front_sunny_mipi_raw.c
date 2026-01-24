@@ -2618,7 +2618,7 @@ static kal_uint32 feature_control(MSDK_SENSOR_FEATURE_ENUM feature_id,
 		*(feature_data + 2) = imgsensor_info.margin;
 		break;
 	case SENSOR_FEATURE_GET_VC_INFO:
-		pr_info("SENSOR_FEATURE_GET_VC_INFO %d\n",
+		pr_debug("SENSOR_FEATURE_GET_VC_INFO %d\n",
 			(UINT16) (*feature_data));
 
 		pvcinfo =
@@ -2651,7 +2651,7 @@ static kal_uint32 feature_control(MSDK_SENSOR_FEATURE_ENUM feature_id,
 			*feature_return_para_32 = 1; /*BINNING_AVERAGED*/
 			break;
 		}
-		pr_info("SENSOR_FEATURE_GET_BINNING_TYPE AE_binning_type:%d,\n",
+		pr_debug("SENSOR_FEATURE_GET_BINNING_TYPE AE_binning_type:%d,\n",
 			*feature_return_para_32);
 		*feature_para_len = 4;
 		break;

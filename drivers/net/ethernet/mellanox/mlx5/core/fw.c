@@ -519,7 +519,7 @@ int mlx5_firmware_flash(struct mlx5_core_dev *dev,
 	    !MLX5_CAP_MCAM_REG(dev, mcqi) ||
 	    !MLX5_CAP_MCAM_REG(dev, mcc)  ||
 	    !MLX5_CAP_MCAM_REG(dev, mcda)) {
-		pr_info("%s flashing isn't supported by the running FW\n", __func__);
+		pr_debug("%s flashing isn't supported by the running FW\n", __func__);
 		return -EOPNOTSUPP;
 	}
 

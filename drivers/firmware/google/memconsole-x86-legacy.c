@@ -59,9 +59,9 @@ static ssize_t memconsole_read(char *buf, loff_t pos, size_t count)
 
 static void found_v1_header(struct biosmemcon_ebda *hdr)
 {
-	pr_info("memconsole: BIOS console v1 EBDA structure found at %p\n",
+	pr_debug("memconsole: BIOS console v1 EBDA structure found at %p\n",
 		hdr);
-	pr_info("memconsole: BIOS console buffer at 0x%.8x, start = %d, end = %d, num = %d\n",
+	pr_debug("memconsole: BIOS console buffer at 0x%.8x, start = %d, end = %d, num = %d\n",
 		hdr->v1.buffer_addr, hdr->v1.start,
 		hdr->v1.end, hdr->v1.num_chars);
 
@@ -72,9 +72,9 @@ static void found_v1_header(struct biosmemcon_ebda *hdr)
 
 static void found_v2_header(struct biosmemcon_ebda *hdr)
 {
-	pr_info("memconsole: BIOS console v2 EBDA structure found at %p\n",
+	pr_debug("memconsole: BIOS console v2 EBDA structure found at %p\n",
 		hdr);
-	pr_info("memconsole: BIOS console buffer at 0x%.8x, start = %d, end = %d, num_bytes = %d\n",
+	pr_debug("memconsole: BIOS console buffer at 0x%.8x, start = %d, end = %d, num_bytes = %d\n",
 		hdr->v2.buffer_addr, hdr->v2.start,
 		hdr->v2.end, hdr->v2.num_bytes);
 
@@ -94,7 +94,7 @@ static bool memconsole_ebda_init(void)
 
 	address = get_bios_ebda();
 	if (!address) {
-		pr_info("memconsole: BIOS EBDA non-existent.\n");
+		pr_debug("memconsole: BIOS EBDA non-existent.\n");
 		return false;
 	}
 
@@ -122,7 +122,7 @@ static bool memconsole_ebda_init(void)
 		}
 	}
 
-	pr_info("memconsole: BIOS console EBDA structure not found!\n");
+	pr_debug("memconsole: BIOS console EBDA structure not found!\n");
 	return false;
 }
 

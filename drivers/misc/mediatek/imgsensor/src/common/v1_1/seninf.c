@@ -91,7 +91,7 @@ static int seninf_dfs_ctrl(struct seninf_dfs_ctx *ctx,
 {
 	int i4RetValue = 0;
 
-	/*pr_info("%s\n", __func__);*/
+	/*pr_debug("%s\n", __func__);*/
 
 	switch (option) {
 	case DFS_CTRL_ENABLE:
@@ -123,7 +123,7 @@ static int seninf_dfs_ctrl(struct seninf_dfs_ctx *ctx,
 		pIspclks->clklevelcnt = ctx->cnt;
 
 		if (pIspclks->clklevelcnt > ISP_CLK_LEVEL_CNT) {
-			pr_info("ERR: clklevelcnt is exceeded\n");
+			pr_debug("ERR: clklevelcnt is exceeded\n");
 			i4RetValue = -EFAULT;
 			break;
 		}
@@ -149,7 +149,7 @@ static int seninf_dfs_ctrl(struct seninf_dfs_ctx *ctx,
 	}
 		break;
 	default:
-		pr_info("None\n");
+		pr_debug("None\n");
 		break;
 	}
 	return i4RetValue;

@@ -169,19 +169,19 @@
 
 #define ipio_info(fmt, arg...)						\
 ({									\
-	pr_info("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
+	pr_debug("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
 })									\
 
 #define ipio_err(fmt, arg...)						\
 ({									\
-	pr_info("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
+	pr_debug("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
 })									\
 
 extern bool ipio_debug_level;
 #define ipio_debug(fmt, arg...)						\
 do {									\
 	if (ipio_debug_level)						\
-	pr_info("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
+	pr_debug("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
 } while (0)
 
 #define ERR_ALLOC_MEM(X)	((IS_ERR(X) || X == NULL) ? 1 : 0)

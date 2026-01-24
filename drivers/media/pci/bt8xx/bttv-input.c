@@ -37,7 +37,7 @@ module_param(ir_rc5_remote_gap, int, 0644);
 #define dprintk(fmt, ...)			\
 do {						\
 	if (ir_debug >= 1)			\
-		pr_info(fmt, ##__VA_ARGS__);	\
+		pr_debug(fmt, ##__VA_ARGS__);	\
 } while (0)
 
 #define DEVNAME "bttv-input"

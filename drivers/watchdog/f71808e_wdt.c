@@ -773,7 +773,7 @@ static int __init watchdog_init(int sioaddr)
 		if (nowayout)
 			__module_get(THIS_MODULE);
 
-		pr_info("watchdog started with initial timeout of %u sec\n",
+		pr_debug("watchdog started with initial timeout of %u sec\n",
 			start_withtimeout);
 	}
 
@@ -836,13 +836,13 @@ static int __init f71808e_find(int sioaddr)
 		watchdog.type = f81866;
 		break;
 	default:
-		pr_info("Unrecognized Fintek device: %04x\n",
+		pr_debug("Unrecognized Fintek device: %04x\n",
 			(unsigned int)devid);
 		err = -ENODEV;
 		goto exit;
 	}
 
-	pr_info("Found %s watchdog chip, revision %d\n",
+	pr_debug("Found %s watchdog chip, revision %d\n",
 		f71808e_names[watchdog.type],
 		(int)superio_inb(sioaddr, SIO_REG_DEVREV));
 exit:

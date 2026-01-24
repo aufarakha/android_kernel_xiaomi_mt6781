@@ -3168,7 +3168,7 @@ static void print_port_info(struct adapter *adap, const struct adapter_info *ai)
 			    (adap->flags & USING_MSIX) ? " MSI-X" :
 			    (adap->flags & USING_MSI) ? " MSI" : "");
 		if (adap->name == dev->name && adap->params.vpd.mclk)
-			pr_info("%s: %uMB CM, %uMB PMTX, %uMB PMRX, S/N: %s\n",
+			pr_debug("%s: %uMB CM, %uMB PMTX, %uMB PMRX, S/N: %s\n",
 			       adap->name, t3_mc7_size(&adap->cm) >> 20,
 			       t3_mc7_size(&adap->pmtx) >> 20,
 			       t3_mc7_size(&adap->pmrx) >> 20,

@@ -287,7 +287,7 @@ static __init int efivar_ssdt_load(void)
 	ret = efivar_init(efivar_ssdt_iter, &entries, true, &entries);
 
 	list_for_each_entry_safe(entry, aux, &entries, list) {
-		pr_info("loading SSDT from variable %s-%pUl\n", efivar_ssdt,
+		pr_debug("loading SSDT from variable %s-%pUl\n", efivar_ssdt,
 			&entry->var.VendorGuid);
 
 		list_del(&entry->list);
@@ -523,7 +523,7 @@ int __init efi_config_parse_tables(void *config_tables, int count, int sz,
 	int i;
 
 	tablep = config_tables;
-	pr_info("");
+	pr_debug("");
 	for (i = 0; i < count; i++) {
 		efi_guid_t guid;
 		unsigned long table;
@@ -720,7 +720,7 @@ static int __init __find_uefi_params(unsigned long node,
 			*(u64 *)dest = val;
 
 		if (efi_enabled(EFI_DBG))
-			pr_info("  %s: 0x%0*llx\n", params[i].name,
+			pr_debug("  %s: 0x%0*llx\n", params[i].name,
 				params[i].size * 2, val);
 	}
 
@@ -761,14 +761,14 @@ int __init efi_get_fdt_params(struct efi_fdt_params *params)
 	struct param_info info;
 	int ret;
 
-	pr_info("Getting EFI parameters from FDT:\n");
+	pr_debug("Getting EFI parameters from FDT:\n");
 
 	info.found = 0;
 	info.params = params;
 
 	ret = of_scan_flat_dt(fdt_find_uefi_params, &info);
 	if (!info.found)
-		pr_info("UEFI not found.\n");
+		pr_debug("UEFI not found.\n");
 	else if (!ret)
 		pr_err("Can't find '%s' in device tree!\n",
 		       info.missing);

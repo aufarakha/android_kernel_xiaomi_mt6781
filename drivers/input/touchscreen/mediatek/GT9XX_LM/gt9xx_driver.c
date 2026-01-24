@@ -3000,7 +3000,7 @@ static int __init tpd_driver_init(void)
 {
 #ifdef CONFIG_MID_ITEMS_SUPPORT
 	if (item_exist("touchpanel.ic")) {
-		pr_info("other touchpanel.ic choose , not load GT9XX driver\n");
+		pr_debug("other touchpanel.ic choose , not load GT9XX driver\n");
 		return -1;
 	}
 #endif

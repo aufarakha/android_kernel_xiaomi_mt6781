@@ -155,7 +155,7 @@ static int or51211_load_firmware (struct dvb_frontend* fe,
 	}
 	msleep(10);
 
-	pr_info("Done.\n");
+	pr_debug("Done.\n");
 	return 0;
 };
 
@@ -367,11 +367,11 @@ static int or51211_init(struct dvb_frontend* fe)
 
 	if (!state->initialized) {
 		/* Request the firmware, this will block until it uploads */
-		pr_info("Waiting for firmware upload (%s)...\n",
+		pr_debug("Waiting for firmware upload (%s)...\n",
 			OR51211_DEFAULT_FIRMWARE);
 		ret = config->request_firmware(fe, &fw,
 					       OR51211_DEFAULT_FIRMWARE);
-		pr_info("Got Hotplug firmware\n");
+		pr_debug("Got Hotplug firmware\n");
 		if (ret) {
 			pr_warn("No firmware uploaded (timeout or file not found?)\n");
 			return ret;
@@ -383,7 +383,7 @@ static int or51211_init(struct dvb_frontend* fe)
 			pr_warn("Writing firmware to device failed!\n");
 			return ret;
 		}
-		pr_info("Firmware upload complete.\n");
+		pr_debug("Firmware upload complete.\n");
 
 		/* Set operation mode in Receiver 1 register;
 		 * type 1:
@@ -461,7 +461,7 @@ static int or51211_init(struct dvb_frontend* fe)
 		}
 		dprintk("read_fwbits %10ph\n", rec_buf);
 
-		pr_info("ver TU%02x%02x%02x VSB mode %02x Status %02x\n",
+		pr_debug("ver TU%02x%02x%02x VSB mode %02x Status %02x\n",
 			rec_buf[2], rec_buf[4], rec_buf[6], rec_buf[12],
 			rec_buf[10]);
 

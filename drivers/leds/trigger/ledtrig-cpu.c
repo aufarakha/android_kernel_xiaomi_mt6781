@@ -169,7 +169,7 @@ static int __init ledtrig_cpu_init(void)
 		pr_err("CPU hotplug notifier for ledtrig-cpu could not be registered: %d\n",
 		       ret);
 
-	pr_info("ledtrig-cpu: registered to indicate activity on CPUs\n");
+	pr_debug("ledtrig-cpu: registered to indicate activity on CPUs\n");
 
 	return 0;
 }

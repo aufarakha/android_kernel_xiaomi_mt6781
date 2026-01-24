@@ -270,7 +270,7 @@ int vmbus_connect(void)
 		goto cleanup;
 
 	vmbus_proto_version = version;
-	pr_info("Vmbus version:%d.%d\n",
+	pr_debug("Vmbus version:%d.%d\n",
 		version >> 16, version & 0xFFFF);
 
 	kfree(msginfo);

@@ -270,7 +270,7 @@ static __init int pci_mcfg_parse(struct acpi_table_header *header)
 	mcfg_oem_revision = header->oem_revision;
 #endif
 
-	pr_info("MCFG table detected, %d entries\n", n);
+	pr_debug("MCFG table detected, %d entries\n", n);
 	return 0;
 }
 

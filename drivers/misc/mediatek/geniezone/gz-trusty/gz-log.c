@@ -133,7 +133,7 @@ static int __init gz_log_context_init(struct reserved_mem *rmem)
 	unsigned long node;
 
 	if (!rmem) {
-		pr_info("[%s] ERROR: invalid reserved memory\n", __func__);
+		pr_debug("[%s] ERROR: invalid reserved memory\n", __func__);
 		return -EFAULT;
 	}
 	glctx.paddr = rmem->base;
@@ -145,7 +145,7 @@ static int __init gz_log_context_init(struct reserved_mem *rmem)
 	else
 		glctx.flag = STATIC_NOMAP;
 
-	pr_info("[%s] rmem:%s base(0x%llx) size(0x%zx) flag(%u)\n",
+	pr_debug("[%s] rmem:%s base(0x%llx) size(0x%zx) flag(%u)\n",
 		__func__, rmem->name, glctx.paddr, glctx.size, glctx.flag);
 	return 0;
 }
@@ -158,19 +158,19 @@ static void gz_log_find_mblock(void)
 
 	mblock_root = of_find_node_by_path("/reserved-memory");
 	if (!mblock_root) {
-		pr_info("%s not found /reserved-memory\n", __func__);
+		pr_debug("%s not found /reserved-memory\n", __func__);
 		return;
 	}
 
 	gz_node = of_find_compatible_node(mblock_root, NULL, "mediatek,gz-log");
 	if (!gz_node) {
-		pr_info("%s not found gz-log\n", __func__);
+		pr_debug("%s not found gz-log\n", __func__);
 		return;
 	}
 
 	rmem = of_reserved_mem_lookup(gz_node);
 	if (!rmem) {
-		pr_info("[%s] ERROR: not found address\n", __func__);
+		pr_debug("[%s] ERROR: not found address\n", __func__);
 		return;
 	}
 
@@ -181,7 +181,7 @@ static void gz_log_find_mblock(void)
 	else
 		glctx.flag = STATIC_NOMAP;
 
-	pr_info("[%s] rmem:%s base(0x%llx) size(0x%zx) flag(%u)\n",
+	pr_debug("[%s] rmem:%s base(0x%llx) size(0x%zx) flag(%u)\n",
 		__func__, gz_node->name, glctx.paddr, glctx.size, glctx.flag);
 }
 #endif
@@ -213,7 +213,7 @@ static int gz_log_page_init(void)
 		glctx.paddr = virt_to_phys(glctx.virt);
 	}
 
-	pr_info("[%s] set by %s, virt addr:%p, sz:0x%zx\n",
+	pr_debug("[%s] set by %s, virt addr:%p, sz:0x%zx\n",
 		__func__,
 		glctx.flag == STATIC_NOMAP ? "static_nomap" :
 		glctx.flag == STATIC_MAP ? "static_map" : "dynamic",
@@ -230,12 +230,12 @@ void get_gz_log_buffer(unsigned long *addr, unsigned long *paddr,
 
 	if (!glctx.virt) {
 		*addr = *paddr = *size = *start = 0;
-		pr_info("[%s] ERR gz_log init failed\n", __func__);
+		pr_debug("[%s] ERR gz_log init failed\n", __func__);
 		return;
 	}
 	*addr = (unsigned long)glctx.virt;
 	*paddr = (unsigned long)glctx.paddr;
-	pr_info("[%s] virtual address:0x%lx, paddr:0x%lx\n",
+	pr_debug("[%s] virtual address:0x%lx, paddr:0x%lx\n",
 		__func__, (unsigned long)*addr, *paddr);
 	*size = glctx.size;
 	*start = 0;
@@ -296,7 +296,7 @@ static int trusty_log_panic_notify(struct notifier_block *nb,
 	 * Don't grab the spin lock to hold up the panic notifier, even
 	 * though this is racy.
 	 */
-	pr_info("trusty-log panic notifier - trusty version %s",
+	pr_debug("trusty-log panic notifier - trusty version %s",
 		trusty_version_str_get(gls->trusty_dev));
 	atomic_inc(&gls->gz_log_event_count);
 	wake_up_interruptible(&gls->gz_log_wq);
@@ -311,20 +311,20 @@ static bool trusty_supports_logging(struct device *device)
 				MTEE_SMCNR(SMCF_SC_SHARED_LOG_VERSION, device),
 				TRUSTY_LOG_API_VERSION, 0, 0);
 	if (ret == SM_ERR_UNDEFINED_SMC) {
-		pr_info("trusty-log not supported on secure side.\n");
+		pr_debug("trusty-log not supported on secure side.\n");
 		return false;
 	} else if (ret < 0) {
-		pr_info("trusty std call (GZ_SHARED_LOG_VERSION) failed: %d\n",
+		pr_debug("trusty std call (GZ_SHARED_LOG_VERSION) failed: %d\n",
 		       ret);
 		return false;
 	}
 
 	if (ret == TRUSTY_LOG_API_VERSION) {
-		pr_info("trusty-log API supported: %d\n", ret);
+		pr_debug("trusty-log API supported: %d\n", ret);
 		return true;
 	}
 
-	pr_info("trusty-log unsupported api version: %d, supported: %d\n",
+	pr_debug("trusty-log unsupported api version: %d, supported: %d\n",
 		ret, TRUSTY_LOG_API_VERSION);
 	return false;
 }
@@ -364,7 +364,7 @@ static int do_gz_log_read(struct gz_log_state *gls,
 	int ret = 0;
 
 	if (!is_power_of_2(log->sz))
-		pr_info("[%s] Error log size 0x%x\n", __func__, log->sz);
+		pr_debug("[%s] Error log size 0x%x\n", __func__, log->sz);
 
 	/*
 	 * For this ring buffer, at any given point, alloc >= put >= get.
@@ -975,7 +975,7 @@ static int trusty_gz_log_remove(struct platform_device *pdev)
 			MTEE_SMCNR(SMCF_SC_SHARED_LOG_RM, gls->trusty_dev),
 			(u32)glctx.paddr, (u32)((u64)glctx.paddr >> 32), 0);
 	if (ret)
-		pr_info("std call(GZ_SHARED_LOG_RM) failed: %d\n", ret);
+		pr_debug("std call(GZ_SHARED_LOG_RM) failed: %d\n", ret);
 
 	if (glctx.flag == STATIC_NOMAP)
 		memunmap(glctx.virt);

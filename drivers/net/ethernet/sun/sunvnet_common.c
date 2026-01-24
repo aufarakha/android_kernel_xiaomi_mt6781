@@ -496,7 +496,7 @@ static int vnet_send_ack(struct vnet_port *port, struct vio_dring_state *dr,
 		if ((delay <<= 1) > 128)
 			delay = 128;
 		if (retries++ > VNET_MAX_RETRIES) {
-			pr_info("ECONNRESET %x:%x:%x:%x:%x:%x\n",
+			pr_debug("ECONNRESET %x:%x:%x:%x:%x:%x\n",
 				port->raddr[0], port->raddr[1],
 				port->raddr[2], port->raddr[3],
 				port->raddr[4], port->raddr[5]);

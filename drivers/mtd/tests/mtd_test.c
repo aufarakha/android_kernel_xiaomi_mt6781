@@ -19,7 +19,7 @@ int mtdtest_erase_eraseblock(struct mtd_info *mtd, unsigned int ebnum)
 
 	err = mtd_erase(mtd, &ei);
 	if (err) {
-		pr_info("error %d while erasing EB %d\n", err, ebnum);
+		pr_debug("error %d while erasing EB %d\n", err, ebnum);
 		return err;
 	}
 
@@ -34,7 +34,7 @@ static int is_block_bad(struct mtd_info *mtd, unsigned int ebnum)
 
 	ret = mtd_block_isbad(mtd, addr);
 	if (ret)
-		pr_info("block %d is bad\n", ebnum);
+		pr_debug("block %d is bad\n", ebnum);
 
 	return ret;
 }
@@ -47,14 +47,14 @@ int mtdtest_scan_for_bad_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
 	if (!mtd_can_have_bb(mtd))
 		return 0;
 
-	pr_info("scanning for bad eraseblocks\n");
+	pr_debug("scanning for bad eraseblocks\n");
 	for (i = 0; i < ebcnt; ++i) {
 		bbt[i] = is_block_bad(mtd, eb + i) ? 1 : 0;
 		if (bbt[i])
 			bad += 1;
 		cond_resched();
 	}
-	pr_info("scanned %d eraseblocks, %d are bad\n", i, bad);
+	pr_debug("scanned %d eraseblocks, %d are bad\n", i, bad);
 
 	return 0;
 }

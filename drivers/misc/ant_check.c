@@ -64,7 +64,7 @@ static int ant_parse_dt(struct device *dev, struct ant_check_info *pdata)
 				0, &pdata->irq_gpio_flags);
 	if (pdata->irq_gpio < 0)
 		return pdata->irq_gpio;
-	pr_info("Macle irq_gpio=%d\n", pdata->irq_gpio);
+	pr_debug("Macle irq_gpio=%d\n", pdata->irq_gpio);
 	return 0;
 }
 #ifdef CONFIG_ANT_SYS

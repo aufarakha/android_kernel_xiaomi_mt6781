@@ -507,7 +507,7 @@ static int gdm_mux_probe(struct usb_interface *intf,
 	idVendor = __le16_to_cpu(usbdev->descriptor.idVendor);
 	idProduct = __le16_to_cpu(usbdev->descriptor.idProduct);
 
-	pr_info("mux vid = 0x%04x pid = 0x%04x\n", idVendor, idProduct);
+	pr_debug("mux vid = 0x%04x pid = 0x%04x\n", idVendor, idProduct);
 
 	if (bInterfaceNumber != 2)
 		return -ENODEV;

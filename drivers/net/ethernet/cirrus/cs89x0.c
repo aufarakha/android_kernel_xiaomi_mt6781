@@ -585,7 +585,7 @@ detect_tp(struct net_device *dev)
 		switch (lp->force & 0xf0) {
 #if 0
 		case FORCE_AUTO:
-			pr_info("%s: cs8900 doesn't autonegotiate\n",
+			pr_debug("%s: cs8900 doesn't autonegotiate\n",
 				dev->name);
 			return DETECTED_NONE;
 #endif
@@ -618,7 +618,7 @@ detect_tp(struct net_device *dev)
 		writereg(dev, PP_AutoNegCTL, lp->auto_neg_cnf & AUTO_NEG_MASK);
 
 		if ((lp->auto_neg_cnf & AUTO_NEG_BITS) == AUTO_NEG_ENABLE) {
-			pr_info("%s: negotiating duplex...\n", dev->name);
+			pr_debug("%s: negotiating duplex...\n", dev->name);
 			while (readreg(dev, PP_AutoNegST) & AUTO_NEG_BUSY) {
 				if (time_after(jiffies, timenow + 4000)) {
 					pr_err("**** Full / half duplex auto-negotiation timed out ****\n");
@@ -1022,16 +1022,16 @@ release_irq:
 		       dev->name);
 		goto release_dma;
 	case DETECTED_RJ45H:
-		pr_info("%s: using half-duplex 10Base-T (RJ-45)\n", dev->name);
+		pr_debug("%s: using half-duplex 10Base-T (RJ-45)\n", dev->name);
 		break;
 	case DETECTED_RJ45F:
-		pr_info("%s: using full-duplex 10Base-T (RJ-45)\n", dev->name);
+		pr_debug("%s: using full-duplex 10Base-T (RJ-45)\n", dev->name);
 		break;
 	case DETECTED_AUI:
-		pr_info("%s: using 10Base-5 (AUI)\n", dev->name);
+		pr_debug("%s: using 10Base-5 (AUI)\n", dev->name);
 		break;
 	case DETECTED_BNC:
-		pr_info("%s: using 10Base-2 (BNC)\n", dev->name);
+		pr_debug("%s: using 10Base-2 (BNC)\n", dev->name);
 		break;
 	}
 
@@ -1364,7 +1364,7 @@ cs89x0_probe1(struct net_device *dev, void __iomem *ioaddr, int modular)
 
 	pr_info_once("%s\n", version);
 
-	pr_info("%s: cs89%c0%s rev %c found at %p ",
+	pr_debug("%s: cs89%c0%s rev %c found at %p ",
 		dev->name,
 		lp->chip_type == CS8900  ? '0' : '2',
 		lp->chip_type == CS8920M ? "M" : "",
@@ -1507,7 +1507,7 @@ cs89x0_probe1(struct net_device *dev, void __iomem *ioaddr, int modular)
 	 * ifconfig IFACE hw ether AABBCCDDEEFF
 	 */
 
-	pr_info("media %s%s%s",
+	pr_debug("media %s%s%s",
 		(lp->adapter_cnf & A_CNF_10B_T) ? "RJ-45," : "",
 		(lp->adapter_cnf & A_CNF_AUI) ? "AUI," : "",
 		(lp->adapter_cnf & A_CNF_10B_2) ? "BNC," : "");

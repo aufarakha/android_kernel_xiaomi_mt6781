@@ -282,7 +282,7 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
 		return rc;
 	}
 
-	pr_info("channel=%u addr=0x%x idr=0x%x odr=0x%x str=0x%x\n",
+	pr_debug("channel=%u addr=0x%x idr=0x%x odr=0x%x str=0x%x\n",
 		chan, addr,
 		kcs_bmc->ioreg.idr, kcs_bmc->ioreg.odr, kcs_bmc->ioreg.str);
 

@@ -148,7 +148,7 @@ void gb_audio_manager_dump_all(void)
 	}
 	up_read(&modules_rwsem);
 
-	pr_info("Number of connected modules: %d\n", count);
+	pr_debug("Number of connected modules: %d\n", count);
 }
 EXPORT_SYMBOL_GPL(gb_audio_manager_dump_all);
 

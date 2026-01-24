@@ -389,7 +389,7 @@ static int nv_tco_init(struct platform_device *dev)
 		return -ENODEV;
 
 	/* Check to see if last reboot was due to watchdog timeout */
-	pr_info("Watchdog reboot %sdetected\n",
+	pr_debug("Watchdog reboot %sdetected\n",
 		inl(TCO_STS(tcobase)) & TCO_STS_TCO2TO_STS ? "" : "not ");
 
 	/* Clear out the old status */
@@ -402,7 +402,7 @@ static int nv_tco_init(struct platform_device *dev)
 	if (tco_timer_set_heartbeat(heartbeat)) {
 		heartbeat = WATCHDOG_HEARTBEAT;
 		tco_timer_set_heartbeat(heartbeat);
-		pr_info("heartbeat value must be 2<heartbeat<39, using %d\n",
+		pr_debug("heartbeat value must be 2<heartbeat<39, using %d\n",
 			heartbeat);
 	}
 
@@ -417,7 +417,7 @@ static int nv_tco_init(struct platform_device *dev)
 
 	tco_timer_stop();
 
-	pr_info("initialized (0x%04x). heartbeat=%d sec (nowayout=%d)\n",
+	pr_debug("initialized (0x%04x). heartbeat=%d sec (nowayout=%d)\n",
 		tcobase, heartbeat, nowayout);
 
 	return 0;
@@ -483,7 +483,7 @@ static int __init nv_tco_init_module(void)
 {
 	int err;
 
-	pr_info("NV TCO WatchDog Timer Driver v%s\n", TCO_VERSION);
+	pr_debug("NV TCO WatchDog Timer Driver v%s\n", TCO_VERSION);
 
 	err = platform_driver_register(&nv_tco_driver);
 	if (err)
@@ -507,7 +507,7 @@ static void __exit nv_tco_cleanup_module(void)
 {
 	platform_device_unregister(nv_tco_platform_device);
 	platform_driver_unregister(&nv_tco_driver);
-	pr_info("NV TCO Watchdog Module Unloaded\n");
+	pr_debug("NV TCO Watchdog Module Unloaded\n");
 }
 
 module_init(nv_tco_init_module);

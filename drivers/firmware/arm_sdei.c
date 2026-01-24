@@ -941,7 +941,7 @@ static int sdei_probe(struct platform_device *pdev)
 		return err;
 	}
 
-	pr_info("SDEIv%d.%d (0x%x) detected in firmware.\n",
+	pr_debug("SDEIv%d.%d (0x%x) detected in firmware.\n",
 		(int)SDEI_VERSION_MAJOR(ver), (int)SDEI_VERSION_MINOR(ver),
 		(int)SDEI_VERSION_VENDOR(ver));
 
@@ -1039,7 +1039,7 @@ static bool __init sdei_present_acpi(void)
 	if (ACPI_FAILURE(status) && status != AE_NOT_FOUND) {
 		const char *msg = acpi_format_exception(status);
 
-		pr_info("Failed to get ACPI:SDEI table, %s\n", msg);
+		pr_debug("Failed to get ACPI:SDEI table, %s\n", msg);
 	}
 	if (ACPI_FAILURE(status))
 		return false;

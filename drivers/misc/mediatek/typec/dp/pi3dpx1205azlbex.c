@@ -57,7 +57,7 @@
 
 #define usbc_dbg(level, fmt, args...) do { \
 		if (1) { \
-			pr_info("[USB_DP]" fmt, ## args); \
+			pr_debug("[USB_DP]" fmt, ## args); \
 		} \
 	} while (0)
 
@@ -79,7 +79,7 @@ static struct delayed_work check_wk;
  */
 static int pi3dpx1205a_readn(struct i2c_client *client, u8 len)
 {
-	pr_info("I2C readn : len=%d\n",len);
+	pr_debug("I2C readn : len=%d\n",len);
 
 	if (!client) {
 		usbc_dbg(K_ERR, "Null client\n");
@@ -87,7 +87,7 @@ static int pi3dpx1205a_readn(struct i2c_client *client, u8 len)
 	}
 
 	/* Read I2C 0x06 */
-	pr_info("%s====%d\n", __func__, i2c_smbus_read_byte_data (client,0x06));
+	pr_debug("%s====%d\n", __func__, i2c_smbus_read_byte_data (client,0x06));
 
 	return i2c_smbus_read_byte_data (client,0x06);
 }
@@ -133,7 +133,7 @@ int pi3dpx1205a_set_conf(struct i2c_client *client, u8 conf)
 		return -1;
 	data[3] = conf;
 	res = pi3dpx1205a_writen(client, conf);
-	pr_info("%s:%d\n", __func__, pi3dpx1205a_readn(client,3));
+	pr_debug("%s:%d\n", __func__, pi3dpx1205a_readn(client,3));
 
 	return reg;
 }
@@ -150,7 +150,7 @@ static int pi3dpx1205a_set_eq_fg_sw(struct i2c_client *client, u8 conf)
 	int res=0;
 
 	res = pi3dpx1205a_writen(client,0xA8);
-	pr_info("yds-:res =%d\n",res);
+	pr_debug("yds-:res =%d\n",res);
 	for (res = 0; res < 3; res++) {
 		pi3dpx1205a_readn(client,3);
 		msleep(50);
@@ -158,10 +158,10 @@ static int pi3dpx1205a_set_eq_fg_sw(struct i2c_client *client, u8 conf)
 		msleep(50);
 	}
 
-	pr_info("yds-%s:start!!\n",__func__);
+	pr_debug("yds-%s:start!!\n",__func__);
 	res = pi3dpx1205a_readn(client,3);
 	if (res < 0) {
-		pr_info("yds:IIC READ fail");
+		pr_debug("yds:IIC READ fail");
 		return -1;
 	}
 
@@ -169,7 +169,7 @@ static int pi3dpx1205a_set_eq_fg_sw(struct i2c_client *client, u8 conf)
 	if (res < 0)
 		return -1; /* Fail */
 	res = pi3dpx1205a_readn(client,3);
-	pr_info("yds-%s:RES==%d\n",__func__,res);
+	pr_debug("yds-%s:RES==%d\n",__func__,res);
 
 	return res;
 }
@@ -203,7 +203,7 @@ int pi3dpx1205a_hpd(struct i2c_client *client, u8 hpd)
 	usbc_dbg(K_INFO, "hpd=%d\n", hpd);
 
 	/* Read I2C */
-	pr_info("yds-%s:start!!\n",__func__);
+	pr_debug("yds-%s:start!!\n",__func__);
 	res = pi3dpx1205a_readn(client,3);
 	if (res < 0)
 		return -1;
@@ -292,13 +292,13 @@ static int chg_tcp_notifier_call(struct notifier_block *nb,
 			case 16:
 				pi3dpx1205a_writen(usbdp_client, 0xFB);
 				pi3dpx1205a_readn(usbdp_client,0x06);
-				pr_info("pi3dpx1205a_set_conf(usbdp_client, 0XF8)zhengcha\n");
+				pr_debug("pi3dpx1205a_set_conf(usbdp_client, 0XF8)zhengcha\n");
 				break;
 			case 8:
 			case 32:
 				pi3dpx1205a_writen(usbdp_client, 0xFB);
 				pi3dpx1205a_readn(usbdp_client,0x06);
-				pr_info("pi3dpx1205a_set_conf(usbdp_client,0XF8)zhengcha\n");
+				pr_debug("pi3dpx1205a_set_conf(usbdp_client,0XF8)zhengcha\n");
 				break;
 			default:
 				usbc_dbg(K_INFO, "%s: pin_assignment not support\n",
@@ -310,14 +310,14 @@ static int chg_tcp_notifier_call(struct notifier_block *nb,
 			case 16:
 				pi3dpx1205a_writen(usbdp_client, 0xFF);
 				pi3dpx1205a_readn(usbdp_client,0x06);
-				pr_info("pi3dpx1205a_set_conf(usbdp_client, 0XFC)FANcha\n");
+				pr_debug("pi3dpx1205a_set_conf(usbdp_client, 0XFC)FANcha\n");
 				break;
 			case 8:
 			case 32:
-				pr_info("%s:pin32:[%d]\n",__func__,pin);
+				pr_debug("%s:pin32:[%d]\n",__func__,pin);
 				pi3dpx1205a_writen(usbdp_client, 0xFF);
 				pi3dpx1205a_readn(usbdp_client,0x06);
-				pr_info("pi3dpx1205a_set_conf(usbdp_client, 0XFC)FANcha\n");
+				pr_debug("pi3dpx1205a_set_conf(usbdp_client, 0XFC)FANcha\n");
 				break;
 			default:
 				usbc_dbg(K_INFO, "%s: pin_assignment not support\n",
@@ -356,22 +356,22 @@ static int chg_tcp_notifier_call(struct notifier_block *nb,
 		if (noti->typec_state.polarity == 0){
 			pi3dpx1205a_writen(usbdp_client, 0xFB);
 			//pi3dpx1205a_set_conf(usbdp_client, 0xFB);
-			pr_info("pi3dpx1205a_set_conf(usbdp_client, 0XFB)zc\n");
+			pr_debug("pi3dpx1205a_set_conf(usbdp_client, 0XFB)zc\n");
 		}else{
 			pi3dpx1205a_writen(usbdp_client, 0xFF);
 			//pi3dpx1205a_set_conf(usbdp_client, 0XFF);
-			pr_info("pi3dpx1205a_set_conf(usbdp_client, 0XFF)fc\n");
+			pr_debug("pi3dpx1205a_set_conf(usbdp_client, 0XFF)fc\n");
 			}
 		if ((noti->typec_state.old_state == TYPEC_ATTACHED_SRC ||
 			noti->typec_state.old_state == TYPEC_ATTACHED_SNK) &&
 			noti->typec_state.new_state == TYPEC_UNATTACHED) {
-			pr_info("P537 typec Plug out\n");
+			pr_debug("P537 typec Plug out\n");
 			pi3dpx1205a_writen(usbdp_client, 0xA8);
 			pi3dpx1205a_readn(usbdp_client,0x06);
 			//mtk_dp_SWInterruptSet(0x2);
 			dp_sw_connect = false;
 		}
-		pr_info("yds_event == TCP_NOTIFY_TYPEC_STATE!!!!!!\n");
+		pr_debug("yds_event == TCP_NOTIFY_TYPEC_STATE!!!!!!\n");
 	}
 	/* Debug */
 	/* Debug */
@@ -480,7 +480,7 @@ static int usbdp_pinctrl_probe(struct platform_device *pdev)
 	struct device_node *np;
 	const char *platform;
 
-	pr_info("%s: initializing...\n", __func__);
+	pr_debug("%s: initializing...\n", __func__);
 
 	dp_pctrl.pinctrl = devm_pinctrl_get(&pdev->dev);
 	if (IS_ERR(dp_pctrl.pinctrl)) {
@@ -509,7 +509,7 @@ static int usbdp_pinctrl_probe(struct platform_device *pdev)
 		pinctrl_select_state(dp_pctrl.pinctrl, dp_pctrl.ext_pwr_en);
 	}
 		pinctrl_select_state(dp_pctrl.pinctrl, dp_pctrl.pwr_en);
-		pr_info("zzz-%s:dp_pctrl.pwr_en\n",__func__);
+		pr_debug("zzz-%s:dp_pctrl.pwr_en\n",__func__);
 	np = of_find_node_by_name(pdev->dev.of_node, "usb_dp-data");
 	if (np) {
 		usbc_dbg(K_DEBUG, "%s: find usb_dp-data\n", __func__);

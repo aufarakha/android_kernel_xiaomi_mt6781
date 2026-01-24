@@ -14,12 +14,12 @@
 
 __weak void dvfsrc_enable_dvfs_freq_hopping(int gps_on)
 {
-	pr_info("dummy dvfsrc enable freq hopping(%d)\n", gps_on);
+	pr_debug("dummy dvfsrc enable freq hopping(%d)\n", gps_on);
 }
 
 __weak int dvfsrc_get_dvfs_freq_hopping_status(void)
 {
-	pr_info("dummy dvfsrc get freq hopping status\n");
+	pr_debug("dummy dvfsrc get freq hopping status\n");
 	return 0;
 }
 

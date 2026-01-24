@@ -440,7 +440,7 @@ static int cw1200_register_common(struct ieee80211_hw *dev)
 
 	cw1200_debug_init(priv);
 
-	pr_info("Registered as '%s'\n", wiphy_name(dev->wiphy));
+	pr_debug("Registered as '%s'\n", wiphy_name(dev->wiphy));
 	return 0;
 }
 

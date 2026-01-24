@@ -162,7 +162,7 @@ static void gsta_set_config(struct gsta_gpio *chip, int nr, unsigned cfg)
 	u32 val;
 	int err = 0;
 
-	pr_info("%s: %p %i %i\n", __func__, chip, nr, cfg);
+	pr_debug("%s: %p %i %i\n", __func__, chip, nr, cfg);
 
 	if (cfg == PINMUX_TYPE_NONE)
 		return;

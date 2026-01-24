@@ -460,7 +460,7 @@ dcssblk_save_store(struct device *dev, struct device_attribute *attr, const char
 	if (inbuf[0] == '1') {
 		if (atomic_read(&dev_info->use_count) == 0) {
 			// device is idle => we save immediately
-			pr_info("All DCSSs that map to device %s are "
+			pr_debug("All DCSSs that map to device %s are "
 				"saved\n", dev_info->segment_name);
 			list_for_each_entry(entry, &dev_info->seg_list, lh) {
 				if (entry->segment_type == SEG_TYPE_EN ||
@@ -474,7 +474,7 @@ dcssblk_save_store(struct device *dev, struct device_attribute *attr, const char
 		}  else {
 			// device is busy => we save it when it becomes
 			// idle in dcssblk_release
-			pr_info("Device %s is in use, its DCSSs will be "
+			pr_debug("Device %s is in use, its DCSSs will be "
 				"saved when it becomes idle\n",
 				dev_info->segment_name);
 			dev_info->save_pending = 1;
@@ -484,7 +484,7 @@ dcssblk_save_store(struct device *dev, struct device_attribute *attr, const char
 			// device is busy & the user wants to undo his save
 			// request
 			dev_info->save_pending = 0;
-			pr_info("A pending save request for device %s "
+			pr_debug("A pending save request for device %s "
 				"has been canceled\n",
 				dev_info->segment_name);
 		}
@@ -644,7 +644,7 @@ dcssblk_add_store(struct device *dev, struct device_attribute *attr, const char 
 
 	seg_byte_size = (dev_info->end - dev_info->start + 1);
 	set_capacity(dev_info->gd, seg_byte_size >> 9); // size in sectors
-	pr_info("Loaded %s with total size %lu bytes and capacity %lu "
+	pr_debug("Loaded %s with total size %lu bytes and capacity %lu "
 		"sectors\n", local_buf, seg_byte_size, seg_byte_size >> 9);
 
 	dev_info->save_pending = 0;
@@ -835,7 +835,7 @@ dcssblk_release(struct gendisk *disk, fmode_t mode)
 	down_write(&dcssblk_devices_sem);
 	if (atomic_dec_and_test(&dev_info->use_count)
 	    && (dev_info->save_pending)) {
-		pr_info("Device %s has become idle and is being saved "
+		pr_debug("Device %s has become idle and is being saved "
 			"now\n", dev_info->segment_name);
 		list_for_each_entry(entry, &dev_info->seg_list, lh) {
 			if (entry->segment_type == SEG_TYPE_EN ||

@@ -1059,7 +1059,7 @@ static int __init klp_init(void)
 
 	ret = klp_check_compiler_support();
 	if (ret) {
-		pr_info("Your compiler is too old; turning off.\n");
+		pr_debug("Your compiler is too old; turning off.\n");
 		return -EINVAL;
 	}
 

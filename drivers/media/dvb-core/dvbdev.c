@@ -394,7 +394,7 @@ static int dvb_create_media_entity(struct dvb_device *dvbdev,
 	if (ret)
 		return ret;
 
-	pr_info("%s: media entity '%s' registered.\n",
+	pr_debug("%s: media entity '%s' registered.\n",
 		__func__, dvbdev->entity->name);
 
 	return 0;
@@ -928,7 +928,7 @@ int dvb_register_adapter(struct dvb_adapter *adap, const char *name,
 	memset (adap, 0, sizeof(struct dvb_adapter));
 	INIT_LIST_HEAD (&adap->device_list);
 
-	pr_info("DVB: registering new adapter (%s)\n", name);
+	pr_debug("DVB: registering new adapter (%s)\n", name);
 
 	adap->num = num;
 	adap->name = name;

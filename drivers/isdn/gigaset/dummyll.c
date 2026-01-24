@@ -69,7 +69,7 @@ void gigaset_isdn_unregdev(struct cardstate *cs)
 
 void gigaset_isdn_regdrv(void)
 {
-	pr_info("no ISDN subsystem interface\n");
+	pr_debug("no ISDN subsystem interface\n");
 }
 
 void gigaset_isdn_unregdrv(void)

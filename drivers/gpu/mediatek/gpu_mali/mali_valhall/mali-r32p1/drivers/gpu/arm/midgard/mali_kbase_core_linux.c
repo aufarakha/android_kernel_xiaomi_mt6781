@@ -5274,10 +5274,10 @@ static int kbase_platform_device_probe(struct platform_device *pdev)
 	int err = 0;
 
 	// *** MTK *** : make sure gpufreq driver is ready
-	pr_info("%s start\n", __func__);
+	pr_debug("%s start\n", __func__);
 #if !defined(CONFIG_MACH_MT6768) && !defined(CONFIG_MACH_MT6785)
 	if (mt_gpufreq_not_ready()) {
-		pr_info("gpufreq driver is not ready: %d\n", -EPROBE_DEFER);
+		pr_debug("gpufreq driver is not ready: %d\n", -EPROBE_DEFER);
 		return -EPROBE_DEFER;
 	}
 #endif

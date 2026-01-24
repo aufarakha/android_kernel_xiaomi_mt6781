@@ -175,7 +175,7 @@ static void calibrate_port(struct pps_generator_pp *dev)
 	}
 
 	dev->port_write_time = acc >> PORT_NTESTS_SHIFT;
-	pr_info("port write takes %ldns\n", dev->port_write_time);
+	pr_debug("port write takes %ldns\n", dev->port_write_time);
 }
 
 static inline ktime_t next_intr_time(struct pps_generator_pp *dev)
@@ -214,7 +214,7 @@ static void parport_attach(struct parport *port)
 		goto err_unregister_dev;
 	}
 
-	pr_info("attached to %s\n", port->name);
+	pr_debug("attached to %s\n", port->name);
 	attached = 1;
 
 	calibrate_port(&device);
@@ -252,7 +252,7 @@ static int __init pps_gen_parport_init(void)
 {
 	int ret;
 
-	pr_info(DRVDESC "\n");
+	pr_debug(DRVDESC "\n");
 
 	if (send_delay > SEND_DELAY_MAX) {
 		pr_err("delay value should be not greater"
@@ -272,7 +272,7 @@ static int __init pps_gen_parport_init(void)
 static void __exit pps_gen_parport_exit(void)
 {
 	parport_unregister_driver(&pps_gen_parport_driver);
-	pr_info("hrtimer avg error is %ldns\n", hrtimer_error);
+	pr_debug("hrtimer avg error is %ldns\n", hrtimer_error);
 }
 
 module_init(pps_gen_parport_init);

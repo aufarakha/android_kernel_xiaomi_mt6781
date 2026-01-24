@@ -285,7 +285,7 @@ int __init qede_init(void)
 {
 	int ret;
 
-	pr_info("qede_init: %s\n", version);
+	pr_debug("qede_init: %s\n", version);
 
 	qed_ops = qed_get_eth_ops();
 	if (!qed_ops) {
@@ -317,7 +317,7 @@ int __init qede_init(void)
 static void __exit qede_cleanup(void)
 {
 	if (debug & QED_LOG_INFO_MASK)
-		pr_info("qede_cleanup called\n");
+		pr_debug("qede_cleanup called\n");
 
 	unregister_netdevice_notifier(&qede_netdev_notifier);
 	pci_unregister_driver(&qede_pci_driver);
@@ -1034,7 +1034,7 @@ static void qede_log_probe(struct qede_dev *edev)
 			 (p_dev_info->mbi_version & QED_MBI_VERSION_0_MASK) >>
 			 QED_MBI_VERSION_0_OFFSET);
 
-	pr_info("qede %02x:%02x.%02x: %s [%s]\n", edev->pdev->bus->number,
+	pr_debug("qede %02x:%02x.%02x: %s [%s]\n", edev->pdev->bus->number,
 		PCI_SLOT(edev->pdev->devfn), PCI_FUNC(edev->pdev->devfn),
 		buf, edev->ndev->name);
 }

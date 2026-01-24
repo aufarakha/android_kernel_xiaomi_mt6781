@@ -94,28 +94,28 @@ static void lcm_request_gpio_control(struct device *dev)
 {
 	GPIO_LCD_RST = of_get_named_gpio(dev->of_node, "gpio_lcd_rst", 0);
 	gpio_request(GPIO_LCD_RST, "GPIO_LCD_RST");
-	pr_info("[KE/LCM] GPIO_LCD_RST = 0x%x\n", GPIO_LCD_RST);
+	pr_debug("[KE/LCM] GPIO_LCD_RST = 0x%x\n", GPIO_LCD_RST);
 
 	GPIO_LCD_PWR_ENN = of_get_named_gpio(dev->of_node, "gpio_lcd_pwr_enn", 0);
 	gpio_request(GPIO_LCD_PWR_ENN, "GPIO_LCD_PWR_ENN");
-	pr_info("[KE/LCM] GPIO_LCD_PWR_ENN = 0x%x\n", GPIO_LCD_PWR_ENN);
+	pr_debug("[KE/LCM] GPIO_LCD_PWR_ENN = 0x%x\n", GPIO_LCD_PWR_ENN);
 
 	GPIO_LCD_PWR_ENP = of_get_named_gpio(dev->of_node, "gpio_lcd_pwr_enp", 0);
 	gpio_request(GPIO_LCD_PWR_ENP, "GPIO_LCD_PWR_ENP");
-	pr_info("[KE/LCM] GPIO_LCD_PWR_ENP = 0x%x\n", GPIO_LCD_PWR_ENP);
+	pr_debug("[KE/LCM] GPIO_LCD_PWR_ENP = 0x%x\n", GPIO_LCD_PWR_ENP);
 
 	GPIO_LCD_PWM_EN = of_get_named_gpio(dev->of_node, "gpio_lcd_pwm_en", 0);
 	gpio_request(GPIO_LCD_PWM_EN, "GPIO_LCD_PWM_EN");
-	pr_info("[KE/LCM] GPIO_LCD_PWM_EN = 0x%x\n", GPIO_LCD_PWM_EN);
+	pr_debug("[KE/LCM] GPIO_LCD_PWM_EN = 0x%x\n", GPIO_LCD_PWM_EN);
 
 	GPIO_LCD_BL_EN = of_get_named_gpio(dev->of_node, "gpio_lcd_bl_en", 0);
 	gpio_request(GPIO_LCD_BL_EN, "GPIO_LCD_BL_EN");
-	pr_info("[KE/LCM] GPIO_LCD_BL_EN = 0x%x\n", GPIO_LCD_BL_EN);
+	pr_debug("[KE/LCM] GPIO_LCD_BL_EN = 0x%x\n", GPIO_LCD_BL_EN);
 }
 
 static int lcm_driver_probe(struct device *dev, void const *data)
 {
-	pr_info("[KE/LCM] %s Enter\n", __func__);
+	pr_debug("[KE/LCM] %s Enter\n", __func__);
 
 	lcm_request_gpio_control(dev);
 
@@ -156,7 +156,7 @@ static struct platform_driver lcm_driver = {
 static int __init lcm_init(void)
 {
 	if (platform_driver_register(&lcm_driver)) {
-		pr_info("LCM: failed to register this driver!\n");
+		pr_debug("LCM: failed to register this driver!\n");
 		return -ENODEV;
 	}
 
@@ -414,7 +414,7 @@ static void lcm_get_params(struct LCM_PARAMS *params)
 
 static void lcm_init_power(void)
 {
-	pr_info("[Kernel/LCM] %s()\n", __func__);
+	pr_debug("[Kernel/LCM] %s()\n", __func__);
 	/* set AVDD*/
 	/*5.7V + 0.1* 100mV*/
 	ocp2138_write_byte(0x00, 0x11);
@@ -431,7 +431,7 @@ static void lcm_init_power(void)
 
 static void lcm_init_lcm(void)
 {
-	pr_info("[KERNEL/LCM] hx83102p %s enter\n", __func__);
+	pr_debug("[KERNEL/LCM] hx83102p %s enter\n", __func__);
 
 	lcm_set_gpio_output(GPIO_LCD_RST, GPIO_OUT_ONE);
 	MDELAY(10);
@@ -452,7 +452,7 @@ static void lcm_init_lcm(void)
 
 static void lcm_suspend(void)
 {
-	pr_info("[Kernel/LCM] hx83102p %s() enter\n", __func__);
+	pr_debug("[Kernel/LCM] hx83102p %s() enter\n", __func__);
 	lcm_set_gpio_output(GPIO_LCD_BL_EN, GPIO_OUT_ZERO);
 	push_table(lcm_suspend_setting,
 		sizeof(lcm_suspend_setting) / sizeof(struct LCM_setting_table), 1);
@@ -461,7 +461,7 @@ static void lcm_suspend(void)
 
 static void lcm_suspend_power(void)
 {
-	pr_info("[Kernel/LCM] %s\n", __func__);
+	pr_debug("[Kernel/LCM] %s\n", __func__);
 
 	lcm_set_gpio_output(GPIO_LCD_RST, GPIO_OUT_ZERO);
 	MDELAY(3);
@@ -477,10 +477,10 @@ static void lcm_resume_power(void)
 
 static void lcm_resume(void)
 {
-	pr_info("[Kernel/LCM] hx83102p %s enter\n", __func__);
+	pr_debug("[Kernel/LCM] hx83102p %s enter\n", __func__);
 	lcm_init_lcm();
 
-	pr_info("[Kernel/LCM] %s s_last_backlight_level=%d\n", __func__, s_last_backlight_level);
+	pr_debug("[Kernel/LCM] %s s_last_backlight_level=%d\n", __func__, s_last_backlight_level);
 }
 
 static unsigned int lcm_compare_id(void)
@@ -504,7 +504,7 @@ static unsigned int lcm_compare_id(void)
 #ifdef BUILD_LK
 	dprintf(0, "%s, [LK/LCM] hx83102p: id = 0x%08x\n", __func__, id);
 #else
-	pr_info("%s, [Kernel/LCM] hx83102p: id = 0x%08x\n", __func__, id);
+	pr_debug("%s, [Kernel/LCM] hx83102p: id = 0x%08x\n", __func__, id);
 #endif
 
 	if (id == LCM_ID_NT35595)
@@ -521,7 +521,7 @@ static void lcm_setbacklight_cmdq(void *handle, unsigned int level)
 		level = 255;
 
 	sgm_level = backlight_i2c_map_hx[level];
-	pr_info("lsy_kernel %s,hx83102p backlight: level = %d sgm_level = %d\n",
+	pr_debug("lsy_kernel %s,hx83102p backlight: level = %d sgm_level = %d\n",
 			__func__, level, sgm_level);
 
 	while (level != s_last_backlight_level) {

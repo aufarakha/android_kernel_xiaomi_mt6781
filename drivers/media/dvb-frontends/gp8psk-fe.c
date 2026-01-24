@@ -345,7 +345,7 @@ struct dvb_frontend *gp8psk_fe_attach(const struct gp8psk_fe_ops *ops,
 	st->priv = priv;
 	st->is_rev1 = is_rev1;
 
-	pr_info("Frontend %sattached\n", is_rev1 ? "revision 1 " : "");
+	pr_debug("Frontend %sattached\n", is_rev1 ? "revision 1 " : "");
 
 	return &st->fe;
 }

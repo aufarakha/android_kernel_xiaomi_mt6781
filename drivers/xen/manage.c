@@ -195,7 +195,7 @@ static void do_poweroff(void)
 		break;
 	default:
 		/* Don't do it when we are halting/rebooting. */
-		pr_info("Ignoring Xen toolstack shutdown.\n");
+		pr_debug("Ignoring Xen toolstack shutdown.\n");
 		break;
 	}
 }
@@ -256,7 +256,7 @@ static void shutdown_handler(struct xenbus_watch *watch,
 	if (idx < ARRAY_SIZE(shutdown_handlers)) {
 		shutdown_handlers[idx].cb();
 	} else {
-		pr_info("Ignoring shutdown request: %s\n", str);
+		pr_debug("Ignoring shutdown request: %s\n", str);
 		shutting_down = SHUTDOWN_INVALID;
 	}
 

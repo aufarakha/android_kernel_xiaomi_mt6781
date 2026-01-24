@@ -2705,7 +2705,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[0].func,  NULL);
 
 	if (ret) {
-		pr_info("irq_handler_entry: Couldn't activate tracepoint probe to irq_handler_entry\n");
+		pr_debug("irq_handler_entry: Couldn't activate tracepoint probe to irq_handler_entry\n");
 		goto fail_reg_irq_handler_entry;
 	}
 	xgf_tracepoints[0].registered = true;
@@ -2715,7 +2715,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[1].func,  NULL);
 
 	if (ret) {
-		pr_info("irq_handler_exit: Couldn't activate tracepoint probe to irq_handler_exit\n");
+		pr_debug("irq_handler_exit: Couldn't activate tracepoint probe to irq_handler_exit\n");
 		goto fail_reg_irq_handler_exit;
 	}
 	xgf_tracepoints[1].registered = true;
@@ -2725,7 +2725,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[2].func,  NULL);
 
 	if (ret) {
-		pr_info("softirq_entry: Couldn't activate tracepoint probe to softirq_entry\n");
+		pr_debug("softirq_entry: Couldn't activate tracepoint probe to softirq_entry\n");
 		goto fail_reg_softirq_entry;
 	}
 	xgf_tracepoints[2].registered = true;
@@ -2735,7 +2735,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[3].func,  NULL);
 
 	if (ret) {
-		pr_info("softirq_exit: Couldn't activate tracepoint probe to softirq_exit\n");
+		pr_debug("softirq_exit: Couldn't activate tracepoint probe to softirq_exit\n");
 		goto fail_reg_softirq_exit;
 	}
 	xgf_tracepoints[3].registered = true;
@@ -2745,7 +2745,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[4].func,  NULL);
 
 	if (ret) {
-		pr_info("ipi_raise: Couldn't activate tracepoint probe to ipi_raise\n");
+		pr_debug("ipi_raise: Couldn't activate tracepoint probe to ipi_raise\n");
 		goto fail_reg_ipi_raise;
 	}
 	xgf_tracepoints[4].registered = true;
@@ -2755,7 +2755,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[5].func,  NULL);
 
 	if (ret) {
-		pr_info("ipi_entry: Couldn't activate tracepoint probe to ipi_entry\n");
+		pr_debug("ipi_entry: Couldn't activate tracepoint probe to ipi_entry\n");
 		goto fail_reg_ipi_entry;
 	}
 	xgf_tracepoints[5].registered = true;
@@ -2765,7 +2765,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[6].func,  NULL);
 
 	if (ret) {
-		pr_info("ipi_exit: Couldn't activate tracepoint probe to ipi_exit\n");
+		pr_debug("ipi_exit: Couldn't activate tracepoint probe to ipi_exit\n");
 		goto fail_reg_ipi_exit;
 	}
 	xgf_tracepoints[6].registered = true;
@@ -2775,7 +2775,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[7].func,  NULL);
 
 	if (ret) {
-		pr_info("wakeup trace: Couldn't activate tracepoint probe to kernel_sched_wakeup\n");
+		pr_debug("wakeup trace: Couldn't activate tracepoint probe to kernel_sched_wakeup\n");
 		goto fail_reg_sched_wakeup;
 	}
 	xgf_tracepoints[7].registered = true;
@@ -2785,7 +2785,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[8].func,  NULL);
 
 	if (ret) {
-		pr_info("wakeup trace: Couldn't activate tracepoint probe to kernel_sched_wakeup_new\n");
+		pr_debug("wakeup trace: Couldn't activate tracepoint probe to kernel_sched_wakeup_new\n");
 		goto fail_reg_sched_wakeup_new;
 	}
 	xgf_tracepoints[8].registered = true;
@@ -2795,7 +2795,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[9].func,  NULL);
 
 	if (ret) {
-		pr_info("sched trace: Couldn't activate tracepoint probe to kernel_sched_switch\n");
+		pr_debug("sched trace: Couldn't activate tracepoint probe to kernel_sched_switch\n");
 		goto fail_reg_sched_switch;
 	}
 	xgf_tracepoints[9].registered = true;
@@ -2805,7 +2805,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[10].func,  NULL);
 
 	if (ret) {
-		pr_info("sched trace: Couldn't activate tracepoint probe to kernel_sched_waking\n");
+		pr_debug("sched trace: Couldn't activate tracepoint probe to kernel_sched_waking\n");
 		goto fail_reg_sched_waking;
 	}
 	xgf_tracepoints[10].registered = true;
@@ -2815,7 +2815,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[11].func,  NULL);
 
 	if (ret) {
-		pr_info("hrtimer_entry trace: Couldn't activate tracepoint probe to kernel_hrtimer_expire_entry\n");
+		pr_debug("hrtimer_entry trace: Couldn't activate tracepoint probe to kernel_hrtimer_expire_entry\n");
 		goto fail_reg_hrtimer_expire_entry;
 	}
 	xgf_tracepoints[11].registered = true;
@@ -2825,7 +2825,7 @@ static void __nocfi xgf_tracing_register(void)
 						xgf_tracepoints[12].func,  NULL);
 
 	if (ret) {
-		pr_info("hrtimer_exit trace: Couldn't activate tracepoint probe to kernel_hrtimer_expire_exit\n");
+		pr_debug("hrtimer_exit trace: Couldn't activate tracepoint probe to kernel_hrtimer_expire_exit\n");
 		goto fail_reg_hrtimer_expire_exit;
 	}
 	xgf_tracepoints[12].registered = true;

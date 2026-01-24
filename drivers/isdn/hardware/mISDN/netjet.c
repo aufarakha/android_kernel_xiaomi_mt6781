@@ -264,7 +264,7 @@ mode_tiger(struct tiger_ch *bc, u32 protocol)
 		}
 		break;
 	default:
-		pr_info("%s: %s protocol %x not handled\n", card->name,
+		pr_debug("%s: %s protocol %x not handled\n", card->name,
 			__func__, protocol);
 		return -ENOPROTOOPT;
 	}
@@ -313,22 +313,22 @@ inittiger(struct tiger_hw *card)
 	card->dma_p = pci_alloc_consistent(card->pdev, NJ_DMA_SIZE,
 					   &card->dma);
 	if (!card->dma_p) {
-		pr_info("%s: No DMA memory\n", card->name);
+		pr_debug("%s: No DMA memory\n", card->name);
 		return -ENOMEM;
 	}
 	if ((u64)card->dma > 0xffffffff) {
-		pr_info("%s: DMA outside 32 bit\n", card->name);
+		pr_debug("%s: DMA outside 32 bit\n", card->name);
 		return -ENOMEM;
 	}
 	for (i = 0; i < 2; i++) {
 		card->bc[i].hsbuf = kmalloc(NJ_DMA_TXSIZE, GFP_ATOMIC);
 		if (!card->bc[i].hsbuf) {
-			pr_info("%s: no B%d send buffer\n", card->name, i + 1);
+			pr_debug("%s: no B%d send buffer\n", card->name, i + 1);
 			return -ENOMEM;
 		}
 		card->bc[i].hrbuf = kmalloc(NJ_DMA_RXSIZE, GFP_ATOMIC);
 		if (!card->bc[i].hrbuf) {
-			pr_info("%s: no B%d recv buffer\n", card->name, i + 1);
+			pr_debug("%s: no B%d recv buffer\n", card->name, i + 1);
 			return -ENOMEM;
 		}
 	}
@@ -382,7 +382,7 @@ read_dma(struct tiger_ch *bc, u32 idx, int cnt)
 
 	if (bc->lastrx == idx) {
 		bc->rxstate |= RX_OVERRUN;
-		pr_info("%s: B%1d overrun at idx %d\n", card->name,
+		pr_debug("%s: B%1d overrun at idx %d\n", card->name,
 			bc->bch.nr, idx);
 	}
 	bc->lastrx = idx;
@@ -438,13 +438,13 @@ read_dma(struct tiger_ch *bc, u32 idx, int cnt)
 				return;
 			}
 		} else if (stat == -HDLC_CRC_ERROR) {
-			pr_info("%s: B%1d receive frame CRC error\n",
+			pr_debug("%s: B%1d receive frame CRC error\n",
 				card->name, bc->bch.nr);
 		} else if (stat == -HDLC_FRAMING_ERROR) {
-			pr_info("%s: B%1d receive framing error\n",
+			pr_debug("%s: B%1d receive framing error\n",
 				card->name, bc->bch.nr);
 		} else if (stat == -HDLC_LENGTH_ERROR) {
-			pr_info("%s: B%1d receive frame too long (> %d)\n",
+			pr_debug("%s: B%1d receive frame too long (> %d)\n",
 				card->name, bc->bch.nr, bc->bch.maxlen);
 		}
 		pn += i;
@@ -643,7 +643,7 @@ send_tiger_bc(struct tiger_hw *card, struct tiger_ch *bc)
 	bc->free += card->send.size / 2;
 	if (bc->free >= card->send.size) {
 		if (!(bc->txstate & (TX_UNDERRUN | TX_INIT))) {
-			pr_info("%s: B%1d TX underrun state %x\n", card->name,
+			pr_debug("%s: B%1d TX underrun state %x\n", card->name,
 				bc->bch.nr, bc->txstate);
 			bc->txstate |= TX_UNDERRUN;
 		}
@@ -672,7 +672,7 @@ send_tiger(struct tiger_hw *card, u8 irq_stat)
 
 	/* Note send is via the READ DMA channel */
 	if ((irq_stat & card->last_is0) & NJ_IRQM0_RD_MASK) {
-		pr_info("%s: tiger warn write double dma %x/%x\n",
+		pr_debug("%s: tiger warn write double dma %x/%x\n",
 			card->name, irq_stat, card->last_is0);
 		return;
 	} else {
@@ -826,7 +826,7 @@ nj_bctrl(struct mISDNchannel *ch, u32 cmd, void *arg)
 		ret = channel_bctrl(bc, arg);
 		break;
 	default:
-		pr_info("%s: %s unknown prim(%x)\n", card->name, __func__, cmd);
+		pr_debug("%s: %s unknown prim(%x)\n", card->name, __func__, cmd);
 	}
 	return ret;
 }
@@ -852,7 +852,7 @@ channel_ctrl(struct tiger_hw *card, struct mISDN_ctrl_req *cq)
 		ret = card->isac.ctrl(&card->isac, HW_TIMER3_VALUE, cq->p1);
 		break;
 	default:
-		pr_info("%s: %s unknown Op %x\n", card->name, __func__, cq->op);
+		pr_debug("%s: %s unknown Op %x\n", card->name, __func__, cq->op);
 		ret = -EINVAL;
 		break;
 	}
@@ -900,7 +900,7 @@ nj_dctrl(struct mISDNchannel *ch, u32 cmd, void *arg)
 		if (err)
 			break;
 		if (!try_module_get(THIS_MODULE))
-			pr_info("%s: cannot get module\n", card->name);
+			pr_debug("%s: cannot get module\n", card->name);
 		break;
 	case CLOSE_CHANNEL:
 		pr_debug("%s: dev(%d) close from %p\n", card->name, dch->dev.id,
@@ -930,7 +930,7 @@ nj_init_card(struct tiger_hw *card)
 
 	card->irq = card->pdev->irq;
 	if (request_irq(card->irq, nj_irq, IRQF_SHARED, card->name, card)) {
-		pr_info("%s: couldn't get interrupt %d\n",
+		pr_debug("%s: couldn't get interrupt %d\n",
 			card->name, card->irq);
 		card->irq = -1;
 		return -EIO;
@@ -997,7 +997,7 @@ nj_setup(struct tiger_hw *card)
 	card->base = pci_resource_start(card->pdev, 0);
 	card->base_s = pci_resource_len(card->pdev, 0);
 	if (!request_region(card->base, card->base_s, card->name)) {
-		pr_info("%s: NETjet config port %#x-%#x already in use\n",
+		pr_debug("%s: NETjet config port %#x-%#x already in use\n",
 			card->name, card->base,
 			(u32)(card->base + card->base_s - 1));
 		card->base_s = 0;
@@ -1086,7 +1086,7 @@ nj_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 	card = kzalloc(sizeof(struct tiger_hw), GFP_KERNEL);
 	if (!card) {
-		pr_info("No kmem for Netjet\n");
+		pr_debug("No kmem for Netjet\n");
 		return err;
 	}
 
@@ -1130,7 +1130,7 @@ static void nj_remove(struct pci_dev *pdev)
 	if (card)
 		nj_release(card);
 	else
-		pr_info("%s drvdata already removed\n", __func__);
+		pr_debug("%s drvdata already removed\n", __func__);
 }
 
 /* We cannot select cards with PCI_SUB... IDs, since here are cards with

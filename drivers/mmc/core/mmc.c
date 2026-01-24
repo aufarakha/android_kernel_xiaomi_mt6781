@@ -1882,7 +1882,7 @@ static int mmc_init_card(struct mmc_host *host, u32 ocr,
 				mmc_hostname(host), err);
 		} else {
 			host->cqe_enabled = true;
-			pr_info("%s: Command Queue Engine enabled\n",
+			pr_debug("%s: Command Queue Engine enabled\n",
 				mmc_hostname(host));
 		}
 	}
@@ -1893,7 +1893,7 @@ static int mmc_init_card(struct mmc_host *host, u32 ocr,
 		if (err && err != -EBADMSG)
 			goto free_card;
 		if (err) {
-			pr_info("%s: Enabling SWCMDQ failed\n",
+			pr_debug("%s: Enabling SWCMDQ failed\n",
 				mmc_hostname(card->host));
 			card->ext_csd.cmdq_support = false;
 			card->ext_csd.cmdq_depth = 0;

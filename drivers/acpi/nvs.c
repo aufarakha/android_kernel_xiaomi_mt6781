@@ -95,7 +95,7 @@ static int suspend_nvs_register(unsigned long start, unsigned long size)
 {
 	struct nvs_page *entry, *next;
 
-	pr_info("PM: Registering ACPI NVS region [mem %#010lx-%#010lx] (%ld bytes)\n",
+	pr_debug("PM: Registering ACPI NVS region [mem %#010lx-%#010lx] (%ld bytes)\n",
 		start, start + size - 1, size);
 
 	while (size > 0) {

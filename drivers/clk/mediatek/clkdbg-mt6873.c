@@ -494,7 +494,7 @@ void print_subsys_reg(char *subsys_name)
 
 	rb_dump = lookup_regbase(subsys_name);
 	if (rb_dump == NULL) {
-		pr_info("wrong regbase name:%s\n", subsys_name);
+		pr_debug("wrong regbase name:%s\n", subsys_name);
 		return;
 	}
 
@@ -506,7 +506,7 @@ void print_subsys_reg(char *subsys_name)
 		if (rns->base != rb_dump)
 			continue;
 
-		pr_info("%-18s: [0x%08x] = 0x%08x\n",
+		pr_debug("%-18s: [0x%08x] = 0x%08x\n",
 			rns->name, PHYSADDR(rns), clk_readl(ADDR(rns)));
 	}
 }

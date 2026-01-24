@@ -1237,10 +1237,10 @@ static int  mtk_apmixed_init(struct platform_device *pdev)
 	int r;
 	void __iomem *base;
 	struct device_node *node = pdev->dev.of_node;
-	pr_info("%s done\n", __func__);
+	pr_debug("%s done\n", __func__);
 	base = of_iomap(node, 0);
 	if (!base) {
-		pr_info("%s(): ioremap failed\n", __func__);
+		pr_debug("%s(): ioremap failed\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1254,7 +1254,7 @@ static int  mtk_apmixed_init(struct platform_device *pdev)
 	r = of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
 
 	if (r)
-		pr_info("%s(): could not register clock provider: %d\n",
+		pr_debug("%s(): could not register clock provider: %d\n",
 			__func__, r);
 	apmixed_base = base;
 
@@ -1284,7 +1284,7 @@ static int  mtk_apmixed_init(struct platform_device *pdev)
 	clk_setl(APLL1_PWR_CON0, PLL_ISO_EN);
 	clk_clrl(APLL1_PWR_CON0, PLL_PWR_ON);
 #endif
-	pr_info("%s done\n", __func__);
+	pr_debug("%s done\n", __func__);
 	return r;
 }
 
@@ -1299,7 +1299,7 @@ static int mtk_top_init(struct platform_device *pdev)
 	apmixedbase = of_iomap(node, 1);
 
 	if (!base || !apmixedbase) {
-		pr_info("%s(): ioremap failed\n", __func__);
+		pr_debug("%s(): ioremap failed\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1317,7 +1317,7 @@ static int mtk_top_init(struct platform_device *pdev)
 	r = of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
 
 	if (r)
-		pr_info("%s(): could not register clock provider: %d\n",
+		pr_debug("%s(): could not register clock provider: %d\n",
 			__func__, r);
 	top_base = base;
 	clk_writel(CLK_SCP_CFG_0, clk_readl(CLK_SCP_CFG_0) | 0x3EF);/*[10]:no need*/
@@ -1358,7 +1358,7 @@ static int mtk_top_init(struct platform_device *pdev)
 	clk_writel(cksys_base + CLK_CFG_10_CLR, 0x00008000);
 	clk_writel(cksys_base + CLK_CFG_10_SET, 0x00008000);
 #endif
-	pr_info("%s done\n", __func__);
+	pr_debug("%s done\n", __func__);
 	return r;
 }
 
@@ -1372,7 +1372,7 @@ static int mtk_infra_init(struct platform_device *pdev)
 
 	base = of_iomap(node, 0);
 	if (!base) {
-		pr_info("%s(): ioremap failed\n", __func__);
+		pr_debug("%s(): ioremap failed\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1386,7 +1386,7 @@ static int mtk_infra_init(struct platform_device *pdev)
 	r = of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
 
 	if (r)
-		pr_info("%s(): could not register clock provider: %d\n",
+		pr_debug("%s(): could not register clock provider: %d\n",
 			__func__, r);
 	infra_base = base;
 	/* clk_writel(INFRA_TOPAXI_SI0_CTL, clk_readl(INFRA_TOPAXI_SI0_CTL) | 0x2);*//*CDC, MFG issue*/
@@ -1402,7 +1402,7 @@ static int mtk_infra_init(struct platform_device *pdev)
 	clk_writel(MODULE_SW_CG_2_SET, INFRA_CG2);
 	clk_writel(MODULE_SW_CG_3_SET, INFRA_CG3);
 #endif
-	pr_info("%s done\n", __func__);
+	pr_debug("%s done\n", __func__);
 	return r;
 }
 
@@ -1415,7 +1415,7 @@ static int mtk_audio_init(struct platform_device *pdev)
 	
 	base = of_iomap(node, 0);
 	if (!base) {
-		pr_info("%s(): ioremap failed\n", __func__);
+		pr_debug("%s(): ioremap failed\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1429,7 +1429,7 @@ static int mtk_audio_init(struct platform_device *pdev)
 	r = of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
 
 	if (r)
-		pr_info("%s(): could not register clock provider: %d\n",
+		pr_debug("%s(): could not register clock provider: %d\n",
 			__func__, r);
 	audio_base = base;
 
@@ -1441,7 +1441,7 @@ static int mtk_audio_init(struct platform_device *pdev)
 /*	clk_writel(AUDIO_TOP_CON1, clk_readl(AUDIO_TOP_CON1) | ~AUDIO_DISABLE_CG1);*/
 #endif
 
-	pr_info("%s done\n", __func__);
+	pr_debug("%s done\n", __func__);
 	return r;
 }
 
@@ -1455,7 +1455,7 @@ static int mtk_mm_init(struct platform_device *pdev)
 
 	base = of_iomap(node, 0);
 	if (!base) {
-		pr_info("%s(): ioremap failed\n", __func__);
+		pr_debug("%s(): ioremap failed\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1468,7 +1468,7 @@ static int mtk_mm_init(struct platform_device *pdev)
 	r = of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
 
 	if (r)
-		pr_info("%s(): could not register clock provider: %d\n",
+		pr_debug("%s(): could not register clock provider: %d\n",
 			__func__, r);
 	mm_base = base;
 #if MT_CCF_BRINGUP
@@ -1476,7 +1476,7 @@ static int mtk_mm_init(struct platform_device *pdev)
 #else
 	/*won't touch MMSYS*/
 #endif
-	pr_info("%s done\n", __func__);
+	pr_debug("%s done\n", __func__);
 	return r;
 }
 
@@ -1489,7 +1489,7 @@ static int  mtk_img_init(struct platform_device *pdev)
 
 	base = of_iomap(node, 0);
 	if (!base) {
-		pr_info("%s(): ioremap failed\n", __func__);
+		pr_debug("%s(): ioremap failed\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1502,7 +1502,7 @@ static int  mtk_img_init(struct platform_device *pdev)
 	r = of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
 
 	if (r)
-		pr_info("%s(): could not register clock provider: %d\n",
+		pr_debug("%s(): could not register clock provider: %d\n",
 			__func__, r);
 	img_base = base;
 
@@ -1511,7 +1511,7 @@ static int  mtk_img_init(struct platform_device *pdev)
 #else
 	clk_writel(IMG_CG_SET, IMG_DISABLE_CG);
 #endif
-	pr_info("%s done\n", __func__);
+	pr_debug("%s done\n", __func__);
 	return r;
 }
 
@@ -1525,7 +1525,7 @@ static int  mtk_venc_init(struct platform_device *pdev)
 
 	base = of_iomap(node, 0);
 	if (!base) {
-		pr_info("%s(): ioremap failed\n", __func__);
+		pr_debug("%s(): ioremap failed\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1539,7 +1539,7 @@ static int  mtk_venc_init(struct platform_device *pdev)
 	r = of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
 
 	if (r)
-		pr_info("%s(): could not register clock provider: %d\n",
+		pr_debug("%s(): could not register clock provider: %d\n",
 			__func__, r);
 	venc_base = base;
 
@@ -1548,7 +1548,7 @@ static int  mtk_venc_init(struct platform_device *pdev)
 #else
 	clk_writel(VCODECSYS_CG_CLR, VEN_DISABLE_CG);
 #endif
-	pr_info("%s done\n", __func__);
+	pr_debug("%s done\n", __func__);
 	return r;
 }
 

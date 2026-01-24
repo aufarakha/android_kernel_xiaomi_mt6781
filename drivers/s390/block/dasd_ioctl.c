@@ -109,7 +109,7 @@ static int dasd_ioctl_quiesce(struct dasd_block *block)
 	if (!capable (CAP_SYS_ADMIN))
 		return -EACCES;
 
-	pr_info("%s: The DASD has been put in the quiesce "
+	pr_debug("%s: The DASD has been put in the quiesce "
 		"state\n", dev_name(&base->cdev->dev));
 	spin_lock_irqsave(get_ccwdev_lock(base->cdev), flags);
 	dasd_device_set_stop_bits(base, DASD_STOPPED_QUIESCE);
@@ -130,7 +130,7 @@ static int dasd_ioctl_resume(struct dasd_block *block)
 	if (!capable (CAP_SYS_ADMIN))
 		return -EACCES;
 
-	pr_info("%s: I/O operations have been resumed "
+	pr_debug("%s: I/O operations have been resumed "
 		"on the DASD\n", dev_name(&base->cdev->dev));
 	spin_lock_irqsave(get_ccwdev_lock(base->cdev), flags);
 	dasd_device_remove_stop_bits(base, DASD_STOPPED_QUIESCE);

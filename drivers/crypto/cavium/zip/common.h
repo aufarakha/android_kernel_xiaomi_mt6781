@@ -176,7 +176,7 @@ static inline int zip_poll_result(union zip_zres_s *result)
 
 #ifdef MSG_ENABLE
 /* Enable all messages */
-#define zip_msg(fmt, args...) pr_info("ZIP_MSG:" fmt "\n", ## args)
+#define zip_msg(fmt, args...) pr_debug("ZIP_MSG:" fmt "\n", ## args)
 #else
 #define zip_msg(fmt, args...)
 #endif
@@ -190,28 +190,28 @@ static inline int zip_poll_result(union zip_zres_s *result)
 
 #if DEBUG_LEVEL >= 4
 
-#define zip_dbg(fmt, args...) pr_info("ZIP DBG: %s: %s() : %d: " \
+#define zip_dbg(fmt, args...) pr_debug("ZIP DBG: %s: %s() : %d: " \
 			      fmt "\n", FILE_NAME, __func__, __LINE__, ## args)
 
 #elif DEBUG_LEVEL >= 3
 
-#define zip_dbg(fmt, args...) pr_info("ZIP DBG: %s: %s() : %d: " \
+#define zip_dbg(fmt, args...) pr_debug("ZIP DBG: %s: %s() : %d: " \
 			      fmt "\n", FILE_NAME, __func__, __LINE__, ## args)
 
 #elif DEBUG_LEVEL >= 2
 
-#define zip_dbg(fmt, args...) pr_info("ZIP DBG: %s() : %d: " \
+#define zip_dbg(fmt, args...) pr_debug("ZIP DBG: %s() : %d: " \
 			      fmt "\n", __func__, __LINE__, ## args)
 
 #else
 
-#define zip_dbg(fmt, args...) pr_info("ZIP DBG:" fmt "\n", ## args)
+#define zip_dbg(fmt, args...) pr_debug("ZIP DBG:" fmt "\n", ## args)
 
 #endif /* DEBUG LEVEL >=4 */
 
 #else
 
-#define zip_dbg(fmt, args...) pr_info("ZIP DBG:" fmt "\n", ## args)
+#define zip_dbg(fmt, args...) pr_debug("ZIP DBG:" fmt "\n", ## args)
 
 #endif /* DEBUG_LEVEL */
 #else

@@ -1218,7 +1218,7 @@ static int dvb_init(struct saa7134_dev *dev)
 	mutex_init(&dev->frontends.lock);
 	INIT_LIST_HEAD(&dev->frontends.felist);
 
-	pr_info("%s() allocating 1 frontend\n", __func__);
+	pr_debug("%s() allocating 1 frontend\n", __func__);
 	fe0 = vb2_dvb_alloc_frontend(&dev->frontends, 1);
 	if (!fe0) {
 		pr_err("%s() failed to alloc\n", __func__);

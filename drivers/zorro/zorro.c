@@ -155,7 +155,7 @@ static int __init amiga_zorro_probe(struct platform_device *pdev)
 	}
 	platform_set_drvdata(pdev, bus);
 
-	pr_info("Zorro: Probing AutoConfig expansion devices: %u device%s\n",
+	pr_debug("Zorro: Probing AutoConfig expansion devices: %u device%s\n",
 		 zorro_num_autocon, zorro_num_autocon == 1 ? "" : "s");
 
 	/* First identify all devices ... */

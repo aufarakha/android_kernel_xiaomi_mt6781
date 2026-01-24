@@ -970,7 +970,7 @@ static void ethdev_setup(struct net_device *dev)
 	struct ei_device *ei_local = netdev_priv(dev);
 
 	if ((msg_enable & NETIF_MSG_DRV) && (version_printed++ == 0))
-		pr_info("%s", version);
+		pr_debug("%s", version);
 
 	ether_setup(dev);
 

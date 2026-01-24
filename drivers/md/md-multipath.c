@@ -97,7 +97,7 @@ static void multipath_end_request(struct bio *bio)
 		 */
 		char b[BDEVNAME_SIZE];
 		md_error (mp_bh->mddev, rdev);
-		pr_info("multipath: %s: rescheduling sector %llu\n",
+		pr_debug("multipath: %s: rescheduling sector %llu\n",
 			bdevname(rdev->bdev,b),
 			(unsigned long long)bio->bi_iter.bi_sector);
 		multipath_reschedule_retry(mp_bh);
@@ -442,7 +442,7 @@ static int multipath_run (struct mddev *mddev)
 	if (!mddev->thread)
 		goto out_free_conf;
 
-	pr_info("multipath: array %s active with %d out of %d IO paths\n",
+	pr_debug("multipath: array %s active with %d out of %d IO paths\n",
 		mdname(mddev), conf->raid_disks - mddev->degraded,
 		mddev->raid_disks);
 	/*

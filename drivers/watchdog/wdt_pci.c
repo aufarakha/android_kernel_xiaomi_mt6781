@@ -646,14 +646,14 @@ static int wdtpci_init_one(struct pci_dev *dev,
 		goto out_reg;
 	}
 
-	pr_info("PCI-WDT500/501 (PCI-WDG-CSM) driver 0.10 at 0x%llx (Interrupt %d)\n",
+	pr_debug("PCI-WDT500/501 (PCI-WDG-CSM) driver 0.10 at 0x%llx (Interrupt %d)\n",
 		(unsigned long long)io, irq);
 
 	/* Check that the heartbeat value is within its range;
 	   if not reset to the default */
 	if (wdtpci_set_heartbeat(heartbeat)) {
 		wdtpci_set_heartbeat(WD_TIMO);
-		pr_info("heartbeat value must be 0 < heartbeat < 65536, using %d\n",
+		pr_debug("heartbeat value must be 0 < heartbeat < 65536, using %d\n",
 			WD_TIMO);
 	}
 
@@ -679,10 +679,10 @@ static int wdtpci_init_one(struct pci_dev *dev,
 		goto out_misc;
 	}
 
-	pr_info("initialized. heartbeat=%d sec (nowayout=%d)\n",
+	pr_debug("initialized. heartbeat=%d sec (nowayout=%d)\n",
 		heartbeat, nowayout);
 	if (type == 501)
-		pr_info("Fan Tachometer is %s\n",
+		pr_debug("Fan Tachometer is %s\n",
 			tachometer ? "Enabled" : "Disabled");
 
 	ret = 0;

@@ -489,7 +489,7 @@ void tulip_find_mii(struct net_device *dev, int board_idx)
 
 		tp->phys[phy_idx++] = phy;
 
-		pr_info("tulip%d:  MII transceiver #%d config %04x status %04x advertising %04x\n",
+		pr_debug("tulip%d:  MII transceiver #%d config %04x status %04x advertising %04x\n",
 			board_idx, phy, mii_reg0, mii_status, mii_advert);
 
 		/* Fixup for DLink with miswired PHY. */
@@ -540,7 +540,7 @@ void tulip_find_mii(struct net_device *dev, int board_idx)
 	}
 	tp->mii_cnt = phy_idx;
 	if (tp->mtable && tp->mtable->has_mii && phy_idx == 0) {
-		pr_info("tulip%d: ***WARNING***: No MII transceiver found!\n",
+		pr_debug("tulip%d: ***WARNING***: No MII transceiver found!\n",
 			board_idx);
 		tp->phys[0] = 1;
 	}

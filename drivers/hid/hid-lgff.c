@@ -162,7 +162,7 @@ int lgff_init(struct hid_device* hid)
 	if ( test_bit(FF_AUTOCENTER, dev->ffbit) )
 		dev->ff->set_autocenter = hid_lgff_set_autocenter;
 
-	pr_info("Force feedback for Logitech force feedback devices by Johann Deneux <johann.deneux@it.uu.se>\n");
+	pr_debug("Force feedback for Logitech force feedback devices by Johann Deneux <johann.deneux@it.uu.se>\n");
 
 	return 0;
 }

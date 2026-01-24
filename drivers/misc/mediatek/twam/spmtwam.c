@@ -70,7 +70,7 @@ static void spmtwam_handler(struct spmtwam_result *r)
 
 	for (i = 0; i < 4; i++) {
 		if (cfg->ch[i].id < 32)
-			pr_info("spmtwam (sel%d:%d) ratio: %u/1000 %s, %u\n",
+			pr_debug("spmtwam (sel%d:%d) ratio: %u/1000 %s, %u\n",
 				cfg->ch[i].signal, cfg->ch[i].id,
 				cfg->spmtwam_speed_mode ?
 					GET_EVENT_RATIO_SPEED(r->value[i]) :
@@ -326,24 +326,24 @@ int spmtwam_monitor(bool enable, struct spmtwam_cfg *cfg,
 	int i;
 
 	if (g_spmtwam_init == false) {
-		pr_info("spmtwam: no such device\n");
+		pr_debug("spmtwam: no such device\n");
 		return -ENODEV;
 	}
 
 	if (enable) {
 		if (cfg == NULL || handler == NULL) {
-			pr_info("spmtwam: null parameter(s)\n");
+			pr_debug("spmtwam: null parameter(s)\n");
 			return -EINVAL;
 		}
 
 		if (spmtwam_handler_ptr != NULL) {
-			pr_info("spmtwam: already enable ?\n");
+			pr_debug("spmtwam: already enable ?\n");
 			return -EAGAIN;
 		}
 
 		if (REG(SPM_IRQ_MASK) == NULL || REG(SPM_TWAM_IDLE_SEL) == NULL ||
 			REG(SPM_TWAM_CON) == NULL || REG(SPM_TWAM_WINDOW_LEN) == NULL) {
-			pr_info("spmtwam: register is not initialized\n");
+			pr_debug("spmtwam: register is not initialized\n");
 			return -EINVAL;
 		}
 
@@ -410,7 +410,7 @@ int spmtwam_monitor(bool enable, struct spmtwam_cfg *cfg,
 
 		if (REG(SPM_IRQ_MASK) == NULL || REG(SPM_IRQ_STA) == NULL ||
 			REG(SPM_TWAM_CON) == NULL) {
-			pr_info("spmtwam: register is not initialized\n");
+			pr_debug("spmtwam: register is not initialized\n");
 			return -EINVAL;
 		}
 
@@ -497,31 +497,31 @@ static int spmtwam_probe(struct platform_device *pdev)
 
 	node = of_find_compatible_node(NULL, NULL, SPMTWAM_COMPATIBLE_STRING);
 	if (!node) {
-		pr_info("failed to get spmtwam node\n");
+		pr_debug("failed to get spmtwam node\n");
 		return -ENOENT;
 	}
 
 	base = of_iomap(node, 0);
 	if (!base) {
-		pr_info("failed to get spmtwam base\n");
+		pr_debug("failed to get spmtwam base\n");
 		return -ENOENT;
 	}
 
 	irq0 = irq_of_parse_and_map(node, 0);
 	if (!irq0) {
-		pr_info("failed to get spmtwam irq0\n");
+		pr_debug("failed to get spmtwam irq0\n");
 		return -ENOENT;
 	}
 
 	for (i = 0; i < sizeof(reg)/sizeof(struct spmtwam_reg_pair); i++) {
 		offset = 0;
 		if (of_property_read_u32(node, reg[i].name, &offset)) {
-			pr_info("failed to parse '%s' in spmtwam dts\n",
+			pr_debug("failed to parse '%s' in spmtwam dts\n",
 				reg[i].name);
 			return -ENOENT;
 		}
 		reg[i].addr = base + offset;
-		pr_info("%s 0x%x\n", reg[i].name, offset);
+		pr_debug("%s 0x%x\n", reg[i].name, offset);
 	}
 
 	ret = request_irq(irq0, spm_irq0_handler,
@@ -529,7 +529,7 @@ static int spmtwam_probe(struct platform_device *pdev)
 	if (ret)
 		return ret;
 
-	pr_info("spmtwam base %p irq %u\n", base, irq0);
+	pr_debug("spmtwam base %p irq %u\n", base, irq0);
 
 	return ret;
 }

@@ -43,7 +43,7 @@ static int ion_parse_dt_heap_common(struct device_node *heap_node,
 
 	/* Some kind of callback function pointer? */
 
-	pr_info("%s: id %d type %d name %s align %lx\n", __func__,
+	pr_debug("%s: id %d type %d name %s align %lx\n", __func__,
 		heap->id, heap->type, heap->name, heap->align);
 	return 0;
 }
@@ -173,7 +173,7 @@ static int __init rmem_ion_setup(struct reserved_mem *rmem)
 
 	size = size / 1024;
 
-	pr_info("Ion memory setup at %pa size %pa MiB\n",
+	pr_debug("Ion memory setup at %pa size %pa MiB\n",
 		&rmem->base, &size);
 	rmem->ops = &rmem_dma_ops;
 	return 0;

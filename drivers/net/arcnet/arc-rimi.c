@@ -67,9 +67,9 @@ static void arcrimi_copy_from_card(struct net_device *dev, int bufnum,
 static int __init arcrimi_probe(struct net_device *dev)
 {
 	if (BUGLVL(D_NORMAL)) {
-		pr_info("%s\n", "RIM I (entirely mem-mapped) support");
-		pr_info("E-mail me if you actually test the RIM I driver, please!\n");
-		pr_info("Given: node %02Xh, shmem %lXh, irq %d\n",
+		pr_debug("%s\n", "RIM I (entirely mem-mapped) support");
+		pr_debug("E-mail me if you actually test the RIM I driver, please!\n");
+		pr_debug("Given: node %02Xh, shmem %lXh, irq %d\n",
 			dev->dev_addr[0], dev->mem_start, dev->irq);
 	}
 

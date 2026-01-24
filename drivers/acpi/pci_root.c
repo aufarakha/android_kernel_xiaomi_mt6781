@@ -585,7 +585,7 @@ static int acpi_pci_root_add(struct acpi_device *device,
 		goto end;
 	}
 
-	pr_info(PREFIX "%s [%s] (domain %04x %pR)\n",
+	pr_debug(PREFIX "%s [%s] (domain %04x %pR)\n",
 	       acpi_device_name(device), acpi_device_bid(device),
 	       root->segment, &root->secondary);
 
@@ -763,7 +763,7 @@ static void acpi_pci_root_remap_iospace(struct fwnode_handle *fwnode,
 	if (pci_remap_iospace(res, cpu_addr) < 0)
 		goto err;
 
-	pr_info("Remapped I/O %pa to %pR\n", &cpu_addr, res);
+	pr_debug("Remapped I/O %pa to %pR\n", &cpu_addr, res);
 	return;
 err:
 	res->flags |= IORESOURCE_DISABLED;

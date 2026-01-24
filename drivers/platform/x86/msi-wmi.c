@@ -190,7 +190,7 @@ static void msi_wmi_notify(u32 value, void *context)
 
 	status = wmi_get_event_data(value, &response);
 	if (status != AE_OK) {
-		pr_info("bad event status 0x%x\n", status);
+		pr_debug("bad event status 0x%x\n", status);
 		return;
 	}
 
@@ -202,7 +202,7 @@ static void msi_wmi_notify(u32 value, void *context)
 		key = sparse_keymap_entry_from_scancode(msi_wmi_input_dev,
 				eventcode);
 		if (!key) {
-			pr_info("Unknown key pressed - %x\n", eventcode);
+			pr_debug("Unknown key pressed - %x\n", eventcode);
 			goto msi_wmi_notify_exit;
 		}
 
@@ -231,7 +231,7 @@ static void msi_wmi_notify(u32 value, void *context)
 						   true);
 		}
 	} else
-		pr_info("Unknown event received\n");
+		pr_debug("Unknown event received\n");
 
 msi_wmi_notify_exit:
 	kfree(response.pointer);

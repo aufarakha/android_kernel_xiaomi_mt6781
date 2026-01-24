@@ -335,7 +335,7 @@ static void _rtl92cu_read_board_type(struct ieee80211_hw *hw, u8 *contents)
 	rtlefuse->board_type = boardType;
 	if (IS_HIGHT_PA(rtlefuse->board_type))
 		rtlefuse->external_pa = 1;
-	pr_info("Board Type %x\n", rtlefuse->board_type);
+	pr_debug("Board Type %x\n", rtlefuse->board_type);
 }
 
 static void _rtl92cu_read_adapter_info(struct ieee80211_hw *hw)
@@ -480,7 +480,7 @@ static int _rtl92cu_init_power_on(struct ieee80211_hw *hw)
 	rtl_write_word(rtlpriv, REG_APS_FSMCO, value16);
 	do {
 		if (!(rtl_read_word(rtlpriv, REG_APS_FSMCO) & APFM_ONMAC)) {
-			pr_info("MAC auto ON okay!\n");
+			pr_debug("MAC auto ON okay!\n");
 			break;
 		}
 		if (pollingCount++ > 1000) {
@@ -632,7 +632,7 @@ static void _rtl92cu_init_chipN_one_out_ep_priority(struct ieee80211_hw *hw,
 	}
 	_rtl92c_init_chipN_reg_priority(hw, value, value, value, value,
 					value, value);
-	pr_info("Tx queue select: 0x%02x\n", queue_sel);
+	pr_debug("Tx queue select: 0x%02x\n", queue_sel);
 }
 
 static void _rtl92cu_init_chipN_two_out_ep_priority(struct ieee80211_hw *hw,
@@ -676,7 +676,7 @@ static void _rtl92cu_init_chipN_two_out_ep_priority(struct ieee80211_hw *hw,
 		hiQ = valueHi;
 	}
 	_rtl92c_init_chipN_reg_priority(hw, beQ, bkQ, viQ, voQ, mgtQ, hiQ);
-	pr_info("Tx queue select: 0x%02x\n", queue_sel);
+	pr_debug("Tx queue select: 0x%02x\n", queue_sel);
 }
 
 static void _rtl92cu_init_chipN_three_out_ep_priority(struct ieee80211_hw *hw,
@@ -701,7 +701,7 @@ static void _rtl92cu_init_chipN_three_out_ep_priority(struct ieee80211_hw *hw,
 		hiQ	= QUEUE_HIGH;
 	}
 	_rtl92c_init_chipN_reg_priority(hw, beQ, bkQ, viQ, voQ, mgtQ, hiQ);
-	pr_info("Tx queue select :0x%02x..\n", queue_sel);
+	pr_debug("Tx queue select :0x%02x..\n", queue_sel);
 }
 
 static void _rtl92cu_init_chipN_queue_priority(struct ieee80211_hw *hw,
@@ -760,7 +760,7 @@ static void _rtl92cu_init_chipT_queue_priority(struct ieee80211_hw *hw,
 		break;
 	}
 	rtl_write_byte(rtlpriv, (REG_TRXDMA_CTRL+1), hq_sele);
-	pr_info("Tx queue select :0x%02x..\n", hq_sele);
+	pr_debug("Tx queue select :0x%02x..\n", hq_sele);
 }
 
 static void _rtl92cu_init_queue_priority(struct ieee80211_hw *hw,

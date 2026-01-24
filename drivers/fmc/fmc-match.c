@@ -77,22 +77,22 @@ int fmc_fill_id_info(struct fmc_device *fmc)
 	/* So we have the eeprom: parse the FRU part (if any) */
 	h = (void *)fmc->eeprom;
 	if (h->format != 1) {
-		pr_info("      EEPROM has no FRU information\n");
+		pr_debug("      EEPROM has no FRU information\n");
 		goto out;
 	}
 	if (!fru_header_cksum_ok(h)) {
-		pr_info("      FRU: wrong header checksum\n");
+		pr_debug("      FRU: wrong header checksum\n");
 		goto out;
 	}
 	bia = fru_get_board_area(h);
 	if (!fru_bia_cksum_ok(bia)) {
-		pr_info("      FRU: wrong board area checksum\n");
+		pr_debug("      FRU: wrong board area checksum\n");
 		goto out;
 	}
 	fmc->id.manufacturer = fru_get_board_manufacturer(h);
 	fmc->id.product_name = fru_get_product_name(h);
-	pr_info("      Manufacturer: %s\n", fmc->id.manufacturer);
-	pr_info("      Product name: %s\n", fmc->id.product_name);
+	pr_debug("      Manufacturer: %s\n", fmc->id.manufacturer);
+	pr_debug("      Product name: %s\n", fmc->id.product_name);
 
 	/* Create the short name (FIXME: look in sdb as well) */
 	fmc->mezzanine_name = kstrdup(fmc->id.product_name, GFP_KERNEL);

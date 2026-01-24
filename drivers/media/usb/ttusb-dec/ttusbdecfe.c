@@ -75,7 +75,7 @@ static int ttusbdecfe_dvbt_read_status(struct dvb_frontend *fe,
 			*status = FE_TIMEDOUT;
 			break;
 		default:
-			pr_info("%s: returned unknown value: %d\n",
+			pr_debug("%s: returned unknown value: %d\n",
 				__func__, result[3]);
 			return -EIO;
 	}

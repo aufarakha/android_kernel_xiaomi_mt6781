@@ -262,7 +262,7 @@ void mtk_vcodec_set_log(struct mtk_vcodec_ctx *ctx, char *val)
 	char vcu_log[LOG_INFO_SIZE] = {0};
 	struct venc_enc_param enc_prm;
 
-	pr_info("%s: %s", __func__, val);
+	pr_debug("%s: %s", __func__, val);
 
 	if (val == NULL) {
 		mtk_v4l2_err("cannot set log due to input is null");
@@ -308,11 +308,11 @@ void mtk_vcodec_set_log(struct mtk_vcodec_ctx *ctx, char *val)
 				argv[i+1][LOG_INFO_SIZE-1] = '\0';
 				ret = snprintf(vcu_log, LOG_INFO_SIZE, "%s %s", argv[i], argv[i+1]);
 			} else {
-				pr_info("[MTK_V4L2] vcu_log input arg[%d] error: Null value", i+1);
+				pr_debug("[MTK_V4L2] vcu_log input arg[%d] error: Null value", i+1);
 				break;
 			}
 			if (ret < 0) {
-				pr_info("[MTK_V4L2] vcu_log snprintf error: %d", ret);
+				pr_debug("[MTK_V4L2] vcu_log snprintf error: %d", ret);
 				break;
 			}
 			if (ctx->type == MTK_INST_DECODER) {
@@ -333,9 +333,9 @@ void mtk_vcodec_set_log(struct mtk_vcodec_ctx *ctx, char *val)
 			kfree(argv[i]);
 	}
 
-	pr_info("----------------Debug Config ----------------\n");
-	pr_info("mtk_vcodec_dbg: %d\n", mtk_vcodec_dbg);
-	pr_info("mtk_vcodec_perf: %d\n", mtk_vcodec_perf);
-	pr_info("mtk_v4l2_dbg_level: %d\n", mtk_v4l2_dbg_level);
+	pr_debug("----------------Debug Config ----------------\n");
+	pr_debug("mtk_vcodec_dbg: %d\n", mtk_vcodec_dbg);
+	pr_debug("mtk_vcodec_perf: %d\n", mtk_vcodec_perf);
+	pr_debug("mtk_v4l2_dbg_level: %d\n", mtk_v4l2_dbg_level);
 }
 

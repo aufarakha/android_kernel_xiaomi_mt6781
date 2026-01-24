@@ -204,7 +204,7 @@ int mt9m111_probe(struct sd *sd)
 
 	if (force_sensor) {
 		if (force_sensor == MT9M111_SENSOR) {
-			pr_info("Forcing a %s sensor\n", mt9m111.name);
+			pr_debug("Forcing a %s sensor\n", mt9m111.name);
 			goto sensor_found;
 		}
 		/* If we want to force another sensor, don't try to probe this
@@ -232,7 +232,7 @@ int mt9m111_probe(struct sd *sd)
 		return -ENODEV;
 
 	if ((data[0] == 0x14) && (data[1] == 0x3a)) {
-		pr_info("Detected a mt9m111 sensor\n");
+		pr_debug("Detected a mt9m111 sensor\n");
 		goto sensor_found;
 	}
 
@@ -569,34 +569,34 @@ static void mt9m111_dump_registers(struct sd *sd)
 {
 	u8 address, value[2] = {0x00, 0x00};
 
-	pr_info("Dumping the mt9m111 register state\n");
+	pr_debug("Dumping the mt9m111 register state\n");
 
-	pr_info("Dumping the mt9m111 sensor core registers\n");
+	pr_debug("Dumping the mt9m111 sensor core registers\n");
 	value[1] = MT9M111_SENSOR_CORE;
 	m5602_write_sensor(sd, MT9M111_PAGE_MAP, value, 2);
 	for (address = 0; address < 0xff; address++) {
 		m5602_read_sensor(sd, address, value, 2);
-		pr_info("register 0x%x contains 0x%x%x\n",
+		pr_debug("register 0x%x contains 0x%x%x\n",
 			address, value[0], value[1]);
 	}
 
-	pr_info("Dumping the mt9m111 color pipeline registers\n");
+	pr_debug("Dumping the mt9m111 color pipeline registers\n");
 	value[1] = MT9M111_COLORPIPE;
 	m5602_write_sensor(sd, MT9M111_PAGE_MAP, value, 2);
 	for (address = 0; address < 0xff; address++) {
 		m5602_read_sensor(sd, address, value, 2);
-		pr_info("register 0x%x contains 0x%x%x\n",
+		pr_debug("register 0x%x contains 0x%x%x\n",
 			address, value[0], value[1]);
 	}
 
-	pr_info("Dumping the mt9m111 camera control registers\n");
+	pr_debug("Dumping the mt9m111 camera control registers\n");
 	value[1] = MT9M111_CAMERA_CONTROL;
 	m5602_write_sensor(sd, MT9M111_PAGE_MAP, value, 2);
 	for (address = 0; address < 0xff; address++) {
 		m5602_read_sensor(sd, address, value, 2);
-		pr_info("register 0x%x contains 0x%x%x\n",
+		pr_debug("register 0x%x contains 0x%x%x\n",
 			address, value[0], value[1]);
 	}
 
-	pr_info("mt9m111 register state dump complete\n");
+	pr_debug("mt9m111 register state dump complete\n");
 }

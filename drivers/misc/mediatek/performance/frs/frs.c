@@ -242,7 +242,7 @@ static ssize_t frs_info_store(struct kobject *kobj,
 		if ((ap_headroom >= -1000) && (ap_headroom <= 1000)) {
 			frs_data.ap_headroom = ap_headroom;
 		} else {
-			pr_info("[%s] invalid ap head room input\n", __func__);
+			pr_debug("[%s] invalid ap head room input\n", __func__);
 			return -EINVAL;
 		}
 
@@ -255,7 +255,7 @@ static ssize_t frs_info_store(struct kobject *kobj,
 		frs_data.tpcb_slope = tpcb_slope;
 		frs_data.n_sec_to_ttpcb = n_sec_to_ttpcb;
 	} else {
-		pr_info("[%s] invalid input\n", __func__);
+		pr_debug("[%s] invalid input\n", __func__);
 		return -EINVAL;
 	}
 
@@ -290,7 +290,7 @@ int __init eara_thrm_pre_init(void)
 
 	ret = sysfs_create_group(kernel_kobj, &thermal_attr_group);
 	if (ret) {
-		pr_info(TAG, "failed to create thermal sysfs, ret=%d!\n", ret);
+		pr_debug(TAG, "failed to create thermal sysfs, ret=%d!\n", ret);
 		return ret;
 	}
 	return 0;

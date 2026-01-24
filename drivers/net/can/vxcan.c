@@ -305,7 +305,7 @@ static struct rtnl_link_ops vxcan_link_ops = {
 
 static __init int vxcan_init(void)
 {
-	pr_info("vxcan: Virtual CAN Tunnel driver\n");
+	pr_debug("vxcan: Virtual CAN Tunnel driver\n");
 
 	return rtnl_link_register(&vxcan_link_ops);
 }

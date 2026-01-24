@@ -63,7 +63,7 @@ static int __init gemini_soc_init(void)
 			   GEMINI_ARB1_BURST_MASK | GEMINI_ARB1_PRIO_MASK,
 			   val);
 
-	pr_info("Gemini SoC %04x revision %02x, set arbitration %08x\n",
+	pr_debug("Gemini SoC %04x revision %02x, set arbitration %08x\n",
 		rev >> 8, rev & 0xff, val);
 
 	return 0;

@@ -1166,7 +1166,7 @@ int ttm_dma_page_alloc_init(struct ttm_mem_global *glob, unsigned max_pages)
 
 	WARN_ON(_manager);
 
-	pr_info("Initializing DMA pool allocator\n");
+	pr_debug("Initializing DMA pool allocator\n");
 
 	_manager = kzalloc(sizeof(*_manager), GFP_KERNEL);
 	if (!_manager)
@@ -1200,7 +1200,7 @@ void ttm_dma_page_alloc_fini(void)
 {
 	struct device_pools *p, *t;
 
-	pr_info("Finalizing DMA pool allocator\n");
+	pr_debug("Finalizing DMA pool allocator\n");
 	ttm_dma_pool_mm_shrink_fini(_manager);
 
 	list_for_each_entry_safe_reverse(p, t, &_manager->pools, pools) {

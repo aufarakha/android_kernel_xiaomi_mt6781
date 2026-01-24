@@ -698,7 +698,7 @@ static void r5c_disable_writeback_async(struct work_struct *work)
 
 	if (log->r5c_journal_mode == R5C_JOURNAL_MODE_WRITE_THROUGH)
 		return;
-	pr_info("md/raid:%s: Disabling writeback cache for degraded array.\n",
+	pr_debug("md/raid:%s: Disabling writeback cache for degraded array.\n",
 		mdname(mddev));
 
 	/* wait superblock change before suspend */
@@ -2494,10 +2494,10 @@ static int r5l_recovery_log(struct r5l_log *log)
 	ctx->seq += 10000;
 
 	if ((ctx->data_only_stripes == 0) && (ctx->data_parity_stripes == 0))
-		pr_info("md/raid:%s: starting from clean shutdown\n",
+		pr_debug("md/raid:%s: starting from clean shutdown\n",
 			 mdname(mddev));
 	else
-		pr_info("md/raid:%s: recovering %d data-only stripes and %d data-parity stripes\n",
+		pr_debug("md/raid:%s: recovering %d data-only stripes and %d data-parity stripes\n",
 			 mdname(mddev), ctx->data_only_stripes,
 			 ctx->data_parity_stripes);
 

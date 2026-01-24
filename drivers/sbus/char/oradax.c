@@ -53,7 +53,7 @@ MODULE_DESCRIPTION("Driver for Oracle Data Analytics Accelerator");
 #define	DAX_DBG_FLG_ALL		0xff
 
 #define	dax_err(fmt, ...)      pr_err("%s: " fmt "\n", __func__, ##__VA_ARGS__)
-#define	dax_info(fmt, ...)     pr_info("%s: " fmt "\n", __func__, ##__VA_ARGS__)
+#define	dax_info(fmt, ...)     pr_debug("%s: " fmt "\n", __func__, ##__VA_ARGS__)
 
 #define	dax_dbg(fmt, ...)	do {					\
 					if (dax_debug & DAX_DBG_FLG_BASIC)\
@@ -355,7 +355,7 @@ static int __init dax_attach(void)
 		goto cdev_error;
 	}
 
-	pr_info("Attached DAX module\n");
+	pr_debug("Attached DAX module\n");
 	goto done;
 
 cdev_error:
@@ -372,7 +372,7 @@ module_init(dax_attach);
 
 static void __exit dax_detach(void)
 {
-	pr_info("Cleaning up DAX module\n");
+	pr_debug("Cleaning up DAX module\n");
 	cdev_del(&c_dev);
 	device_destroy(cl, first);
 	class_destroy(cl);

@@ -473,7 +473,7 @@ static int xen_upload_processor_pm_data(void)
 	unsigned int i;
 	int rc = 0;
 
-	pr_info("Uploading Xen processor PM info\n");
+	pr_debug("Uploading Xen processor PM info\n");
 
 	for_each_possible_cpu(i) {
 		struct acpi_processor *_pr;
@@ -503,7 +503,7 @@ static void xen_acpi_processor_resume_worker(struct work_struct *dummy)
 
 	rc = xen_upload_processor_pm_data();
 	if (rc != 0)
-		pr_info("ACPI data upload failed, error = %d\n", rc);
+		pr_debug("ACPI data upload failed, error = %d\n", rc);
 }
 
 static void xen_acpi_processor_resume(void)

@@ -688,7 +688,7 @@ static void fpga_mgr_dev_release(struct device *dev)
 
 static int __init fpga_mgr_class_init(void)
 {
-	pr_info("FPGA manager framework\n");
+	pr_debug("FPGA manager framework\n");
 
 	fpga_mgr_class = class_create(THIS_MODULE, "fpga_manager");
 	if (IS_ERR(fpga_mgr_class))

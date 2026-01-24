@@ -33,7 +33,7 @@ static int pn544_mei_probe(struct mei_cl_device *cldev,
 	struct nfc_mei_phy *phy;
 	int r;
 
-	pr_info("Probing NFC pn544\n");
+	pr_debug("Probing NFC pn544\n");
 
 	phy = nfc_mei_phy_alloc(cldev);
 	if (!phy) {
@@ -57,7 +57,7 @@ static int pn544_mei_remove(struct mei_cl_device *cldev)
 {
 	struct nfc_mei_phy *phy = mei_cldev_get_drvdata(cldev);
 
-	pr_info("Removing pn544\n");
+	pr_debug("Removing pn544\n");
 
 	pn544_hci_remove(phy->hdev);
 

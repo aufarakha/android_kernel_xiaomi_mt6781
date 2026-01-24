@@ -364,7 +364,7 @@ int as102_dvb_register(struct as102_dev_t *as102_dev)
 		try_then_request_module(as102_fw_upload(&as102_dev->bus_adap),
 				"firmware_class");
 
-	pr_info("Registered device %s", as102_dev->name);
+	pr_debug("Registered device %s", as102_dev->name);
 	return 0;
 
 efereg:
@@ -391,7 +391,7 @@ void as102_dvb_unregister(struct as102_dev_t *as102_dev)
 	/* unregister dvb adapter */
 	dvb_unregister_adapter(&as102_dev->dvb_adap);
 
-	pr_info("Unregistered device %s", as102_dev->name);
+	pr_debug("Unregistered device %s", as102_dev->name);
 }
 
 module_usb_driver(as102_usb_driver);

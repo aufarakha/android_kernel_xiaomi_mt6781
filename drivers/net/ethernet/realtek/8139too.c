@@ -960,7 +960,7 @@ static int rtl8139_init_one(struct pci_dev *pdev,
 	{
 		static int printed_version;
 		if (!printed_version++)
-			pr_info(RTL8139_DRIVER_NAME "\n");
+			pr_debug(RTL8139_DRIVER_NAME "\n");
 	}
 #endif
 
@@ -976,7 +976,7 @@ static int rtl8139_init_one(struct pci_dev *pdev,
 	    pdev->device == PCI_DEVICE_ID_REALTEK_8139 &&
 	    pdev->subsystem_vendor == PCI_VENDOR_ID_ATHEROS &&
 	    pdev->subsystem_device == PCI_DEVICE_ID_REALTEK_8139) {
-		pr_info("OQO Model 2 detected. Forcing PIO\n");
+		pr_debug("OQO Model 2 detected. Forcing PIO\n");
 		use_io = 1;
 	}
 
@@ -2671,7 +2671,7 @@ static int __init rtl8139_init_module (void)
 	 * even if no 8139 board is found.
 	 */
 #ifdef MODULE
-	pr_info(RTL8139_DRIVER_NAME "\n");
+	pr_debug(RTL8139_DRIVER_NAME "\n");
 #endif
 
 	return pci_register_driver(&rtl8139_pci_driver);

@@ -373,7 +373,7 @@ out:
 		__le32 zero = 0;
 		saa7146_i2c_reset(dev);
 		if( 0 != saa7146_i2c_writeout(dev, &zero, short_delay)) {
-			pr_info("revision 0 error. this should never happen\n");
+			pr_debug("revision 0 error. this should never happen\n");
 		}
 	}
 

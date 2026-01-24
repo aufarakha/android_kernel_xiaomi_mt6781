@@ -95,15 +95,15 @@ static int __init mcp_write_pairing_set(void)
 
 	creds = cbc_readl(CPU_CREDIT_REG);
 	if (mcp_wr_pairing_en) {
-		pr_info("MCP: Enabling write pairing\n");
+		pr_debug("MCP: Enabling write pairing\n");
 		cbc_writel(creds | CPU_CREDIT_REG_MCPx_WR_PAIRING_EN_MASK,
 			   CPU_CREDIT_REG);
 	} else if (creds & CPU_CREDIT_REG_MCPx_WR_PAIRING_EN_MASK) {
-		pr_info("MCP: Disabling write pairing\n");
+		pr_debug("MCP: Disabling write pairing\n");
 		cbc_writel(creds & ~CPU_CREDIT_REG_MCPx_WR_PAIRING_EN_MASK,
 			   CPU_CREDIT_REG);
 	} else {
-		pr_info("MCP: Write pairing already disabled\n");
+		pr_debug("MCP: Write pairing already disabled\n");
 	}
 
 	return 0;

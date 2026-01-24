@@ -5427,7 +5427,7 @@ static void dasd_eckd_cuir_notify_user(struct dasd_device *device,
 				device->path[pos].cssid,
 				device->path[pos].chpid);
 		else if (action == CUIR_RESUME)
-			pr_info("Path %x.%02x is back online after service on the storage server",
+			pr_debug("Path %x.%02x is back online after service on the storage server",
 				device->path[pos].cssid,
 				device->path[pos].chpid);
 		clear_bit(7 - pos, &paths);

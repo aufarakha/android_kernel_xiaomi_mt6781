@@ -294,7 +294,7 @@ int acpiphp_register_hotplug_slot(struct acpiphp_slot *acpiphp_slot,
 		goto error_hpslot;
 	}
 
-	pr_info("Slot [%s] registered\n", slot_name(slot));
+	pr_debug("Slot [%s] registered\n", slot_name(slot));
 
 	return 0;
 error_hpslot:
@@ -310,7 +310,7 @@ void acpiphp_unregister_hotplug_slot(struct acpiphp_slot *acpiphp_slot)
 {
 	struct slot *slot = acpiphp_slot->slot;
 
-	pr_info("Slot [%s] unregistered\n", slot_name(slot));
+	pr_debug("Slot [%s] unregistered\n", slot_name(slot));
 
 	pci_hp_deregister(slot->hotplug_slot);
 	kfree(slot->hotplug_slot);
@@ -320,7 +320,7 @@ void acpiphp_unregister_hotplug_slot(struct acpiphp_slot *acpiphp_slot)
 
 void __init acpiphp_init(void)
 {
-	pr_info(DRIVER_DESC " version: " DRIVER_VERSION "%s\n",
+	pr_debug(DRIVER_DESC " version: " DRIVER_VERSION "%s\n",
 		acpiphp_disabled ? ", disabled by user; please report a bug"
 				 : "");
 }

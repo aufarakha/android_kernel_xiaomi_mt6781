@@ -757,7 +757,7 @@ static int kfd_topology_update_sysfs(void)
 {
 	int ret;
 
-	pr_info("Creating topology SYSFS entries\n");
+	pr_debug("Creating topology SYSFS entries\n");
 	if (!sys_props.kobj_topology) {
 		sys_props.kobj_topology =
 				kfd_alloc_struct(sys_props.kobj_topology);
@@ -839,13 +839,13 @@ static void kfd_debug_print_topology(void)
 	if (dev) {
 		if (dev->node_props.cpu_cores_count &&
 				dev->node_props.simd_count) {
-			pr_info("Topology: Add APU node [0x%0x:0x%0x]\n",
+			pr_debug("Topology: Add APU node [0x%0x:0x%0x]\n",
 				dev->node_props.device_id,
 				dev->node_props.vendor_id);
 		} else if (dev->node_props.cpu_cores_count)
-			pr_info("Topology: Add CPU node\n");
+			pr_debug("Topology: Add CPU node\n");
 		else if (dev->node_props.simd_count)
-			pr_info("Topology: Add dGPU node [0x%0x:0x%0x]\n",
+			pr_debug("Topology: Add dGPU node [0x%0x:0x%0x]\n",
 				dev->node_props.device_id,
 				dev->node_props.vendor_id);
 	}
@@ -931,7 +931,7 @@ static bool kfd_is_acpi_crat_invalid(struct list_head *device_list)
 			dev->node_props.simd_count)
 			return false;
 	}
-	pr_info("Ignoring ACPI CRAT on non-APU system\n");
+	pr_debug("Ignoring ACPI CRAT on non-APU system\n");
 	return true;
 }
 
@@ -1019,7 +1019,7 @@ int kfd_topology_init(void)
 		sys_props.generation_count++;
 		kfd_update_system_properties();
 		kfd_debug_print_topology();
-		pr_info("Finished initializing topology\n");
+		pr_debug("Finished initializing topology\n");
 	} else
 		pr_err("Failed to update topology in sysfs ret=%d\n", ret);
 

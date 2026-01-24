@@ -175,7 +175,7 @@ static int toshiba_haps_available(acpi_handle handle)
 	}
 
 	if (!hdd_present) {
-		pr_info("HDD protection not available or using SSD\n");
+		pr_debug("HDD protection not available or using SSD\n");
 		return 0;
 	}
 
@@ -193,7 +193,7 @@ static int toshiba_haps_add(struct acpi_device *acpi_dev)
 	if (!toshiba_haps_available(acpi_dev->handle))
 		return -ENODEV;
 
-	pr_info("Toshiba HDD Active Protection Sensor device\n");
+	pr_debug("Toshiba HDD Active Protection Sensor device\n");
 
 	haps = kzalloc(sizeof(struct toshiba_haps_dev), GFP_KERNEL);
 	if (!haps)

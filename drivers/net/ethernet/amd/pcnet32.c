@@ -1632,10 +1632,10 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 	chip_version =
 	    a->read_csr(ioaddr, 88) | (a->read_csr(ioaddr, 89) << 16);
 	if ((pcnet32_debug & NETIF_MSG_PROBE) && (pcnet32_debug & NETIF_MSG_HW))
-		pr_info("  PCnet chip version is %#x\n", chip_version);
+		pr_debug("  PCnet chip version is %#x\n", chip_version);
 	if ((chip_version & 0xfff) != 0x003) {
 		if (pcnet32_debug & NETIF_MSG_PROBE)
-			pr_info("Unsupported chip version\n");
+			pr_debug("Unsupported chip version\n");
 		goto err_release_region;
 	}
 
@@ -1706,7 +1706,7 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 		break;
 	default:
 		if (pcnet32_debug & NETIF_MSG_PROBE)
-			pr_info("PCnet version %#x, no PCnet32 chip\n",
+			pr_debug("PCnet version %#x, no PCnet32 chip\n",
 				chip_version);
 		goto err_release_region;
 	}
@@ -1761,7 +1761,7 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 		SET_NETDEV_DEV(dev, &pdev->dev);
 
 	if (pcnet32_debug & NETIF_MSG_PROBE)
-		pr_info("%s at %#3lx,", chipname, ioaddr);
+		pr_debug("%s at %#3lx,", chipname, ioaddr);
 
 	/* In most chips, after a chip reset, the ethernet address is read from the
 	 * station address PROM at the base address and programmed into the
@@ -1787,7 +1787,7 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 		if (is_valid_ether_addr(promaddr)) {
 			if (pcnet32_debug & NETIF_MSG_PROBE) {
 				pr_cont(" warning: CSR address invalid,\n");
-				pr_info("    using instead PROM address of");
+				pr_debug("    using instead PROM address of");
 			}
 			memcpy(dev->dev_addr, promaddr, ETH_ALEN);
 		}
@@ -1803,7 +1803,7 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 		/* Version 0x2623 and 0x2624 */
 		if (((chip_version + 1) & 0xfffe) == 0x2624) {
 			i = a->read_csr(ioaddr, 80) & 0x0C00;	/* Check tx_start_pt */
-			pr_info("    tx_start_pt(0x%04x):", i);
+			pr_debug("    tx_start_pt(0x%04x):", i);
 			switch (i >> 10) {
 			case 0:
 				pr_cont("  20 bytes,");
@@ -1829,7 +1829,7 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 			if (i & (1 << 11))
 				pr_cont("NoUFlow ");
 			i = a->read_bcr(ioaddr, 25);
-			pr_info("    SRAMSIZE=0x%04x,", i << 8);
+			pr_debug("    SRAMSIZE=0x%04x,", i << 8);
 			i = a->read_bcr(ioaddr, 26);
 			pr_cont(" SRAM_BND=0x%04x,", i << 8);
 			i = a->read_bcr(ioaddr, 27);
@@ -1967,7 +1967,7 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 			lp->phymask |= (1 << i);
 			lp->mii_if.phy_id = i;
 			if (pcnet32_debug & NETIF_MSG_PROBE)
-				pr_info("Found PHY %04x:%04x at address %d\n",
+				pr_debug("Found PHY %04x:%04x at address %d\n",
 					id1, id2, i);
 		}
 		lp->a->write_bcr(ioaddr, 33, (lp->mii_if.phy_id) << 5);
@@ -1994,7 +1994,7 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 	}
 
 	if (pcnet32_debug & NETIF_MSG_PROBE)
-		pr_info("%s: registered as %s\n", dev->name, lp->name);
+		pr_debug("%s: registered as %s\n", dev->name, lp->name);
 	cards_found++;
 
 	/* enable LED writes */
@@ -3007,7 +3007,7 @@ MODULE_LICENSE("GPL");
 
 static int __init pcnet32_init_module(void)
 {
-	pr_info("%s", version);
+	pr_debug("%s", version);
 
 	pcnet32_debug = netif_msg_init(debug, PCNET32_MSG_DEFAULT);
 
@@ -3023,7 +3023,7 @@ static int __init pcnet32_init_module(void)
 		pcnet32_probe_vlbus(pcnet32_portlist);
 
 	if (cards_found && (pcnet32_debug & NETIF_MSG_PROBE))
-		pr_info("%d cards_found\n", cards_found);
+		pr_debug("%d cards_found\n", cards_found);
 
 	return (pcnet32_have_pci + cards_found) ? 0 : -ENODEV;
 }

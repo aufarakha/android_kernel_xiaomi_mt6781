@@ -1379,7 +1379,7 @@ static void __init intel_idle_cpuidle_driver_init(void)
 			break;
 
 		if (cstate + 1 > max_cstate) {
-			pr_info("max_cstate %d reached\n", max_cstate);
+			pr_debug("max_cstate %d reached\n", max_cstate);
 			break;
 		}
 

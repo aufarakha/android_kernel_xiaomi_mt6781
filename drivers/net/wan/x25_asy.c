@@ -790,7 +790,7 @@ static int __init init_x25_asy(void)
 	if (x25_asy_maxdev < 4)
 		x25_asy_maxdev = 4; /* Sanity */
 
-	pr_info("X.25 async: version 0.00 ALPHA (dynamic channels, max=%d)\n",
+	pr_debug("X.25 async: version 0.00 ALPHA (dynamic channels, max=%d)\n",
 		x25_asy_maxdev);
 
 	x25_asy_devs = kcalloc(x25_asy_maxdev, sizeof(struct net_device *),

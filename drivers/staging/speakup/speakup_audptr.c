@@ -139,7 +139,7 @@ static void synth_version(struct spk_synth *synth)
 		synth_id[++test] = 0x00;
 	}
 	if (synth_id[0] == 'A')
-		pr_info("%s version: %s", synth->long_name, synth_id);
+		pr_debug("%s version: %s", synth->long_name, synth_id);
 }
 
 static int synth_probe(struct spk_synth *synth)

@@ -306,7 +306,7 @@ int vimc_link_validate(struct media_link *link)
 	if (ret)
 		return ret;
 
-	pr_info("vimc link validate: "
+	pr_debug("vimc link validate: "
 		"%s:src:%dx%d (0x%x, %d, %d, %d, %d) "
 		"%s:snk:%dx%d (0x%x, %d, %d, %d, %d)\n",
 		/* src */

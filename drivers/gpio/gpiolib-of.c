@@ -89,7 +89,7 @@ static void of_gpio_flags_quirks(struct device_node *np,
 	    of_device_is_compatible(np, "reg-fixed-voltage") &&
 	    of_property_read_bool(np, "gpio-open-drain")) {
 		*flags |= (OF_GPIO_SINGLE_ENDED | OF_GPIO_OPEN_DRAIN);
-		pr_info("%s uses legacy open drain flag - update the DTS if you can\n",
+		pr_debug("%s uses legacy open drain flag - update the DTS if you can\n",
 			of_node_full_name(np));
 	}
 }

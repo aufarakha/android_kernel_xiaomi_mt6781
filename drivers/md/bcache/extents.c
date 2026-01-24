@@ -553,7 +553,7 @@ static bool bch_extent_bad(struct btree_keys *bk, const struct bkey *k)
 
 		if (stale && KEY_DIRTY(k)) {
 			bch_extent_to_text(buf, sizeof(buf), k);
-			pr_info("stale dirty pointer, stale %u, key: %s",
+			pr_debug("stale dirty pointer, stale %u, key: %s",
 				stale, buf);
 		}
 

@@ -41,7 +41,7 @@ static int intel_mmio_bases_check(void *arg)
 			prev = gen;
 		}
 
-		pr_info("%s: min gen supported for %s = %d\n",
+		pr_debug("%s: min gen supported for %s = %d\n",
 			__func__, name, prev);
 	}
 

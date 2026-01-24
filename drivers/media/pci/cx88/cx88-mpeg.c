@@ -406,7 +406,7 @@ static int cx8802_init_common(struct cx8802_dev *dev)
 
 	dev->pci_rev = dev->pci->revision;
 	pci_read_config_byte(dev->pci, PCI_LATENCY_TIMER,  &dev->pci_lat);
-	pr_info("found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
+	pr_debug("found at %s, rev: %d, irq: %d, latency: %d, mmio: 0x%llx\n",
 		pci_name(dev->pci), dev->pci_rev, dev->pci->irq,
 		dev->pci_lat,
 		(unsigned long long)pci_resource_start(dev->pci, 0));
@@ -452,7 +452,7 @@ static int cx8802_suspend_common(struct pci_dev *pci_dev, pm_message_t state)
 	spin_lock_irqsave(&dev->slock, flags);
 	if (!list_empty(&dev->mpegq.active)) {
 		dprintk(2, "suspend\n");
-		pr_info("suspend mpeg\n");
+		pr_debug("suspend mpeg\n");
 		cx8802_stop_dma(dev);
 	}
 	spin_unlock_irqrestore(&dev->slock, flags);
@@ -499,7 +499,7 @@ static int cx8802_resume_common(struct pci_dev *pci_dev)
 	/* restart video+vbi capture */
 	spin_lock_irqsave(&dev->slock, flags);
 	if (!list_empty(&dev->mpegq.active)) {
-		pr_info("resume mpeg\n");
+		pr_debug("resume mpeg\n");
 		cx8802_restart_queue(dev, &dev->mpegq);
 	}
 	spin_unlock_irqrestore(&dev->slock, flags);
@@ -609,7 +609,7 @@ int cx8802_register_driver(struct cx8802_driver *drv)
 	struct cx8802_driver *driver;
 	int err, i = 0;
 
-	pr_info("registering cx8802 driver, type: %s access: %s\n",
+	pr_debug("registering cx8802 driver, type: %s access: %s\n",
 		drv->type_id == CX88_MPEG_DVB ? "dvb" : "blackbird",
 		drv->hw_access == CX8802_DRVCTL_SHARED ?
 				  "shared" : "exclusive");
@@ -623,7 +623,7 @@ int cx8802_register_driver(struct cx8802_driver *drv)
 	mutex_lock(&cx8802_mutex);
 
 	list_for_each_entry(dev, &cx8802_devlist, devlist) {
-		pr_info("subsystem: %04x:%04x, board: %s [card=%d]\n",
+		pr_debug("subsystem: %04x:%04x, board: %s [card=%d]\n",
 			dev->pci->subsystem_vendor,
 			dev->pci->subsystem_device, dev->core->board.name,
 			dev->core->boardnr);
@@ -667,7 +667,7 @@ int cx8802_unregister_driver(struct cx8802_driver *drv)
 	struct cx8802_driver *d, *dtmp;
 	int err = 0;
 
-	pr_info("unregistering cx8802 driver, type: %s access: %s\n",
+	pr_debug("unregistering cx8802 driver, type: %s access: %s\n",
 		drv->type_id == CX88_MPEG_DVB ? "dvb" : "blackbird",
 		drv->hw_access == CX8802_DRVCTL_SHARED ?
 				  "shared" : "exclusive");
@@ -675,7 +675,7 @@ int cx8802_unregister_driver(struct cx8802_driver *drv)
 	mutex_lock(&cx8802_mutex);
 
 	list_for_each_entry(dev, &cx8802_devlist, devlist) {
-		pr_info("subsystem: %04x:%04x, board: %s [card=%d]\n",
+		pr_debug("subsystem: %04x:%04x, board: %s [card=%d]\n",
 			dev->pci->subsystem_vendor,
 			dev->pci->subsystem_device, dev->core->board.name,
 			dev->core->boardnr);
@@ -718,7 +718,7 @@ static int cx8802_probe(struct pci_dev *pci_dev,
 	if (!core)
 		return -EINVAL;
 
-	pr_info("cx2388x 8802 Driver Manager\n");
+	pr_debug("cx2388x 8802 Driver Manager\n");
 
 	err = -ENODEV;
 	if (!core->board.mpeg)

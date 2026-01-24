@@ -102,7 +102,7 @@ static void print_results(const struct whitelist *w, const u32 *results)
 		u32 expected = get_whitelist_reg(w, i);
 		u32 actual = results[i];
 
-		pr_info("RING_NONPRIV[%d]: expected 0x%08x, found 0x%08x\n",
+		pr_debug("RING_NONPRIV[%d]: expected 0x%08x, found 0x%08x\n",
 			i, expected, actual);
 	}
 }
@@ -254,7 +254,7 @@ static int live_reset_whitelist(void *arg)
 	if (!whitelist_build(engine, &w))
 		return 0;
 
-	pr_info("Checking %d whitelisted registers (RING_NONPRIV)\n", w.count);
+	pr_debug("Checking %d whitelisted registers (RING_NONPRIV)\n", w.count);
 
 	set_bit(I915_RESET_BACKOFF, &error->flags);
 	set_bit(I915_RESET_ENGINE + engine->id, &error->flags);

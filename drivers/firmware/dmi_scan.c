@@ -580,17 +580,17 @@ static int __init dmi_present(const u8 *buf)
 
 		if (dmi_walk_early(dmi_decode) == 0) {
 			if (smbios_ver) {
-				pr_info("SMBIOS %d.%d present.\n",
+				pr_debug("SMBIOS %d.%d present.\n",
 					dmi_ver >> 16, (dmi_ver >> 8) & 0xFF);
 			} else {
 				smbios_entry_point_size = 15;
 				memcpy(smbios_entry_point, buf,
 				       smbios_entry_point_size);
-				pr_info("Legacy DMI %d.%d present.\n",
+				pr_debug("Legacy DMI %d.%d present.\n",
 					dmi_ver >> 16, (dmi_ver >> 8) & 0xFF);
 			}
 			dmi_format_ids(dmi_ids_string, sizeof(dmi_ids_string));
-			pr_info("DMI: %s\n", dmi_ids_string);
+			pr_debug("DMI: %s\n", dmi_ids_string);
 			return 0;
 		}
 	}
@@ -614,11 +614,11 @@ static int __init dmi_smbios3_present(const u8 *buf)
 		memcpy(smbios_entry_point, buf, smbios_entry_point_size);
 
 		if (dmi_walk_early(dmi_decode) == 0) {
-			pr_info("SMBIOS %d.%d.%d present.\n",
+			pr_debug("SMBIOS %d.%d.%d present.\n",
 				dmi_ver >> 16, (dmi_ver >> 8) & 0xFF,
 				dmi_ver & 0xFF);
 			dmi_format_ids(dmi_ids_string, sizeof(dmi_ids_string));
-			pr_info("DMI: %s\n", dmi_ids_string);
+			pr_debug("DMI: %s\n", dmi_ids_string);
 			return 0;
 		}
 	}
@@ -713,7 +713,7 @@ void __init dmi_scan_machine(void)
 		dmi_early_unmap(p, 0x10000);
 	}
  error:
-	pr_info("DMI not present or invalid.\n");
+	pr_debug("DMI not present or invalid.\n");
 }
 
 static ssize_t raw_table_read(struct file *file, struct kobject *kobj,

@@ -524,7 +524,7 @@ static void ixgbe_regdump(struct ixgbe_hw *hw, struct ixgbe_reg_info *reginfo)
 			regs[i] = IXGBE_READ_REG(hw, IXGBE_TXDCTL(i));
 		break;
 	default:
-		pr_info("%-15s %08x\n",
+		pr_debug("%-15s %08x\n",
 			reginfo->name, IXGBE_READ_REG(hw, reginfo->ofs));
 		return;
 	}
@@ -548,7 +548,7 @@ static void ixgbe_print_buffer(struct ixgbe_ring *ring, int n)
 	struct ixgbe_tx_buffer *tx_buffer;
 
 	tx_buffer = &ring->tx_buffer_info[ring->next_to_clean];
-	pr_info(" %5d %5X %5X %016llX %08X %p %016llX\n",
+	pr_debug(" %5d %5X %5X %016llX %08X %p %016llX\n",
 		n, ring->next_to_use, ring->next_to_clean,
 		(u64)dma_unmap_addr(tx_buffer, dma),
 		dma_unmap_len(tx_buffer, len),
@@ -580,9 +580,9 @@ static void ixgbe_dump(struct ixgbe_adapter *adapter)
 	/* Print netdevice Info */
 	if (netdev) {
 		dev_info(&adapter->pdev->dev, "Net device Info\n");
-		pr_info("Device Name     state            "
+		pr_debug("Device Name     state            "
 			"trans_start\n");
-		pr_info("%-15s %016lX %016lX\n",
+		pr_debug("%-15s %016lX %016lX\n",
 			netdev->name,
 			netdev->state,
 			dev_trans_start(netdev));
@@ -590,7 +590,7 @@ static void ixgbe_dump(struct ixgbe_adapter *adapter)
 
 	/* Print Registers */
 	dev_info(&adapter->pdev->dev, "Register Dump\n");
-	pr_info(" Register Name   Value\n");
+	pr_debug(" Register Name   Value\n");
 	for (reginfo = (struct ixgbe_reg_info *)ixgbe_reg_info_tbl;
 	     reginfo->name; reginfo++) {
 		ixgbe_regdump(hw, reginfo);
@@ -601,7 +601,7 @@ static void ixgbe_dump(struct ixgbe_adapter *adapter)
 		return;
 
 	dev_info(&adapter->pdev->dev, "TX Rings Summary\n");
-	pr_info(" %s     %s              %s        %s\n",
+	pr_debug(" %s     %s              %s        %s\n",
 		"Queue [NTU] [NTC] [bi(ntc)->dma  ]",
 		"leng", "ntw", "timestamp");
 	for (n = 0; n < adapter->num_tx_queues; n++) {
@@ -657,10 +657,10 @@ static void ixgbe_dump(struct ixgbe_adapter *adapter)
 
 	for (n = 0; n < adapter->num_tx_queues; n++) {
 		ring = adapter->tx_ring[n];
-		pr_info("------------------------------------\n");
-		pr_info("TX QUEUE INDEX = %d\n", ring->queue_index);
-		pr_info("------------------------------------\n");
-		pr_info("%s%s    %s              %s        %s          %s\n",
+		pr_debug("------------------------------------\n");
+		pr_debug("TX QUEUE INDEX = %d\n", ring->queue_index);
+		pr_debug("------------------------------------\n");
+		pr_debug("%s%s    %s              %s        %s          %s\n",
 			"T [desc]     [address 63:0  ] ",
 			"[PlPOIdStDDt Ln] [bi->dma       ] ",
 			"leng", "ntw", "timestamp", "bi->skb");
@@ -681,7 +681,7 @@ static void ixgbe_dump(struct ixgbe_adapter *adapter)
 					ring_desc = " NTC";
 				else
 					ring_desc = "";
-				pr_info("T [0x%03X]    %016llX %016llX %016llX %08X %p %016llX %p%s",
+				pr_debug("T [0x%03X]    %016llX %016llX %016llX %08X %p %016llX %p%s",
 					i,
 					le64_to_cpu((__force __le64)u0->a),
 					le64_to_cpu((__force __le64)u0->b),
@@ -706,10 +706,10 @@ static void ixgbe_dump(struct ixgbe_adapter *adapter)
 	/* Print RX Rings Summary */
 rx_ring_summary:
 	dev_info(&adapter->pdev->dev, "RX Rings Summary\n");
-	pr_info("Queue [NTU] [NTC]\n");
+	pr_debug("Queue [NTU] [NTC]\n");
 	for (n = 0; n < adapter->num_rx_queues; n++) {
 		rx_ring = adapter->rx_ring[n];
-		pr_info("%5d %5X %5X\n",
+		pr_debug("%5d %5X %5X\n",
 			n, rx_ring->next_to_use, rx_ring->next_to_clean);
 	}
 
@@ -766,14 +766,14 @@ rx_ring_summary:
 
 	for (n = 0; n < adapter->num_rx_queues; n++) {
 		rx_ring = adapter->rx_ring[n];
-		pr_info("------------------------------------\n");
-		pr_info("RX QUEUE INDEX = %d\n", rx_ring->queue_index);
-		pr_info("------------------------------------\n");
-		pr_info("%s%s%s\n",
+		pr_debug("------------------------------------\n");
+		pr_debug("RX QUEUE INDEX = %d\n", rx_ring->queue_index);
+		pr_debug("------------------------------------\n");
+		pr_debug("%s%s%s\n",
 			"R  [desc]      [ PktBuf     A0] ",
 			"[  HeadBuf   DD] [bi->dma       ] [bi->skb       ] ",
 			"<-- Adv Rx Read format");
-		pr_info("%s%s%s\n",
+		pr_debug("%s%s%s\n",
 			"RWB[desc]      [PcsmIpSHl PtRs] ",
 			"[vl er S cks ln] ---------------- [bi->skb       ] ",
 			"<-- Adv Rx Write-Back format");
@@ -793,14 +793,14 @@ rx_ring_summary:
 			u0 = (struct my_u0 *)rx_desc;
 			if (rx_desc->wb.upper.length) {
 				/* Descriptor Done */
-				pr_info("RWB[0x%03X]     %016llX %016llX ---------------- %p%s\n",
+				pr_debug("RWB[0x%03X]     %016llX %016llX ---------------- %p%s\n",
 					i,
 					le64_to_cpu((__force __le64)u0->a),
 					le64_to_cpu((__force __le64)u0->b),
 					rx_buffer_info->skb,
 					ring_desc);
 			} else {
-				pr_info("R  [0x%03X]     %016llX %016llX %016llX %p%s\n",
+				pr_debug("R  [0x%03X]     %016llX %016llX %016llX %p%s\n",
 					i,
 					le64_to_cpu((__force __le64)u0->a),
 					le64_to_cpu((__force __le64)u0->b),
@@ -11248,8 +11248,8 @@ static struct pci_driver ixgbe_driver = {
 static int __init ixgbe_init_module(void)
 {
 	int ret;
-	pr_info("%s - version %s\n", ixgbe_driver_string, ixgbe_driver_version);
-	pr_info("%s\n", ixgbe_copyright);
+	pr_debug("%s - version %s\n", ixgbe_driver_string, ixgbe_driver_version);
+	pr_debug("%s\n", ixgbe_copyright);
 
 	ixgbe_wq = create_singlethread_workqueue(ixgbe_driver_name);
 	if (!ixgbe_wq) {

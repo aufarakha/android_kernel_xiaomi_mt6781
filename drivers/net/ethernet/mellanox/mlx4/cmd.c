@@ -2274,7 +2274,7 @@ void mlx4_master_comm_channel(struct work_struct *work)
 			if (toggle != slt) {
 				if (master->slave_state[slave].comm_toggle
 				    != slt) {
-					pr_info("slave %d out of sync. read toggle %d, state toggle %d. Resynching.\n",
+					pr_debug("slave %d out of sync. read toggle %d, state toggle %d. Resynching.\n",
 						slave, slt,
 						master->slave_state[slave].comm_toggle);
 					master->slave_state[slave].comm_toggle =

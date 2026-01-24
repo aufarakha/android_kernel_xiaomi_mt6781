@@ -1126,7 +1126,7 @@ static int acpi_thermal_add(struct acpi_device *device)
 	mutex_init(&tz->thermal_check_lock);
 	INIT_WORK(&tz->thermal_check_work, acpi_thermal_check_fn);
 
-	pr_info(PREFIX "%s [%s] (%ld C)\n", acpi_device_name(device),
+	pr_debug(PREFIX "%s [%s] (%ld C)\n", acpi_device_name(device),
 		acpi_device_bid(device), DECI_KELVIN_TO_CELSIUS(tz->temperature));
 	goto end;
 

@@ -820,10 +820,10 @@ static int __init fsl_hypervisor_init(void)
 	struct doorbell_isr *dbisr, *n;
 	int ret;
 
-	pr_info("Freescale hypervisor management driver\n");
+	pr_debug("Freescale hypervisor management driver\n");
 
 	if (!has_fsl_hypervisor()) {
-		pr_info("fsl-hv: no hypervisor found\n");
+		pr_debug("fsl-hv: no hypervisor found\n");
 		return -ENODEV;
 	}
 
@@ -891,7 +891,7 @@ static int __init fsl_hypervisor_init(void)
 
 		list_add(&dbisr->list, &isr_list);
 
-		pr_info("fsl-hv: registered handler for doorbell %u\n",
+		pr_debug("fsl-hv: registered handler for doorbell %u\n",
 			dbisr->doorbell);
 	}
 

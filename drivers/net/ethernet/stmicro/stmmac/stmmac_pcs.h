@@ -66,15 +66,15 @@ static inline void dwmac_pcs_isr(void __iomem *ioaddr, u32 reg,
 	if (intr_status & PCS_ANE_IRQ) {
 		x->irq_pcs_ane_n++;
 		if (val & GMAC_AN_STATUS_ANC)
-			pr_info("stmmac_pcs: ANE process completed\n");
+			pr_debug("stmmac_pcs: ANE process completed\n");
 	}
 
 	if (intr_status & PCS_LINK_IRQ) {
 		x->irq_pcs_link_n++;
 		if (val & GMAC_AN_STATUS_LS)
-			pr_info("stmmac_pcs: Link Up\n");
+			pr_debug("stmmac_pcs: Link Up\n");
 		else
-			pr_info("stmmac_pcs: Link Down\n");
+			pr_debug("stmmac_pcs: Link Down\n");
 	}
 }
 

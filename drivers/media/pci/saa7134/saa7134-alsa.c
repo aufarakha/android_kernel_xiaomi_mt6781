@@ -1182,7 +1182,7 @@ static int alsa_card_saa7134_create(struct saa7134_dev *dev, int devnum)
 	sprintf(card->longname, "%s at 0x%lx irq %d",
 		chip->dev->name, chip->iobase, chip->irq);
 
-	pr_info("%s/alsa: %s registered as card %d\n",
+	pr_debug("%s/alsa: %s registered as card %d\n",
 		dev->name, card->longname, index[devnum]);
 
 	if ((err = snd_card_register(card)) == 0) {
@@ -1229,19 +1229,19 @@ static int saa7134_alsa_init(void)
 	saa7134_dmasound_init = alsa_device_init;
 	saa7134_dmasound_exit = alsa_device_exit;
 
-	pr_info("saa7134 ALSA driver for DMA sound loaded\n");
+	pr_debug("saa7134 ALSA driver for DMA sound loaded\n");
 
 	list_for_each(list,&saa7134_devlist) {
 		dev = list_entry(list, struct saa7134_dev, devlist);
 		if (dev->pci->device == PCI_DEVICE_ID_PHILIPS_SAA7130)
-			pr_info("%s/alsa: %s doesn't support digital audio\n",
+			pr_debug("%s/alsa: %s doesn't support digital audio\n",
 				dev->name, saa7134_boards[dev->board].name);
 		else
 			alsa_device_init(dev);
 	}
 
 	if (dev == NULL)
-		pr_info("saa7134 ALSA: no saa7134 cards found\n");
+		pr_debug("saa7134 ALSA: no saa7134 cards found\n");
 
 	return 0;
 
@@ -1262,7 +1262,7 @@ static void saa7134_alsa_exit(void)
 
 	saa7134_dmasound_init = NULL;
 	saa7134_dmasound_exit = NULL;
-	pr_info("saa7134 ALSA driver for DMA sound unloaded\n");
+	pr_debug("saa7134 ALSA driver for DMA sound unloaded\n");
 
 	return;
 }

@@ -604,7 +604,7 @@ static int orion_wdt_probe(struct platform_device *pdev)
 	if (ret)
 		goto disable_clk;
 
-	pr_info("Initial timeout %d sec%s\n",
+	pr_debug("Initial timeout %d sec%s\n",
 		dev->wdt.timeout, nowayout ? ", nowayout" : "");
 	return 0;
 

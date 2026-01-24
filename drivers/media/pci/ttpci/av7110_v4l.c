@@ -707,12 +707,12 @@ int av7110_init_analog_module(struct av7110 *av7110)
 
 	if (i2c_writereg(av7110, 0x80, 0x0, 0x80) == 1 &&
 	    i2c_writereg(av7110, 0x80, 0x0, 0) == 1) {
-		pr_info("DVB-C analog module @ card %d detected, initializing MSP3400\n",
+		pr_debug("DVB-C analog module @ card %d detected, initializing MSP3400\n",
 			av7110->dvb_adapter.num);
 		av7110->adac_type = DVB_ADAC_MSP34x0;
 	} else if (i2c_writereg(av7110, 0x84, 0x0, 0x80) == 1 &&
 		   i2c_writereg(av7110, 0x84, 0x0, 0) == 1) {
-		pr_info("DVB-C analog module @ card %d detected, initializing MSP3415\n",
+		pr_debug("DVB-C analog module @ card %d detected, initializing MSP3415\n",
 			av7110->dvb_adapter.num);
 		av7110->adac_type = DVB_ADAC_MSP34x5;
 	} else
@@ -733,7 +733,7 @@ int av7110_init_analog_module(struct av7110 *av7110)
 	msp_writereg(av7110, MSP_WR_DSP, 0x000d, 0x1900); // prescale SCART
 
 	if (i2c_writereg(av7110, 0x48, 0x01, 0x00)!=1) {
-		pr_info("saa7113 not accessible\n");
+		pr_debug("saa7113 not accessible\n");
 	} else {
 		u8 *i = saa7113_init_regs;
 

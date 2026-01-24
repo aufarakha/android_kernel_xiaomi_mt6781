@@ -645,7 +645,7 @@ static int attach_xc3028(u8 addr, struct cx8802_dev *dev)
 		return -EINVAL;
 	}
 
-	pr_info("xc3028 attached\n");
+	pr_debug("xc3028 attached\n");
 
 	return 0;
 }
@@ -675,7 +675,7 @@ static int attach_xc4000(struct cx8802_dev *dev, struct xc4000_config *cfg)
 		return -EINVAL;
 	}
 
-	pr_info("xc4000 attached\n");
+	pr_debug("xc4000 attached\n");
 
 	return 0;
 }
@@ -796,7 +796,7 @@ static int cx8802_alloc_frontends(struct cx8802_dev *dev)
 	if (!core->board.num_frontends)
 		return -ENODEV;
 
-	pr_info("%s: allocating %d frontend(s)\n", __func__,
+	pr_debug("%s: allocating %d frontend(s)\n", __func__,
 		core->board.num_frontends);
 	for (i = 1; i <= core->board.num_frontends; i++) {
 		fe = vb2_dvb_alloc_frontend(&dev->frontends, i);
@@ -1762,7 +1762,7 @@ static int cx8802_dvb_probe(struct cx8802_driver *drv)
 		goto fail_core;
 
 	/* dvb stuff */
-	pr_info("cx2388x based DVB/ATSC card\n");
+	pr_debug("cx2388x based DVB/ATSC card\n");
 	dev->ts_gen_cntrl = 0x0c;
 
 	err = cx8802_alloc_frontends(dev);
@@ -1838,7 +1838,7 @@ static struct cx8802_driver cx8802_dvb_driver = {
 
 static int __init dvb_init(void)
 {
-	pr_info("cx2388x dvb driver version %s loaded\n", CX88_VERSION);
+	pr_debug("cx2388x dvb driver version %s loaded\n", CX88_VERSION);
 	return cx8802_register_driver(&cx8802_dvb_driver);
 }
 

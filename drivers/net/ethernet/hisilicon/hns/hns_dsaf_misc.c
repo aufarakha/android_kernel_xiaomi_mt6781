@@ -642,10 +642,10 @@ static int hns_mac_config_sds_loopback(struct hns_mac_cb *mac_cb, bool en)
 
 	if (!mac_cb->phy_dev) {
 		if (ret)
-			pr_info("please confirm sfp is present or not\n");
+			pr_debug("please confirm sfp is present or not\n");
 		else
 			if (!sfp_prsnt)
-				pr_info("no sfp in this eth\n");
+				pr_debug("no sfp in this eth\n");
 	}
 
 	if (mac_cb->serdes_ctrl) {

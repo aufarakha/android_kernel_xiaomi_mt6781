@@ -167,15 +167,15 @@ static int kvp_handle_handshake(struct hv_kvp_msg *msg)
 	switch (msg->kvp_hdr.operation) {
 	case KVP_OP_REGISTER:
 		dm_reg_value = KVP_OP_REGISTER;
-		pr_info("KVP: IP injection functionality not available\n");
-		pr_info("KVP: Upgrade the KVP daemon\n");
+		pr_debug("KVP: IP injection functionality not available\n");
+		pr_debug("KVP: Upgrade the KVP daemon\n");
 		break;
 	case KVP_OP_REGISTER1:
 		dm_reg_value = KVP_OP_REGISTER1;
 		break;
 	default:
-		pr_info("KVP: incompatible daemon\n");
-		pr_info("KVP: KVP version: %d, Daemon version: %d\n",
+		pr_debug("KVP: incompatible daemon\n");
+		pr_debug("KVP: KVP version: %d, Daemon version: %d\n",
 			KVP_OP_REGISTER1, msg->kvp_hdr.operation);
 		return -EINVAL;
 	}
@@ -673,7 +673,7 @@ void hv_kvp_onchannelcallback(void *context)
 				 recv_buffer, fw_versions, FW_VER_COUNT,
 				 kvp_versions, KVP_VER_COUNT,
 				 NULL, &kvp_srv_version)) {
-				pr_info("KVP IC version %d.%d\n",
+				pr_debug("KVP IC version %d.%d\n",
 					kvp_srv_version >> 16,
 					kvp_srv_version & 0xFFFF);
 			}

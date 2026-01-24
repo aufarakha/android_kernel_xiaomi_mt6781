@@ -1841,7 +1841,7 @@ static void handle_serdes_issues(struct qib_pportdata *ppd, u64 ibcst)
 					    ppd->dd->cspec->r1 ?
 					    QDR_STATIC_ADAPT_DOWN_R1 :
 					    QDR_STATIC_ADAPT_DOWN);
-			pr_info(
+			pr_debug(
 				"IB%u:%u re-enabled QDR adaptation ibclt %x\n",
 				ppd->dd->unit, ppd->port, ibclt);
 		}
@@ -6145,13 +6145,13 @@ static int setup_txselect(const char *str, const struct kernel_param *kp)
 	char *n;
 
 	if (strlen(str) >= ARRAY_SIZE(txselect_list)) {
-		pr_info("txselect_values string too long\n");
+		pr_debug("txselect_values string too long\n");
 		return -ENOSPC;
 	}
 	val = simple_strtoul(str, &n, 0);
 	if (n == str || val >= (TXDDS_TABLE_SZ + TXDDS_EXTRA_SZ +
 				TXDDS_MFG_SZ)) {
-		pr_info("txselect_values must start with a number < %d\n",
+		pr_debug("txselect_values must start with a number < %d\n",
 			TXDDS_TABLE_SZ + TXDDS_EXTRA_SZ + TXDDS_MFG_SZ);
 		return -EINVAL;
 	}
@@ -7677,7 +7677,7 @@ static void find_best_ent(struct qib_pportdata *ppd,
 		   ppd->cpspec->no_eep < (TXDDS_TABLE_SZ + TXDDS_EXTRA_SZ +
 					  TXDDS_MFG_SZ)) {
 		idx = ppd->cpspec->no_eep - (TXDDS_TABLE_SZ + TXDDS_EXTRA_SZ);
-		pr_info("IB%u:%u use idx %u into txdds_mfg\n",
+		pr_debug("IB%u:%u use idx %u into txdds_mfg\n",
 			ppd->dd->unit, ppd->port, idx);
 		*sdr_dds = &txdds_extra_mfg[idx];
 		*ddr_dds = &txdds_extra_mfg[idx];
@@ -7831,11 +7831,11 @@ static void serdes_7322_los_enable(struct qib_pportdata *ppd, int enable)
 	u8 state = SYM_FIELD(data, IBSerdesCtrl_0, RXLOSEN);
 
 	if (enable && !state) {
-		pr_info("IB%u:%u Turning LOS on\n",
+		pr_debug("IB%u:%u Turning LOS on\n",
 			ppd->dd->unit, ppd->port);
 		data |= SYM_MASK(IBSerdesCtrl_0, RXLOSEN);
 	} else if (!enable && state) {
-		pr_info("IB%u:%u Turning LOS off\n",
+		pr_debug("IB%u:%u Turning LOS off\n",
 			ppd->dd->unit, ppd->port);
 		data &= ~SYM_MASK(IBSerdesCtrl_0, RXLOSEN);
 	}
@@ -8072,7 +8072,7 @@ static int serdes_7322_init_new(struct qib_pportdata *ppd)
 		}
 	}
 	if (chan_done) {
-		pr_info("Serdes %d calibration not done after .5 sec: 0x%x\n",
+		pr_debug("Serdes %d calibration not done after .5 sec: 0x%x\n",
 			 IBSD(ppd->hw_pidx), chan_done);
 	} else {
 		for (chan = 0; chan < SERDES_CHANS; ++chan) {
@@ -8080,7 +8080,7 @@ static int serdes_7322_init_new(struct qib_pportdata *ppd)
 					    (chan + (chan >> 1)),
 					    25, 0, 0);
 			if ((~rxcaldone & (u32)BMASK(10, 10)) == 0)
-				pr_info("Serdes %d chan %d calibration failed\n",
+				pr_debug("Serdes %d chan %d calibration failed\n",
 					IBSD(ppd->hw_pidx), chan);
 		}
 	}

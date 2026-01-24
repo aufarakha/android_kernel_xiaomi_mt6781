@@ -1791,7 +1791,7 @@ static int bq27xxx_battery_get_property(struct power_supply *psy,
 #if defined(CONFIG_MACH_MT6893)
 	chg_psy = power_supply_get_by_name("charger");
 	if (chg_psy == NULL) {
-		pr_info("[%s] can get charger psy\n", __func__);
+		pr_debug("[%s] can get charger psy\n", __func__);
 	} else {
 		power_supply_get_property(chg_psy, POWER_SUPPLY_PROP_ONLINE, &online_val);
 		power_supply_get_property(chg_psy, POWER_SUPPLY_PROP_CHARGE_TYPE, &type_val);
@@ -1804,13 +1804,13 @@ static int bq27xxx_battery_get_property(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_STATUS:
 		ret = bq27xxx_battery_status(di, val);
 #if defined(CONFIG_MACH_MT6893)
-		pr_info("original charger status(%d)", val->intval);
+		pr_debug("original charger status(%d)", val->intval);
 		if ((val->intval == POWER_SUPPLY_STATUS_DISCHARGING) ||
 			(val->intval == POWER_SUPPLY_STATUS_NOT_CHARGING) ||
 			(val->intval == POWER_SUPPLY_STATUS_UNKNOWN)) {
 			if (online_val.intval && (type_val.intval != 0)) {
 				val->intval = POWER_SUPPLY_STATUS_CHARGING;
-				pr_info("update charger status(%d), online_val.intval(%d), type_val.intval(%d)",
+				pr_debug("update charger status(%d), online_val.intval(%d), type_val.intval(%d)",
 					val->intval,online_val.intval, type_val.intval);
 			}
 		}

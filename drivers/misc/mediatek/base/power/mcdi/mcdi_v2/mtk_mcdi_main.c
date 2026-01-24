@@ -174,7 +174,7 @@ static void mcdi_stress_start(void)
 	for (i = 0; i < NF_CPU; i++) {
 		ret = scnprintf(name, sizeof(name), "mcdi_stress_task%d", i);
 		if (ret == 0)
-			pr_info("[mcdi]%s task naming fail\n", __func__);
+			pr_debug("[mcdi]%s task naming fail\n", __func__);
 
 		mcdi_stress_tsk[i] =
 			kthread_create(mcdi_stress_task, NULL, name);
@@ -872,7 +872,7 @@ subsys_initcall(mcdi_sysram_init);
 static int __init mcdi_init(void)
 {
 	/* Activate MCDI after SMP */
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 
 	/* Register CPU up/down callbacks */
 	mcdi_hotplug_cb_init();

@@ -237,7 +237,7 @@ static ssize_t panel_event_show(struct device *device,
 ssize_t ret = 0;
         struct drm_connector *connector = to_drm_connector(device);
         if (!connector) {
-                pr_info("%s-%d connector is NULL \r\n",__func__, __LINE__);
+                pr_debug("%s-%d connector is NULL \r\n",__func__, __LINE__);
                 return ret;
         }
 
@@ -262,7 +262,7 @@ static ssize_t mipi_reg_show(struct device *device,
 			    struct device_attribute *attr,
 			   char *buf)
 {
-	pr_info("%s, k7s project \n", __func__);
+	pr_debug("%s, k7s project \n", __func__);
 	return lcm_mipi_reg_read(buf);
 }
 static ssize_t mipi_reg_store(struct device *device,
@@ -270,7 +270,7 @@ static ssize_t mipi_reg_store(struct device *device,
 			   const char *buf, size_t count)
 {
 	int rc = 0;
-	pr_info("%s, k7s project \n", __func__);
+	pr_debug("%s, k7s project \n", __func__);
 	rc = lcm_mipi_reg_write((char *)buf, count);
 	return rc;
 }
@@ -314,7 +314,7 @@ static ssize_t disp_param_store(struct device *device,
 	int32_t param;
 	struct drm_connector *connector = to_drm_connector(device);
 	if (!connector) {
-		pr_info("%s-%d connector is NULL \r\n",__func__, __LINE__);
+		pr_debug("%s-%d connector is NULL \r\n",__func__, __LINE__);
 		return ret;
 	}
 	sscanf(buf, "0x%x", &param);
@@ -328,7 +328,7 @@ static ssize_t disp_param_show(struct device *device,
 	ssize_t ret = 0;
 	struct drm_connector *connector = to_drm_connector(device);
 	if (!connector) {
-		pr_info("%s-%d connector is NULL \r\n",__func__, __LINE__);
+		pr_debug("%s-%d connector is NULL \r\n",__func__, __LINE__);
 		return ret;
 	}
 	return mi_drm_sysfs_get_disp_param(connector, buf);

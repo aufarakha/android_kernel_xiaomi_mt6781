@@ -94,7 +94,7 @@ static int check_crc(struct sk_buff *skb)
 
 	if (crc != skb->data[skb->len-1]) {
 		pr_err("CRC error 0x%x != 0x%x\n", crc, skb->data[skb->len-1]);
-		pr_info("%s: BAD CRC\n", __func__);
+		pr_debug("%s: BAD CRC\n", __func__);
 		return -EPERM;
 	}
 

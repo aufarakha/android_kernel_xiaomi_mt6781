@@ -1325,7 +1325,7 @@ static void __init parse_id(char *id)
 	if ((token = strsep(&id, ":")) != NULL)
 		device_id = simple_strtoul(token, NULL, 16);
 	flags = simple_strtoul(id, NULL, 16);
-	pr_info("%s: new device %s, vendor ID 0x%04x, device ID 0x%04x, flags: 0x%x\n",
+	pr_debug("%s: new device %s, vendor ID 0x%04x, device ID 0x%04x, flags: 0x%x\n",
 		driver_name, name, vendor_id, device_id, flags);
 
 	if (vendor_id > 0x10000 || vendor_id == 0)
@@ -1345,7 +1345,7 @@ static void __init parse_id(char *id)
 
 static int __init pegasus_init(void)
 {
-	pr_info("%s: %s, " DRIVER_DESC "\n", driver_name, DRIVER_VERSION);
+	pr_debug("%s: %s, " DRIVER_DESC "\n", driver_name, DRIVER_VERSION);
 	if (devid)
 		parse_id(devid);
 	return usb_register(&pegasus_driver);

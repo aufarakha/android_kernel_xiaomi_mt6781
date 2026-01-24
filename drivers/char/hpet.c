@@ -386,7 +386,7 @@ static int hpet_mmap_enabled = 0;
 static __init int hpet_mmap_enable(char *str)
 {
 	get_option(&str, &hpet_mmap_enabled);
-	pr_info("HPET mmap %s\n", hpet_mmap_enabled ? "enabled" : "disabled");
+	pr_debug("HPET mmap %s\n", hpet_mmap_enabled ? "enabled" : "disabled");
 	return 1;
 }
 __setup("hpet_mmap=", hpet_mmap_enable);

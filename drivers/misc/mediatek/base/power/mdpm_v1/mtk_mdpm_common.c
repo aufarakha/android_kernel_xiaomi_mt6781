@@ -109,7 +109,7 @@ int get_md1_power(enum mdpm_power_type power_type, bool need_update)
 	g_dbm_power[power_type] = dbm_power;
 
 	if (mt_mdpm_debug)
-		pr_info("[md1_power] scenario_power=%d dbm_power=%d total=%d\n",
+		pr_debug("[md1_power] scenario_power=%d dbm_power=%d total=%d\n",
 			scenario_power, dbm_power, scenario_power + dbm_power);
 
 	return scenario_power + dbm_power;

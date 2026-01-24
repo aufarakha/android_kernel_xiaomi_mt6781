@@ -44,17 +44,17 @@ int acquire_dram_ctrl(void)
 		}
 
 		cnt--;
-		/* pr_info("[DRAMC] wait for SPM HW SEMAPHORE\n"); */
+		/* pr_debug("[DRAMC] wait for SPM HW SEMAPHORE\n"); */
 		udelay(1);
 	} while (cnt > 0);
 
 	if (cnt == 0) {
 		spin_unlock_irqrestore(&dramc_lock, save_flags);
-		pr_info("[DRAMC] can NOT get SPM HW SEMAPHORE!\n");
+		pr_debug("[DRAMC] can NOT get SPM HW SEMAPHORE!\n");
 		return -1;
 	}
 
-	/* pr_info("[DRAMC] get SPM HW SEMAPHORE success!\n"); */
+	/* pr_debug("[DRAMC] get SPM HW SEMAPHORE success!\n"); */
 
 	spin_unlock_irqrestore(&dramc_lock, save_flags);
 	return 0;
@@ -73,7 +73,7 @@ int release_dram_ctrl(void)
 		pr_err("[DRAMC] release SPM HW SEMAPHORE fail!\n");
 		/* BUG(); */
 	}
-	/* pr_info("[DRAMC] release SPM HW SEMAPHORE success!\n"); */
+	/* pr_debug("[DRAMC] release SPM HW SEMAPHORE success!\n"); */
 	return 0;
 }
 

@@ -1190,7 +1190,7 @@ static int __init ion_reserve_memory_to_camera(struct reserved_mem *mem)
 				mem->size;
 		}
 	}
-	pr_info("%s: name:%s,base:%llx,size:0x%llx\n",
+	pr_debug("%s: name:%s,base:%llx,size:0x%llx\n",
 		__func__, mem->name,
 		(unsigned long long)mem->base,
 		(unsigned long long)mem->size);

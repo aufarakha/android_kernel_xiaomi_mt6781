@@ -266,7 +266,7 @@ int nfcmrvl_parse_dt(struct device_node *node,
 
 	reset_n_io = of_get_named_gpio(node, "reset-n-io", 0);
 	if (reset_n_io < 0) {
-		pr_info("no reset-n-io config\n");
+		pr_debug("no reset-n-io config\n");
 	} else if (!gpio_is_valid(reset_n_io)) {
 		pr_err("invalid reset-n-io GPIO\n");
 		return reset_n_io;

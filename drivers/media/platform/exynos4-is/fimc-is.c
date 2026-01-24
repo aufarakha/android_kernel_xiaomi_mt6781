@@ -473,7 +473,7 @@ static void fimc_is_general_irq_handler(struct fimc_is *is)
 	case IHC_NOT_READY:
 		break;
 	default:
-		pr_info("unknown command: %#x\n", is->i2h_cmd.cmd);
+		pr_debug("unknown command: %#x\n", is->i2h_cmd.cmd);
 	}
 
 	fimc_is_fw_clear_irq1(is, FIMC_IS_INT_GENERAL);
@@ -694,7 +694,7 @@ int fimc_is_hw_initialize(struct fimc_is *is)
 
 	pr_debug("setfile: base: %#x, size: %d\n",
 		 is->setfile.base, is->setfile.size);
-	pr_info("FIMC-IS Setfile info: %s\n", is->fw.setfile_info);
+	pr_debug("FIMC-IS Setfile info: %s\n", is->fw.setfile_info);
 
 	/* Check magic number. */
 	if (is->is_p_region->shared[MAX_SHARED_COUNT - 1] !=

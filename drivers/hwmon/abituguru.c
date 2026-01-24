@@ -1411,7 +1411,7 @@ static int abituguru_probe(struct platform_device *pdev)
 		res = -ENAMETOOLONG;
 		goto abituguru_probe_error;
 	}
-	pr_info("found Abit uGuru\n");
+	pr_debug("found Abit uGuru\n");
 
 	/* Register sysfs hooks */
 	for (i = 0; i < sysfs_attr_i; i++) {
@@ -1574,7 +1574,7 @@ static int __init abituguru_detect(void)
 		"0x%02X\n", (unsigned int)data_val, (unsigned int)cmd_val);
 
 	if (force) {
-		pr_info("Assuming Abit uGuru is present because of \"force\" parameter\n");
+		pr_debug("Assuming Abit uGuru is present because of \"force\" parameter\n");
 		return ABIT_UGURU_BASE;
 	}
 

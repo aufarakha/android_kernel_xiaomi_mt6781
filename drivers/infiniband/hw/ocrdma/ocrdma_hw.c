@@ -2940,13 +2940,13 @@ static int ocrdma_parse_dcbxcfg_rsp(struct ocrdma_dev *dev, int ptype,
 	u16 proto;
 
 	if (!(dcbxcfg->tcv_aev_opv_st & OCRDMA_DCBX_STATE_MASK)) {
-		pr_info("%s ocrdma%d DCBX is disabled\n",
+		pr_debug("%s ocrdma%d DCBX is disabled\n",
 			dev_name(&dev->nic_info.pdev->dev), dev->id);
 		goto out;
 	}
 
 	if (!ocrdma_is_enabled_and_synced(dcbxcfg->pfc_state)) {
-		pr_info("%s ocrdma%d priority flow control(%s) is %s%s\n",
+		pr_debug("%s ocrdma%d priority flow control(%s) is %s%s\n",
 			dev_name(&dev->nic_info.pdev->dev), dev->id,
 			(ptype > 0 ? "operational" : "admin"),
 			(dcbxcfg->pfc_state & OCRDMA_STATE_FLAG_ENABLED) ?
@@ -2955,7 +2955,7 @@ static int ocrdma_parse_dcbxcfg_rsp(struct ocrdma_dev *dev, int ptype,
 			"" : ", not sync'ed");
 		goto out;
 	} else {
-		pr_info("%s ocrdma%d priority flow control is enabled and sync'ed\n",
+		pr_debug("%s ocrdma%d priority flow control is enabled and sync'ed\n",
 			dev_name(&dev->nic_info.pdev->dev), dev->id);
 	}
 
@@ -2993,7 +2993,7 @@ static int ocrdma_parse_dcbxcfg_rsp(struct ocrdma_dev *dev, int ptype,
 				}
 			}
 			if (slindx == OCRDMA_MAX_SERVICE_LEVEL_INDEX) {
-				pr_info("%s ocrdma%d application priority not set for 0x%x protocol\n",
+				pr_debug("%s ocrdma%d application priority not set for 0x%x protocol\n",
 					dev_name(&dev->nic_info.pdev->dev),
 					dev->id, proto);
 			}
@@ -3030,10 +3030,10 @@ void ocrdma_init_service_level(struct ocrdma_dev *dev)
 	}
 
 	if (status)
-		pr_info("%s ocrdma%d service level default\n",
+		pr_debug("%s ocrdma%d service level default\n",
 			dev_name(&dev->nic_info.pdev->dev), dev->id);
 	else
-		pr_info("%s ocrdma%d service level %d\n",
+		pr_debug("%s ocrdma%d service level %d\n",
 			dev_name(&dev->nic_info.pdev->dev), dev->id,
 			srvc_lvl);
 

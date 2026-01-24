@@ -3977,7 +3977,7 @@ void himax_mcu_read_sram_0f(const struct firmware *fw_entry,
 		I("0x%2.2X, ", temp_info_data[i]);
 
 		if (i > 0 && i%16 == 15)
-			pr_info("\n");
+			pr_debug("\n");
 
 	}
 	I("%s,READ END,Not Same count=%d\n", __func__, not_same);

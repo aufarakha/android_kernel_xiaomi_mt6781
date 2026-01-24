@@ -290,7 +290,7 @@ int __init mbi_init(struct fwnode_handle *fwnode, struct irq_domain *parent)
 			ret = -ENOMEM;
 			goto err_free_mbi;
 		}
-		pr_info("MBI range [%d:%d]\n", mbi_ranges[n].spi_start,
+		pr_debug("MBI range [%d:%d]\n", mbi_ranges[n].spi_start,
 			mbi_ranges[n].spi_start + mbi_ranges[n].nr_spis - 1);
 	}
 
@@ -312,7 +312,7 @@ int __init mbi_init(struct fwnode_handle *fwnode, struct irq_domain *parent)
 		mbi_phys_base = res.start;
 	}
 
-	pr_info("Using MBI frame %pa\n", &mbi_phys_base);
+	pr_debug("Using MBI frame %pa\n", &mbi_phys_base);
 
 	ret = mbi_allocate_domains(parent);
 	if (ret)

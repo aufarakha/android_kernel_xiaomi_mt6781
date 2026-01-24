@@ -1064,7 +1064,7 @@ static int nx842_remove(struct vio_dev *viodev)
 	struct nx842_devdata *old_devdata;
 	unsigned long flags;
 
-	pr_info("Removing IBM Power 842 compression device\n");
+	pr_debug("Removing IBM Power 842 compression device\n");
 	sysfs_remove_group(&viodev->dev.kobj, &nx842_attribute_group);
 
 	crypto_unregister_alg(&nx842_pseries_alg);

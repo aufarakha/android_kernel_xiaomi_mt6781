@@ -821,7 +821,7 @@ static int msm_iommu_probe(struct platform_device *pdev)
 
 	bus_set_iommu(&platform_bus_type, &msm_iommu_ops);
 
-	pr_info("device mapped at %p, irq %d with %d ctx banks\n",
+	pr_debug("device mapped at %p, irq %d with %d ctx banks\n",
 		iommu->base, iommu->irq, iommu->ncb);
 
 	return ret;

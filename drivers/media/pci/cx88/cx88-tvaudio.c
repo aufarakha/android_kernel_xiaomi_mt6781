@@ -801,7 +801,7 @@ void cx88_set_tvaudio(struct cx88_core *core)
 		break;
 	case WW_NONE:
 	case WW_I2SPT:
-		pr_info("unknown tv audio mode [%d]\n", core->tvaudio);
+		pr_debug("unknown tv audio mode [%d]\n", core->tvaudio);
 		break;
 	}
 }

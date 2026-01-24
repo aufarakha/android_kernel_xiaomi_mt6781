@@ -240,7 +240,7 @@ static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
 	struct removed_region *mem = rmem->priv;
 
 	if (!mem && dma_init_removed_memory(rmem->base, rmem->size, &mem)) {
-		pr_info("Reserved memory: failed to init DMA memory pool at %pa, size %ld MiB\n",
+		pr_debug("Reserved memory: failed to init DMA memory pool at %pa, size %ld MiB\n",
 			&rmem->base, (unsigned long)rmem->size / SZ_1M);
 		return -EINVAL;
 	}
@@ -264,7 +264,7 @@ static const struct reserved_mem_ops removed_mem_ops = {
 static int __init removed_dma_setup(struct reserved_mem *rmem)
 {
 	rmem->ops = &removed_mem_ops;
-	pr_info("Removed memory: created DMA memory pool at %pa, size %ld MiB\n",
+	pr_debug("Removed memory: created DMA memory pool at %pa, size %ld MiB\n",
 		&rmem->base, (unsigned long)rmem->size / SZ_1M);
 	return 0;
 }

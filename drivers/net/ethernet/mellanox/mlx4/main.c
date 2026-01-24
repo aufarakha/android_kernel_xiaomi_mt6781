@@ -3715,7 +3715,7 @@ static int __mlx4_init_one(struct pci_dev *pdev, int pci_dev_data,
 	unsigned total_vfs = 0;
 	unsigned int i;
 
-	pr_info(DRV_NAME ": Initializing %s\n", pci_name(pdev));
+	pr_debug(DRV_NAME ": Initializing %s\n", pci_name(pdev));
 
 	err = mlx4_pci_enable_device(&priv->dev);
 	if (err) {

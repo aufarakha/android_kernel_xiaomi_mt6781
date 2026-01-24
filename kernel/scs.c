@@ -209,7 +209,7 @@ static void scs_check_usage(struct task_struct *tsk)
 	spin_lock(&lock);
 
 	if (used > highest) {
-		pr_info("%s (%d): highest shadow stack usage: %lu bytes\n",
+		pr_debug("%s (%d): highest shadow stack usage: %lu bytes\n",
 			tsk->comm, task_pid_nr(tsk), used);
 		highest = used;
 	}

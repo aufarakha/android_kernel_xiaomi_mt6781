@@ -1132,7 +1132,7 @@ static int igt_write_huge(struct i915_gem_context *ctx,
 	n = 0;
 	for_each_engine(engine, i915, id) {
 		if (!intel_engine_can_store_dword(engine)) {
-			pr_info("store-dword-imm not supported on engine=%u\n", id);
+			pr_debug("store-dword-imm not supported on engine=%u\n", id);
 			continue;
 		}
 		engines[n++] = engine;
@@ -1245,7 +1245,7 @@ static int igt_ppgtt_exhaust_huge(void *arg)
 				i915_gem_object_put(obj);
 
 				if (err == -ENOMEM) {
-					pr_info("unable to get pages, size=%u, pages=%u\n",
+					pr_debug("unable to get pages, size=%u, pages=%u\n",
 						size, page_sizes);
 					err = 0;
 					break;
@@ -1317,7 +1317,7 @@ static int igt_ppgtt_internal_huge(void *arg)
 			goto out_put;
 
 		if (obj->mm.page_sizes.phys < I915_GTT_PAGE_SIZE_64K) {
-			pr_info("internal unable to allocate huge-page(s) with size=%u\n",
+			pr_debug("internal unable to allocate huge-page(s) with size=%u\n",
 				size);
 			goto out_unpin;
 		}
@@ -1370,7 +1370,7 @@ static int igt_ppgtt_gemfs_huge(void *arg)
 	 */
 
 	if (!igt_can_allocate_thp(i915)) {
-		pr_info("missing THP support, skipping\n");
+		pr_debug("missing THP support, skipping\n");
 		return 0;
 	}
 
@@ -1386,7 +1386,7 @@ static int igt_ppgtt_gemfs_huge(void *arg)
 			goto out_put;
 
 		if (obj->mm.page_sizes.phys < I915_GTT_PAGE_SIZE_2M) {
-			pr_info("finishing test early, gemfs unable to allocate huge-page(s) with size=%u\n",
+			pr_debug("finishing test early, gemfs unable to allocate huge-page(s) with size=%u\n",
 				size);
 			goto out_unpin;
 		}
@@ -1434,7 +1434,7 @@ static int igt_ppgtt_pin_update(void *arg)
 	 */
 
 	if (!USES_FULL_48BIT_PPGTT(dev_priv)) {
-		pr_info("48b PPGTT not supported, skipping\n");
+		pr_debug("48b PPGTT not supported, skipping\n");
 		return 0;
 	}
 
@@ -1459,7 +1459,7 @@ static int igt_ppgtt_pin_update(void *arg)
 			goto out_close;
 
 		if (vma->page_sizes.sg < page_size) {
-			pr_info("Unable to allocate page-size %x, finishing test early\n",
+			pr_debug("Unable to allocate page-size %x, finishing test early\n",
 				page_size);
 			goto out_unpin;
 		}
@@ -1482,7 +1482,7 @@ static int igt_ppgtt_pin_update(void *arg)
 				       vma->page_sizes.gtt, page_size);
 				err = -EINVAL;
 			} else {
-				pr_info("dma address misaligned, finishing test early\n");
+				pr_debug("dma address misaligned, finishing test early\n");
 			}
 
 			goto out_unpin;
@@ -1610,7 +1610,7 @@ static int igt_shrink_thp(void *arg)
 	 */
 
 	if (!igt_can_allocate_thp(i915)) {
-		pr_info("missing THP support, skipping\n");
+		pr_debug("missing THP support, skipping\n");
 		return 0;
 	}
 
@@ -1629,7 +1629,7 @@ static int igt_shrink_thp(void *arg)
 		goto out_close;
 
 	if (obj->mm.page_sizes.phys < I915_GTT_PAGE_SIZE_2M) {
-		pr_info("failed to allocate THP, finishing test early\n");
+		pr_debug("failed to allocate THP, finishing test early\n");
 		goto out_unpin;
 	}
 
@@ -1751,7 +1751,7 @@ int i915_gem_huge_page_live_selftests(struct drm_i915_private *dev_priv)
 	int err;
 
 	if (!USES_PPGTT(dev_priv)) {
-		pr_info("PPGTT not supported, skipping live-selftests\n");
+		pr_debug("PPGTT not supported, skipping live-selftests\n");
 		return 0;
 	}
 

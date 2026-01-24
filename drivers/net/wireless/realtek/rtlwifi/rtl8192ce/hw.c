@@ -1121,7 +1121,7 @@ static enum version_8192c _rtl92ce_read_chip_version(struct ieee80211_hw *hw)
 		break;
 	}
 
-	pr_info("Chip Version ID: %s\n", versionid);
+	pr_debug("Chip Version ID: %s\n", versionid);
 
 	switch (version & 0x3) {
 	case CHIP_88C:

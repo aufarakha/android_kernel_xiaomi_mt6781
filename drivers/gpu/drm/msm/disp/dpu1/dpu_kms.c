@@ -1046,7 +1046,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
 
 	_dpu_kms_core_hw_rev_init(dpu_kms);
 
-	pr_info("dpu hardware revision:0x%x\n", dpu_kms->core_rev);
+	pr_debug("dpu hardware revision:0x%x\n", dpu_kms->core_rev);
 
 	dpu_kms->catalog = dpu_hw_catalog_init(dpu_kms->core_rev);
 	if (IS_ERR_OR_NULL(dpu_kms->catalog)) {

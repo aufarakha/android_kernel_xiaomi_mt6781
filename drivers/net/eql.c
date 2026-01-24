@@ -581,7 +581,7 @@ static int __init eql_init_module(void)
 {
 	int err;
 
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 
 	dev_eql = alloc_netdev(sizeof(equalizer_t), "eql", NET_NAME_UNKNOWN,
 			       eql_setup);

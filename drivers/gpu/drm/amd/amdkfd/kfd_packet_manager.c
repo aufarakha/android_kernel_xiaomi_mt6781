@@ -435,7 +435,7 @@ int pm_debugfs_hang_hws(struct packet_manager *pm)
 	memset(buffer, 0x55, size);
 	pm->priv_queue->ops.submit_packet(pm->priv_queue);
 
-	pr_info("Submitting %x %x %x %x %x %x %x to HIQ to hang the HWS.",
+	pr_debug("Submitting %x %x %x %x %x %x %x to HIQ to hang the HWS.",
 		buffer[0], buffer[1], buffer[2], buffer[3],
 		buffer[4], buffer[5], buffer[6]);
 out:

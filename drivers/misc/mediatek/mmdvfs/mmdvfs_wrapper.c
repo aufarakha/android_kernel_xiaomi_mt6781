@@ -238,7 +238,7 @@ int set_test_freq(const char *val, const struct kernel_param *kp)
 	s32 ret;
 
 	ret = sscanf(val, "%u %u", &clk_id, &freq);
-	pr_info("%s: ret:%d input:%s", __func__, ret, val);
+	pr_debug("%s: ret:%d input:%s", __func__, ret, val);
 	if (ret != 2 || clk_id >= CLK_MAX_NUM)
 		return -EINVAL;
 

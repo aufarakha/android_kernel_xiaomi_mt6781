@@ -135,7 +135,7 @@ static int memory_set_cur_bandwidth(struct thermal_cooling_device *cdev,
 	    acpi_evaluate_integer(handle, MEMORY_SET_BANDWIDTH, &arg_list,
 				  &temp);
 
-	pr_info("Bandwidth value was %ld: status is %d\n", state, status);
+	pr_debug("Bandwidth value was %ld: status is %d\n", state, status);
 	if (ACPI_FAILURE(status))
 		return -EFAULT;
 

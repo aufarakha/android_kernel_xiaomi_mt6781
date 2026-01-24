@@ -25,7 +25,7 @@ static void system_power_event(unsigned int keycode)
 	switch (keycode) {
 	case KEY_SUSPEND:
 		apm_queue_event(APM_USER_SUSPEND);
-		pr_info("Requesting system suspend...\n");
+		pr_debug("Requesting system suspend...\n");
 		break;
 	default:
 		break;

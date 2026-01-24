@@ -1166,7 +1166,7 @@ static int pvcalls_front_probe(struct xenbus_device *dev,
 	/* See XENBUS_FUNCTIONS_CALLS in pvcalls.h */
 	if (function_calls != 1)
 		return -ENODEV;
-	pr_info("%s max-page-order is %u\n", __func__, max_page_order);
+	pr_debug("%s max-page-order is %u\n", __func__, max_page_order);
 
 	bedata = kzalloc(sizeof(struct pvcalls_bedata), GFP_KERNEL);
 	if (!bedata)
@@ -1288,7 +1288,7 @@ static int __init pvcalls_frontend_init(void)
 	if (!xen_domain())
 		return -ENODEV;
 
-	pr_info("Initialising Xen pvcalls frontend driver\n");
+	pr_debug("Initialising Xen pvcalls frontend driver\n");
 
 	return xenbus_register_frontend(&pvcalls_front_driver);
 }

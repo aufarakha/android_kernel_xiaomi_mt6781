@@ -340,7 +340,7 @@ static void tps65010_interrupt(struct tps65010 *tps)
 
 		/* "off" usually means deep sleep */
 		if (tmp & TPS_REG_ONOFF) {
-			pr_info("%s: power off button\n", DRIVER_NAME);
+			pr_debug("%s: power off button\n", DRIVER_NAME);
 #if 0
 			/* REVISIT:  this might need its own workqueue
 			 * plus tweaks including deadlock avoidance ...
@@ -386,7 +386,7 @@ static void tps65010_interrupt(struct tps65010 *tps)
 		}
 		if (charging != tps->charging) {
 			tps->charging = charging;
-			pr_info("%s: battery %scharging\n",
+			pr_debug("%s: battery %scharging\n",
 				DRIVER_NAME, charging ? "" :
 				((tps->chgstatus & (TPS_CHG_USB|TPS_CHG_AC))
 					? "NOT " : "dis"));

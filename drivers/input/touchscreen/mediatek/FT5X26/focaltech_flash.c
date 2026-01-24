@@ -181,7 +181,7 @@ int hidi2c_to_stdi2c(struct i2c_client *client)
 
 	if (auc_i2c_write_buf[0] == 0xeb && auc_i2c_write_buf[1] == 0xaa &&
 	    auc_i2c_write_buf[2] == 0x08) {
-		pr_info("hidi2c to_stdi2c successful.\n");
+		pr_debug("hidi2c to_stdi2c successful.\n");
 		bRet = 1;
 	} else {
 		pr_notice("hidi2c to_stdi2c error.\n");
@@ -411,7 +411,7 @@ int fts_ctpm_fw_upgrade_ReadProjectCode(struct i2c_client *client,
 		if (*(pProjectCode + j) == '\0')
 			break;
 	}
-	pr_info("project code = %s\n", pProjectCode);
+	pr_debug("project code = %s\n", pProjectCode);
 	msleep(50);
 	/*********Step 5: reset the new FW***********************/
 	TPD_DEBUG("Step 5: reset the new FW\n");

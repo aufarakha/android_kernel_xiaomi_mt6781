@@ -132,7 +132,7 @@ static void __bq2589x_switch_dp_dm(struct bq2589x *bq, int dp_dm_direction)
 		gpio_set_value(bq->platform_data->dp_cb1, 0);
 		gpio_set_value(bq->platform_data->dm_cb2, 0);
 	}
-	pr_info("%s: dp_dm_direction:%d\n", __func__, dp_dm_direction);
+	pr_debug("%s: dp_dm_direction:%d\n", __func__, dp_dm_direction);
 }
 
 static int bq2589x_get_vendor_id(struct charger_device *chg_dev, u32 *vendor_id)
@@ -488,7 +488,7 @@ int bq2589x_set_chargecurrent(struct bq2589x *bq, int curr)
 int bq2589x_set_term_current(struct bq2589x *bq, int curr)
 {
 	u8 iterm;
-	pr_info("bq2589x_set_term_current:%d\n",curr);
+	pr_debug("bq2589x_set_term_current:%d\n",curr);
 	if (curr < BQ2589X_ITERM_BASE)
 		curr = BQ2589X_ITERM_BASE;
 
@@ -609,7 +609,7 @@ int bq2589x_force_dpdm(struct bq2589x *bq)
 	ret = bq2589x_update_bits(bq, BQ2589X_REG_02, 
 						BQ2589X_FORCE_DPDM_MASK, val);
 
-	pr_info("Force DPDM %s\n", !ret ? "successfully" : "failed");
+	pr_debug("Force DPDM %s\n", !ret ? "successfully" : "failed");
 	
 	return ret;
 
@@ -1153,7 +1153,7 @@ static int bq2589x_cb_init(struct bq2589x *bq)
 		return ret;
 	}
 
-	pr_info("cb init successfully\n");
+	pr_debug("cb init successfully\n");
 	return ret;
 }
 
@@ -1535,9 +1535,9 @@ static int bq2589x_set_ieoc(struct charger_device *chg_dev, u32 curr)
 	if(bq)
 		{
 			if( bq->part_no == 3) {
-				pr_info("charger vendor:1\n");
+				pr_debug("charger vendor:1\n");
 			} else {
-				pr_info("charger vendor:0\n");
+				pr_debug("charger vendor:0\n");
 			}
 		}
 	return bq2589x_set_term_current(bq, curr / 1000);
@@ -1645,7 +1645,7 @@ static int bq2589x_do_event(struct charger_device *chg_dev, u32 event,
 	if (chg_dev == NULL)
 		return -EINVAL;
 
-	pr_info("%s: event = %d\n", __func__, event);
+	pr_debug("%s: event = %d\n", __func__, event);
 	switch (event) {
 	case EVENT_EOC:
 		charger_dev_notify(chg_dev, CHARGER_DEV_NOTIFY_EOC);

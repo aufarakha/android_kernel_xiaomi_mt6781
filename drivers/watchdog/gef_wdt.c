@@ -316,7 +316,7 @@ static struct platform_driver gef_wdt_driver = {
 
 static int __init gef_wdt_init(void)
 {
-	pr_info("GE watchdog driver\n");
+	pr_debug("GE watchdog driver\n");
 	return platform_driver_register(&gef_wdt_driver);
 }
 

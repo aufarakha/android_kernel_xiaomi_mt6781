@@ -46,7 +46,7 @@ static void tpk_flush(void)
 {
 	if (tpk_curr > 0) {
 		tpk_buffer[tpk_curr] = '\0';
-		pr_info("[U] %s\n", tpk_buffer);
+		pr_debug("[U] %s\n", tpk_buffer);
 		tpk_curr = 0;
 	}
 }

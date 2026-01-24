@@ -2989,7 +2989,7 @@ int mtk_drm_ioctl_get_lcm_index(struct drm_device *dev, void *data,
 		*info = params->lcm_index;
 	} else {
 		*info = 0;
-		pr_info("Cannot get lcm_ext_params\n");
+		pr_debug("Cannot get lcm_ext_params\n");
 	}
 
 	return ret;
@@ -3744,7 +3744,7 @@ static int mtk_drm_probe(struct platform_device *pdev)
 	private->reg_data = mtk_ddp_get_mmsys_reg_data(private->data->mmsys_id);
 	if (IS_ERR(private->reg_data)) {
 		ret = PTR_ERR(private->config_regs);
-		pr_info("Failed to get mmsys register data: %d\n", ret);
+		pr_debug("Failed to get mmsys register data: %d\n", ret);
 		return ret;
 	}
 

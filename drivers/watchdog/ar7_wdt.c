@@ -138,7 +138,7 @@ static void ar7_wdt_update_margin(int new_margin)
 		change = 0xffff;
 	ar7_wdt_change(change);
 	margin = change * prescale_value / vbus_rate;
-	pr_info("timer margin %d seconds (prescale %d, change %d, freq %d)\n",
+	pr_debug("timer margin %d seconds (prescale %d, change %d, freq %d)\n",
 		margin, prescale_value, change, vbus_rate);
 }
 

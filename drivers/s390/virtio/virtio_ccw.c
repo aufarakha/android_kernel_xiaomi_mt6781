@@ -620,7 +620,7 @@ static int virtio_ccw_register_adapter_ind(struct virtio_ccw_device *vcdev,
 			 * for virtio-ccw, stop trying.
 			 */
 			virtio_ccw_use_airq = 0;
-			pr_info("Adapter interrupts unsupported on host\n");
+			pr_debug("Adapter interrupts unsupported on host\n");
 		} else
 			dev_warn(&vcdev->cdev->dev,
 				 "enabling adapter interrupts = %d\n", ret);

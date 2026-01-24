@@ -377,7 +377,7 @@ extern const struct sram_channel cx25821_sram_channels[];
 #define CX25821_WARN(fmt, args...)			\
 	pr_warn("(%d): " fmt, dev->board, ##args)
 #define CX25821_INFO(fmt, args...)			\
-	pr_info("(%d): " fmt, dev->board, ##args)
+	pr_debug("(%d): " fmt, dev->board, ##args)
 
 extern int cx25821_i2c_register(struct cx25821_i2c *bus);
 extern int cx25821_i2c_read(struct cx25821_i2c *bus, u16 reg_addr, int *value);

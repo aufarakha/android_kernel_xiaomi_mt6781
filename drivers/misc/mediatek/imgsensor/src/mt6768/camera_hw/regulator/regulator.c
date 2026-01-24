@@ -64,7 +64,7 @@ static int regulator_oc_notify(
 			return NOTIFY_OK;
 
 		/* Do OC handling */
-		pr_info("Imgsensor OC notify regulator: %s OC pid %ld\n",
+		pr_debug("Imgsensor OC notify regulator: %s OC pid %ld\n",
 			reg_oc_dbg->name, (long)reg_instance.pid);
 
 		gimgsensor.status.oc = 1;
@@ -106,7 +106,7 @@ enum IMGSENSOR_RETURN imgsensor_oc_interrupt(
 				Is_Notify_call[(unsigned int)sensor_idx][i] = true;
 
 				if (ret) {
-					pr_info(
+					pr_debug(
 					"regulator notifier request error\n");
 				}
 				pr_debug(
@@ -134,7 +134,7 @@ enum IMGSENSOR_RETURN imgsensor_oc_interrupt(
 					preg_own->pregulator[(unsigned int)sensor_idx][i],
 					&reg_oc_debug[(unsigned int)sensor_idx][i].nb);
 				Is_Notify_call[(unsigned int)sensor_idx][i] = false;
-				pr_info("Unregister OC notifier");
+				pr_debug("Unregister OC notifier");
 			}
 		}
 

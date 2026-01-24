@@ -185,7 +185,7 @@ static void kim_int_recv(struct kim_data_s *kim_gdata,
 			kim_gdata->rx_count = 2;
 			break;
 		default:
-			pr_info("unknown packet");
+			pr_debug("unknown packet");
 			ptr++;
 			count--;
 			continue;
@@ -252,7 +252,7 @@ static long read_local_version(struct kim_data_s *kim_gdata, char *bts_scr_name)
 	kim_gdata->version.maj_ver = maj_ver;
 	kim_gdata->version.min_ver = min_ver;
 
-	pr_info("%s", bts_scr_name);
+	pr_debug("%s", bts_scr_name);
 	return 0;
 }
 
@@ -402,7 +402,7 @@ static long download_firmware(struct kim_data_s *kim_gdata)
 			reinit_completion(&kim_gdata->kim_rcvd);
 			break;
 		case ACTION_DELAY:	/* sleep */
-			pr_info("sleep command in scr");
+			pr_debug("sleep command in scr");
 			action_ptr = &(((struct bts_action *)ptr)->data[0]);
 			mdelay(((struct bts_action_delay *)action_ptr)->msec);
 			break;
@@ -461,7 +461,7 @@ long st_kim_start(void *kim_data)
 	struct ti_st_plat_data	*pdata;
 	struct kim_data_s	*kim_gdata = (struct kim_data_s *)kim_data;
 
-	pr_info(" %s", __func__);
+	pr_debug(" %s", __func__);
 	pdata = kim_gdata->kim_pdev->dev.platform_data;
 
 	do {
@@ -478,7 +478,7 @@ long st_kim_start(void *kim_data)
 		reinit_completion(&kim_gdata->ldisc_installed);
 		/* send notification to UIM */
 		kim_gdata->ldisc_install = 1;
-		pr_info("ldisc_install = 1");
+		pr_debug("ldisc_install = 1");
 		sysfs_notify(&kim_gdata->kim_pdev->dev.kobj,
 				NULL, "install");
 		/* wait for ldisc to be installed */
@@ -492,7 +492,7 @@ long st_kim_start(void *kim_data)
 			continue;
 		} else {
 			/* ldisc installed now */
-			pr_info("line discipline installed");
+			pr_debug("line discipline installed");
 			err = download_firmware(kim_gdata);
 			if (err != 0) {
 				/* ldisc installed but fw download failed,
@@ -535,7 +535,7 @@ long st_kim_stop(void *kim_data)
 	}
 
 	/* send uninstall notification to UIM */
-	pr_info("ldisc_install = 0");
+	pr_debug("ldisc_install = 0");
 	kim_gdata->ldisc_install = 0;
 	sysfs_notify(&kim_gdata->kim_pdev->dev.kobj, NULL, "install");
 
@@ -780,7 +780,7 @@ static int kim_probe(struct platform_device *pdev)
 	strncpy(kim_gdata->dev_name, pdata->dev_name, UART_DEV_NAME_LEN);
 	kim_gdata->flow_cntrl = pdata->flow_cntrl;
 	kim_gdata->baud_rate = pdata->baud_rate;
-	pr_info("sysfs entries created\n");
+	pr_debug("sysfs entries created\n");
 
 	kim_debugfs_dir = debugfs_create_dir("ti-st", NULL);
 	if (!kim_debugfs_dir) {
@@ -815,11 +815,11 @@ static int kim_remove(struct platform_device *pdev)
 	 * nShutdown gpio from the system
 	 */
 	gpio_free(pdata->nshutdown_gpio);
-	pr_info("nshutdown GPIO Freed");
+	pr_debug("nshutdown GPIO Freed");
 
 	debugfs_remove_recursive(kim_debugfs_dir);
 	sysfs_remove_group(&pdev->dev.kobj, &uim_attr_grp);
-	pr_info("sysfs entries removed");
+	pr_debug("sysfs entries removed");
 
 	kim_gdata->kim_pdev = NULL;
 	st_core_exit(kim_gdata->core_data);

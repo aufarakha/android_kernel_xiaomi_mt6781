@@ -1521,7 +1521,7 @@ static int __init saa7164_init(void)
 
 	saa7164_proc_create();
 
-	pr_info("saa7164 driver loaded\n");
+	pr_debug("saa7164 driver loaded\n");
 
 	return 0;
 }

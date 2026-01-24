@@ -237,7 +237,7 @@ static int print_device_status(struct device *dev, void *data)
 
 	if (!dev->driver) {
 		/* Information only: is this too noisy? */
-		pr_info("Device with no driver: %s\n", xendev->nodename);
+		pr_debug("Device with no driver: %s\n", xendev->nodename);
 	} else if (xendev->state < XenbusStateConnected) {
 		enum xenbus_state rstate = XenbusStateUnknown;
 		if (xendev->otherend)
@@ -348,7 +348,7 @@ static void xenbus_reset_wait_for_backend(char *be, int expected)
 	timeout = wait_event_interruptible_timeout(backend_state_wq,
 			backend_state == expected, 5 * HZ);
 	if (timeout <= 0)
-		pr_info("backend %s timed out\n", be);
+		pr_debug("backend %s timed out\n", be);
 }
 
 /*
@@ -371,7 +371,7 @@ static void xenbus_reset_frontend(char *fe, char *be, int be_state)
 	be_watch.callback = xenbus_reset_backend_state_changed;
 	backend_state = XenbusStateUnknown;
 
-	pr_info("triggering reconnect on %s\n", be);
+	pr_debug("triggering reconnect on %s\n", be);
 	register_xenbus_watch(&be_watch);
 
 	/* fall through to forward backend to state XenbusStateInitialising */
@@ -392,7 +392,7 @@ static void xenbus_reset_frontend(char *fe, char *be, int be_state)
 	}
 
 	unregister_xenbus_watch(&be_watch);
-	pr_info("reconnect done on %s\n", be);
+	pr_debug("reconnect done on %s\n", be);
 	kfree(be_watch.node);
 }
 

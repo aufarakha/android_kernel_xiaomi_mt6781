@@ -288,14 +288,14 @@ static ssize_t dasd_stats_proc_write(struct file *file,
 			}
 			dasd_profile_reset(&dasd_global_profile);
 			dasd_global_profile_level = DASD_PROFILE_ON;
-			pr_info("The statistics feature has been switched "
+			pr_debug("The statistics feature has been switched "
 				"on\n");
 		} else if (strcmp(str, "off") == 0) {
 			/* switch off statistics profiling */
 			dasd_global_profile_level = DASD_PROFILE_OFF;
 			dasd_profile_off(&dasd_global_profile);
 			dasd_stats_all_block_off();
-			pr_info("The statistics feature has been switched "
+			pr_debug("The statistics feature has been switched "
 				"off\n");
 		} else
 			goto out_parse_error;
@@ -303,7 +303,7 @@ static ssize_t dasd_stats_proc_write(struct file *file,
 		/* reset the statistics */
 		dasd_profile_reset(&dasd_global_profile);
 		dasd_stats_all_block_reset();
-		pr_info("The statistics have been reset\n");
+		pr_debug("The statistics have been reset\n");
 	} else
 		goto out_parse_error;
 	vfree(buffer);

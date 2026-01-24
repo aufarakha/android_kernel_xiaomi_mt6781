@@ -165,7 +165,7 @@ static int max8925_probe(struct i2c_client *client,
 		if (max8925_dt_init(node, &client->dev, pdata))
 			return -EINVAL;
 	} else if (!pdata) {
-		pr_info("%s: platform data is missing\n", __func__);
+		pr_debug("%s: platform data is missing\n", __func__);
 		return -EINVAL;
 	}
 

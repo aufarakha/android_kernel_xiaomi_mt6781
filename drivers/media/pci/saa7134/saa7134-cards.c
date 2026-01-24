@@ -7342,7 +7342,7 @@ static void hauppauge_eeprom(struct saa7134_dev *dev, u8 *eeprom_data)
 		break;
 	}
 
-	pr_info("%s: hauppauge eeprom: model=%d\n",
+	pr_debug("%s: hauppauge eeprom: model=%d\n",
 	       dev->name, tv.model);
 }
 
@@ -7353,7 +7353,7 @@ int saa7134_board_init1(struct saa7134_dev *dev)
 	/* Always print gpio, often manufacturers encode tuner type and other info. */
 	saa_writel(SAA7134_GPIO_GPMODE0 >> 2, 0);
 	dev->gpio_value = saa_readl(SAA7134_GPIO_GPSTATUS0 >> 2);
-	pr_info("%s: board init: gpio is %x\n", dev->name, dev->gpio_value);
+	pr_debug("%s: board init: gpio is %x\n", dev->name, dev->gpio_value);
 
 	switch (dev->board) {
 	case SAA7134_BOARD_FLYVIDEO2000:
@@ -7773,7 +7773,7 @@ int saa7134_board_init2(struct saa7134_dev *dev)
 				break;
 			case 0x001d:
 				dev->tuner_type = TUNER_PHILIPS_FMD1216ME_MK3;
-				pr_info("%s Board has DVB-T\n",
+				pr_debug("%s Board has DVB-T\n",
 				       dev->name);
 				break;
 			default:
@@ -7784,7 +7784,7 @@ int saa7134_board_init2(struct saa7134_dev *dev)
 			pr_err("%s unexpected config structure\n", dev->name);
 		}
 
-		pr_info("%s Tuner type is %d\n", dev->name, dev->tuner_type);
+		pr_debug("%s Tuner type is %d\n", dev->name, dev->tuner_type);
 
 		/* The tuner TUNER_PHILIPS_FMD1216ME_MK3 after hardware    */
 		/* start has disabled IF and enabled DVB-T. When saa7134   */
@@ -7802,7 +7802,7 @@ int saa7134_board_init2(struct saa7134_dev *dev)
 			/* Reconfigure board as Snake reference design */
 			dev->board = SAA7134_BOARD_PHILIPS_SNAKE;
 			dev->tuner_type = saa7134_boards[dev->board].tuner_type;
-			pr_info("%s: Reconfigured board as %s\n",
+			pr_debug("%s: Reconfigured board as %s\n",
 				dev->name, saa7134_boards[dev->board].name);
 			break;
 		}
@@ -7830,7 +7830,7 @@ int saa7134_board_init2(struct saa7134_dev *dev)
 		struct i2c_msg msg = {.addr=0x08, .flags=0, .buf=data, .len = sizeof(data)};
 		if (dev->autodetected && (dev->eedata[0x49] == 0x50)) {
 			dev->board = SAA7134_BOARD_PHILIPS_TIGER_S;
-			pr_info("%s: Reconfigured board as %s\n",
+			pr_debug("%s: Reconfigured board as %s\n",
 				dev->name, saa7134_boards[dev->board].name);
 		}
 		if (dev->board == SAA7134_BOARD_PHILIPS_TIGER_S) {
@@ -7847,7 +7847,7 @@ int saa7134_board_init2(struct saa7134_dev *dev)
 	/* The card below is detected as card=53, but is different */
 	       if (dev->autodetected && (dev->eedata[0x27] == 0x03)) {
 			dev->board = SAA7134_BOARD_ASUSTeK_P7131_ANALOG;
-			pr_info("%s: P7131 analog only, using entry of %s\n",
+			pr_debug("%s: P7131 analog only, using entry of %s\n",
 				dev->name, saa7134_boards[dev->board].name);
 
 			/*
@@ -7921,7 +7921,7 @@ int saa7134_board_init2(struct saa7134_dev *dev)
 		} else {
 			msg.flags = I2C_M_RD;
 			rc = i2c_transfer(&dev->i2c_adap, &msg, 1);
-			pr_info("%s: probe IR chip @ i2c 0x%02x: %s\n",
+			pr_debug("%s: probe IR chip @ i2c 0x%02x: %s\n",
 				   dev->name, msg.addr,
 				   (1 == rc) ? "yes" : "no");
 			if (rc == 1)
@@ -7962,7 +7962,7 @@ int saa7134_board_init2(struct saa7134_dev *dev)
 			dev->board = SAA7134_BOARD_VIDEOMATE_DVBT_200A;
 			dev->tuner_type   = saa7134_boards[dev->board].tuner_type;
 			dev->tda9887_conf = saa7134_boards[dev->board].tda9887_conf;
-			pr_info("%s: Reconfigured board as %s\n",
+			pr_debug("%s: Reconfigured board as %s\n",
 				dev->name, saa7134_boards[dev->board].name);
 		} else {
 			pr_warn("%s: Unexpected tuner type info: %x in eeprom\n",

@@ -908,7 +908,7 @@ int xen_bind_pirq_gsi_to_irq(unsigned gsi,
 
 	irq = xen_irq_from_gsi(gsi);
 	if (irq != -1) {
-		pr_info("%s: returning irq %d for gsi %u\n",
+		pr_debug("%s: returning irq %d for gsi %u\n",
 			__func__, irq, gsi);
 		goto out;
 	}
@@ -1038,7 +1038,7 @@ int xen_destroy_irq(int irq)
 		 * (free_domain_pirqs).
 		 */
 		if ((rc == -ESRCH && info->u.pirq.domid != DOMID_SELF))
-			pr_info("domain %d does not have %d anymore\n",
+			pr_debug("domain %d does not have %d anymore\n",
 				info->u.pirq.domid, info->u.pirq.pirq);
 		else if (rc) {
 			pr_warn("unmap irq failed %d\n", rc);

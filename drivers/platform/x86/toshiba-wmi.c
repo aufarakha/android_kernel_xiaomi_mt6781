@@ -132,7 +132,7 @@ static int __init toshiba_wmi_init(void)
 		return ret;
 	}
 
-	pr_info("Toshiba WMI Hotkey Driver\n");
+	pr_debug("Toshiba WMI Hotkey Driver\n");
 
 	return 0;
 }

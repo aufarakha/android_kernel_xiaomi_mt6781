@@ -662,7 +662,7 @@ stm32_exti_chip_data *stm32_exti_chip_init(struct stm32_exti_host_data *h_data,
 	writel_relaxed(0, base + stm32_bank->imr_ofst);
 	writel_relaxed(0, base + stm32_bank->emr_ofst);
 
-	pr_info("%s: bank%d, External IRQs available:%#x\n",
+	pr_debug("%s: bank%d, External IRQs available:%#x\n",
 		node->full_name, bank_idx, irqs_mask);
 
 	return chip_data;

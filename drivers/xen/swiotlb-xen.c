@@ -262,7 +262,7 @@ error:
 	if (repeat--) {
 		xen_io_tlb_nslabs = max(1024UL, /* Min is 2MB */
 					(xen_io_tlb_nslabs >> 1));
-		pr_info("Lowering to %luMB\n",
+		pr_debug("Lowering to %luMB\n",
 			(xen_io_tlb_nslabs << IO_TLB_SHIFT) >> 20);
 		goto retry;
 	}

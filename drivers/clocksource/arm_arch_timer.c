@@ -596,7 +596,7 @@ static void arch_timer_check_ool_workaround(enum arch_timer_erratum_match_type t
 	}
 
 	arch_timer_enable_workaround(wa, local);
-	pr_info("Enabling %s workaround for %s\n",
+	pr_debug("Enabling %s workaround for %s\n",
 		local ? "local" : "global", wa->desc);
 }
 
@@ -867,7 +867,7 @@ static void arch_counter_set_user_access(void)
 	 * disabled though.
 	 */
 	if (arch_timer_this_cpu_has_cntvct_wa())
-		pr_info("CPU%d: Trapping CNTVCT access\n", smp_processor_id());
+		pr_debug("CPU%d: Trapping CNTVCT access\n", smp_processor_id());
 	else
 		cntkctl |= ARCH_TIMER_USR_VCT_ACCESS_EN;
 
@@ -937,7 +937,7 @@ static void arch_timer_of_configure_rate(u32 rate, struct device_node *np)
 
 static void arch_timer_banner(unsigned type)
 {
-	pr_info("%s%s%s timer(s) running at %lu.%02luMHz (%s%s%s).\n",
+	pr_debug("%s%s%s timer(s) running at %lu.%02luMHz (%s%s%s).\n",
 		type & ARCH_TIMER_TYPE_CP15 ? "cp15" : "",
 		type == (ARCH_TIMER_TYPE_CP15 | ARCH_TIMER_TYPE_MEM) ?
 			" and " : "",

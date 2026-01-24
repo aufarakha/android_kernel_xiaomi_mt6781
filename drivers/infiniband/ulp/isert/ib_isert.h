@@ -28,7 +28,7 @@
 #define isert_info(fmt, arg...)				\
 	do {						\
 		if (unlikely(isert_debug_level > 1))	\
-			pr_info(PFX "%s: " fmt,         \
+			pr_debug(PFX "%s: " fmt,         \
 				__func__ , ## arg);	\
 	} while (0)
 

@@ -5004,7 +5004,7 @@ static struct vio_driver ibmvnic_driver = {
 /* module functions */
 static int __init ibmvnic_module_init(void)
 {
-	pr_info("%s: %s %s\n", ibmvnic_driver_name, ibmvnic_driver_string,
+	pr_debug("%s: %s %s\n", ibmvnic_driver_name, ibmvnic_driver_string,
 		IBMVNIC_DRIVER_VERSION);
 
 	return vio_register_driver(&ibmvnic_driver);

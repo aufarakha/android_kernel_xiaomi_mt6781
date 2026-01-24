@@ -836,28 +836,28 @@ static int probe_disk(struct vdc_port *port)
 	if (vdc_version_supported(port, 1, 1)) {
 		switch (port->vdisk_mtype) {
 		case VD_MEDIA_TYPE_CD:
-			pr_info(PFX "Virtual CDROM %s\n", port->disk_name);
+			pr_debug(PFX "Virtual CDROM %s\n", port->disk_name);
 			g->flags |= GENHD_FL_CD;
 			g->flags |= GENHD_FL_REMOVABLE;
 			set_disk_ro(g, 1);
 			break;
 
 		case VD_MEDIA_TYPE_DVD:
-			pr_info(PFX "Virtual DVD %s\n", port->disk_name);
+			pr_debug(PFX "Virtual DVD %s\n", port->disk_name);
 			g->flags |= GENHD_FL_CD;
 			g->flags |= GENHD_FL_REMOVABLE;
 			set_disk_ro(g, 1);
 			break;
 
 		case VD_MEDIA_TYPE_FIXED:
-			pr_info(PFX "Virtual Hard disk %s\n", port->disk_name);
+			pr_debug(PFX "Virtual Hard disk %s\n", port->disk_name);
 			break;
 		}
 	}
 
 	blk_queue_physical_block_size(q, port->vdisk_phys_blksz);
 
-	pr_info(PFX "%s: %u sectors (%u MB) protocol %d.%d\n",
+	pr_debug(PFX "%s: %u sectors (%u MB) protocol %d.%d\n",
 	       g->disk_name,
 	       port->vdisk_size, (port->vdisk_size >> (20 - 9)),
 	       port->vio.ver.major, port->vio.ver.minor);

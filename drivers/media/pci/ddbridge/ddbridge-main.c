@@ -294,7 +294,7 @@ static __init int module_init_ddbridge(void)
 {
 	int stat;
 
-	pr_info("Digital Devices PCIE bridge driver "
+	pr_debug("Digital Devices PCIE bridge driver "
 		DDBRIDGE_VERSION
 		", Copyright (C) 2010-17 Digital Devices GmbH\n");
 	stat = ddb_init_ddbridge();

@@ -608,7 +608,7 @@ static int acpi_suspend_enter(suspend_state_t pm_state)
 		error = acpi_suspend_lowlevel();
 		if (error)
 			return error;
-		pr_info(PREFIX "Low-level resume complete\n");
+		pr_debug(PREFIX "Low-level resume complete\n");
 		pm_set_resume_via_firmware();
 		break;
 	}
@@ -1309,7 +1309,7 @@ int __init acpi_sleep_init(void)
 		if (sleep_states[i])
 			pos += sprintf(pos, " S%d", i);
 	}
-	pr_info(PREFIX "(supports%s)\n", supported);
+	pr_debug(PREFIX "(supports%s)\n", supported);
 
 	/*
 	 * Register the tts_notifier to reboot notifier list so that the _TTS

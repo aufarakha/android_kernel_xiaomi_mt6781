@@ -3178,7 +3178,7 @@ qla4xxx_conn_create(struct iscsi_cls_session *cls_sess, uint32_t conn_idx)
 	cls_conn = iscsi_conn_setup(cls_sess, sizeof(struct qla_conn),
 				    conn_idx);
 	if (!cls_conn) {
-		pr_info("%s: Can not create connection for conn_idx = %u\n",
+		pr_debug("%s: Can not create connection for conn_idx = %u\n",
 			__func__, conn_idx);
 		return NULL;
 	}

@@ -275,7 +275,7 @@ int bttv_I2CRead(struct bttv *btv, unsigned char addr, char *probe_for)
 	if (0 != btv->i2c_rc)
 		return -1;
 	if (bttv_verbose && NULL != probe_for)
-		pr_info("%d: i2c: checking for %s @ 0x%02x... ",
+		pr_debug("%d: i2c: checking for %s @ 0x%02x... ",
 			btv->c.nr, probe_for, addr);
 	btv->i2c_client.addr = addr >> 1;
 	if (1 != i2c_master_recv(&btv->i2c_client, &buffer, 1)) {
@@ -339,7 +339,7 @@ static void do_i2c_scan(char *name, struct i2c_client *c)
 		rc = i2c_master_recv(c,&buf,0);
 		if (rc < 0)
 			continue;
-		pr_info("%s: i2c scan: found device @ 0x%x  [%s]\n",
+		pr_debug("%s: i2c scan: found device @ 0x%x  [%s]\n",
 			name, i << 1, i2c_devs[i] ? i2c_devs[i] : "???");
 	}
 }

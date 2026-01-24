@@ -2866,7 +2866,7 @@ static int __init comedi_init(void)
 	int i;
 	int retval;
 
-	pr_info("version " COMEDI_RELEASE " - http://www.comedi.org\n");
+	pr_debug("version " COMEDI_RELEASE " - http://www.comedi.org\n");
 
 	if (comedi_num_legacy_minors > COMEDI_NUM_BOARD_MINORS) {
 		pr_err("invalid value for module parameter \"comedi_num_legacy_minors\".  Valid values are 0 through %i.\n",

@@ -76,7 +76,7 @@ int cxgbi_ppm_find_page_index(struct cxgbi_ppm *ppm, unsigned long pgsz)
 			return i;
 		}
 	}
-	pr_info("ippm: ddp page size %lu not supported.\n", pgsz);
+	pr_debug("ippm: ddp page size %lu not supported.\n", pgsz);
 	return DDP_PGIDX_MAX;
 }
 
@@ -317,7 +317,7 @@ static void ppm_destroy(struct kref *kref)
 	struct cxgbi_ppm *ppm = container_of(kref,
 					     struct cxgbi_ppm,
 					     refcnt);
-	pr_info("ippm: kref 0, destroy %s ppm 0x%p.\n",
+	pr_debug("ippm: kref 0, destroy %s ppm 0x%p.\n",
 		ppm->ndev->name, ppm);
 
 	*ppm->ppm_pp = NULL;
@@ -396,7 +396,7 @@ int cxgbi_ppm_init(void **ppm_pp, struct net_device *ndev,
 	unsigned int ppod_bmap_size;
 
 	if (ppm) {
-		pr_info("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
+		pr_debug("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
 			ndev->name, ppm_pp, ppm, ppm->ppmax, ppmax);
 		kref_get(&ppm->refcnt);
 		return 1;
@@ -430,7 +430,7 @@ int cxgbi_ppm_init(void **ppm_pp, struct net_device *ndev,
 		unsigned int end = ppod_bmap_size >> 3;
 
 		bitmap_set(ppm->ppod_bmap, ppmax, end - start);
-		pr_info("%s: %u - %u < %u * 8, mask extra bits %u, %u.\n",
+		pr_debug("%s: %u - %u < %u * 8, mask extra bits %u, %u.\n",
 			__func__, ppmax, ppmax_pool, ppod_bmap_size, start,
 			end);
 	}
@@ -460,7 +460,7 @@ int cxgbi_ppm_init(void **ppm_pp, struct net_device *ndev,
 		ppm_free(ppm);
 		ppm = (struct cxgbi_ppm *)(*ppm_pp);
 
-		pr_info("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
+		pr_debug("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
 			ndev->name, ppm_pp, *ppm_pp, ppm->ppmax, ppmax);
 
 		kref_get(&ppm->refcnt);
@@ -470,7 +470,7 @@ int cxgbi_ppm_init(void **ppm_pp, struct net_device *ndev,
 
 	ppm->tformat.pgsz_idx_dflt = cxgbi_ppm_find_page_index(ppm, PAGE_SIZE);
 
-	pr_info("ippm %s: ppm 0x%p, 0x%p, base %u/%u, pg %lu,%u, rsvd %u,%u.\n",
+	pr_debug("ippm %s: ppm 0x%p, 0x%p, base %u/%u, pg %lu,%u, rsvd %u,%u.\n",
 		ndev->name, ppm_pp, ppm, ppm->base_idx, ppm->ppmax, PAGE_SIZE,
 		ppm->tformat.pgsz_idx_dflt, ppm->pool_rsvd,
 		ppm->pool_index_max);
@@ -490,7 +490,7 @@ unsigned int cxgbi_tagmask_set(unsigned int ppmax)
 	if (bits > PPOD_IDX_MAX_SIZE)
 		bits = PPOD_IDX_MAX_SIZE;
 
-	pr_info("ippm: ppmax %u/0x%x -> bits %u, tagmask 0x%x.\n",
+	pr_debug("ippm: ppmax %u/0x%x -> bits %u, tagmask 0x%x.\n",
 		ppmax, ppmax, bits, 1 << (bits + PPOD_IDX_SHIFT));
 
 	return 1 << (bits + PPOD_IDX_SHIFT);

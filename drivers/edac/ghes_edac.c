@@ -94,7 +94,7 @@ static void ghes_edac_dmidecode(const struct dmi_header *dh, void *arg)
 		u16 rdr_mask = BIT(7) | BIT(13);
 
 		if (entry->size == 0xffff) {
-			pr_info("Can't get DIMM%i size\n",
+			pr_debug("Can't get DIMM%i size\n",
 				dimm_fill->count);
 			dimm->nr_pages = MiB_TO_PAGES(32);/* Unknown */
 		} else if (entry->size == 0x7fff) {
@@ -478,7 +478,7 @@ int ghes_edac_register(struct ghes *ghes, struct device *dev)
 
 	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers, sizeof(struct ghes_edac_pvt));
 	if (!mci) {
-		pr_info("Can't allocate memory for EDAC data\n");
+		pr_debug("Can't allocate memory for EDAC data\n");
 		return -ENOMEM;
 	}
 
@@ -495,16 +495,16 @@ int ghes_edac_register(struct ghes *ghes, struct device *dev)
 	mci->dev_name = "ghes";
 
 	if (fake) {
-		pr_info("This system has a very crappy BIOS: It doesn't even list the DIMMS.\n");
-		pr_info("Its SMBIOS info is wrong. It is doubtful that the error report would\n");
-		pr_info("work on such system. Use this driver with caution\n");
+		pr_debug("This system has a very crappy BIOS: It doesn't even list the DIMMS.\n");
+		pr_debug("Its SMBIOS info is wrong. It is doubtful that the error report would\n");
+		pr_debug("work on such system. Use this driver with caution\n");
 	} else if (idx < 0) {
-		pr_info("This EDAC driver relies on BIOS to enumerate memory and get error reports.\n");
-		pr_info("Unfortunately, not all BIOSes reflect the memory layout correctly.\n");
-		pr_info("So, the end result of using this driver varies from vendor to vendor.\n");
-		pr_info("If you find incorrect reports, please contact your hardware vendor\n");
-		pr_info("to correct its BIOS.\n");
-		pr_info("This system has %d DIMM sockets.\n", num_dimm);
+		pr_debug("This EDAC driver relies on BIOS to enumerate memory and get error reports.\n");
+		pr_debug("Unfortunately, not all BIOSes reflect the memory layout correctly.\n");
+		pr_debug("So, the end result of using this driver varies from vendor to vendor.\n");
+		pr_debug("If you find incorrect reports, please contact your hardware vendor\n");
+		pr_debug("to correct its BIOS.\n");
+		pr_debug("This system has %d DIMM sockets.\n", num_dimm);
 	}
 
 	if (!fake) {
@@ -524,7 +524,7 @@ int ghes_edac_register(struct ghes *ghes, struct device *dev)
 
 	rc = edac_mc_add_mc(mci);
 	if (rc < 0) {
-		pr_info("Can't register at EDAC core\n");
+		pr_debug("Can't register at EDAC core\n");
 		edac_mc_free(mci);
 		return -ENODEV;
 	}

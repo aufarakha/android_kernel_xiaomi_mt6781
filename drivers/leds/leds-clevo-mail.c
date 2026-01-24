@@ -27,7 +27,7 @@ static struct platform_device *pdev;
 
 static int __init clevo_mail_led_dmi_callback(const struct dmi_system_id *id)
 {
-	pr_info("'%s' found\n", id->ident);
+	pr_debug("'%s' found\n", id->ident);
 	return 1;
 }
 

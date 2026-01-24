@@ -125,7 +125,7 @@ static void do_i2c_scan(const char *name, struct i2c_client *c)
 		rc = i2c_master_recv(c, &buf, 0);
 		if (rc < 0)
 			continue;
-		pr_info("i2c scan: found device @ 0x%x  [%s]\n",
+		pr_debug("i2c scan: found device @ 0x%x  [%s]\n",
 			i << 1, i2c_devs[i] ? i2c_devs[i] : "???");
 	}
 }
@@ -168,7 +168,7 @@ int cx88_i2c_init(struct cx88_core *core, struct pci_dev *pci)
 		case CX88_BOARD_HAUPPAUGE_HVR1300:
 		case CX88_BOARD_HAUPPAUGE_HVR3000:
 		case CX88_BOARD_HAUPPAUGE_HVR4000:
-			pr_info("i2c init: enabling analog demod on HVR1300/3000/4000 tuner\n");
+			pr_debug("i2c init: enabling analog demod on HVR1300/3000/4000 tuner\n");
 			i2c_transfer(core->i2c_client.adapter, &tuner_msg, 1);
 			break;
 		default:

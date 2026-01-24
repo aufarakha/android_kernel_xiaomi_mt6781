@@ -453,7 +453,7 @@ int pp_atomfwctrl_get_avfs_information(struct pp_hwmgr *hwmgr,
 		param->ucAcgEnableGbVdroopTable = le32_to_cpu(profile_v4_2->enable_acg_gb_vdroop_table);
 		param->ucAcgEnableGbFuseTable = le32_to_cpu(profile_v4_2->enable_acg_gb_fuse_table);
 	} else {
-		pr_info("Invalid VBIOS AVFS ProfilingInfo Revision!\n");
+		pr_debug("Invalid VBIOS AVFS ProfilingInfo Revision!\n");
 		return -EINVAL;
 	}
 
@@ -472,7 +472,7 @@ int pp_atomfwctrl_get_gpio_information(struct pp_hwmgr *hwmgr,
 				idx, NULL, NULL, NULL);
 
 	if (!info) {
-		pr_info("Error retrieving BIOS smu_info Table Address!");
+		pr_debug("Error retrieving BIOS smu_info Table Address!");
 		return -1;
 	}
 
@@ -592,7 +592,7 @@ int pp_atomfwctrl_get_vbios_bootup_values(struct pp_hwmgr *hwmgr,
 				ix, NULL, NULL, NULL);
 
 	if (!info) {
-		pr_info("Error retrieving BIOS firmwareinfo!");
+		pr_debug("Error retrieving BIOS firmwareinfo!");
 		return -EINVAL;
 	}
 
@@ -605,7 +605,7 @@ int pp_atomfwctrl_get_vbios_bootup_values(struct pp_hwmgr *hwmgr,
 		pp_atomfwctrl_copy_vbios_bootup_values_3_1(hwmgr,
 				boot_values, fwinfo_3_1);
 	} else {
-		pr_info("Fw info table revision does not match!");
+		pr_debug("Fw info table revision does not match!");
 		return -EINVAL;
 	}
 
@@ -623,7 +623,7 @@ int pp_atomfwctrl_get_smc_dpm_information(struct pp_hwmgr *hwmgr,
 		smu_atom_get_data_table(hwmgr->adev,
 				ix, NULL, NULL, NULL);
 	if (!info) {
-		pr_info("Error retrieving BIOS Table Address!");
+		pr_debug("Error retrieving BIOS Table Address!");
 		return -EINVAL;
 	}
 

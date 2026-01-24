@@ -207,7 +207,7 @@ static int __init footbridge_watchdog_init(void)
 	if (retval < 0)
 		return retval;
 
-	pr_info("Footbridge Watchdog Timer: 0.01, timer margin: %d sec\n",
+	pr_debug("Footbridge Watchdog Timer: 0.01, timer margin: %d sec\n",
 		soft_margin);
 
 	if (machine_is_cats())

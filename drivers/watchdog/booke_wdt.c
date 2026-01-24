@@ -221,7 +221,7 @@ static int __init booke_wdt_init(void)
 	int ret = 0;
 	bool nowayout = WATCHDOG_NOWAYOUT;
 
-	pr_info("powerpc book-e watchdog driver loaded\n");
+	pr_debug("powerpc book-e watchdog driver loaded\n");
 	booke_wdt_info.firmware_version = cur_cpu_spec->pvr_value;
 	booke_wdt_set_timeout(&booke_wdt_dev,
 			      period_to_sec(booke_wdt_period));

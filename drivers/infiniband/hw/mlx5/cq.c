@@ -1337,7 +1337,7 @@ int mlx5_ib_resize_cq(struct ib_cq *ibcq, int entries, struct ib_udata *udata)
 	unsigned long flags;
 
 	if (!MLX5_CAP_GEN(dev->mdev, cq_resize)) {
-		pr_info("Firmware does not support resize CQ\n");
+		pr_debug("Firmware does not support resize CQ\n");
 		return -ENOSYS;
 	}
 

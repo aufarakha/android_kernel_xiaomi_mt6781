@@ -1523,7 +1523,7 @@ int rtllib_rx(struct rtllib_device *ieee, struct sk_buff *skb,
 	int ret = 0;
 
 	if (!ieee || !skb || !rx_stats) {
-		pr_info("%s: Input parameters NULL!\n", __func__);
+		pr_debug("%s: Input parameters NULL!\n", __func__);
 		goto rx_dropped;
 	}
 	if (skb->len < 10) {

@@ -92,7 +92,7 @@ static void dell_wmi_aio_notify(u32 value, void *context)
 
 	status = wmi_get_event_data(value, &response);
 	if (status != AE_OK) {
-		pr_info("bad event status 0x%x\n", status);
+		pr_debug("bad event status 0x%x\n", status);
 		return;
 	}
 
@@ -151,7 +151,7 @@ static int __init dell_wmi_aio_input_setup(void)
 	}
 	err = input_register_device(dell_wmi_aio_input_dev);
 	if (err) {
-		pr_info("Unable to register input device\n");
+		pr_debug("Unable to register input device\n");
 		goto err_free_dev;
 	}
 	return 0;

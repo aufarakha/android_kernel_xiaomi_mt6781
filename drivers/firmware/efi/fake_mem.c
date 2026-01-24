@@ -131,7 +131,7 @@ static int __init setup_fake_mem(char *p)
 	     cmp_fake_mem, NULL);
 
 	for (i = 0; i < nr_fake_mem; i++)
-		pr_info("efi_fake_mem: add attr=0x%016llx to [mem 0x%016llx-0x%016llx]",
+		pr_debug("efi_fake_mem: add attr=0x%016llx to [mem 0x%016llx-0x%016llx]",
 			fake_mems[i].attribute, fake_mems[i].range.start,
 			fake_mems[i].range.end);
 

@@ -3517,8 +3517,8 @@ static int __init ice_module_init(void)
 {
 	int status;
 
-	pr_info("%s - version %s\n", ice_driver_string, ice_drv_ver);
-	pr_info("%s\n", ice_copyright);
+	pr_debug("%s - version %s\n", ice_driver_string, ice_drv_ver);
+	pr_debug("%s\n", ice_copyright);
 
 	ice_wq = alloc_ordered_workqueue("%s", WQ_MEM_RECLAIM, KBUILD_MODNAME);
 	if (!ice_wq) {
@@ -3546,7 +3546,7 @@ static void __exit ice_module_exit(void)
 {
 	pci_unregister_driver(&ice_driver);
 	destroy_workqueue(ice_wq);
-	pr_info("module unloaded\n");
+	pr_debug("module unloaded\n");
 }
 module_exit(ice_module_exit);
 

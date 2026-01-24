@@ -38,7 +38,7 @@ module_param(debug, int, 0644);
 #define dprintk(level, fmt, arg...)					      \
 	do {								      \
 		if (debug >= level)					      \
-			pr_info("vb2-v4l2: %s: " fmt, __func__, ## arg); \
+			pr_debug("vb2-v4l2: %s: " fmt, __func__, ## arg); \
 	} while (0)
 
 /* Flags that are set by us */

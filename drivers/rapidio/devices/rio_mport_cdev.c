@@ -1654,7 +1654,7 @@ static void rio_release_dev(struct device *dev)
 	struct rio_dev *rdev;
 
 	rdev = to_rio_dev(dev);
-	pr_info(DRV_PREFIX "%s: %s\n", __func__, rio_name(rdev));
+	pr_debug(DRV_PREFIX "%s: %s\n", __func__, rio_name(rdev));
 	kfree(rdev);
 }
 
@@ -2431,14 +2431,14 @@ static struct mport_dev *mport_cdev_add(struct rio_mport *mport)
 		md->properties.cap_transfer_mode = 0;
 		md->properties.cap_addr_size = 0;
 	} else
-		pr_info(DRV_PREFIX "Failed to obtain info for %s cdev(%d:%d)\n",
+		pr_debug(DRV_PREFIX "Failed to obtain info for %s cdev(%d:%d)\n",
 			mport->name, MAJOR(dev_number), mport->id);
 
 	mutex_lock(&mport_devs_lock);
 	list_add_tail(&md->node, &mport_devs);
 	mutex_unlock(&mport_devs_lock);
 
-	pr_info(DRV_PREFIX "Added %s cdev(%d:%d)\n",
+	pr_debug(DRV_PREFIX "Added %s cdev(%d:%d)\n",
 		mport->name, MAJOR(dev_number), mport->id);
 
 	return md;

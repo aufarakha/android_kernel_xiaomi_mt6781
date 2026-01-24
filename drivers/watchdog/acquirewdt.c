@@ -262,7 +262,7 @@ static int __init acq_probe(struct platform_device *dev)
 		       WATCHDOG_MINOR, ret);
 		goto unreg_regions;
 	}
-	pr_info("initialized. (nowayout=%d)\n", nowayout);
+	pr_debug("initialized. (nowayout=%d)\n", nowayout);
 
 	return 0;
 unreg_regions:
@@ -302,7 +302,7 @@ static int __init acq_init(void)
 {
 	int err;
 
-	pr_info("WDT driver for Acquire single board computer initialising\n");
+	pr_debug("WDT driver for Acquire single board computer initialising\n");
 
 	acq_platform_device = platform_device_register_simple(DRV_NAME,
 								-1, NULL, 0);
@@ -323,7 +323,7 @@ static void __exit acq_exit(void)
 {
 	platform_device_unregister(acq_platform_device);
 	platform_driver_unregister(&acquirewdt_driver);
-	pr_info("Watchdog Module Unloaded\n");
+	pr_debug("Watchdog Module Unloaded\n");
 }
 
 module_init(acq_init);

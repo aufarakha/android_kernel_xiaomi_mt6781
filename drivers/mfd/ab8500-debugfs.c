@@ -2529,7 +2529,7 @@ static ssize_t ab8500_subscribe_write(struct file *file,
 	dev_attr[irq_index]->attr.mode = S_IRUGO;
 	err = sysfs_create_file(&dev->kobj, &dev_attr[irq_index]->attr);
 	if (err < 0) {
-		pr_info("sysfs_create_file failed %d\n", err);
+		pr_debug("sysfs_create_file failed %d\n", err);
 		return err;
 	}
 
@@ -2537,7 +2537,7 @@ static ssize_t ab8500_subscribe_write(struct file *file,
 				   IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
 				   "ab8500-debug", &dev->kobj);
 	if (err < 0) {
-		pr_info("request_threaded_irq failed %d, %lu\n",
+		pr_debug("request_threaded_irq failed %d, %lu\n",
 			err, user_val);
 		sysfs_remove_file(&dev->kobj, &dev_attr[irq_index]->attr);
 		return err;

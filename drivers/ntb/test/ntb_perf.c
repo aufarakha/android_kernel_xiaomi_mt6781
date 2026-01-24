@@ -1496,12 +1496,12 @@ static int __init perf_init(void)
 
 	if (chunk_order > MAX_CHUNK_ORDER) {
 		chunk_order = MAX_CHUNK_ORDER;
-		pr_info("Chunk order reduced to %hhu\n", chunk_order);
+		pr_debug("Chunk order reduced to %hhu\n", chunk_order);
 	}
 
 	if (total_order < chunk_order) {
 		total_order = chunk_order;
-		pr_info("Total data order reduced to %hhu\n", total_order);
+		pr_debug("Total data order reduced to %hhu\n", total_order);
 	}
 
 	perf_wq = alloc_workqueue("perf_wq", WQ_UNBOUND | WQ_SYSFS, 0);

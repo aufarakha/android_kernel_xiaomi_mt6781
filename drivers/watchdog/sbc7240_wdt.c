@@ -64,7 +64,7 @@ static void wdt_disable(void)
 	/* disable the watchdog */
 	if (test_and_clear_bit(SBC7240_ENABLED_STATUS_BIT, &wdt_status)) {
 		inb_p(SBC7240_DISABLE_PORT);
-		pr_info("Watchdog timer is now disabled\n");
+		pr_debug("Watchdog timer is now disabled\n");
 	}
 }
 
@@ -73,7 +73,7 @@ static void wdt_enable(void)
 	/* enable the watchdog */
 	if (!test_and_set_bit(SBC7240_ENABLED_STATUS_BIT, &wdt_status)) {
 		inb_p(SBC7240_ENABLE_PORT);
-		pr_info("Watchdog timer is now enabled\n");
+		pr_debug("Watchdog timer is now enabled\n");
 	}
 }
 
@@ -86,7 +86,7 @@ static int wdt_set_timeout(int t)
 	/* set the timeout */
 	outb_p((unsigned)t, SBC7240_SET_TIMEOUT_PORT);
 	timeout = t;
-	pr_info("timeout set to %d seconds\n", t);
+	pr_debug("timeout set to %d seconds\n", t);
 	return 0;
 }
 
@@ -246,7 +246,7 @@ static struct notifier_block wdt_notifier = {
 
 static void __exit sbc7240_wdt_unload(void)
 {
-	pr_info("Removing watchdog\n");
+	pr_debug("Removing watchdog\n");
 	misc_deregister(&wdt_miscdev);
 
 	unregister_reboot_notifier(&wdt_notifier);
@@ -270,7 +270,7 @@ static int __init sbc7240_wdt_init(void)
 
 	if (timeout < 1 || timeout > SBC7240_MAX_TIMEOUT) {
 		timeout = SBC7240_TIMEOUT;
-		pr_info("timeout value must be 1<=x<=%d, using %d\n",
+		pr_debug("timeout value must be 1<=x<=%d, using %d\n",
 			SBC7240_MAX_TIMEOUT, timeout);
 	}
 	wdt_set_timeout(timeout);
@@ -289,7 +289,7 @@ static int __init sbc7240_wdt_init(void)
 		goto err_out_reboot_notifier;
 	}
 
-	pr_info("Watchdog driver for SBC7240 initialised (nowayout=%d)\n",
+	pr_debug("Watchdog driver for SBC7240 initialised (nowayout=%d)\n",
 		nowayout);
 
 	return 0;

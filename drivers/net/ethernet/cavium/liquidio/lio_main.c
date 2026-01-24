@@ -301,7 +301,7 @@ static void cleanup_aer_uncorrect_error_status(struct pci_dev *dev)
 	int pos = 0x100;
 	u32 status, mask;
 
-	pr_info("%s :\n", __func__);
+	pr_debug("%s :\n", __func__);
 
 	pci_read_config_dword(dev, pos + PCI_ERR_UNCOR_STATUS, &status);
 	pci_read_config_dword(dev, pos + PCI_ERR_UNCOR_SEVER, &mask);
@@ -2384,7 +2384,7 @@ static netdev_tx_t liquidio_xmit(struct sk_buff *skb, struct net_device *netdev)
 		return NETDEV_TX_BUSY;
 	}
 
-	/* pr_info(" XMIT - valid Qs: %d, 1st Q no: %d, cpu:  %d, q_no:%d\n",
+	/* pr_debug(" XMIT - valid Qs: %d, 1st Q no: %d, cpu:  %d, q_no:%d\n",
 	 *	lio->linfo.num_txpciq, lio->txq, cpu, ndata.q_no);
 	 */
 
@@ -4312,7 +4312,7 @@ static void __exit liquidio_exit(void)
 {
 	liquidio_deinit_pci();
 
-	pr_info("LiquidIO network module is now unloaded\n");
+	pr_debug("LiquidIO network module is now unloaded\n");
 }
 
 module_init(liquidio_init);

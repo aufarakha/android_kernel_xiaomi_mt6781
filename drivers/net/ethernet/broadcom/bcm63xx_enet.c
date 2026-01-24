@@ -828,7 +828,7 @@ static void bcm_enet_adjust_phy_link(struct net_device *dev)
 	}
 
 	if (status_changed) {
-		pr_info("%s: link %s", dev->name, phydev->link ?
+		pr_debug("%s: link %s", dev->name, phydev->link ?
 			"UP" : "DOWN");
 		if (phydev->link)
 			pr_cont(" - %d/%s - flow control %s", phydev->speed,
@@ -851,7 +851,7 @@ static void bcm_enet_adjust_link(struct net_device *dev)
 	bcm_enet_set_flow(priv, priv->pause_rx, priv->pause_tx);
 	netif_carrier_on(dev);
 
-	pr_info("%s: link forced UP - %d/%s - flow control %s/%s\n",
+	pr_debug("%s: link forced UP - %d/%s - flow control %s/%s\n",
 		dev->name,
 		priv->force_speed_100 ? 100 : 10,
 		priv->force_duplex_full ? "full" : "half",

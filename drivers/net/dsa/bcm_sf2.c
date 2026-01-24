@@ -1174,7 +1174,7 @@ static int bcm_sf2_sw_probe(struct platform_device *pdev)
 	if (ret)
 		goto out_mdio;
 
-	pr_info("Starfighter 2 top: %x.%02x, core: %x.%02x base: 0x%p, IRQs: %d, %d\n",
+	pr_debug("Starfighter 2 top: %x.%02x, core: %x.%02x base: 0x%p, IRQs: %d, %d\n",
 		priv->hw_params.top_rev >> 8, priv->hw_params.top_rev & 0xff,
 		priv->hw_params.core_rev >> 8, priv->hw_params.core_rev & 0xff,
 		priv->core, priv->irq0, priv->irq1);

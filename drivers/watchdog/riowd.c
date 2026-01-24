@@ -202,7 +202,7 @@ static int riowd_probe(struct platform_device *op)
 		goto out_iounmap;
 	}
 
-	pr_info("Hardware watchdog [%i minutes], regs at %p\n",
+	pr_debug("Hardware watchdog [%i minutes], regs at %p\n",
 		riowd_timeout, p->regs);
 
 	platform_set_drvdata(op, p);

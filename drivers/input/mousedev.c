@@ -1112,7 +1112,7 @@ static int __init mousedev_init(void)
 
 	mousedev_psaux_register();
 
-	pr_info("PS/2 mouse device common for all mice\n");
+	pr_debug("PS/2 mouse device common for all mice\n");
 
 	return 0;
 }

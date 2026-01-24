@@ -2689,7 +2689,7 @@ static void dbx500_fw_version_init(struct platform_device *pdev,
 		fw_project_name(fw_info.version.project),
 		PRCMU_FW_PROJECT_NAME_LEN);
 	fw_info.valid = true;
-	pr_info("PRCMU firmware: %s(%d), version %d.%d.%d\n",
+	pr_debug("PRCMU firmware: %s(%d), version %d.%d.%d\n",
 		fw_info.version.project_name,
 		fw_info.version.project,
 		fw_info.version.api_version,
@@ -3168,7 +3168,7 @@ static int db8500_prcmu_probe(struct platform_device *pdev)
 		return err;
 	}
 
-	pr_info("DB8500 PRCMU initialized\n");
+	pr_debug("DB8500 PRCMU initialized\n");
 	return err;
 }
 static const struct of_device_id db8500_prcmu_match[] = {

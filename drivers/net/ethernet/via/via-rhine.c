@@ -716,7 +716,7 @@ static void rhine_reload_eeprom(long pioaddr, struct net_device *dev)
 			break;
 	}
 	if (i > 512)
-		pr_info("%4d cycles used @ %s:%d\n", i, __func__, __LINE__);
+		pr_debug("%4d cycles used @ %s:%d\n", i, __func__, __LINE__);
 
 	/*
 	 * Reloading from EEPROM overwrites ConfigA-D, so we must re-enable
@@ -2622,7 +2622,7 @@ static int __init rhine_init(void)
 
 /* when a module, this is printed whether or not devices are found in probe */
 #ifdef MODULE
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 #endif
 	if (dmi_check_system(rhine_dmi_table)) {
 		/* these BIOSes fail at PXE boot if chip is in D3 */
@@ -2630,7 +2630,7 @@ static int __init rhine_init(void)
 		pr_warn("Broken BIOS detected, avoid_D3 enabled\n");
 	}
 	else if (avoid_D3)
-		pr_info("avoid_D3 set\n");
+		pr_debug("avoid_D3 set\n");
 
 	ret_pci = pci_register_driver(&rhine_driver_pci);
 	ret_platform = platform_driver_register(&rhine_driver_platform);

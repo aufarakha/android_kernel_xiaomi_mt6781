@@ -138,7 +138,7 @@ static int __init pps_tty_init(void)
 	if (err)
 		pr_err("can't register PPS line discipline\n");
 	else
-		pr_info("PPS line discipline registered\n");
+		pr_debug("PPS line discipline registered\n");
 
 	return err;
 }
@@ -151,7 +151,7 @@ static void __exit pps_tty_cleanup(void)
 	if (err)
 		pr_err("can't unregister PPS line discipline\n");
 	else
-		pr_info("PPS line discipline removed\n");
+		pr_debug("PPS line discipline removed\n");
 }
 
 module_init(pps_tty_init);

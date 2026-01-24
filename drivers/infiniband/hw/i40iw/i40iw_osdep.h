@@ -97,7 +97,7 @@ struct i40iw_virt_mem {
 #define i40iw_debug(h, m, s, ...)                               \
 do {                                                            \
 	if (((m) & (h)->debug_mask))                            \
-		pr_info("i40iw " s, ##__VA_ARGS__);             \
+		pr_debug("i40iw " s, ##__VA_ARGS__);             \
 } while (0)
 
 #define i40iw_flush(a)          readl((a)->hw_addr + I40E_GLGEN_STAT)

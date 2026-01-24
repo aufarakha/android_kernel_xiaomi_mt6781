@@ -198,7 +198,7 @@ static int mlxfw_flash_components(struct mlxfw_dev *mlxfw_dev, u32 fwhandle,
 		if (IS_ERR(comp))
 			return PTR_ERR(comp);
 
-		pr_info("Flashing component type %d\n", comp->index);
+		pr_debug("Flashing component type %d\n", comp->index);
 		err = mlxfw_flash_component(mlxfw_dev, fwhandle, comp);
 		mlxfw_mfa2_file_component_put(comp);
 		if (err)
@@ -223,7 +223,7 @@ int mlxfw_firmware_flash(struct mlxfw_dev *mlxfw_dev,
 	if (IS_ERR(mfa2_file))
 		return PTR_ERR(mfa2_file);
 
-	pr_info("Initialize firmware flash process\n");
+	pr_debug("Initialize firmware flash process\n");
 	err = mlxfw_dev->ops->fsm_lock(mlxfw_dev, &fwhandle);
 	if (err) {
 		pr_err("Could not lock the firmware FSM\n");
@@ -253,7 +253,7 @@ int mlxfw_firmware_flash(struct mlxfw_dev *mlxfw_dev,
 	pr_debug("Handle release\n");
 	mlxfw_dev->ops->fsm_release(mlxfw_dev, fwhandle);
 
-	pr_info("Firmware flash done.\n");
+	pr_debug("Firmware flash done.\n");
 	mlxfw_mfa2_file_fini(mfa2_file);
 	return 0;
 

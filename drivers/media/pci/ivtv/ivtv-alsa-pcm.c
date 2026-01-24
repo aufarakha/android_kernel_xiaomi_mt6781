@@ -38,7 +38,7 @@ MODULE_PARM_DESC(pcm_debug, "enable debug messages for pcm");
 #define dprintk(fmt, arg...) \
 	do { \
 		if (pcm_debug) \
-			pr_info("ivtv-alsa-pcm %s: " fmt, __func__, ##arg); \
+			pr_debug("ivtv-alsa-pcm %s: " fmt, __func__, ##arg); \
 	} while (0)
 
 static const struct snd_pcm_hardware snd_ivtv_hw_capture = {

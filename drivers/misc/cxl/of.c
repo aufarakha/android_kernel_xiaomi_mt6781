@@ -24,7 +24,7 @@ static const __be32 *read_prop_string(const struct device_node *np,
 
 	prop = of_get_property(np, prop_name, NULL);
 	if (cxl_verbose && prop)
-		pr_info("%s: %s\n", prop_name, (char *) prop);
+		pr_debug("%s: %s\n", prop_name, (char *) prop);
 	return prop;
 }
 
@@ -37,7 +37,7 @@ static const __be32 *read_prop_dword(const struct device_node *np,
 	if (prop)
 		*val = be32_to_cpu(prop[0]);
 	if (cxl_verbose && prop)
-		pr_info("%s: %#x (%u)\n", prop_name, *val, *val);
+		pr_debug("%s: %#x (%u)\n", prop_name, *val, *val);
 	return prop;
 }
 
@@ -50,7 +50,7 @@ static const __be64 *read_prop64_dword(const struct device_node *np,
 	if (prop)
 		*val = be64_to_cpu(prop[0]);
 	if (cxl_verbose && prop)
-		pr_info("%s: %#llx (%llu)\n", prop_name, *val, *val);
+		pr_debug("%s: %#llx (%llu)\n", prop_name, *val, *val);
 	return prop;
 }
 
@@ -105,7 +105,7 @@ static int read_phys_addr(struct device_node *np, char *prop_name,
 				return -EINVAL;
 			}
 			if (cxl_verbose)
-				pr_info("%s: %#x %#llx (size %#llx)\n",
+				pr_debug("%s: %#x %#llx (size %#llx)\n",
 					prop_name, type, addr, size);
 		}
 	}
@@ -152,13 +152,13 @@ int cxl_of_read_afu_properties(struct cxl_afu *afu, struct device_node *np)
 	/* Properties are read in the same order as listed in PAPR */
 
 	if (cxl_verbose) {
-		pr_info("Dump of the 'ibm,coherent-platform-function' node properties:\n");
+		pr_debug("Dump of the 'ibm,coherent-platform-function' node properties:\n");
 
 		prop = of_get_property(np, "compatible", &len);
 		i = 0;
 		while (i < len) {
 			p = (char *) prop + i;
-			pr_info("compatible: %s\n", p);
+			pr_debug("compatible: %s\n", p);
 			i += strlen(p) + 1;
 		}
 		read_prop_string(np, "name");
@@ -224,18 +224,18 @@ int cxl_of_read_afu_properties(struct cxl_afu *afu, struct device_node *np)
 			rc = cxl_ops->afu_cr_read16(afu, i, PCI_DEVICE_ID,
 						&device_id);
 			if (!rc)
-				pr_info("record %d - device-id: %#x\n",
+				pr_debug("record %d - device-id: %#x\n",
 					i, device_id);
 			rc = cxl_ops->afu_cr_read16(afu, i, PCI_VENDOR_ID,
 						&vendor_id);
 			if (!rc)
-				pr_info("record %d - vendor-id: %#x\n",
+				pr_debug("record %d - vendor-id: %#x\n",
 					i, vendor_id);
 			rc = cxl_ops->afu_cr_read32(afu, i, PCI_CLASS_REVISION,
 						&class_code);
 			if (!rc) {
 				class_code >>= 8;
-				pr_info("record %d - class-code: %#x\n",
+				pr_debug("record %d - class-code: %#x\n",
 					i, class_code);
 			}
 		}
@@ -319,7 +319,7 @@ static int read_adapter_irq_config(struct cxl *adapter, struct device_node *np)
 		if (cur->offset < adapter->guest->irq_base_offset)
 			adapter->guest->irq_base_offset = cur->offset;
 		if (cxl_verbose)
-			pr_info("available IRQ range: %#lx-%#lx (%lu)\n",
+			pr_debug("available IRQ range: %#lx-%#lx (%lu)\n",
 				cur->offset, cur->offset + cur->range - 1,
 				cur->range);
 	}
@@ -358,7 +358,7 @@ int cxl_of_read_adapter_properties(struct cxl *adapter, struct device_node *np)
 	naddr = of_n_addr_cells(np);
 
 	if (cxl_verbose) {
-		pr_info("Dump of the 'ibm,coherent-platform-facility' node properties:\n");
+		pr_debug("Dump of the 'ibm,coherent-platform-facility' node properties:\n");
 
 		read_prop_dword(np, "#address-cells", &val);
 		read_prop_dword(np, "#size-cells", &val);
@@ -367,7 +367,7 @@ int cxl_of_read_adapter_properties(struct cxl *adapter, struct device_node *np)
 		i = 0;
 		while (i < len) {
 			p = (char *) prop + i;
-			pr_info("compatible: %s\n", p);
+			pr_debug("compatible: %s\n", p);
 			i += strlen(p) + 1;
 		}
 		read_prop_string(np, "name");
@@ -375,7 +375,7 @@ int cxl_of_read_adapter_properties(struct cxl *adapter, struct device_node *np)
 
 		prop = of_get_property(np, "reg", NULL);
 		if (prop) {
-			pr_info("reg: addr:%#llx size:%#x\n",
+			pr_debug("reg: addr:%#llx size:%#x\n",
 				of_read_number(prop, naddr),
 				be32_to_cpu(prop[naddr]));
 		}

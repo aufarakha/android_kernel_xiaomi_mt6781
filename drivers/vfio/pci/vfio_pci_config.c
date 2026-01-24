@@ -430,7 +430,7 @@ static void vfio_bar_restore(struct vfio_pci_device *vdev)
 	if (pdev->is_virtfn)
 		return;
 
-	pr_info("%s: %s reset recovery - restoring bars\n",
+	pr_debug("%s: %s reset recovery - restoring bars\n",
 		__func__, dev_name(&pdev->dev));
 
 	for (i = PCI_BASE_ADDRESS_0; i <= PCI_BASE_ADDRESS_5; i += 4, rbar++)
@@ -1513,7 +1513,7 @@ static int vfio_cap_init(struct vfio_pci_device *vdev)
 		}
 
 		if (!len) {
-			pr_info("%s: %s hiding cap 0x%x\n",
+			pr_debug("%s: %s hiding cap 0x%x\n",
 				__func__, dev_name(&pdev->dev), cap);
 			*prev = next;
 			pos = next;
@@ -1588,7 +1588,7 @@ static int vfio_ecap_init(struct vfio_pci_device *vdev)
 		}
 
 		if (!len) {
-			pr_info("%s: %s hiding ecap 0x%x@0x%x\n",
+			pr_debug("%s: %s hiding ecap 0x%x@0x%x\n",
 				__func__, dev_name(&pdev->dev), ecap, epos);
 
 			/* If not the first in the chain, we can skip over it */

@@ -788,13 +788,13 @@ static struct arm_pmu *__armpmu_alloc(gfp_t flags)
 
 	pmu = kzalloc(sizeof(*pmu), flags);
 	if (!pmu) {
-		pr_info("failed to allocate PMU device!\n");
+		pr_debug("failed to allocate PMU device!\n");
 		goto out;
 	}
 
 	pmu->hw_events = alloc_percpu_gfp(struct pmu_hw_events, flags);
 	if (!pmu->hw_events) {
-		pr_info("failed to allocate per-cpu PMU data.\n");
+		pr_debug("failed to allocate per-cpu PMU data.\n");
 		goto out_free_pmu;
 	}
 
@@ -870,7 +870,7 @@ int armpmu_register(struct arm_pmu *pmu)
 	if (!__oprofile_cpu_pmu)
 		__oprofile_cpu_pmu = pmu;
 
-	pr_info("enabled with %s PMU driver, %d counters available\n",
+	pr_debug("enabled with %s PMU driver, %d counters available\n",
 		pmu->name, pmu->num_events);
 
 	return 0;

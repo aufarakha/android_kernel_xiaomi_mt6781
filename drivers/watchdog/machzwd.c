@@ -203,7 +203,7 @@ static void zf_timer_off(void)
 	zf_set_control(ctrl_reg);
 	spin_unlock_irqrestore(&zf_port_lock, flags);
 
-	pr_info("Watchdog timer is now disabled\n");
+	pr_debug("Watchdog timer is now disabled\n");
 }
 
 
@@ -233,7 +233,7 @@ static void zf_timer_on(void)
 	zf_set_control(ctrl_reg);
 	spin_unlock_irqrestore(&zf_port_lock, flags);
 
-	pr_info("Watchdog timer is now enabled\n");
+	pr_debug("Watchdog timer is now enabled\n");
 }
 
 
@@ -389,14 +389,14 @@ static void __init zf_show_action(int act)
 {
 	static const char * const str[] = { "RESET", "SMI", "NMI", "SCI" };
 
-	pr_info("Watchdog using action = %s\n", str[act]);
+	pr_debug("Watchdog using action = %s\n", str[act]);
 }
 
 static int __init zf_init(void)
 {
 	int ret;
 
-	pr_info("MachZ ZF-Logic Watchdog driver initializing\n");
+	pr_debug("MachZ ZF-Logic Watchdog driver initializing\n");
 
 	ret = zf_get_ZFL_version();
 	if (!ret || ret == 0xffff) {

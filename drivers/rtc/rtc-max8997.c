@@ -420,7 +420,7 @@ static void max8997_rtc_enable_smpl(struct max8997_rtc_info *info, bool enable)
 
 	val = 0;
 	max8997_read_reg(info->rtc, MAX8997_RTC_WTSR_SMPL, &val);
-	pr_info("WTSR_SMPL(0x%02x)\n", val);
+	pr_debug("WTSR_SMPL(0x%02x)\n", val);
 }
 
 static int max8997_rtc_init_reg(struct max8997_rtc_info *info)

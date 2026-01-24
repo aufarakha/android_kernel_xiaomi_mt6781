@@ -116,7 +116,7 @@ int iwpm_register_pid(struct iwpm_dev_data *pm_msg, u8 nl_client)
 	ret = iwpm_wait_complete_req(nlmsg_request);
 	return ret;
 pid_query_error:
-	pr_info("%s: %s (client = %d)\n", __func__, err_str, nl_client);
+	pr_debug("%s: %s (client = %d)\n", __func__, err_str, nl_client);
 	if (skb)
 		dev_kfree_skb(skb);
 	if (nlmsg_request)
@@ -186,7 +186,7 @@ int iwpm_add_mapping(struct iwpm_sa_data *pm_msg, u8 nl_client)
 	ret = iwpm_wait_complete_req(nlmsg_request);
 	return ret;
 add_mapping_error:
-	pr_info("%s: %s (client = %d)\n", __func__, err_str, nl_client);
+	pr_debug("%s: %s (client = %d)\n", __func__, err_str, nl_client);
 	if (skb)
 		dev_kfree_skb(skb);
 	if (nlmsg_request)
@@ -263,7 +263,7 @@ int iwpm_add_and_query_mapping(struct iwpm_sa_data *pm_msg, u8 nl_client)
 	ret = iwpm_wait_complete_req(nlmsg_request);
 	return ret;
 query_mapping_error:
-	pr_info("%s: %s (client = %d)\n", __func__, err_str, nl_client);
+	pr_debug("%s: %s (client = %d)\n", __func__, err_str, nl_client);
 	if (skb)
 		dev_kfree_skb(skb);
 	if (nlmsg_request)
@@ -327,7 +327,7 @@ int iwpm_remove_mapping(struct sockaddr_storage *local_addr, u8 nl_client)
 			"remove_mapping: Local sockaddr:");
 	return 0;
 remove_mapping_error:
-	pr_info("%s: %s (client = %d)\n", __func__, err_str, nl_client);
+	pr_debug("%s: %s (client = %d)\n", __func__, err_str, nl_client);
 	if (skb)
 		dev_kfree_skb_any(skb);
 	return ret;
@@ -366,7 +366,7 @@ int iwpm_register_pid_cb(struct sk_buff *skb, struct netlink_callback *cb)
 	msg_seq = nla_get_u32(nltb[IWPM_NLA_RREG_PID_SEQ]);
 	nlmsg_request = iwpm_find_nlmsg_request(msg_seq);
 	if (!nlmsg_request) {
-		pr_info("%s: Could not find a matching request (seq = %u)\n",
+		pr_debug("%s: Could not find a matching request (seq = %u)\n",
 				 __func__, msg_seq);
 		return -EINVAL;
 	}
@@ -381,7 +381,7 @@ int iwpm_register_pid_cb(struct sk_buff *skb, struct netlink_callback *cb)
 			strcmp(iwpm_ulib_name, iwpm_name) ||
 			iwpm_version != iwpm_ulib_version) {
 
-		pr_info("%s: Incorrect info (dev = %s name = %s version = %d)\n",
+		pr_debug("%s: Incorrect info (dev = %s name = %s version = %d)\n",
 				__func__, dev_name, iwpm_name, iwpm_version);
 		nlmsg_request->err_code = IWPM_USER_LIB_INFO_ERR;
 		goto register_pid_response_exit;
@@ -433,7 +433,7 @@ int iwpm_add_mapping_cb(struct sk_buff *skb, struct netlink_callback *cb)
 	msg_seq = nla_get_u32(nltb[IWPM_NLA_MANAGE_MAPPING_SEQ]);
 	nlmsg_request = iwpm_find_nlmsg_request(msg_seq);
 	if (!nlmsg_request) {
-		pr_info("%s: Could not find a matching request (seq = %u)\n",
+		pr_debug("%s: Could not find a matching request (seq = %u)\n",
 				 __func__, msg_seq);
 		return -EINVAL;
 	}
@@ -448,7 +448,7 @@ int iwpm_add_mapping_cb(struct sk_buff *skb, struct netlink_callback *cb)
 		goto add_mapping_response_exit;
 	}
 	if (mapped_sockaddr->ss_family != local_sockaddr->ss_family) {
-		pr_info("%s: Sockaddr family doesn't match the requested one\n",
+		pr_debug("%s: Sockaddr family doesn't match the requested one\n",
 				__func__);
 		nlmsg_request->err_code = IWPM_USER_LIB_INFO_ERR;
 		goto add_mapping_response_exit;
@@ -505,7 +505,7 @@ int iwpm_add_and_query_mapping_cb(struct sk_buff *skb,
 	msg_seq = nla_get_u32(nltb[IWPM_NLA_QUERY_MAPPING_SEQ]);
 	nlmsg_request = iwpm_find_nlmsg_request(msg_seq);
 	if (!nlmsg_request) {
-		pr_info("%s: Could not find a matching request (seq = %u)\n",
+		pr_debug("%s: Could not find a matching request (seq = %u)\n",
 				 __func__, msg_seq);
 		return -EINVAL;
 	}
@@ -521,19 +521,19 @@ int iwpm_add_and_query_mapping_cb(struct sk_buff *skb,
 
 	err_code = nla_get_u16(nltb[IWPM_NLA_RQUERY_MAPPING_ERR]);
 	if (err_code == IWPM_REMOTE_QUERY_REJECT) {
-		pr_info("%s: Received a Reject (pid = %u, echo seq = %u)\n",
+		pr_debug("%s: Received a Reject (pid = %u, echo seq = %u)\n",
 			__func__, cb->nlh->nlmsg_pid, msg_seq);
 		nlmsg_request->err_code = IWPM_REMOTE_QUERY_REJECT;
 	}
 	if (iwpm_compare_sockaddr(local_sockaddr, &pm_msg->loc_addr) ||
 		iwpm_compare_sockaddr(remote_sockaddr, &pm_msg->rem_addr)) {
-		pr_info("%s: Incorrect local sockaddr\n", __func__);
+		pr_debug("%s: Incorrect local sockaddr\n", __func__);
 		nlmsg_request->err_code = IWPM_USER_LIB_INFO_ERR;
 		goto query_mapping_response_exit;
 	}
 	if (mapped_loc_sockaddr->ss_family != local_sockaddr->ss_family ||
 		mapped_rem_sockaddr->ss_family != remote_sockaddr->ss_family) {
-		pr_info("%s: Sockaddr family doesn't match the requested one\n",
+		pr_debug("%s: Sockaddr family doesn't match the requested one\n",
 				__func__);
 		nlmsg_request->err_code = IWPM_USER_LIB_INFO_ERR;
 		goto query_mapping_response_exit;
@@ -581,7 +581,7 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
 
 	nl_client = RDMA_NL_GET_CLIENT(cb->nlh->nlmsg_type);
 	if (!iwpm_valid_client(nl_client)) {
-		pr_info("%s: Invalid port mapper client = %d\n",
+		pr_debug("%s: Invalid port mapper client = %d\n",
 				__func__, nl_client);
 		return ret;
 	}
@@ -598,7 +598,7 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
 
 	if (mapped_loc_sockaddr->ss_family != local_sockaddr->ss_family ||
 		mapped_rem_sockaddr->ss_family != remote_sockaddr->ss_family) {
-		pr_info("%s: Sockaddr family doesn't match the requested one\n",
+		pr_debug("%s: Sockaddr family doesn't match the requested one\n",
 				__func__);
 		return ret;
 	}
@@ -649,20 +649,20 @@ int iwpm_mapping_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
 
 	if (iwpm_parse_nlmsg(cb, IWPM_NLA_MAPINFO_REQ_MAX,
 				resp_mapinfo_policy, nltb, msg_type)) {
-		pr_info("%s: Unable to parse nlmsg\n", __func__);
+		pr_debug("%s: Unable to parse nlmsg\n", __func__);
 		return ret;
 	}
 	iwpm_name = (char *)nla_data(nltb[IWPM_NLA_MAPINFO_ULIB_NAME]);
 	iwpm_version = nla_get_u16(nltb[IWPM_NLA_MAPINFO_ULIB_VER]);
 	if (strcmp(iwpm_ulib_name, iwpm_name) ||
 			iwpm_version != iwpm_ulib_version) {
-		pr_info("%s: Invalid port mapper name = %s version = %d\n",
+		pr_debug("%s: Invalid port mapper name = %s version = %d\n",
 				__func__, iwpm_name, iwpm_version);
 		return ret;
 	}
 	nl_client = RDMA_NL_GET_CLIENT(cb->nlh->nlmsg_type);
 	if (!iwpm_valid_client(nl_client)) {
-		pr_info("%s: Invalid port mapper client = %d\n",
+		pr_debug("%s: Invalid port mapper client = %d\n",
 				__func__, nl_client);
 		return ret;
 	}
@@ -700,7 +700,7 @@ int iwpm_ack_mapping_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
 	mapinfo_send = nla_get_u32(nltb[IWPM_NLA_MAPINFO_SEND_NUM]);
 	mapinfo_ack = nla_get_u32(nltb[IWPM_NLA_MAPINFO_ACK_NUM]);
 	if (mapinfo_ack != mapinfo_send)
-		pr_info("%s: Invalid mapinfo number (sent = %u ack-ed = %u)\n",
+		pr_debug("%s: Invalid mapinfo number (sent = %u ack-ed = %u)\n",
 			__func__, mapinfo_send, mapinfo_ack);
 	atomic_set(&echo_nlmsg_seq, cb->nlh->nlmsg_seq);
 	return 0;
@@ -730,7 +730,7 @@ int iwpm_mapping_error_cb(struct sk_buff *skb, struct netlink_callback *cb)
 
 	msg_seq = nla_get_u32(nltb[IWPM_NLA_ERR_SEQ]);
 	err_code = nla_get_u16(nltb[IWPM_NLA_ERR_CODE]);
-	pr_info("%s: Received msg seq = %u err code = %u client = %d\n",
+	pr_debug("%s: Received msg seq = %u err code = %u client = %d\n",
 				__func__, msg_seq, err_code, nl_client);
 	/* look for nlmsg_request */
 	nlmsg_request = iwpm_find_nlmsg_request(msg_seq);

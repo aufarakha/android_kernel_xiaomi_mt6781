@@ -116,7 +116,7 @@ static int timer8_clock_event_periodic(struct clock_event_device *ced)
 {
 	struct timer8_priv *p = ced_to_priv(ced);
 
-	pr_info("%s: used for periodic clock events\n", ced->name);
+	pr_debug("%s: used for periodic clock events\n", ced->name);
 	timer8_stop(p);
 	timer8_clock_event_start(p, (p->rate + HZ/2) / HZ);
 
@@ -127,7 +127,7 @@ static int timer8_clock_event_oneshot(struct clock_event_device *ced)
 {
 	struct timer8_priv *p = ced_to_priv(ced);
 
-	pr_info("%s: used for oneshot clock events\n", ced->name);
+	pr_debug("%s: used for oneshot clock events\n", ced->name);
 	timer8_stop(p);
 	timer8_clock_event_start(p, 0x10000);
 

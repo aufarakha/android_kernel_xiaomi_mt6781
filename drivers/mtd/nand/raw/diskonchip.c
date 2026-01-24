@@ -408,7 +408,7 @@ static uint16_t __init doc200x_ident_chip(struct mtd_info *mtd, int nr)
 
 		ident.dword = readl(docptr + DoC_2k_CDSN_IO);
 		if (((ident.byte[0] << 8) | ident.byte[1]) == ret) {
-			pr_info("DiskOnChip 2000 responds to DWORD access\n");
+			pr_debug("DiskOnChip 2000 responds to DWORD access\n");
 			this->read_buf = &doc2000_readbuf_dword;
 		}
 	}
@@ -1016,7 +1016,7 @@ static int __init find_media_headers(struct mtd_info *mtd, u_char *buf, const ch
 		}
 		if (memcmp(buf, id, 6))
 			continue;
-		pr_info("Found DiskOnChip %s Media Header at 0x%x\n", id, offs);
+		pr_debug("Found DiskOnChip %s Media Header at 0x%x\n", id, offs);
 		if (doc->mh0_page == -1) {
 			doc->mh0_page = offs >> this->page_shift;
 			if (!findmirror)
@@ -1066,7 +1066,7 @@ static inline int __init nftl_partscan(struct mtd_info *mtd, struct mtd_partitio
 	le16_to_cpus(&mh->FirstPhysicalEUN);
 	le32_to_cpus(&mh->FormattedSize);
 
-	pr_info("    DataOrgID        = %s\n"
+	pr_debug("    DataOrgID        = %s\n"
 		"    NumEraseUnits    = %d\n"
 		"    FirstPhysicalEUN = %d\n"
 		"    FormattedSize    = %d\n"
@@ -1101,7 +1101,7 @@ static inline int __init nftl_partscan(struct mtd_info *mtd, struct mtd_partitio
 	if (mh->UnitSizeFactor != 0xff) {
 		this->bbt_erase_shift += (0xff - mh->UnitSizeFactor);
 		mtd->erasesize <<= (0xff - mh->UnitSizeFactor);
-		pr_info("Setting virtual erase size to %d\n", mtd->erasesize);
+		pr_debug("Setting virtual erase size to %d\n", mtd->erasesize);
 		blocks = mtd->size >> this->bbt_erase_shift;
 		maxblocks = min(32768U, mtd->erasesize - psize);
 	}
@@ -1178,7 +1178,7 @@ static inline int __init inftl_partscan(struct mtd_info *mtd, struct mtd_partiti
 	le32_to_cpus(&mh->FormatFlags);
 	le32_to_cpus(&mh->PercentUsed);
 
-	pr_info("    bootRecordID          = %s\n"
+	pr_debug("    bootRecordID          = %s\n"
 		"    NoOfBootImageBlocks   = %d\n"
 		"    NoOfBinaryPartitions  = %d\n"
 		"    NoOfBDTLPartitions    = %d\n"
@@ -1220,7 +1220,7 @@ static inline int __init inftl_partscan(struct mtd_info *mtd, struct mtd_partiti
 		le32_to_cpus(&ip->spareUnits);
 		le32_to_cpus(&ip->Reserved0);
 
-		pr_info("    PARTITION[%d] ->\n"
+		pr_debug("    PARTITION[%d] ->\n"
 			"        virtualUnits    = %d\n"
 			"        firstUnit       = %d\n"
 			"        lastUnit        = %d\n"
@@ -1672,7 +1672,7 @@ static int __init init_nanddoc(void)
 	int i, ret = 0;
 
 	if (doc_config_location) {
-		pr_info("Using configured DiskOnChip probe address 0x%lx\n",
+		pr_debug("Using configured DiskOnChip probe address 0x%lx\n",
 			doc_config_location);
 		ret = doc_probe(doc_config_location);
 		if (ret < 0)
@@ -1685,7 +1685,7 @@ static int __init init_nanddoc(void)
 	/* No banner message any more. Print a message if no DiskOnChip
 	   found, so the user knows we at least tried. */
 	if (!doclist) {
-		pr_info("No valid DiskOnChip devices found\n");
+		pr_debug("No valid DiskOnChip devices found\n");
 		ret = -ENODEV;
 	}
 	return ret;

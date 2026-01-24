@@ -1703,7 +1703,7 @@ bfad_init(void)
 {
 	int		error = 0;
 
-	pr_info("QLogic BR-series BFA FC/FCOE SCSI driver - version: %s\n",
+	pr_debug("QLogic BR-series BFA FC/FCOE SCSI driver - version: %s\n",
 			BFAD_DRIVER_VERSION);
 
 	if (num_sgpgs > 0)

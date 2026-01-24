@@ -15,7 +15,7 @@
 #define MTK_LOGW(fmt, args...) \
 	pr_warn(MTKPVR_TAG"[WARN]@%s: "fmt"\n", __func__, ##args)
 #define MTK_LOGI(fmt, args...) \
-	pr_info(MTKPVR_TAG"[INFO]@%s: "fmt"\n", __func__, ##args)
+	pr_debug(MTKPVR_TAG"[INFO]@%s: "fmt"\n", __func__, ##args)
 #define MTK_LOGD(fmt, args...) \
 	pr_debug(MTKPVR_TAG"[DEBUG]@%s: "fmt"\n", __func__, ##args)
 

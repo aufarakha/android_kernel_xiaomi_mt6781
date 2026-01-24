@@ -778,7 +778,7 @@ static int prealloc_memory(u32 num_entries)
 	num_free_entries = num_entries;
 	min_free_entries = num_entries;
 
-	pr_info("DMA-API: preallocated %d debug entries\n", num_entries);
+	pr_debug("DMA-API: preallocated %d debug entries\n", num_entries);
 
 	return 0;
 
@@ -851,7 +851,7 @@ static ssize_t filter_write(struct file *file, const char __user *userbuf,
 		 * switched off.
 		 */
 		if (current_driver_name[0])
-			pr_info("DMA-API: switching off dma-debug driver filter\n");
+			pr_debug("DMA-API: switching off dma-debug driver filter\n");
 		current_driver_name[0] = 0;
 		current_driver = NULL;
 		goto out_unlock;
@@ -869,7 +869,7 @@ static ssize_t filter_write(struct file *file, const char __user *userbuf,
 	current_driver_name[i] = 0;
 	current_driver = NULL;
 
-	pr_info("DMA-API: enable driver filter for driver [%s]\n",
+	pr_debug("DMA-API: enable driver filter for driver [%s]\n",
 		current_driver_name);
 
 out_unlock:
@@ -1041,7 +1041,7 @@ static int dma_debug_init(void)
 
 	dma_debug_initialized = true;
 
-	pr_info("DMA-API: debugging enabled by kernel config\n");
+	pr_debug("DMA-API: debugging enabled by kernel config\n");
 	return 0;
 }
 core_initcall(dma_debug_init);
@@ -1052,7 +1052,7 @@ static __init int dma_debug_cmdline(char *str)
 		return -EINVAL;
 
 	if (strncmp(str, "off", 3) == 0) {
-		pr_info("DMA-API: debugging disabled on kernel command line\n");
+		pr_debug("DMA-API: debugging disabled on kernel command line\n");
 		global_disable = true;
 	}
 
@@ -1765,7 +1765,7 @@ static int __init dma_debug_driver_setup(char *str)
 	}
 
 	if (current_driver_name[0])
-		pr_info("DMA-API: enable driver filter for driver [%s]\n",
+		pr_debug("DMA-API: enable driver filter for driver [%s]\n",
 			current_driver_name);
 
 

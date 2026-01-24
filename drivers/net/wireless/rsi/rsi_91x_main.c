@@ -63,7 +63,7 @@ void rsi_dbg(u32 zone, const char *fmt, ...)
 	vaf.va = &args;
 
 	if (zone & rsi_zone_enabled)
-		pr_info("%pV", &vaf);
+		pr_debug("%pV", &vaf);
 	va_end(args);
 }
 EXPORT_SYMBOL_GPL(rsi_dbg);

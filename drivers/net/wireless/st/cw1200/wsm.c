@@ -832,7 +832,7 @@ static int wsm_startup_indication(struct cw1200_common *priv,
 	if (WARN_ON(priv->wsm_caps.fw_type > 4))
 		return -EINVAL;
 
-	pr_info("CW1200 WSM init done.\n"
+	pr_debug("CW1200 WSM init done.\n"
 		"   Input buffers: %d x %d bytes\n"
 		"   Hardware: %d.%d\n"
 		"   %s firmware [%s], ver: %d, build: %d,"
@@ -1041,7 +1041,7 @@ static int wsm_ba_timeout_indication(struct cw1200_common *priv,
 	dummy2 = WSM_GET8(buf);
 	WSM_GET(buf, addr, ETH_ALEN);
 
-	pr_info("BlockACK timeout, tid %d, addr %pM\n",
+	pr_debug("BlockACK timeout, tid %d, addr %pM\n",
 		tid, addr);
 
 	return 0;

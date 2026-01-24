@@ -109,7 +109,7 @@ static int __init parse_crashkernel_mem(char *cmdline,
 			}
 		}
 	} else
-		pr_info("crashkernel size resulted in zero bytes\n");
+		pr_debug("crashkernel size resulted in zero bytes\n");
 
 	return 0;
 }

@@ -99,7 +99,7 @@ static int __init chromeos_probe_acpi(struct platform_device *pdev)
 	if (!res->start || !len)
 		return -ENOMEM;
 
-	pr_info("chromeos ramoops using acpi device.\n");
+	pr_debug("chromeos ramoops using acpi device.\n");
 
 	chromeos_ramoops_data.mem_size = len;
 	chromeos_ramoops_data.mem_address = res->start;

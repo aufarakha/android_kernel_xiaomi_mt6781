@@ -952,13 +952,13 @@ static int __init telemetry_debugfs_init(void)
 
 	err = telemetry_pltconfig_valid();
 	if (err < 0) {
-		pr_info("Invalid pltconfig, ensure IPC1 device is enabled in BIOS\n");
+		pr_debug("Invalid pltconfig, ensure IPC1 device is enabled in BIOS\n");
 		return -ENODEV;
 	}
 
 	err = telemetry_debugfs_check_evts();
 	if (err < 0) {
-		pr_info("telemetry_debugfs_check_evts failed\n");
+		pr_debug("telemetry_debugfs_check_evts failed\n");
 		return -EINVAL;
 	}
 

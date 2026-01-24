@@ -681,7 +681,7 @@ void dma_buf_put(struct dma_buf *dmabuf)
 		return;
 
 	if (atomic_dec_return(&dmabuf->ref_dbg) < 0) {
-		pr_info("[Warn] %s, ref underflow!\n", __func__);
+		pr_debug("[Warn] %s, ref underflow!\n", __func__);
 		atomic_set(&dmabuf->ref_dbg, 0);
 	}
 	fput(dmabuf->file);

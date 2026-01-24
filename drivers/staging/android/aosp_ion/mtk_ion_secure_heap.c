@@ -141,7 +141,7 @@ static struct ion_heap *__ion_sec_heap_create(int ssmr_id)
 {
 	struct ion_sec_heap *sec_heap;
 
-	pr_info("[ION] %s enter\n", __func__);
+	pr_debug("[ION] %s enter\n", __func__);
 
 	sec_heap = kzalloc(sizeof(*sec_heap), GFP_KERNEL);
 	if (!sec_heap)
@@ -175,11 +175,11 @@ static int ion_sec_heap_create(void)
 		}
 		heap->name = heap_name[i];
 		ion_device_add_heap(heap);
-		pr_info("[ION] ssmr_id:%d, name:%s, heap_id:%u\n",
+		pr_debug("[ION] ssmr_id:%d, name:%s, heap_id:%u\n",
 			ssmr_id, heap->name, heap->id);
 	}
 #else
-	pr_info("[ION] ion secure heap not support\n");
+	pr_debug("[ION] ion secure heap not support\n");
 #endif
 	return 0;
 }

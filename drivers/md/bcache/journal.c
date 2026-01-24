@@ -84,7 +84,7 @@ reread:		left = ca->sb.bucket_size - offset;
 
 			if (bytes > left << 9 ||
 			    bytes > PAGE_SIZE << JSET_BITS) {
-				pr_info("%u: too big, %zu bytes, offset %u",
+				pr_debug("%u: too big, %zu bytes, offset %u",
 					bucket_index, bytes, offset);
 				return ret;
 			}
@@ -93,7 +93,7 @@ reread:		left = ca->sb.bucket_size - offset;
 				goto reread;
 
 			if (j->csum != csum_set(j)) {
-				pr_info("%u: bad csum, %zu bytes, offset %u",
+				pr_debug("%u: bad csum, %zu bytes, offset %u",
 					bucket_index, bytes, offset);
 				return ret;
 			}
@@ -344,7 +344,7 @@ int bch_journal_replay(struct cache_set *s, struct list_head *list)
 
 		if (n != i->j.seq) {
 			if (n == start && is_discard_enabled(s))
-				pr_info("bcache: journal entries %llu-%llu may be discarded! (replaying %llu-%llu)",
+				pr_debug("bcache: journal entries %llu-%llu may be discarded! (replaying %llu-%llu)",
 					n, i->j.seq - 1, start, end);
 			else {
 				pr_err("bcache: journal entries %llu-%llu missing! (replaying %llu-%llu)",
@@ -377,7 +377,7 @@ int bch_journal_replay(struct cache_set *s, struct list_head *list)
 		entries++;
 	}
 
-	pr_info("journal replay done, %i keys in %i entries, seq %llu",
+	pr_debug("journal replay done, %i keys in %i entries, seq %llu",
 		keys, entries, end);
 err:
 	while (!list_empty(list)) {

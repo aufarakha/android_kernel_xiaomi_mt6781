@@ -462,7 +462,7 @@ static int __init sp5100_tco_init(void)
 	if (!sp5100_tco_pci)
 		return -ENODEV;
 
-	pr_info("SP5100/SB800 TCO WatchDog Timer Driver\n");
+	pr_debug("SP5100/SB800 TCO WatchDog Timer Driver\n");
 
 	err = platform_driver_register(&sp5100_tco_driver);
 	if (err)

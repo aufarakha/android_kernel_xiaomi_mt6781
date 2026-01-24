@@ -357,7 +357,7 @@ static void ipoib_qp_state_validate_work(struct work_struct *work)
 			   __func__, ret);
 		goto free_res;
 	}
-	pr_info("%s: QP: 0x%x is in state: %d\n",
+	pr_debug("%s: QP: 0x%x is in state: %d\n",
 		__func__, priv->qp->qp_num, qp_attr.qp_state);
 
 	/* currently support only in SQE->RTS transition*/
@@ -370,7 +370,7 @@ static void ipoib_qp_state_validate_work(struct work_struct *work)
 				ret, priv->qp->qp_num);
 			goto free_res;
 		}
-		pr_info("%s: QP: 0x%x moved from IB_QPS_SQE to IB_QPS_RTS\n",
+		pr_debug("%s: QP: 0x%x moved from IB_QPS_SQE to IB_QPS_RTS\n",
 			__func__, priv->qp->qp_num);
 	} else {
 		pr_warn("QP (%d) will stay in state: %d\n",

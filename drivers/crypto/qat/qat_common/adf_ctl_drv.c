@@ -320,9 +320,9 @@ static int adf_ctl_ioctl_dev_stop(struct file *fp, unsigned int cmd,
 		goto out;
 
 	if (ctl_data->device_id == ADF_CFG_ALL_DEVICES)
-		pr_info("QAT: Stopping all acceleration devices.\n");
+		pr_debug("QAT: Stopping all acceleration devices.\n");
 	else
-		pr_info("QAT: Stopping acceleration device qat_dev%d.\n",
+		pr_debug("QAT: Stopping acceleration device qat_dev%d.\n",
 			ctl_data->device_id);
 
 	adf_ctl_stop_devices(ctl_data->device_id);

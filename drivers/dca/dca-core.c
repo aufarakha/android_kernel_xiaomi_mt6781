@@ -459,7 +459,7 @@ EXPORT_SYMBOL_GPL(dca_unregister_notify);
 
 static int __init dca_init(void)
 {
-	pr_info("dca service started, version %s\n", DCA_VERSION);
+	pr_debug("dca service started, version %s\n", DCA_VERSION);
 	return dca_sysfs_init();
 }
 

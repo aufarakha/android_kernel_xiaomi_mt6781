@@ -391,7 +391,7 @@ fwh_done:
 		goto out;
 	}
 
-	pr_info("Intel 82802 RNG detected\n");
+	pr_debug("Intel 82802 RNG detected\n");
 	err = hwrng_register(&intel_rng);
 	if (err) {
 		pr_err(PFX "RNG registering failed (%d)\n",

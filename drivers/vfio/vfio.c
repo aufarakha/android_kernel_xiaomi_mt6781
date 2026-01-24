@@ -2219,7 +2219,7 @@ static int __init vfio_init(void)
 	if (ret)
 		goto err_cdev_add;
 
-	pr_info(DRIVER_DESC " version: " DRIVER_VERSION "\n");
+	pr_debug(DRIVER_DESC " version: " DRIVER_VERSION "\n");
 
 #ifdef CONFIG_VFIO_NOIOMMU
 	vfio_register_iommu_driver(&vfio_noiommu_ops);

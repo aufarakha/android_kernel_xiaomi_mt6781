@@ -717,7 +717,7 @@ static int __init evtchn_init(void)
 		return err;
 	}
 
-	pr_info("Event-channel device installed\n");
+	pr_debug("Event-channel device installed\n");
 
 	return 0;
 }

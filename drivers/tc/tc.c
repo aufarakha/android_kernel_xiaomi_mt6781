@@ -110,7 +110,7 @@ static void __init tc_bus_add_devices(struct tc_bus *tbus)
 		tdev->vendor[8] = 0;
 		tdev->name[8] = 0;
 
-		pr_info("%s: %s %s %s\n", dev_name(&tdev->dev), tdev->vendor,
+		pr_debug("%s: %s %s %s\n", dev_name(&tdev->dev), tdev->vendor,
 			tdev->name, tdev->firmware);
 
 		devsize = readb(module + offset + TC_SLOT_SIZE);
@@ -162,7 +162,7 @@ static int __init tc_init(void)
 	if (tc_bus.info.slot_size) {
 		unsigned int tc_clock = tc_get_speed(&tc_bus) / 100000;
 
-		pr_info("tc: TURBOchannel rev. %d at %d.%d MHz "
+		pr_debug("tc: TURBOchannel rev. %d at %d.%d MHz "
 			"(with%s parity)\n", tc_bus.info.revision,
 			tc_clock / 10, tc_clock % 10,
 			tc_bus.info.parity ? "" : "out");

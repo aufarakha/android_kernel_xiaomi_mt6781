@@ -146,9 +146,9 @@ static int rtl92d_init_sw_vars(struct ieee80211_hw *hw)
 	rtlpriv->psc.swctrl_lps = rtlpriv->cfg->mod_params->swctrl_lps;
 	rtlpriv->psc.fwctrl_lps = rtlpriv->cfg->mod_params->fwctrl_lps;
 	if (!rtlpriv->psc.inactiveps)
-		pr_info("Power Save off (module option)\n");
+		pr_debug("Power Save off (module option)\n");
 	if (!rtlpriv->psc.fwctrl_lps)
-		pr_info("FW Power Save off (module option)\n");
+		pr_debug("FW Power Save off (module option)\n");
 	rtlpriv->psc.reg_fwctrl_lps = 3;
 	rtlpriv->psc.reg_max_lps_awakeintvl = 5;
 	/* for ASPM, you can close aspm through
@@ -175,8 +175,8 @@ static int rtl92d_init_sw_vars(struct ieee80211_hw *hw)
 	}
 
 	rtlpriv->max_fw_size = 0x8000;
-	pr_info("Driver for Realtek RTL8192DE WLAN interface\n");
-	pr_info("Loading firmware file %s\n", fw_name);
+	pr_debug("Driver for Realtek RTL8192DE WLAN interface\n");
+	pr_debug("Loading firmware file %s\n", fw_name);
 
 	/* request fw */
 	err = request_firmware_nowait(THIS_MODULE, 1, fw_name,

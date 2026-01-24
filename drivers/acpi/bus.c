@@ -503,7 +503,7 @@ static void sb_notify_work(struct work_struct *dummy)
 	 */
 	acpi_get_handle(NULL, "\\_SB", &sb_handle);
 	while (1) {
-		pr_info("Graceful shutdown in progress.\n");
+		pr_debug("Graceful shutdown in progress.\n");
 		acpi_evaluate_ost(sb_handle, ACPI_OST_EC_OSPM_SHUTDOWN,
 				ACPI_OST_SC_OS_SHUTDOWN_IN_PROGRESS, NULL);
 		msleep(ACPI_SB_INDICATE_INTERVAL);

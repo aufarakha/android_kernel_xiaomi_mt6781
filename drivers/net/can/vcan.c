@@ -173,7 +173,7 @@ static struct rtnl_link_ops vcan_link_ops __read_mostly = {
 
 static __init int vcan_init_module(void)
 {
-	pr_info("vcan: Virtual CAN interface driver\n");
+	pr_debug("vcan: Virtual CAN interface driver\n");
 
 	if (echo)
 		printk(KERN_INFO "vcan: enabled echo on driver level.\n");

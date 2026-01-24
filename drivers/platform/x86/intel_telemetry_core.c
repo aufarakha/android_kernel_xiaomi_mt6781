@@ -445,7 +445,7 @@ EXPORT_SYMBOL_GPL(telemetry_get_evtname);
 
 static int __init telemetry_module_init(void)
 {
-	pr_info(pr_fmt(DRIVER_NAME) " Init\n");
+	pr_debug(pr_fmt(DRIVER_NAME) " Init\n");
 
 	telm_core_conf.telem_ops = &telm_defpltops;
 	return 0;

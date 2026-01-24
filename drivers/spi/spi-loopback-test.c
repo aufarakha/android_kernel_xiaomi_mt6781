@@ -397,7 +397,7 @@ static void spi_test_print_hex_dump(char *pre, const void *ptr, size_t len)
 		       DUMP_PREFIX_OFFSET, 16, 1,
 		       ptr, 512, 0);
 	/* print tail */
-	pr_info("%s truncated - continuing at offset %04zx\n",
+	pr_debug("%s truncated - continuing at offset %04zx\n",
 		pre, len - 512);
 	print_hex_dump(KERN_INFO, pre,
 		       DUMP_PREFIX_OFFSET, 16, 1,

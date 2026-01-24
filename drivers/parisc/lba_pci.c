@@ -657,7 +657,7 @@ extend_lmmio_len(unsigned long start, unsigned long end, unsigned long lba_len)
 			end = tmp->start - 1;
 	}
 
-	pr_info("LBA: lmmio_space [0x%lx-0x%lx] - new\n", start, end);
+	pr_debug("LBA: lmmio_space [0x%lx-0x%lx] - new\n", start, end);
 
 	/* return new end */
 	return end;

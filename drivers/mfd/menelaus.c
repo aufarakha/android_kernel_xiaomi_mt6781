@@ -1212,7 +1212,7 @@ static int menelaus_probe(struct i2c_client *client,
 	mutex_init(&menelaus->lock);
 	INIT_WORK(&menelaus->work, menelaus_work);
 
-	pr_info("Menelaus rev %d.%d\n", rev >> 4, rev & 0x0f);
+	pr_debug("Menelaus rev %d.%d\n", rev >> 4, rev & 0x0f);
 
 	err = menelaus_read_reg(MENELAUS_VCORE_CTRL1);
 	if (err < 0)

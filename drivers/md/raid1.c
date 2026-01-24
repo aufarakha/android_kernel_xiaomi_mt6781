@@ -2302,7 +2302,7 @@ static void fix_read_error(struct r1conf *conf, int read_disk,
 				if (r1_sync_page_io(rdev, sect, s,
 						    conf->tmppage, READ)) {
 					atomic_add(s, &rdev->corrected_errors);
-					pr_info("md/raid1:%s: read error corrected (%d sectors at %llu on %s)\n",
+					pr_debug("md/raid1:%s: read error corrected (%d sectors at %llu on %s)\n",
 						mdname(mddev), s,
 						(unsigned long long)(sect +
 								     rdev->data_offset),
@@ -3122,9 +3122,9 @@ static int raid1_run(struct mddev *mddev)
 		mddev->recovery_cp = MaxSector;
 
 	if (mddev->recovery_cp != MaxSector)
-		pr_info("md/raid1:%s: not clean -- starting background reconstruction\n",
+		pr_debug("md/raid1:%s: not clean -- starting background reconstruction\n",
 			mdname(mddev));
-	pr_info("md/raid1:%s: active with %d out of %d mirrors\n",
+	pr_debug("md/raid1:%s: active with %d out of %d mirrors\n",
 		mdname(mddev), mddev->raid_disks - mddev->degraded,
 		mddev->raid_disks);
 

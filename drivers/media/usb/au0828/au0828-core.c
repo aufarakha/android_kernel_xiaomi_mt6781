@@ -647,7 +647,7 @@ static int au0828_usb_probe(struct usb_interface *interface,
 	/* Remote controller */
 	au0828_rc_register(dev);
 
-	pr_info("Registered device AU0828 [%s]\n",
+	pr_debug("Registered device AU0828 [%s]\n",
 		dev->board.name == NULL ? "Unset" : dev->board.name);
 
 	mutex_unlock(&dev->lock);
@@ -669,7 +669,7 @@ static int au0828_suspend(struct usb_interface *interface,
 	if (!dev)
 		return 0;
 
-	pr_info("Suspend\n");
+	pr_debug("Suspend\n");
 
 	au0828_rc_suspend(dev);
 	au0828_v4l2_suspend(dev);
@@ -686,7 +686,7 @@ static int au0828_resume(struct usb_interface *interface)
 	if (!dev)
 		return 0;
 
-	pr_info("Resume\n");
+	pr_debug("Resume\n");
 
 	/* Power Up the bridge */
 	au0828_write(dev, REG_600, 1 << 4);
@@ -718,23 +718,23 @@ static int __init au0828_init(void)
 	int ret;
 
 	if (au0828_debug & 1)
-		pr_info("%s() Debugging is enabled\n", __func__);
+		pr_debug("%s() Debugging is enabled\n", __func__);
 
 	if (au0828_debug & 2)
-		pr_info("%s() USB Debugging is enabled\n", __func__);
+		pr_debug("%s() USB Debugging is enabled\n", __func__);
 
 	if (au0828_debug & 4)
-		pr_info("%s() I2C Debugging is enabled\n", __func__);
+		pr_debug("%s() I2C Debugging is enabled\n", __func__);
 
 	if (au0828_debug & 8)
-		pr_info("%s() Bridge Debugging is enabled\n",
+		pr_debug("%s() Bridge Debugging is enabled\n",
 		       __func__);
 
 	if (au0828_debug & 16)
-		pr_info("%s() IR Debugging is enabled\n",
+		pr_debug("%s() IR Debugging is enabled\n",
 		       __func__);
 
-	pr_info("au0828 driver loaded\n");
+	pr_debug("au0828 driver loaded\n");
 
 	ret = usb_register(&au0828_usb_driver);
 	if (ret)

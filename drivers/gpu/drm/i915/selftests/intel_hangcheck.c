@@ -799,7 +799,7 @@ static int __igt_reset_engines(struct drm_i915_private *i915,
 			}
 		} while (time_before(jiffies, end_time));
 		clear_bit(I915_RESET_ENGINE + id, &i915->gpu_error.flags);
-		pr_info("i915_reset_engine(%s:%s): %lu resets\n",
+		pr_debug("i915_reset_engine(%s:%s): %lu resets\n",
 			engine->name, test_name, count);
 
 		reported = i915_reset_engine_count(&i915->gpu_error, engine);
@@ -1302,7 +1302,7 @@ static int igt_reset_queue(void *arg)
 			prev = rq;
 			count++;
 		} while (time_before(jiffies, end_time));
-		pr_info("%s: Completed %d resets\n", engine->name, count);
+		pr_debug("%s: Completed %d resets\n", engine->name, count);
 
 		*h.batch = MI_BATCH_BUFFER_END;
 		i915_gem_chipset_flush(i915);

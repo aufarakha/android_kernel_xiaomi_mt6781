@@ -631,7 +631,7 @@ static int acpi_cpufreq_blacklist(struct cpuinfo_x86 *c)
 		if ((c->x86 == 15) &&
 		    (c->x86_model == 6) &&
 		    (c->x86_stepping == 8)) {
-			pr_info("Intel(R) Xeon(R) 7100 Errata AL30, processors may lock up on frequency changes: disabling acpi-cpufreq\n");
+			pr_debug("Intel(R) Xeon(R) 7100 Errata AL30, processors may lock up on frequency changes: disabling acpi-cpufreq\n");
 			return -ENODEV;
 		    }
 		}

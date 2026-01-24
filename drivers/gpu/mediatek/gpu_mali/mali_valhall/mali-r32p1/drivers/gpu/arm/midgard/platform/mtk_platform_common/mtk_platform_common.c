@@ -108,7 +108,7 @@ void mtk_common_procfs_init(void)
 {
   	mtk_mali_root = proc_mkdir("mtk_mali", NULL);
   	if (!mtk_mali_root) {
-  		pr_info("cannot create /proc/%s\n", "mtk_mali");
+  		pr_debug("cannot create /proc/%s\n", "mtk_mali");
   		return;
   	}
 	proc_create("utilization", 0444, mtk_mali_root, &mtk_common_gpu_utilization_fops);
@@ -125,7 +125,7 @@ void mtk_common_procfs_exit(void)
 int mtk_common_device_init(struct kbase_device *kbdev)
 {
 	if (!kbdev) {
-		pr_info("@%s: kbdev is NULL\n", __func__);
+		pr_debug("@%s: kbdev is NULL\n", __func__);
 		return -1;
 	}
 
@@ -137,7 +137,7 @@ int mtk_common_device_init(struct kbase_device *kbdev)
 	}
 
 	if (kbdev->client == NULL) {
-		pr_info("@%s: create ion client failed!\n", __func__);
+		pr_debug("@%s: create ion client failed!\n", __func__);
 	}
 #endif
 
@@ -158,7 +158,7 @@ int mtk_common_device_init(struct kbase_device *kbdev)
 void mtk_common_device_term(struct kbase_device *kbdev)
 {
 	if (!kbdev) {
-		pr_info("@%s: kbdev is NULL\n", __func__);
+		pr_debug("@%s: kbdev is NULL\n", __func__);
 		return;
 	}
 
@@ -204,7 +204,7 @@ int mtk_set_mt_gpufreq_clock_parking(int clksrc)
 	if (mtk_common_pm_is_mfg_active())
 		ret = mt_gpufreq_clock_parking(clksrc);
 	else
-		pr_info("MALI: set clock parking at power off\n");
+		pr_debug("MALI: set clock parking at power off\n");
 
 	return ret;
 }

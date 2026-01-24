@@ -420,7 +420,7 @@ static size_t mtkfb_ion_phys_mmu_addr(struct ion_client *client,
 
 	if (ion_kernel_ioctl(ion_client, ION_CMD_MULTIMEDIA,
 		(unsigned long)&mm_data))
-		pr_info("[DISP][ION] ERR: get iova failed!\n");
+		pr_debug("[DISP][ION] ERR: get iova failed!\n");
 	*mva = (unsigned int)mm_data.get_phys_param.phy_addr;
 	size = (size_t)mm_data.get_phys_param.len;
 

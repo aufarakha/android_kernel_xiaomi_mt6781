@@ -750,7 +750,7 @@ static void ps3av_fixup_monitor_info(struct ps3av_info_monitor *info)
 		quirk = &ps3av_monitor_quirks[i];
 		if (!strncmp(info->monitor_name, quirk->monitor_name,
 			     sizeof(info->monitor_name))) {
-			pr_info("%s: Applying quirk for %s\n", __func__,
+			pr_debug("%s: Applying quirk for %s\n", __func__,
 				quirk->monitor_name);
 			info->res_60.res_bits &= ~quirk->clear_60;
 			info->res_60.native &= ~quirk->clear_60;

@@ -97,7 +97,7 @@ static void _nbu2ss_dump_register(struct nbu2ss_udc *udc)
 	int		i;
 	u32 reg_data;
 
-	pr_info("=== %s()\n", __func__);
+	pr_debug("=== %s()\n", __func__);
 
 	if (!udc) {
 		pr_err("%s udc == NULL\n", __func__);

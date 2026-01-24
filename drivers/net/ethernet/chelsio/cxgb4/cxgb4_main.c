@@ -218,7 +218,7 @@ static void link_report(struct net_device *dev)
 			s = "100Gbps";
 			break;
 		default:
-			pr_info("%s: unsupported speed: %d\n",
+			pr_debug("%s: unsupported speed: %d\n",
 				dev->name, p->link_cfg.speed);
 			return;
 		}
@@ -5364,7 +5364,7 @@ static int cxgb4_iov_configure(struct pci_dev *pdev, int num_vfs)
 
 		err = register_netdev(adap->port[0]);
 		if (err) {
-			pr_info("Unable to register VF mgmt netdev %s\n", name);
+			pr_debug("Unable to register VF mgmt netdev %s\n", name);
 			free_netdev(adap->port[0]);
 			adap->port[0] = NULL;
 			return err;
@@ -5383,7 +5383,7 @@ static int cxgb4_iov_configure(struct pci_dev *pdev, int num_vfs)
 	/* Instantiate the requested number of VFs. */
 	err = pci_enable_sriov(pdev, num_vfs);
 	if (err) {
-		pr_info("Unable to instantiate %d VFs\n", num_vfs);
+		pr_debug("Unable to instantiate %d VFs\n", num_vfs);
 		if (!current_vfs) {
 			unregister_netdev(adap->port[0]);
 			free_netdev(adap->port[0]);

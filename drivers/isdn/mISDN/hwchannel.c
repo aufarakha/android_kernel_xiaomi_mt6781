@@ -198,7 +198,7 @@ mISDN_ctrl_bchannel(struct bchannel *bch, struct mISDN_ctrl_req *cq)
 		cq->p2 = bch->maxlen;
 		break;
 	default:
-		pr_info("mISDN unhandled control %x operation\n", cq->op);
+		pr_debug("mISDN unhandled control %x operation\n", cq->op);
 		ret = -EINVAL;
 		break;
 	}

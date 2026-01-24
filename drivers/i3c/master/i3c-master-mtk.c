@@ -274,28 +274,28 @@ static bool i3c_debug;
 static void mtk_i3c_writew(struct mtk_i3c_master *master, u16 val, u16 offset)
 {
 	if (i3c_debug)
-		pr_info("wrg: %x val:0x%x\n", offset, val);
+		pr_debug("wrg: %x val:0x%x\n", offset, val);
 	writew(val, master->regs + offset);
 }
 
 static void i3c_reg_dump(struct mtk_i3c_master *master)
 {
-	pr_info("SLAVES val:0x%x\n", mtk_i3c_readw(master, SLAVE_ADDR));
-	pr_info("INTR_STAT:0x%x\n", mtk_i3c_readw(master, INTR_STAT));
-	pr_info("INTR_MASK val:0x%x\n", mtk_i3c_readw(master, INTR_MASK));
-	pr_info("CONTROL val:0x%x\n", mtk_i3c_readw(master, CONTROL));
-	pr_info("START val:0x%x\n", mtk_i3c_readw(master, START));
-	pr_info("TRAFFIC val:0x%x\n", mtk_i3c_readw(master, TRAFFIC));
-	pr_info("SHAPE val:0x%x\n", mtk_i3c_readw(master, SHAPE));
-	pr_info("TIMING val:0x%x\n", mtk_i3c_readw(master, TIMING));
-	pr_info("LTIMING val:0x%x\n", mtk_i3c_readw(master, LTIMING));
-	pr_info("HS val:0x%x\n", mtk_i3c_readw(master, HS));
-	pr_info("ERROR val:0x%x\n", mtk_i3c_readw(master, CHN_ERROR));
-	pr_info("DEF DA:0x%x\n", mtk_i3c_readw(master, DEF_DA));
-	pr_info("TRANSFER_LEN val:0x%x\n", mtk_i3c_readw(master, TRANSFER_LEN));
-	pr_info("TRANSAC_LEN val:0x%x\n", mtk_i3c_readw(master, TRANSAC_LEN));
-	pr_info("FIFO_STAT val:0x%x\n", mtk_i3c_readw(master, FIFO_STAT));
-	pr_info("DEBUGSTAT val:0x%x\n", mtk_i3c_readw(master, DEBUGSTAT));
+	pr_debug("SLAVES val:0x%x\n", mtk_i3c_readw(master, SLAVE_ADDR));
+	pr_debug("INTR_STAT:0x%x\n", mtk_i3c_readw(master, INTR_STAT));
+	pr_debug("INTR_MASK val:0x%x\n", mtk_i3c_readw(master, INTR_MASK));
+	pr_debug("CONTROL val:0x%x\n", mtk_i3c_readw(master, CONTROL));
+	pr_debug("START val:0x%x\n", mtk_i3c_readw(master, START));
+	pr_debug("TRAFFIC val:0x%x\n", mtk_i3c_readw(master, TRAFFIC));
+	pr_debug("SHAPE val:0x%x\n", mtk_i3c_readw(master, SHAPE));
+	pr_debug("TIMING val:0x%x\n", mtk_i3c_readw(master, TIMING));
+	pr_debug("LTIMING val:0x%x\n", mtk_i3c_readw(master, LTIMING));
+	pr_debug("HS val:0x%x\n", mtk_i3c_readw(master, HS));
+	pr_debug("ERROR val:0x%x\n", mtk_i3c_readw(master, CHN_ERROR));
+	pr_debug("DEF DA:0x%x\n", mtk_i3c_readw(master, DEF_DA));
+	pr_debug("TRANSFER_LEN val:0x%x\n", mtk_i3c_readw(master, TRANSFER_LEN));
+	pr_debug("TRANSAC_LEN val:0x%x\n", mtk_i3c_readw(master, TRANSAC_LEN));
+	pr_debug("FIFO_STAT val:0x%x\n", mtk_i3c_readw(master, FIFO_STAT));
+	pr_debug("DEBUGSTAT val:0x%x\n", mtk_i3c_readw(master, DEBUGSTAT));
 }
 
 
@@ -320,7 +320,7 @@ static int mtk_i3c_calculate_speed(struct mtk_i3c_master *master,
 	unsigned int best_mul, cnt_mul, base_step_cnt;
 	unsigned int base_sample_cnt = MAX_SAMPLE_CNT;
 
-	pr_info("i3c target speed:%d,clk_src:%d\n", target_speed, clk_src);
+	pr_debug("i3c target speed:%d,clk_src:%d\n", target_speed, clk_src);
 	if (target_speed > I3C_BUS_I2C_FM_PLUS_SCL_RATE)
 		max_step_cnt = MAX_HS_STEP_CNT;
 	else
@@ -329,7 +329,7 @@ static int mtk_i3c_calculate_speed(struct mtk_i3c_master *master,
 	base_step_cnt = max_step_cnt;
 	/* Find the best combination */
 	opt_div = DIV_ROUND_UP(clk_src >> 1, target_speed);
-	pr_info("i3c opt_div:%d\n", opt_div);
+	pr_debug("i3c opt_div:%d\n", opt_div);
 	best_mul = MAX_SAMPLE_CNT * max_step_cnt;
 
 	/* Search for the best pair (sample_cnt, step_cnt) with
@@ -363,7 +363,7 @@ static int mtk_i3c_calculate_speed(struct mtk_i3c_master *master,
 
 	*timing_step_cnt = step_cnt - 1;
 	*timing_sample_cnt = sample_cnt - 1;
-	pr_info("i3c step:%d, sample:%d\n", step_cnt, sample_cnt);
+	pr_debug("i3c step:%d, sample:%d\n", step_cnt, sample_cnt);
 	return 0;
 }
 
@@ -541,7 +541,7 @@ static void mtk_i3c_master_apdma_end(struct mtk_i3c_master *master)
 	u16 int_reg = 0;
 
 	if (!xfer) {
-		pr_info("i3c debug xfer NULL FLOW\n");
+		pr_debug("i3c debug xfer NULL FLOW\n");
 		return;
 	}
 

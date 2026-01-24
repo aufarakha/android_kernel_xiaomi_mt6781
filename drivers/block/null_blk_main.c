@@ -1353,7 +1353,7 @@ static blk_qc_t null_queue_bio(struct request_queue *q, struct bio *bio)
 
 static enum blk_eh_timer_return null_rq_timed_out_fn(struct request *rq)
 {
-	pr_info("null: rq %p timed out\n", rq);
+	pr_debug("null: rq %p timed out\n", rq);
 	__blk_complete_request(rq);
 	return BLK_EH_DONE;
 }
@@ -1416,7 +1416,7 @@ static void null_request_fn(struct request_queue *q)
 
 static enum blk_eh_timer_return null_timeout_rq(struct request *rq, bool res)
 {
-	pr_info("null: rq %p timed out\n", rq);
+	pr_debug("null: rq %p timed out\n", rq);
 	blk_mq_complete_request(rq);
 	return BLK_EH_DONE;
 }
@@ -1927,7 +1927,7 @@ static int __init null_init(void)
 		}
 	}
 
-	pr_info("null: module loaded\n");
+	pr_debug("null: module loaded\n");
 	return 0;
 
 err_dev:

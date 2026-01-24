@@ -216,7 +216,7 @@ struct net_device *r8712_init_netdev(void)
 	}
 	padapter = netdev_priv(pnetdev);
 	padapter->pnetdev = pnetdev;
-	pr_info("r8712u: register rtl8712_netdev_ops to netdev_ops\n");
+	pr_debug("r8712u: register rtl8712_netdev_ops to netdev_ops\n");
 	pnetdev->netdev_ops = &rtl8712_netdev_ops;
 	pnetdev->watchdog_timeo = HZ; /* 1 second timeout */
 	pnetdev->wireless_handlers = (struct iw_handler_def *)

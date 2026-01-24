@@ -35,8 +35,8 @@ struct workqueue_struct *fm10k_workqueue;
  **/
 static int __init fm10k_init_module(void)
 {
-	pr_info("%s - version %s\n", fm10k_driver_string, fm10k_driver_version);
-	pr_info("%s\n", fm10k_copyright);
+	pr_debug("%s - version %s\n", fm10k_driver_string, fm10k_driver_version);
+	pr_debug("%s\n", fm10k_copyright);
 
 	/* create driver workqueue */
 	fm10k_workqueue = alloc_workqueue("%s", WQ_MEM_RECLAIM, 0,

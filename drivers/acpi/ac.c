@@ -453,7 +453,7 @@ static int __init acpi_ac_init(void)
 		for (i = 0; i < ARRAY_SIZE(acpi_ac_blacklist); i++)
 			if (acpi_dev_present(acpi_ac_blacklist[i].hid, "1",
 					     acpi_ac_blacklist[i].hrv)) {
-				pr_info(PREFIX "AC: found native %s PMIC, not loading\n",
+				pr_debug(PREFIX "AC: found native %s PMIC, not loading\n",
 					acpi_ac_blacklist[i].hid);
 				return -ENODEV;
 			}

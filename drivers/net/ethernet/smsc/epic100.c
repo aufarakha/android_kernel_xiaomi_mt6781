@@ -1558,7 +1558,7 @@ static int __init epic_init (void)
 {
 /* when a module, this is printed whether or not devices are found in probe */
 #ifdef MODULE
-	pr_info("%s%s\n", version, version2);
+	pr_debug("%s%s\n", version, version2);
 #endif
 
 	return pci_register_driver(&epic_driver);

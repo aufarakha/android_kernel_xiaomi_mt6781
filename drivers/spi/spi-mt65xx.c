@@ -199,7 +199,7 @@ u8 spi_log_status = LOG_CLOSE;
 
 #define spi_debug(fmt, args...) do { \
 	if (spi_log_status == LOG_OPEN) {\
-		pr_info("[%s]%s() " fmt, dev_name(&master->dev),\
+		pr_debug("[%s]%s() " fmt, dev_name(&master->dev),\
 			__func__, ##args);\
 	} \
 } while (0)
@@ -229,15 +229,15 @@ static ssize_t spi_log_store(struct device *dev, struct device_attribute *attr,
 		return -EINVAL;
 	}
 
-	pr_info("[spi]%s buflen:%zu buf:%s\n", __func__, strlen(buf), buf);
+	pr_debug("[spi]%s buflen:%zu buf:%s\n", __func__, strlen(buf), buf);
 	if (!strncmp(buf, "1", 1)) {
-		pr_info("[spi]%s Now enable spi log\n", __func__);
+		pr_debug("[spi]%s Now enable spi log\n", __func__);
 		spi_log_status = LOG_OPEN;
 	} else if (!strncmp(buf, "0", 1)) {
-		pr_info("[spi]%s Now disable spi log\n", __func__);
+		pr_debug("[spi]%s Now disable spi log\n", __func__);
 		spi_log_status = LOG_CLOSE;
 	} else
-		pr_info("[spi]%s invalid parameter.Plz Input 1 or 0\n",
+		pr_debug("[spi]%s invalid parameter.Plz Input 1 or 0\n",
 			__func__);
 
 	return count;

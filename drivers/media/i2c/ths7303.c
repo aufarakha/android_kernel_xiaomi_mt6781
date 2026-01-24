@@ -132,7 +132,7 @@ static int ths7303_setval(struct v4l2_subdev *sd,
 
 	return 0;
 out:
-	pr_info("write byte data failed\n");
+	pr_debug("write byte data failed\n");
 	return err;
 }
 

@@ -133,7 +133,7 @@ static int vss_handle_handshake(struct hv_vss_msg *vss_msg)
 	default:
 		return -EINVAL;
 	}
-	pr_info("VSS: userspace daemon ver. %d connected\n", dm_reg_value);
+	pr_debug("VSS: userspace daemon ver. %d connected\n", dm_reg_value);
 	return 0;
 }
 
@@ -321,7 +321,7 @@ void hv_vss_onchannelcallback(void *context)
 				 vss_versions, VSS_VER_COUNT,
 				 NULL, &vss_srv_version)) {
 
-				pr_info("VSS IC version %d.%d\n",
+				pr_debug("VSS IC version %d.%d\n",
 					vss_srv_version >> 16,
 					vss_srv_version & 0xFFFF);
 			}

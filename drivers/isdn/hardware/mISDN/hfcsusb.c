@@ -2118,7 +2118,7 @@ hfcsusb_probe(struct usb_interface *intf, const struct usb_device_id *id)
 		return -ENOMEM;
 	}
 
-	pr_info("%s: %s: detected \"%s\" (%s, if=%d alt=%d)\n",
+	pr_debug("%s: %s: detected \"%s\" (%s, if=%d alt=%d)\n",
 		hw->name, __func__, driver_info->vend_name,
 		conf_str[small_match], ifnum, alt_used);
 

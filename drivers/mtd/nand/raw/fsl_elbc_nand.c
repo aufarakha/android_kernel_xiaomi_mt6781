@@ -925,7 +925,7 @@ static int fsl_elbc_nand_probe(struct platform_device *pdev)
 	if (ret)
 		goto cleanup_nand;
 
-	pr_info("eLBC NAND device at 0x%llx, bank %d\n",
+	pr_debug("eLBC NAND device at 0x%llx, bank %d\n",
 		(unsigned long long)res.start, priv->bank);
 
 	return 0;

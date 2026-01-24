@@ -56,7 +56,7 @@ void __iomem *clk_mcucfg_base;
 #define TAG     "[Power/clkmgr] "
 
 #define clk_info(fmt, args...)      \
-	pr_info(TAG fmt, ##args)
+	pr_debug(TAG fmt, ##args)
 #define clk_dbg(fmt, args...)       \
 	pr_debug(TAG fmt, ##args)
 
@@ -517,7 +517,7 @@ void mt_clkmgr_debug_init(void)
 
 	clkmgr_dir = proc_mkdir("clkmgr", NULL);
 	if (!clkmgr_dir) {
-		pr_info("[%s]: fail to mkdir /proc/clkmgr\n", __func__);
+		pr_debug("[%s]: fail to mkdir /proc/clkmgr\n", __func__);
 		return;
 	}
 
@@ -567,18 +567,18 @@ void iomap(void)
 /*apmixed*/
 	node = of_find_compatible_node(NULL, NULL, "mediatek,apmixed");
 	if (!node)
-		pr_info("[CLK_APMIXED] find node failed\n");
+		pr_debug("[CLK_APMIXED] find node failed\n");
 	clk_apmixed_base = of_iomap(node, 0);
 	if (!clk_apmixed_base)
-		pr_info("[CLK_APMIXED] base failed\n");
+		pr_debug("[CLK_APMIXED] base failed\n");
 
 /*mcucfg*/
 	node = of_find_compatible_node(NULL, NULL, "mediatek,mcucfg");
 	if (!node)
-		pr_info("[CLK_MCUCFG] find node failed\n");
+		pr_debug("[CLK_MCUCFG] find node failed\n");
 	clk_mcucfg_base = of_iomap(node, 0);
 	if (!clk_mcucfg_base)
-		pr_info("[CLK_MCUCFG] base failed\n");
+		pr_debug("[CLK_MCUCFG] base failed\n");
 }
 #endif
 

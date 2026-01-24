@@ -218,7 +218,7 @@ static int __init keystone_timer_init(struct device_node *np)
 
 	clockevents_config_and_register(event_dev, rate, 1, ULONG_MAX);
 
-	pr_info("keystone timer clock @%lu Hz\n", rate);
+	pr_debug("keystone timer clock @%lu Hz\n", rate);
 	return 0;
 err:
 	clk_put(clk);

@@ -343,7 +343,7 @@ static int gdrom_get_last_session(struct cdrom_device_info *cd_info,
 		tocuse = 0;
 		err = gdrom_readtoc_cmd(gd.toc, 0);
 		if (err) {
-			pr_info("Could not get CD table of contents\n");
+			pr_debug("Could not get CD table of contents\n");
 			return -ENXIO;
 		}
 	}
@@ -360,7 +360,7 @@ static int gdrom_get_last_session(struct cdrom_device_info *cd_info,
 	} while (track >= fentry);
 
 	if ((track > 100) || (track < get_entry_track(gd.toc->first))) {
-		pr_info("No data on the last session of the CD\n");
+		pr_debug("No data on the last session of the CD\n");
 		gdrom_getsense(NULL);
 		return -ENXIO;
 	}
@@ -455,12 +455,12 @@ static int gdrom_getsense(short *bufstring)
 		goto cleanup_sense;
 	insw(GDROM_DATA_REG, &sense, sense_command->buflen/2);
 	if (sense[1] & 40) {
-		pr_info("Drive not ready - command aborted\n");
+		pr_debug("Drive not ready - command aborted\n");
 		goto cleanup_sense;
 	}
 	sense_key = sense[1] & 0x0F;
 	if (sense_key < ARRAY_SIZE(sense_texts))
-		pr_info("%s\n", sense_texts[sense_key].text);
+		pr_debug("%s\n", sense_texts[sense_key].text);
 	else
 		pr_err("Unknown sense key: %d\n", sense_key);
 	if (bufstring) /* return addional sense data */
@@ -705,7 +705,7 @@ static int gdrom_outputversion(void)
 	firmw_ver = kstrndup(id->firmver, 16, GFP_KERNEL);
 	if (!firmw_ver)
 		goto free_manuf_name;
-	pr_info("%s from %s with firmware %s\n",
+	pr_debug("%s from %s with firmware %s\n",
 		model_name, manuf_name, firmw_ver);
 	err = 0;
 	kfree(firmw_ver);
@@ -794,7 +794,7 @@ static int probe_gdrom(struct platform_device *devptr)
 	gdrom_major = register_blkdev(0, GDROM_DEV_NAME);
 	if (gdrom_major <= 0)
 		return gdrom_major;
-	pr_info("Registered with major number %d\n",
+	pr_debug("Registered with major number %d\n",
 		gdrom_major);
 	/* Specify basic properties of drive */
 	gd.cd_info = kzalloc(sizeof(struct cdrom_device_info), GFP_KERNEL);

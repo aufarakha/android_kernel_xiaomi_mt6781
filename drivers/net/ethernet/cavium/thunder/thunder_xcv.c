@@ -220,7 +220,7 @@ static struct pci_driver xcv_driver = {
 
 static int __init xcv_init_module(void)
 {
-	pr_info("%s, ver %s\n", DRV_NAME, DRV_VERSION);
+	pr_debug("%s, ver %s\n", DRV_NAME, DRV_VERSION);
 
 	return pci_register_driver(&xcv_driver);
 }

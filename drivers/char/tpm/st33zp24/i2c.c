@@ -235,7 +235,7 @@ static int st33zp24_i2c_probe(struct i2c_client *client,
 	struct st33zp24_i2c_phy *phy;
 
 	if (!client) {
-		pr_info("%s: i2c client is NULL. Device not accessible.\n",
+		pr_debug("%s: i2c client is NULL. Device not accessible.\n",
 			__func__);
 		return -ENODEV;
 	}

@@ -558,7 +558,7 @@ static void xlr_config_translate_table(struct xlr_net_priv *priv)
 	use_bkt = 0;
 	cpu_mask = priv->nd->cpu_mask;
 
-	pr_info("Using %s-based distribution\n",
+	pr_debug("Using %s-based distribution\n",
 		(use_bkt) ? "bucket" : "class");
 	j = 0;
 	for (i = 0; i < 32; i++) {
@@ -649,7 +649,7 @@ static int xlr_phy_write(u32 *base_addr, int phy_addr, int regnum, u16 val)
 		timedout = time_after(checktime, stoptime);
 	}
 	if (timedout) {
-		pr_info("Phy device write err: device busy");
+		pr_debug("Phy device write err: device busy");
 		return -EBUSY;
 	}
 
@@ -682,7 +682,7 @@ static int xlr_phy_read(u32 *base_addr, int phy_addr, int regnum)
 		timedout = time_after(checktime, stoptime);
 	}
 	if (timedout) {
-		pr_info("Phy device read err: device busy");
+		pr_debug("Phy device read err: device busy");
 		return -EBUSY;
 	}
 
@@ -791,7 +791,7 @@ void xlr_set_gmac_speed(struct xlr_net_priv *priv)
 		if (speed == SPEED_1000)
 			xlr_nae_wreg(priv->base_addr, R_CORECONTROL, 0x0);
 	}
-	pr_info("gmac%d : %dMbps\n", priv->port_id, priv->phy_speed);
+	pr_debug("gmac%d : %dMbps\n", priv->port_id, priv->phy_speed);
 }
 
 static void xlr_gmac_link_adjust(struct net_device *ndev)
@@ -804,11 +804,11 @@ static void xlr_gmac_link_adjust(struct net_device *ndev)
 	if (phydev->link) {
 		if (phydev->speed != priv->phy_speed) {
 			xlr_set_gmac_speed(priv);
-			pr_info("gmac%d : Link up\n", priv->port_id);
+			pr_debug("gmac%d : Link up\n", priv->port_id);
 		}
 	} else {
 		xlr_set_gmac_speed(priv);
-		pr_info("gmac%d : Link down\n", priv->port_id);
+		pr_debug("gmac%d : Link down\n", priv->port_id);
 	}
 }
 
@@ -874,7 +874,7 @@ static int xlr_setup_mdio(struct xlr_net_priv *priv,
 		return err;
 	}
 
-	pr_info("Registered mdio bus id : %s\n", priv->mii_bus->id);
+	pr_debug("Registered mdio bus id : %s\n", priv->mii_bus->id);
 	err = xlr_mii_probe(priv);
 	if (err) {
 		mdiobus_free(priv->mii_bus);
@@ -944,7 +944,7 @@ static int xlr_gmac_init(struct xlr_net_priv *priv,
 {
 	int ret;
 
-	pr_info("Initializing the gmac%d\n", priv->port_id);
+	pr_debug("Initializing the gmac%d\n", priv->port_id);
 
 	xlr_port_disable(priv);
 
@@ -982,7 +982,7 @@ static int xlr_net_probe(struct platform_device *pdev)
 	struct xlr_adapter *adapter;
 	int err, port;
 
-	pr_info("XLR/XLS Ethernet Driver controller %d\n", pdev->id);
+	pr_debug("XLR/XLS Ethernet Driver controller %d\n", pdev->id);
 	/*
 	 * Allocate our adapter data structure and attach it to the device.
 	 */

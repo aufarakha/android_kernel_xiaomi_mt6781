@@ -732,7 +732,7 @@ static int __init vme_user_init(void)
 {
 	int retval = 0;
 
-	pr_info("VME User Space Access Driver\n");
+	pr_debug("VME User Space Access Driver\n");
 
 	if (bus_num == 0) {
 		pr_err("No cards, skipping registration\n");

@@ -1175,7 +1175,7 @@ static int smsdvb_hotplug(struct smscore_device_t *coredev,
 	sms_board_setup(coredev);
 
 	if (smsdvb_debugfs_create(client) < 0)
-		pr_info("failed to create debugfs node\n");
+		pr_debug("failed to create debugfs node\n");
 
 	rc = dvb_create_media_graph(&client->adapter, true);
 	if (rc < 0) {
@@ -1183,7 +1183,7 @@ static int smsdvb_hotplug(struct smscore_device_t *coredev,
 		goto media_graph_error;
 	}
 
-	pr_info("DVB interface registered.\n");
+	pr_debug("DVB interface registered.\n");
 	return 0;
 
 media_graph_error:

@@ -223,7 +223,7 @@ static int init_i2c_module(struct i2c_adapter *adapter, const struct go_i2c *con
 		return 0;
 	}
 
-	pr_info("go7007: probing for module i2c:%s failed\n", i2c->type);
+	pr_debug("go7007: probing for module i2c:%s failed\n", i2c->type);
 	return -EINVAL;
 }
 

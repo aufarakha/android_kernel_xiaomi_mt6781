@@ -2373,7 +2373,7 @@ err:
 err_no_gate:
 	mutex_unlock(&r820t_list_mutex);
 
-	pr_info("%s: failed=%d\n", __func__, rc);
+	pr_debug("%s: failed=%d\n", __func__, rc);
 	r820t_release(fe);
 	return NULL;
 }

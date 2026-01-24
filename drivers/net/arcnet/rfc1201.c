@@ -59,7 +59,7 @@ static struct ArcProto rfc1201_proto = {
 
 static int __init arcnet_rfc1201_init(void)
 {
-	pr_info("%s\n", "RFC1201 \"standard\" (`a') encapsulation support loaded");
+	pr_debug("%s\n", "RFC1201 \"standard\" (`a') encapsulation support loaded");
 
 	arc_proto_map[ARC_P_IP]
 	    = arc_proto_map[ARC_P_IPV6]

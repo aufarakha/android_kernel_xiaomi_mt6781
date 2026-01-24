@@ -426,7 +426,7 @@ static int vidioc_log_status(struct file *file, void *priv)
 	u32 tmp = 0;
 
 	tmp = cx_read(sram_ch->dma_ctl);
-	pr_info("Video input 0 is %s\n",
+	pr_debug("Video input 0 is %s\n",
 		(tmp & 0x11) ? "streaming" : "stopped");
 	return 0;
 }

@@ -306,7 +306,7 @@ static int __init ir_imon_decode_init(void)
 {
 	ir_raw_handler_register(&imon_handler);
 
-	pr_info("IR iMON protocol handler initialized\n");
+	pr_debug("IR iMON protocol handler initialized\n");
 	return 0;
 }
 

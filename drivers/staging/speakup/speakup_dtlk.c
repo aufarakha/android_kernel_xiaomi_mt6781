@@ -319,13 +319,13 @@ static int synth_probe(struct spk_synth *synth)
 	int i = 0;
 	struct synth_settings *sp;
 
-	pr_info("Probing for DoubleTalk.\n");
+	pr_debug("Probing for DoubleTalk.\n");
 	if (port_forced) {
 		speakup_info.port_tts = port_forced;
-		pr_info("probe forced to %x by kernel command line\n",
+		pr_debug("probe forced to %x by kernel command line\n",
 			speakup_info.port_tts);
 		if ((port_forced & 0xf) != 0xf)
-			pr_info("warning: port base should probably end with f\n");
+			pr_debug("warning: port base should probably end with f\n");
 		if (synth_request_region(speakup_info.port_tts - 1,
 					 SYNTH_IO_EXTENT)) {
 			pr_warn("sorry, port already reserved\n");
@@ -350,7 +350,7 @@ static int synth_probe(struct spk_synth *synth)
 	}
 	port_val &= 0xfbff;
 	if (port_val != 0x107f) {
-		pr_info("DoubleTalk PC: not found\n");
+		pr_debug("DoubleTalk PC: not found\n");
 		if (synth_lpc)
 			synth_release_region(synth_lpc, SYNTH_IO_EXTENT);
 		return -ENODEV;
@@ -358,7 +358,7 @@ static int synth_probe(struct spk_synth *synth)
 	while (inw_p(synth_lpc) != 0x147f)
 		cpu_relax(); /* wait until it's ready */
 	sp = synth_interrogate(synth);
-	pr_info("%s: %03x-%03x, ROM ver %s, s/n %u, driver: %s\n",
+	pr_debug("%s: %03x-%03x, ROM ver %s, s/n %u, driver: %s\n",
 		synth->long_name, synth_lpc, synth_lpc + SYNTH_IO_EXTENT - 1,
 		sp->rom_version, sp->serial_number, synth->version);
 	synth->alive = 1;

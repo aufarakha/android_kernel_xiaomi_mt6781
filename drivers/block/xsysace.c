@@ -1228,7 +1228,7 @@ static int __init ace_init(void)
 	if (rc)
 		goto err_plat;
 
-	pr_info("Xilinx SystemACE device driver, major=%i\n", ace_major);
+	pr_debug("Xilinx SystemACE device driver, major=%i\n", ace_major);
 	return 0;
 
 err_plat:

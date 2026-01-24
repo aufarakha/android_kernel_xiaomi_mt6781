@@ -326,7 +326,7 @@ void mtk_iova_dbg_dump(struct seq_file *s)
 	if (s)
 		seq_printf(s, "%18s %8s %18s\n", "iova", "size", "dev");
 	else
-		pr_info("%18s %8s %18s\n", "iova", "size", "dev");
+		pr_debug("%18s %8s %18s\n", "iova", "size", "dev");
 	list_for_each_entry_safe(plist, n, &iova_list.head,
 				 list_node) {
 		if (s)
@@ -335,7 +335,7 @@ void mtk_iova_dbg_dump(struct seq_file *s)
 				   plist->size,
 				   dev_name(plist->dev));
 		else
-			pr_info("%pa %8zu %18s\n",
+			pr_debug("%pa %8zu %18s\n",
 				   &plist->iova,
 				   plist->size,
 				   dev_name(plist->dev));
@@ -413,7 +413,7 @@ int mtk_iommu_register_fault_callback(int port,
 	int idx = mtk_iommu_port_idx(port);
 
 	if (idx >= m4u_data->plat_data->port_nr) {
-		pr_info("%s fail, port=%d\n", __func__, port);
+		pr_debug("%s fail, port=%d\n", __func__, port);
 		return -1;
 	}
 	m4u_data->m4u_cb[idx].fault_fn = fn;
@@ -427,7 +427,7 @@ int mtk_iommu_unregister_fault_callback(int port)
 	int idx = mtk_iommu_port_idx(port);
 
 	if (idx >= m4u_data->plat_data->port_nr) {
-		pr_info("%s fail, port=%d\n", __func__, port);
+		pr_debug("%s fail, port=%d\n", __func__, port);
 		return -1;
 	}
 	m4u_data->m4u_cb[idx].fault_fn = NULL;
@@ -438,7 +438,7 @@ EXPORT_SYMBOL(mtk_iommu_unregister_fault_callback);
 
 static int m4u_debug_set(void *data, u64 val)
 {
-	pr_info("%s:val=%llu\n", __func__, val);
+	pr_debug("%s:val=%llu\n", __func__, val);
 
 	switch (val) {
 	case 1: /* translation fault test */

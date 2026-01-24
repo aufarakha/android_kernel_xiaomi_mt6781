@@ -242,7 +242,7 @@ static int __init capmode_module_init(void)
 {
 	int count;
 
-	pr_info("cap mode (`c') encapsulation support loaded\n");
+	pr_debug("cap mode (`c') encapsulation support loaded\n");
 
 	for (count = 1; count <= 8; count++)
 		if (arc_proto_map[count] == arc_proto_default)

@@ -140,7 +140,7 @@ static bool is_addr_in_mdp_mali(uint32_t addr)
 	if ((addr >= MDP_REGION1_START_ADDR && addr <= MDP_REGION1_END_ADDR) ||
 		(addr >= MDP_REGION2_START_ADDR && addr <= MDP_REGION2_END_ADDR) ||
 		(addr >= MDP_REGION3_START_ADDR && addr <= MDP_REGION3_END_ADDR)) {
-		pr_info(PFX "vio_addr might from MDP_MALI\n");
+		pr_debug(PFX "vio_addr might from MDP_MALI\n");
 		return true;
 	}
 
@@ -151,7 +151,7 @@ static bool is_addr_in_mmsys_mali(uint32_t addr)
 {
 	if ((addr >= MMSYS_REGION1_START_ADDR && addr <= MMSYS_REGION1_END_ADDR) ||
 		(addr >= MMSYS_REGION2_START_ADDR && addr <= MMSYS_REGION2_END_ADDR)) {
-		pr_info(PFX "vio_addr might from MMSYS_MALI\n");
+		pr_debug(PFX "vio_addr might from MMSYS_MALI\n");
 		return true;
 	}
 
@@ -173,7 +173,7 @@ static const char *mt6833_bus_id_to_master(uint32_t bus_id, uint32_t vio_addr,
 
 	if ((vio_addr >= TINYSYS_START_ADDR && vio_addr <= TINYSYS_END_ADDR) ||
 	    (vio_addr >= MD_START_ADDR && vio_addr <= MD_END_ADDR)) {
-		pr_info(PFX "[DEVAPC] bus_id might be wrong\n");
+		pr_debug(PFX "[DEVAPC] bus_id might be wrong\n");
 
 		if (domain == 0x1)
 			return "SSPM";
@@ -181,7 +181,7 @@ static const char *mt6833_bus_id_to_master(uint32_t bus_id, uint32_t vio_addr,
 			return "CONNSYS";
 
 	} else if (vio_addr >= CONN_START_ADDR && vio_addr <= CONN_END_ADDR) {
-		pr_info(PFX "[DEVAPC] bus_id might be wrong\n");
+		pr_debug(PFX "[DEVAPC] bus_id might be wrong\n");
 
 		if (domain == 0x1)
 			return "MD";
@@ -191,7 +191,7 @@ static const char *mt6833_bus_id_to_master(uint32_t bus_id, uint32_t vio_addr,
 
 	if (slave_type == SLAVE_TYPE_INFRA) {
 		if (vio_addr <= 0x1FFFFF || shift_sta_bit == 6) {
-			pr_info(PFX "vio_addr might from SRAMROM\n");
+			pr_debug(PFX "vio_addr might from SRAMROM\n");
 			if ((bus_id & 0x1) == 0x0)
 				return "EMI_L2C_M";
 
@@ -320,7 +320,7 @@ static void mm2nd_vio_handler(void __iomem *infracfg,
 		reg = infracfg + vio0_offset + i * 4;
 		vio_sta = readl(reg);
 		if (vio_sta)
-			pr_info(PFX "MM 2nd violation: %s%d:0x%x\n",
+			pr_debug(PFX "MM 2nd violation: %s%d:0x%x\n",
 					mm_str, i, vio_sta);
 	}
 

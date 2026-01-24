@@ -15,7 +15,7 @@
 
 #define HX_RSLT_OUT_PATH "/sdcard/"
 #define HX_RSLT_OUT_FILE "hx_test_result.txt"
-#define PCT(x...) pr_info(x)
+#define PCT(x...) pr_debug(x)
 #define HX_SZ_ICID 60
 
 #if defined(HX_EXCP_RECOVERY)

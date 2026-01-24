@@ -562,7 +562,7 @@ static int axmclk_probe(struct platform_device *pdev)
 		return PTR_ERR(regmap);
 
 	num_clks = ARRAY_SIZE(axmclk_clocks);
-	pr_info("axmclk: supporting %zu clocks\n", num_clks);
+	pr_debug("axmclk: supporting %zu clocks\n", num_clks);
 
 	/* Update each entry with the allocated regmap and register the clock
 	 * with the common clock framework

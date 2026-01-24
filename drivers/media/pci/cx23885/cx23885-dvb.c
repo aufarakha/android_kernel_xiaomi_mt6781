@@ -1101,7 +1101,7 @@ static int dvb_register_ci_mac(struct cx23885_tsport *port)
 		netup_get_card_info(&dev->i2c_bus[0].i2c_adap, &cinfo);
 		memcpy(port->frontends.adapter.proposed_mac,
 				cinfo.port[port->nr - 1].mac, 6);
-		pr_info("NetUP Dual DVB-S2 CI card port%d MAC=%pM\n",
+		pr_debug("NetUP Dual DVB-S2 CI card port%d MAC=%pM\n",
 			port->nr, port->frontends.adapter.proposed_mac);
 
 		netup_ci_init(port);
@@ -1127,7 +1127,7 @@ static int dvb_register_ci_mac(struct cx23885_tsport *port)
 		/* Read entire EEPROM */
 		dev->i2c_bus[0].i2c_client.addr = 0xa0 >> 1;
 		tveeprom_read(&dev->i2c_bus[0].i2c_client, eeprom, sizeof(eeprom));
-		pr_info("TeVii S470 MAC= %pM\n", eeprom + 0xa0);
+		pr_debug("TeVii S470 MAC= %pM\n", eeprom + 0xa0);
 		memcpy(port->frontends.adapter.proposed_mac, eeprom + 0xa0, 6);
 		return 0;
 		}
@@ -1144,7 +1144,7 @@ static int dvb_register_ci_mac(struct cx23885_tsport *port)
 		dev->i2c_bus[0].i2c_client.addr = 0xa0 >> 1;
 		tveeprom_read(&dev->i2c_bus[0].i2c_client, eeprom,
 				sizeof(eeprom));
-		pr_info("%s port %d MAC address: %pM\n",
+		pr_debug("%s port %d MAC address: %pM\n",
 			cx23885_boards[dev->board].name, port->nr,
 			eeprom + 0xc0 + (port->nr-1) * 8);
 		memcpy(port->frontends.adapter.proposed_mac, eeprom + 0xc0 +
@@ -1185,7 +1185,7 @@ static int dvb_register_ci_mac(struct cx23885_tsport *port)
 		dev->i2c_bus[0].i2c_client.addr = 0xa0 >> 1;
 		tveeprom_read(&dev->i2c_bus[0].i2c_client, eeprom,
 				sizeof(eeprom));
-		pr_info("%s MAC address: %pM\n",
+		pr_debug("%s MAC address: %pM\n",
 			cx23885_boards[dev->board].name, eeprom + 0xc0);
 		memcpy(port->frontends.adapter.proposed_mac, eeprom + 0xc0, 6);
 		return 0;
@@ -2335,7 +2335,7 @@ static int dvb_register(struct cx23885_tsport *port)
 		break;
 	case CX23885_BOARD_HAUPPAUGE_QUADHD_DVB:
 	case CX23885_BOARD_HAUPPAUGE_QUADHD_DVB_885:
-		pr_info("%s(): board=%d port=%d\n", __func__,
+		pr_debug("%s(): board=%d port=%d\n", __func__,
 			dev->board, port->nr);
 		switch (port->nr) {
 		/* port b - Terrestrial/cable */
@@ -2435,7 +2435,7 @@ static int dvb_register(struct cx23885_tsport *port)
 		break;
 	case CX23885_BOARD_HAUPPAUGE_QUADHD_ATSC:
 	case CX23885_BOARD_HAUPPAUGE_QUADHD_ATSC_885:
-		pr_info("%s(): board=%d port=%d\n", __func__,
+		pr_debug("%s(): board=%d port=%d\n", __func__,
 			dev->board, port->nr);
 		switch (port->nr) {
 		/* port b - Terrestrial/cable */
@@ -2547,7 +2547,7 @@ static int dvb_register(struct cx23885_tsport *port)
 		}
 		break;
 	default:
-		pr_info("%s: The frontend of your DVB/ATSC card  isn't supported yet\n",
+		pr_debug("%s: The frontend of your DVB/ATSC card  isn't supported yet\n",
 			dev->name);
 		break;
 	}
@@ -2634,7 +2634,7 @@ int cx23885_dvb_register(struct cx23885_tsport *port)
 	 * are for safety, and should provide a good foundation for the
 	 * future addition of any multi-frontend cx23885 based boards.
 	 */
-	pr_info("%s() allocating %d frontend(s)\n", __func__,
+	pr_debug("%s() allocating %d frontend(s)\n", __func__,
 		port->num_frontends);
 
 	for (i = 1; i <= port->num_frontends; i++) {
@@ -2661,7 +2661,7 @@ int cx23885_dvb_register(struct cx23885_tsport *port)
 
 		/* dvb stuff */
 		/* We have to init the queue for each frontend on a port. */
-		pr_info("%s: cx23885 based dvb card\n", dev->name);
+		pr_debug("%s: cx23885 based dvb card\n", dev->name);
 		q = &fe0->dvb.dvbq;
 		q->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 		q->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF | VB2_READ;

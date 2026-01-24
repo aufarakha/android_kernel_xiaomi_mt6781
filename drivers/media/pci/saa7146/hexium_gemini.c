@@ -315,7 +315,7 @@ static int hexium_attach(struct saa7146_dev *dev, struct saa7146_pci_extension_d
 		return ret;
 	}
 
-	pr_info("found 'hexium gemini' frame grabber-%d\n", hexium_num);
+	pr_debug("found 'hexium gemini' frame grabber-%d\n", hexium_num);
 	hexium_num++;
 
 	return 0;

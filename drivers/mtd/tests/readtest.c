@@ -94,7 +94,7 @@ static void dump_eraseblock(int ebnum)
 	char line[128];
 	int pg, oob;
 
-	pr_info("dumping eraseblock %d\n", ebnum);
+	pr_debug("dumping eraseblock %d\n", ebnum);
 	n = mtd->erasesize;
 	for (i = 0; i < n;) {
 		char *p = line;
@@ -107,7 +107,7 @@ static void dump_eraseblock(int ebnum)
 	}
 	if (!mtd->oobsize)
 		return;
-	pr_info("dumping oob from eraseblock %d\n", ebnum);
+	pr_debug("dumping oob from eraseblock %d\n", ebnum);
 	n = mtd->oobsize;
 	for (pg = 0, i = 0; pg < pgcnt; pg++)
 		for (oob = 0; oob < n;) {
@@ -131,11 +131,11 @@ static int __init mtd_readtest_init(void)
 	printk(KERN_INFO "=================================================\n");
 
 	if (dev < 0) {
-		pr_info("Please specify a valid mtd-device via module parameter\n");
+		pr_debug("Please specify a valid mtd-device via module parameter\n");
 		return -EINVAL;
 	}
 
-	pr_info("MTD device: %d\n", dev);
+	pr_debug("MTD device: %d\n", dev);
 
 	mtd = get_mtd_device(NULL, dev);
 	if (IS_ERR(mtd)) {
@@ -145,7 +145,7 @@ static int __init mtd_readtest_init(void)
 	}
 
 	if (mtd->writesize == 1) {
-		pr_info("not NAND flash, assume page size is 512 "
+		pr_debug("not NAND flash, assume page size is 512 "
 		       "bytes.\n");
 		pgsize = 512;
 	} else
@@ -156,7 +156,7 @@ static int __init mtd_readtest_init(void)
 	ebcnt = tmp;
 	pgcnt = mtd->erasesize / pgsize;
 
-	pr_info("MTD device size %llu, eraseblock size %u, "
+	pr_debug("MTD device size %llu, eraseblock size %u, "
 	       "page size %u, count of eraseblocks %u, pages per "
 	       "eraseblock %u, OOB size %u\n",
 	       (unsigned long long)mtd->size, mtd->erasesize,
@@ -178,7 +178,7 @@ static int __init mtd_readtest_init(void)
 		goto out;
 
 	/* Read all eraseblocks 1 page at a time */
-	pr_info("testing page read\n");
+	pr_debug("testing page read\n");
 	for (i = 0; i < ebcnt; ++i) {
 		int ret;
 
@@ -199,9 +199,9 @@ static int __init mtd_readtest_init(void)
 	}
 
 	if (err)
-		pr_info("finished with errors\n");
+		pr_debug("finished with errors\n");
 	else
-		pr_info("finished\n");
+		pr_debug("finished\n");
 
 out:
 
@@ -210,7 +210,7 @@ out:
 	kfree(bbt);
 	put_mtd_device(mtd);
 	if (err)
-		pr_info("error %d occurred\n", err);
+		pr_debug("error %d occurred\n", err);
 	printk(KERN_INFO "=================================================\n");
 	return err;
 }

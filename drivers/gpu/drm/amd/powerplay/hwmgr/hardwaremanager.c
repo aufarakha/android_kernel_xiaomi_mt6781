@@ -81,7 +81,7 @@ int phm_enable_dynamic_state_management(struct pp_hwmgr *hwmgr)
 	adev = hwmgr->adev;
 
 	if (smum_is_dpm_running(hwmgr) && !amdgpu_passthrough(adev)) {
-		pr_info("dpm has been enabled\n");
+		pr_debug("dpm has been enabled\n");
 		return 0;
 	}
 
@@ -98,7 +98,7 @@ int phm_disable_dynamic_state_management(struct pp_hwmgr *hwmgr)
 	PHM_FUNC_CHECK(hwmgr);
 
 	if (!smum_is_dpm_running(hwmgr)) {
-		pr_info("dpm has been disabled\n");
+		pr_debug("dpm has been disabled\n");
 		return 0;
 	}
 

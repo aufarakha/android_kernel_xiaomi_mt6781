@@ -406,7 +406,7 @@ static int qlcnic_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
 
 	if (!(adapter->flags & QLCNIC_ESWITCH_ENABLED) &&
 	    !qlcnic_sriov_check(adapter)) {
-		pr_info("%s: FDB e-switch is not enabled\n", __func__);
+		pr_debug("%s: FDB e-switch is not enabled\n", __func__);
 		return -EOPNOTSUPP;
 	}
 
@@ -2627,7 +2627,7 @@ qlcnic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (adapter->portnum == 0) {
 		qlcnic_get_board_name(adapter, board_name);
 
-		pr_info("%s: %s Board Chip rev 0x%x\n",
+		pr_debug("%s: %s Board Chip rev 0x%x\n",
 			module_name(THIS_MODULE),
 			board_name, adapter->ahw->revision_id);
 	}
@@ -3005,7 +3005,7 @@ static inline void dump_tx_ring_desc(struct qlcnic_host_tx_ring *tx_ring)
 
 	for (i = 0; i < tx_ring->num_desc; i++) {
 		tx_desc_info = &tx_ring->desc_head[i];
-		pr_info("TX Desc: %d\n", i);
+		pr_debug("TX Desc: %d\n", i);
 		print_hex_dump(KERN_INFO, "TX: ", DUMP_PREFIX_OFFSET, 16, 1,
 			       &tx_ring->desc_head[i],
 			       sizeof(struct cmd_desc_type0), true);

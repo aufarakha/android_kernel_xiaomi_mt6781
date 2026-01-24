@@ -318,7 +318,7 @@ void gsc_check_src_scale_info(struct gsc_variant *var,
 	if (remainder) {
 		s_frame->crop.width -= remainder;
 		gsc_cal_prescaler_ratio(var, s_frame->crop.width, tx, wratio);
-		pr_info("cropped src width size is recalculated from %d to %d",
+		pr_debug("cropped src width size is recalculated from %d to %d",
 			s_frame->crop.width + remainder, s_frame->crop.width);
 	}
 
@@ -326,7 +326,7 @@ void gsc_check_src_scale_info(struct gsc_variant *var,
 	if (remainder) {
 		s_frame->crop.height -= remainder;
 		gsc_cal_prescaler_ratio(var, s_frame->crop.height, ty, hratio);
-		pr_info("cropped src height size is recalculated from %d to %d",
+		pr_debug("cropped src height size is recalculated from %d to %d",
 			s_frame->crop.height + remainder, s_frame->crop.height);
 	}
 }
@@ -534,7 +534,7 @@ int gsc_g_fmt_mplane(struct gsc_ctx *ctx, struct v4l2_format *f)
 void gsc_check_crop_change(u32 tmp_w, u32 tmp_h, u32 *w, u32 *h)
 {
 	if (tmp_w != *w || tmp_h != *h) {
-		pr_info("Cropped size has been modified from %dx%d to %dx%d",
+		pr_debug("Cropped size has been modified from %dx%d to %dx%d",
 							*w, *h, tmp_w, tmp_h);
 		*w = tmp_w;
 		*h = tmp_h;

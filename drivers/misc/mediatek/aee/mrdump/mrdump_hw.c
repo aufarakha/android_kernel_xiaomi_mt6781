@@ -77,7 +77,7 @@ int __init mrdump_hw_init(bool drm_ready)
 	mrdump_wd_dram_reserved_mode(drm_ready);
 #endif
 #endif
-	pr_info("%s: init_done.\n", __func__);
+	pr_debug("%s: init_done.\n", __func__);
 
 #if IS_ENABLED(CONFIG_MTK_DFD_INTERNAL_DUMP)
 	if (dfd_setup(DFD_BASIC_DUMP) == -1)

@@ -346,7 +346,7 @@ static int __init it87_wdt_init(void)
 		return rc;
 	}
 
-	pr_info("Chip IT%04x revision %d initialized. timeout=%d sec (nowayout=%d testmode=%d)\n",
+	pr_debug("Chip IT%04x revision %d initialized. timeout=%d sec (nowayout=%d testmode=%d)\n",
 		chip_type, chip_rev, timeout, nowayout, testmode);
 
 	return 0;

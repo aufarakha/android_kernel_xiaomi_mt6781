@@ -89,7 +89,7 @@ static void watchdog_check_min_max_timeout(struct watchdog_device *wdd)
 	 * not reset them both to 0 (=not used or unknown)
 	 */
 	if (!wdd->max_hw_heartbeat_ms && wdd->min_timeout > wdd->max_timeout) {
-		pr_info("Invalid min and max timeout values, resetting to 0!\n");
+		pr_debug("Invalid min and max timeout values, resetting to 0!\n");
 		wdd->min_timeout = 0;
 		wdd->max_timeout = 0;
 	}

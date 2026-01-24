@@ -564,7 +564,7 @@ static int __init ps3disk_init(void)
 	}
 	ps3disk_major = error;
 
-	pr_info("%s:%u: registered block device major %d\n", __func__,
+	pr_debug("%s:%u: registered block device major %d\n", __func__,
 		__LINE__, ps3disk_major);
 
 	error = ps3_system_bus_driver_register(&ps3disk);

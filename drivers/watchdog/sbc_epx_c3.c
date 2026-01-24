@@ -52,7 +52,7 @@ static void epx_c3_stop(void)
 
 	outb(0, EPXC3_WATCHDOG_CTL_REG);
 
-	pr_info("Stopped watchdog timer\n");
+	pr_debug("Stopped watchdog timer\n");
 }
 
 static void epx_c3_pet(void)
@@ -76,7 +76,7 @@ static int epx_c3_open(struct inode *inode, struct file *file)
 	epx_c3_pet();
 
 	epx_c3_alive = 1;
-	pr_info("Started watchdog timer\n");
+	pr_debug("Started watchdog timer\n");
 
 	return nonseekable_open(inode, file);
 }
@@ -195,7 +195,7 @@ static int __init watchdog_init(void)
 		goto out;
 	}
 
-	pr_info("Hardware Watchdog Timer for Winsystems EPX-C3 SBC: 0.1\n");
+	pr_debug("Hardware Watchdog Timer for Winsystems EPX-C3 SBC: 0.1\n");
 
 	return 0;
 

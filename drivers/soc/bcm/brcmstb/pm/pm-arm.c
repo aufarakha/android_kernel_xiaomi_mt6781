@@ -427,7 +427,7 @@ noinline int brcmstb_pm_s3_finish(void)
 	else
 		cmd = BSP_GEN_FIXED_KEY;
 	if (do_bsp_initiate_command(cmd)) {
-		pr_info("key loading failed\n");
+		pr_debug("key loading failed\n");
 		return -EIO;
 	}
 

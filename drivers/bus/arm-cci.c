@@ -520,7 +520,7 @@ static int cci_probe_ports(struct device_node *np)
 	sync_cache_w(&ports);
 	sync_cache_w(&cpu_port);
 	__sync_cache_range_w(ports, sizeof(*ports) * nb_cci_ports);
-	pr_info("ARM CCI driver probed\n");
+	pr_debug("ARM CCI driver probed\n");
 
 	return 0;
 }

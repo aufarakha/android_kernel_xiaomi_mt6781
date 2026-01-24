@@ -103,7 +103,7 @@ static uint8_t hash(unsigned offset)
 static int write_page(int log)
 {
 	if (log)
-		pr_info("write_page\n");
+		pr_debug("write_page\n");
 
 	return mtdtest_write(mtd, offset, mtd->writesize, wbuffer);
 }
@@ -115,7 +115,7 @@ static int rewrite_page(int log)
 	struct mtd_oob_ops ops;
 
 	if (log)
-		pr_info("rewrite page\n");
+		pr_debug("rewrite page\n");
 
 	ops.mode      = MTD_OPS_RAW; /* No ECC */
 	ops.len       = mtd->writesize;
@@ -145,7 +145,7 @@ static int read_page(int log)
 	struct mtd_ecc_stats oldstats;
 
 	if (log)
-		pr_info("read_page\n");
+		pr_debug("read_page\n");
 
 	/* Saving last mtd stats */
 	memcpy(&oldstats, &mtd->ecc_stats, sizeof(oldstats));
@@ -169,7 +169,7 @@ static int verify_page(int log)
 	unsigned i, errs = 0;
 
 	if (log)
-		pr_info("verify_page\n");
+		pr_debug("verify_page\n");
 
 	for (i = 0; i < mtd->writesize; i++) {
 		if (rbuffer[i] != hash(i+seed)) {
@@ -198,7 +198,7 @@ static int insert_biterror(unsigned byte)
 		for (bit = 7; bit >= 0; bit--) {
 			if (CBIT(wbuffer[byte], bit)) {
 				BCLR(wbuffer[byte], bit);
-				pr_info("Inserted biterror @ %u/%u\n", byte, bit);
+				pr_debug("Inserted biterror @ %u/%u\n", byte, bit);
 				return 0;
 			}
 		}
@@ -216,7 +216,7 @@ static int incremental_errors_test(void)
 	unsigned i;
 	unsigned errs_per_subpage = 0;
 
-	pr_info("incremental biterrors test\n");
+	pr_debug("incremental biterrors test\n");
 
 	for (i = 0; i < mtd->writesize; i++)
 		wbuffer[i] = hash(i+seed);
@@ -233,7 +233,7 @@ static int incremental_errors_test(void)
 
 		err = read_page(1);
 		if (err > 0)
-			pr_info("Read reported %d corrected bit errors\n", err);
+			pr_debug("Read reported %d corrected bit errors\n", err);
 		if (err < 0) {
 			pr_err("After %d biterrors per subpage, read reported error %d\n",
 				errs_per_subpage, err);
@@ -247,7 +247,7 @@ static int incremental_errors_test(void)
 			goto exit;
 		}
 
-		pr_info("Successfully corrected %d bit errors per subpage\n",
+		pr_debug("Successfully corrected %d bit errors per subpage\n",
 			errs_per_subpage);
 
 		for (i = 0; i < subcount; i++) {
@@ -279,7 +279,7 @@ static int overwrite_test(void)
 
 	memset(bitstats, 0, sizeof(bitstats));
 
-	pr_info("overwrite biterrors test\n");
+	pr_debug("overwrite biterrors test\n");
 
 	for (i = 0; i < mtd->writesize; i++)
 		wbuffer[i] = hash(i+seed);
@@ -297,18 +297,18 @@ static int overwrite_test(void)
 		err = read_page(0);
 		if (err >= 0) {
 			if (err >= MAXBITS) {
-				pr_info("Implausible number of bit errors corrected\n");
+				pr_debug("Implausible number of bit errors corrected\n");
 				err = -EIO;
 				break;
 			}
 			bitstats[err]++;
 			if (err > max_corrected) {
 				max_corrected = err;
-				pr_info("Read reported %d corrected bit errors\n",
+				pr_debug("Read reported %d corrected bit errors\n",
 					err);
 			}
 		} else { /* err < 0 */
-			pr_info("Read reported error %d\n", err);
+			pr_debug("Read reported error %d\n", err);
 			err = 0;
 			break;
 		}
@@ -316,7 +316,7 @@ static int overwrite_test(void)
 		err = verify_page(0);
 		if (err) {
 			bitstats[max_corrected] = opno;
-			pr_info("ECC failure, read data is incorrect despite read success\n");
+			pr_debug("ECC failure, read data is incorrect despite read success\n");
 			break;
 		}
 
@@ -329,9 +329,9 @@ static int overwrite_test(void)
 
 	/* At this point bitstats[0] contains the number of ops with no bit
 	 * errors, bitstats[1] the number of ops with 1 bit error, etc. */
-	pr_info("Bit error histogram (%d operations total):\n", opno);
+	pr_debug("Bit error histogram (%d operations total):\n", opno);
 	for (i = 0; i < max_corrected; i++)
-		pr_info("Page reads with %3d corrected bit errors: %d\n",
+		pr_debug("Page reads with %3d corrected bit errors: %d\n",
 			i, bitstats[i]);
 
 exit:
@@ -344,7 +344,7 @@ static int __init mtd_nandbiterrs_init(void)
 
 	printk("\n");
 	printk(KERN_INFO "==================================================\n");
-	pr_info("MTD device: %d\n", dev);
+	pr_debug("MTD device: %d\n", dev);
 
 	mtd = get_mtd_device(NULL, dev);
 	if (IS_ERR(mtd)) {
@@ -354,24 +354,24 @@ static int __init mtd_nandbiterrs_init(void)
 	}
 
 	if (!mtd_type_is_nand(mtd)) {
-		pr_info("this test requires NAND flash\n");
+		pr_debug("this test requires NAND flash\n");
 		err = -ENODEV;
 		goto exit_nand;
 	}
 
-	pr_info("MTD device size %llu, eraseblock=%u, page=%u, oob=%u\n",
+	pr_debug("MTD device size %llu, eraseblock=%u, page=%u, oob=%u\n",
 		(unsigned long long)mtd->size, mtd->erasesize,
 		mtd->writesize, mtd->oobsize);
 
 	subsize  = mtd->writesize >> mtd->subpage_sft;
 	subcount = mtd->writesize / subsize;
 
-	pr_info("Device uses %d subpages of %d bytes\n", subcount, subsize);
+	pr_debug("Device uses %d subpages of %d bytes\n", subcount, subsize);
 
 	offset     = (loff_t)page_offset * mtd->writesize;
 	eraseblock = mtd_div_by_eb(offset, mtd);
 
-	pr_info("Using page=%u, offset=%llu, eraseblock=%u\n",
+	pr_debug("Using page=%u, offset=%llu, eraseblock=%u\n",
 		page_offset, offset, eraseblock);
 
 	wbuffer = kmalloc(mtd->writesize, GFP_KERNEL);
@@ -404,7 +404,7 @@ static int __init mtd_nandbiterrs_init(void)
 		goto exit_error;
 
 	err = -EIO;
-	pr_info("finished successfully.\n");
+	pr_debug("finished successfully.\n");
 	printk(KERN_INFO "==================================================\n");
 
 exit_error:

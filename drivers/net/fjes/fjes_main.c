@@ -1567,7 +1567,7 @@ static int __init fjes_init_module(void)
 	if (!found)
 		return -ENODEV;
 
-	pr_info("%s - version %s - %s\n",
+	pr_debug("%s - version %s - %s\n",
 		fjes_driver_string, fjes_driver_version, fjes_copyright);
 
 	fjes_dbg_init();

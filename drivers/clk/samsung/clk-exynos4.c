@@ -1537,7 +1537,7 @@ static void __init exynos4_clk_init(struct device_node *np,
 
 	samsung_clk_of_add_provider(np, ctx);
 
-	pr_info("%s clocks: sclk_apll = %ld, sclk_mpll = %ld\n"
+	pr_debug("%s clocks: sclk_apll = %ld, sclk_mpll = %ld\n"
 		"\tsclk_epll = %ld, sclk_vpll = %ld, arm_clk = %ld\n",
 		exynos4_soc == EXYNOS4210 ? "Exynos4210" : "Exynos4x12",
 		_get_rate("sclk_apll"),	_get_rate("sclk_mpll"),

@@ -212,7 +212,7 @@ static inline int cxgbi_ppm_make_non_ddp_tag(struct cxgbi_ppm *ppm,
 	struct cxgbi_tag_format *tformat = &ppm->tformat;
 
 	if (!cxgbi_ppm_sw_tag_is_usable(ppm, sw_tag)) {
-		pr_info("sw_tag 0x%x NOT usable.\n", sw_tag);
+		pr_debug("sw_tag 0x%x NOT usable.\n", sw_tag);
 		return -EINVAL;
 	}
 
@@ -272,7 +272,7 @@ static inline int cxgbi_ppm_ddp_tag_update_sw_bits(struct cxgbi_ppm *ppm,
 	u32 v = val >> tformat->free_bits;
 
 	if (v) {
-		pr_info("sw_bits 0x%x too large, avail bits %u.\n",
+		pr_debug("sw_bits 0x%x too large, avail bits %u.\n",
 			val, tformat->free_bits);
 		return -EINVAL;
 	}
@@ -305,7 +305,7 @@ static inline void cxgbi_tagmask_check(unsigned int tagmask,
 	tformat->idx_clr_mask = (1 << (bits - 1)) - 1;
 	tformat->rsvd_mask = (1 << bits) - 1;
 
-	pr_info("ippm: tagmask 0x%x, rsvd %u=%u+%u+1, mask 0x%x,0x%x, "
+	pr_debug("ippm: tagmask 0x%x, rsvd %u=%u+%u+1, mask 0x%x,0x%x, "
 		"pg %u,%u,%u,%u.\n",
 		tagmask, tformat->rsvd_bits, tformat->idx_bits,
 		tformat->color_bits, tformat->no_ddp_mask, tformat->rsvd_mask,

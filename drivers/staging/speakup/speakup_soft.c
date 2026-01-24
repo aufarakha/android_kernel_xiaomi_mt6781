@@ -391,8 +391,8 @@ static int softsynth_probe(struct spk_synth *synth)
 	}
 
 	misc_registered = 1;
-	pr_info("initialized device: /dev/softsynth, node (MAJOR 10, MINOR 26)\n");
-	pr_info("initialized device: /dev/softsynthu, node (MAJOR 10, MINOR 27)\n");
+	pr_debug("initialized device: /dev/softsynth, node (MAJOR 10, MINOR 26)\n");
+	pr_debug("initialized device: /dev/softsynthu, node (MAJOR 10, MINOR 27)\n");
 	return 0;
 }
 
@@ -401,8 +401,8 @@ static void softsynth_release(void)
 	misc_deregister(&synth_device);
 	misc_deregister(&synthu_device);
 	misc_registered = 0;
-	pr_info("unregistered /dev/softsynth\n");
-	pr_info("unregistered /dev/softsynthu\n");
+	pr_debug("unregistered /dev/softsynth\n");
+	pr_debug("unregistered /dev/softsynthu\n");
 }
 
 static int softsynth_is_alive(struct spk_synth *synth)

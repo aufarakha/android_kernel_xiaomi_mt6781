@@ -431,7 +431,7 @@ int __init xen_evtchn_fifo_init(void)
 	if (ret < 0)
 		return ret;
 
-	pr_info("Using FIFO-based ABI\n");
+	pr_debug("Using FIFO-based ABI\n");
 
 	evtchn_ops = &evtchn_ops_fifo;
 

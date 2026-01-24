@@ -577,7 +577,7 @@ static bool radeon_atpx_detect(void)
 
 	if (has_atpx && vga_count == 2) {
 		acpi_get_name(radeon_atpx_priv.atpx.handle, ACPI_FULL_PATHNAME, &buffer);
-		pr_info("vga_switcheroo: detected switching method %s handle\n",
+		pr_debug("vga_switcheroo: detected switching method %s handle\n",
 			acpi_method_name);
 		radeon_atpx_priv.atpx_detected = true;
 		radeon_atpx_priv.bridge_pm_usable = d3_supported;

@@ -124,7 +124,7 @@ static int nfcmrvl_nci_uart_open(struct nci_uart *nu)
 			pdata = &config;
 
 	if (!pdata) {
-		pr_info("No platform data / DT -> fallback to module params\n");
+		pr_debug("No platform data / DT -> fallback to module params\n");
 		config.hci_muxed = hci_muxed;
 		config.reset_n_io = reset_n_io;
 		config.flow_control = flow_control;

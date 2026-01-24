@@ -251,7 +251,7 @@ struct disp_iommu_device *disp_get_iommu_dev(void)
 		larb_node[larb_idx] = of_parse_phandle(mydev.dev.of_node,
 						"mediatek,larb", larb_idx);
 		if (!larb_node[larb_idx]) {
-			pr_info("disp driver get larb %d fail\n", larb_idx);
+			pr_debug("disp driver get larb %d fail\n", larb_idx);
 			return NULL;
 		}
 		larb_pdev[larb_idx] =
@@ -260,9 +260,9 @@ struct disp_iommu_device *disp_get_iommu_dev(void)
 		if ((!larb_pdev[larb_idx]) ||
 		    (!larb_pdev[larb_idx]->dev.driver)) {
 			if (!larb_pdev[larb_idx])
-				pr_info("earlier than SMI, larb_pdev null\n");
+				pr_debug("earlier than SMI, larb_pdev null\n");
 			else
-				pr_info("earlier than SMI, larb drv null\n");
+				pr_debug("earlier than SMI, larb drv null\n");
 		}
 
 		disp_iommu.larb_pdev[larb_idx] = larb_pdev[larb_idx];
@@ -270,12 +270,12 @@ struct disp_iommu_device *disp_get_iommu_dev(void)
 	/* add for mmp dump mva->pa */
 	np = of_find_compatible_node(NULL, NULL, "mediatek,mt-pseudo_m4u-port");
 	if (np == NULL) {
-		pr_info("DT,mediatek,mt-pseudo_m4u-port is not found\n");
+		pr_debug("DT,mediatek,mt-pseudo_m4u-port is not found\n");
 	} else {
 		disp_iommu.iommu_pdev = of_find_device_by_node(np);
 		of_node_put(np);
 		if (!disp_iommu.iommu_pdev)
-			pr_info("get iommu device failed\n");
+			pr_debug("get iommu device failed\n");
 	}
 	disp_iommu.inited = 1;
 	return &disp_iommu;
@@ -313,7 +313,7 @@ static int disp_probe_1(void)
 	unsigned long va;
 	unsigned int irq;
 
-	pr_info("disp driver(1) %s begin\n", __func__);
+	pr_debug("disp driver(1) %s begin\n", __func__);
 
 #if (defined(CONFIG_MTK_TEE_GP_SUPPORT) || \
 	defined(CONFIG_TRUSTONIC_TEE_SUPPORT)) && \
@@ -337,7 +337,7 @@ static int disp_probe_1(void)
 		struct device_node *node = NULL;
 		struct resource res;
 
-		pr_info("%s: MODULE:%d", __func__, i);
+		pr_debug("%s: MODULE:%d", __func__, i);
 		if (!is_ddp_module_has_reg_info(i))
 			continue;
 
@@ -454,7 +454,7 @@ static int disp_probe_1(void)
 	ddp_path_init();
 	disp_m4u_init();
 
-	pr_info("disp driver(1) %s end\n", __func__);
+	pr_debug("disp driver(1) %s end\n", __func__);
 	/* NOT_REFERENCED(class_dev); */
 	return ret;
 }
@@ -474,7 +474,7 @@ static int disp_probe(struct platform_device *pdev)
 	if (disp_probe_cnt != 0)
 		return 0;
 
-	pr_info("disp driver(1) %s begin\n", __func__);
+	pr_debug("disp driver(1) %s begin\n", __func__);
 
 	/* save pdev for disp_probe_1 */
 	memcpy(&mydev, pdev, sizeof(mydev));
@@ -486,7 +486,7 @@ static int disp_probe(struct platform_device *pdev)
 
 	disp_probe_cnt++;
 
-	pr_info("disp driver(1) %s end\n", __func__);
+	pr_debug("disp driver(1) %s end\n", __func__);
 
 	disp_probe_1();
 

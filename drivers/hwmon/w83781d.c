@@ -1929,7 +1929,7 @@ w83781d_isa_found(unsigned short address)
 		found = 1;
 
 	if (found)
-		pr_info("Found a %s chip at %#x\n",
+		pr_debug("Found a %s chip at %#x\n",
 			val == 0x30 ? "W83782D" : "W83781D", (int)address);
 
  release:

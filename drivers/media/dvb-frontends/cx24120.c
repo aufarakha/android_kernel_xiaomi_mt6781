@@ -111,7 +111,7 @@ enum command_message_id {
 #define CX24120_BER_WINDOW	16
 #define CX24120_BER_WSIZE	((1 << CX24120_BER_WINDOW) * 208 * 8)
 
-#define info(args...) pr_info("cx24120: " args)
+#define info(args...) pr_debug("cx24120: " args)
 #define err(args...)  pr_err("cx24120: ### ERROR: " args)
 
 /* The Demod/Tuner can't easily provide these, we cache them */

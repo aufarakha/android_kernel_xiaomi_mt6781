@@ -1349,13 +1349,13 @@ static int tulip_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 		if (pdev->vendor == 0x1282 && pdev->device == 0x9100 &&
 		    pdev->revision < 0x30) {
-			pr_info("skipping early DM9100 with Crc bug (use dmfe)\n");
+			pr_debug("skipping early DM9100 with Crc bug (use dmfe)\n");
 			return -ENODEV;
 		}
 
 		dp = pci_device_to_OF_node(pdev);
 		if (!(dp && of_get_property(dp, "local-mac-address", NULL))) {
-			pr_info("skipping DM910x expansion card (use dmfe)\n");
+			pr_debug("skipping DM910x expansion card (use dmfe)\n");
 			return -ENODEV;
 		}
 	}
@@ -1462,7 +1462,7 @@ static int tulip_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 		if (sig == 0x09811317) {
 			tp->flags |= COMET_PM;
 			tp->wolinfo.supported = WAKE_PHY | WAKE_MAGIC;
-			pr_info("%s: Enabled WOL support for AN983B\n",
+			pr_debug("%s: Enabled WOL support for AN983B\n",
 				__func__);
 		}
 	}
@@ -1647,7 +1647,7 @@ static int tulip_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (dev->mem_start & MEDIA_MASK)
 		tp->default_port = dev->mem_start & MEDIA_MASK;
 	if (tp->default_port) {
-		pr_info(DRV_NAME "%d: Transceiver selection forced to %s\n",
+		pr_debug(DRV_NAME "%d: Transceiver selection forced to %s\n",
 			board_idx, medianame[tp->default_port & MEDIA_MASK]);
 		tp->medialock = 1;
 		if (tulip_media_cap[tp->default_port] & MediaAlwaysFD)
@@ -1973,7 +1973,7 @@ static struct pci_driver tulip_driver = {
 static int __init tulip_init (void)
 {
 #ifdef MODULE
-	pr_info("%s", version);
+	pr_debug("%s", version);
 #endif
 
 	if (!csr0) {

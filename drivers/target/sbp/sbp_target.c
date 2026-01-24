@@ -579,7 +579,7 @@ static void sbp_management_request_logout(
 		return;
 	}
 
-	pr_info("mgt_agent LOGOUT from LUN %d session %d\n",
+	pr_debug("mgt_agent LOGOUT from LUN %d session %d\n",
 		login->login_lun, login->login_id);
 
 	if (req->node_addr != login->sess->node_id) {
@@ -616,7 +616,7 @@ static void session_check_for_reset(struct sbp_session *sess)
 	}
 
 	if (!card_valid || (sess->generation != sess->card->generation)) {
-		pr_info("Waiting for reconnect from node: %016llx\n",
+		pr_debug("Waiting for reconnect from node: %016llx\n",
 				sess->guid);
 
 		sess->node_id = -1;
@@ -632,7 +632,7 @@ static void session_reconnect_expired(struct sbp_session *sess)
 	struct sbp_login_descriptor *login, *temp;
 	LIST_HEAD(login_list);
 
-	pr_info("Reconnect timer expired for node: %016llx\n", sess->guid);
+	pr_debug("Reconnect timer expired for node: %016llx\n", sess->guid);
 
 	spin_lock_bh(&sess->lock);
 	list_for_each_entry_safe(login, temp, &sess->login_list, link) {

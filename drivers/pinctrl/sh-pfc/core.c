@@ -781,7 +781,7 @@ static void __init sh_pfc_check_info(const struct sh_pfc_soc_info *info)
 	unsigned int *refcnts;
 	unsigned int i, j, k;
 
-	pr_info("Checking %s\n", drvname);
+	pr_debug("Checking %s\n", drvname);
 
 	/* Check pins */
 	for (i = 0; i < info->nr_pins; i++) {

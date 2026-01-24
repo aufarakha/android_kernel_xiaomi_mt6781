@@ -153,7 +153,7 @@ int __init efi_memattr_apply_permissions(struct mm_struct *mm,
 	}
 
 	if (efi_enabled(EFI_DBG))
-		pr_info("Processing EFI Memory Attributes table:\n");
+		pr_debug("Processing EFI Memory Attributes table:\n");
 
 	for (i = ret = 0; ret == 0 && i < tbl->num_entries; i++) {
 		efi_memory_desc_t md;
@@ -165,7 +165,7 @@ int __init efi_memattr_apply_permissions(struct mm_struct *mm,
 				       &md);
 		size = md.num_pages << EFI_PAGE_SHIFT;
 		if (efi_enabled(EFI_DBG) || !valid)
-			pr_info("%s 0x%012llx-0x%012llx %s\n",
+			pr_debug("%s 0x%012llx-0x%012llx %s\n",
 				valid ? "" : "!", md.phys_addr,
 				md.phys_addr + size - 1,
 				efi_md_typeattr_format(buf, sizeof(buf), &md));

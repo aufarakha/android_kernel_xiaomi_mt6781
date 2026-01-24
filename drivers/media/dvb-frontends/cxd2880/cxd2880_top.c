@@ -510,7 +510,7 @@ static int cxd2880_init(struct dvb_frontend *fe)
 					    &priv->regio, &create_param);
 		if (ret) {
 			mutex_unlock(priv->spi_mutex);
-			pr_info("cxd2880 tnrdmd create failed %d\n", ret);
+			pr_debug("cxd2880 tnrdmd create failed %d\n", ret);
 			return ret;
 		}
 	}
@@ -825,20 +825,20 @@ static int cxd2880_set_ber_per_period_t2(struct dvb_frontend *fe)
 
 	ret = cxd2880_tnrdmd_dvbt2_mon_l1_pre(&priv->tnrdmd, &l1pre);
 	if (ret) {
-		pr_info("l1 pre error\n");
+		pr_debug("l1 pre error\n");
 		goto error_ber_setting;
 	}
 
 	ret = cxd2880_tnrdmd_dvbt2_mon_active_plp(&priv->tnrdmd,
 						  CXD2880_DVBT2_PLP_DATA, &plp);
 	if (ret) {
-		pr_info("plp info error\n");
+		pr_debug("plp info error\n");
 		goto error_ber_setting;
 	}
 
 	ret = cxd2880_tnrdmd_dvbt2_mon_l1_post(&priv->tnrdmd, &l1post);
 	if (ret) {
-		pr_info("l1 post error\n");
+		pr_debug("l1 post error\n");
 		goto error_ber_setting;
 	}
 
@@ -906,7 +906,7 @@ static int cxd2880_set_ber_per_period_t2(struct dvb_frontend *fe)
 						CXD2880_DVBT2_PLP_DATA,
 						&bbheader);
 	if (ret) {
-		pr_info("bb header error\n");
+		pr_debug("bb header error\n");
 		goto error_ucblock_setting;
 	}
 
@@ -925,7 +925,7 @@ static int cxd2880_set_ber_per_period_t2(struct dvb_frontend *fe)
 			(pre_ber_rate * kbch_tbl[plp.fec][plp.plp_cr] + 748) /
 			1496;
 	} else {
-		pr_info("plp mode is not Normal or HEM\n");
+		pr_debug("plp mode is not Normal or HEM\n");
 		goto error_ucblock_setting;
 	}
 
@@ -1087,7 +1087,7 @@ static int cxd2880_set_frontend(struct dvb_frontend *fe)
 
 	priv->s = 0;
 
-	pr_info("sys:%d freq:%d bw:%d\n",
+	pr_debug("sys:%d freq:%d bw:%d\n",
 		c->delivery_system, c->frequency, bw);
 	mutex_lock(priv->spi_mutex);
 	if (c->delivery_system == SYS_DVBT) {
@@ -1112,7 +1112,7 @@ static int cxd2880_set_frontend(struct dvb_frontend *fe)
 	}
 	mutex_unlock(priv->spi_mutex);
 
-	pr_info("tune result %d\n", ret);
+	pr_debug("tune result %d\n", ret);
 
 	return ret;
 }
@@ -1945,7 +1945,7 @@ struct dvb_frontend *cxd2880_attach(struct dvb_frontend *fe,
 	}
 
 	fe->demodulator_priv = priv;
-	pr_info("CXD2880 driver version: Ver %s\n",
+	pr_debug("CXD2880 driver version: Ver %s\n",
 		CXD2880_TNRDMD_DRIVER_VERSION);
 
 	return fe;

@@ -381,7 +381,7 @@ static void gnttab_handle_deferred(struct timer_list *unused)
 			entry = NULL;
 		} else {
 			if (!--entry->warn_delay)
-				pr_info("g.e. %#x still pending\n", entry->ref);
+				pr_debug("g.e. %#x still pending\n", entry->ref);
 			if (!first)
 				first = entry;
 		}
@@ -1355,7 +1355,7 @@ static void gnttab_request_version(void)
 		gnttab_interface = &gnttab_v2_ops;
 	else
 		gnttab_interface = &gnttab_v1_ops;
-	pr_info("Grant tables using version %d layout\n",
+	pr_debug("Grant tables using version %d layout\n",
 		gnttab_interface->version);
 }
 

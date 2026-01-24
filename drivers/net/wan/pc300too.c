@@ -411,7 +411,7 @@ static int pc300_pci_init_one(struct pci_dev *pdev,
 	card->buff_offset = card->n_ports * sizeof(pkt_desc) *
 		(card->tx_ring_buffers + card->rx_ring_buffers);
 
-	pr_info("PC300/%s, %u KB RAM at 0x%x, IRQ%u, using %u TX + %u RX packets rings\n",
+	pr_debug("PC300/%s, %u KB RAM at 0x%x, IRQ%u, using %u TX + %u RX packets rings\n",
 		card->type == PC300_X21 ? "X21" :
 		card->type == PC300_TE ? "TE" : "RSV",
 		ramsize / 1024, ramphys, pdev->irq,

@@ -1256,7 +1256,7 @@ static int clk_mt6765_apmixed_probe(struct platform_device *pdev)
 	r = of_property_read_u32(node, "armpll_ll_enable",
 		&val);
 	if (r) {
-		pr_info("fail to read armpll_ll_enable\n");
+		pr_debug("fail to read armpll_ll_enable\n");
 		val = 0;
 	}
 

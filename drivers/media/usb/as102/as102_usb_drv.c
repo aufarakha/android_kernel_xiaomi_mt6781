@@ -339,7 +339,7 @@ static void as102_usb_disconnect(struct usb_interface *intf)
 	/* decrement usage counter */
 	kref_put(&as102_dev->kref, as102_usb_release);
 
-	pr_info("%s: device has been disconnected\n", DRIVER_NAME);
+	pr_debug("%s: device has been disconnected\n", DRIVER_NAME);
 }
 
 static int as102_usb_probe(struct usb_interface *intf,
@@ -397,7 +397,7 @@ static int as102_usb_probe(struct usb_interface *intf,
 		goto failed;
 	}
 
-	pr_info("%s: device has been detected\n", DRIVER_NAME);
+	pr_debug("%s: device has been detected\n", DRIVER_NAME);
 
 	/* request buffer allocation for streaming */
 	ret = as102_alloc_usb_stream_buffer(as102_dev);

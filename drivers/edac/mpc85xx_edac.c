@@ -265,7 +265,7 @@ static int mpc85xx_pci_err_probe(struct platform_device *op)
 			goto err2;
 		}
 
-		pr_info(EDAC_MOD_STR " acquired irq %d for PCI Err\n",
+		pr_debug(EDAC_MOD_STR " acquired irq %d for PCI Err\n",
 		       pdata->irq);
 	}
 
@@ -287,7 +287,7 @@ static int mpc85xx_pci_err_probe(struct platform_device *op)
 
 	devres_remove_group(&op->dev, mpc85xx_pci_err_probe);
 	edac_dbg(3, "success\n");
-	pr_info(EDAC_MOD_STR " PCI err registered\n");
+	pr_debug(EDAC_MOD_STR " PCI err registered\n");
 
 	return 0;
 
@@ -568,7 +568,7 @@ static int mpc85xx_l2_err_probe(struct platform_device *op)
 			goto err2;
 		}
 
-		pr_info(EDAC_MOD_STR " acquired irq %d for L2 Err\n", pdata->irq);
+		pr_debug(EDAC_MOD_STR " acquired irq %d for L2 Err\n", pdata->irq);
 
 		edac_dev->op_state = OP_RUNNING_INTERRUPT;
 
@@ -578,7 +578,7 @@ static int mpc85xx_l2_err_probe(struct platform_device *op)
 	devres_remove_group(&op->dev, mpc85xx_l2_err_probe);
 
 	edac_dbg(3, "success\n");
-	pr_info(EDAC_MOD_STR " L2 err registered\n");
+	pr_debug(EDAC_MOD_STR " L2 err registered\n");
 
 	return 0;
 
@@ -692,7 +692,7 @@ static int __init mpc85xx_mc_init(void)
 	int res = 0;
 	u32 __maybe_unused pvr = 0;
 
-	pr_info("Freescale(R) MPC85xx EDAC driver, (C) 2006 Montavista Software\n");
+	pr_debug("Freescale(R) MPC85xx EDAC driver, (C) 2006 Montavista Software\n");
 
 	/* make sure error reporting method is sane */
 	switch (edac_op_state) {

@@ -210,7 +210,7 @@ static int sharpsl_nand_init_ftl(struct mtd_info *mtd, struct sharpsl_ftl *ftl)
 		}
 	}
 
-	pr_info("Sharp SL FTL: %d blocks used (%d logical, %d reserved)\n",
+	pr_debug("Sharp SL FTL: %d blocks used (%d logical, %d reserved)\n",
 		phymax, ftl->logmax, phymax - ftl->logmax);
 
 	ret = 0;
@@ -342,7 +342,7 @@ static int sharpsl_parse_mtd_partitions(struct mtd_info *master,
 		return err;
 
 	/* read and validate first partition table */
-	pr_info("sharpslpart: try reading first partition table\n");
+	pr_debug("sharpslpart: try reading first partition table\n");
 	err = sharpsl_nand_read_partinfo(master,
 					 SHARPSL_PARTINFO1_LADDR,
 					 sizeof(buf), buf, &ftl);

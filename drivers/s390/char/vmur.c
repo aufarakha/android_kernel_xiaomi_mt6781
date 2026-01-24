@@ -1033,7 +1033,7 @@ static int __init ur_init(void)
 	}
 	ur_first_dev_maj_min = MKDEV(MAJOR(dev), 0);
 
-	pr_info("%s loaded.\n", ur_banner);
+	pr_debug("%s loaded.\n", ur_banner);
 	return 0;
 
 fail_unregister_driver:
@@ -1051,7 +1051,7 @@ static void __exit ur_exit(void)
 	ccw_driver_unregister(&ur_driver);
 	class_destroy(vmur_class);
 	debug_unregister(vmur_dbf);
-	pr_info("%s unloaded.\n", ur_banner);
+	pr_debug("%s unloaded.\n", ur_banner);
 }
 
 module_init(ur_init);

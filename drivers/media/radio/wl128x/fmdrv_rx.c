@@ -116,7 +116,7 @@ int fm_rx_set_freq(struct fmdev *fmdev, u32 freq)
 	curr_frq_in_khz = (fmdev->rx.region.bot_freq + ((u32)curr_frq * FM_FREQ_MUL));
 
 	if (curr_frq_in_khz != freq) {
-		pr_info("Frequency is set to (%d) but requested freq is (%d)\n",
+		pr_debug("Frequency is set to (%d) but requested freq is (%d)\n",
 			curr_frq_in_khz, freq);
 	}
 

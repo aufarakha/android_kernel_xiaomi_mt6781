@@ -305,7 +305,7 @@ int _ioctl_prepare_present_fence(unsigned long arg)
 
 	if (copy_from_user(&pnt_fence, (void __user *)arg,
 			sizeof(struct disp_present_fence))) {
-		pr_info("[FB Driver]: copy_from_user failed! line:%d\n",
+		pr_debug("[FB Driver]: copy_from_user failed! line:%d\n",
 			__LINE__);
 		return -EFAULT;
 	}
@@ -341,7 +341,7 @@ int _ioctl_prepare_present_fence(unsigned long arg)
 	pnt_fence.present_fence_index = data.value;
 	if (copy_to_user(argp, &pnt_fence,
 		sizeof(pnt_fence))) {
-		pr_info("[FB Driver]: copy_to_user failed! line:%d\n",
+		pr_debug("[FB Driver]: copy_to_user failed! line:%d\n",
 			__LINE__);
 		ret = -EFAULT;
 	}

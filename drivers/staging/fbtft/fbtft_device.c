@@ -1456,10 +1456,10 @@ static int __init fbtft_device_init(void)
 
 	/* name=list lists all supported displays */
 	if (strncmp(name, "list", FBTFT_GPIO_NAME_SIZE) == 0) {
-		pr_info("Supported displays:\n");
+		pr_debug("Supported displays:\n");
 
 		for (i = 0; i < ARRAY_SIZE(displays); i++)
-			pr_info("%s\n", displays[i].name);
+			pr_debug("%s\n", displays[i].name);
 		return -ECANCELED;
 	}
 
@@ -1551,15 +1551,15 @@ static int __init fbtft_device_init(void)
 
 	if (verbose && pdata && pdata->gpios) {
 		gpio = pdata->gpios;
-		pr_info("GPIOS used by '%s':\n", name);
+		pr_debug("GPIOS used by '%s':\n", name);
 		found = false;
 		while (verbose && gpio->name[0]) {
-			pr_info("'%s' = GPIO%d\n", gpio->name, gpio->gpio);
+			pr_debug("'%s' = GPIO%d\n", gpio->name, gpio->gpio);
 			gpio++;
 			found = true;
 		}
 		if (!found)
-			pr_info("(none)\n");
+			pr_debug("(none)\n");
 	}
 
 	if (spi_device && (verbose > 1))

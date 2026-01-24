@@ -34,7 +34,7 @@ int rtc_hctosys(void)
 	struct rtc_device *rtc = rtc_class_open(CONFIG_RTC_HCTOSYS_DEVICE);
 
 	if (rtc == NULL) {
-		pr_info("unable to open rtc device (%s)\n",
+		pr_debug("unable to open rtc device (%s)\n",
 			CONFIG_RTC_HCTOSYS_DEVICE);
 		goto err_open;
 	}

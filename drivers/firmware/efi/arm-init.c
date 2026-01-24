@@ -129,7 +129,7 @@ static int __init uefi_init(void)
 		early_memunmap(c16, sizeof(vendor) * sizeof(efi_char16_t));
 	}
 
-	pr_info("EFI v%u.%.02u by %s\n",
+	pr_debug("EFI v%u.%.02u by %s\n",
 		efi.systab->hdr.revision >> 16,
 		efi.systab->hdr.revision & 0xffff, vendor);
 
@@ -185,7 +185,7 @@ static __init void reserve_regions(void)
 	u64 paddr, npages, size;
 
 	if (efi_enabled(EFI_DBG))
-		pr_info("Processing EFI memory map:\n");
+		pr_debug("Processing EFI memory map:\n");
 
 	/*
 	 * Discard memblocks discovered so far: if there are any at this
@@ -202,7 +202,7 @@ static __init void reserve_regions(void)
 		if (efi_enabled(EFI_DBG)) {
 			char buf[64];
 
-			pr_info("  0x%012llx-0x%012llx %s\n",
+			pr_debug("  0x%012llx-0x%012llx %s\n",
 				paddr, paddr + (npages << EFI_PAGE_SHIFT) - 1,
 				efi_md_typeattr_format(buf, sizeof(buf), md));
 		}

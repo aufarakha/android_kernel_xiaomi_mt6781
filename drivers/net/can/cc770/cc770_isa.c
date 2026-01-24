@@ -354,7 +354,7 @@ static int __init cc770_isa_init(void)
 	if (err)
 		goto exit_free_devices;
 
-	pr_info("driver for max. %d devices registered\n", MAXDEV);
+	pr_debug("driver for max. %d devices registered\n", MAXDEV);
 
 	return 0;
 

@@ -229,7 +229,7 @@ static int __init i2c_parport_init(void)
 	}
 
 	if (base == 0) {
-		pr_info(DRVNAME ": using default base 0x%x\n", DEFAULT_BASE);
+		pr_debug(DRVNAME ": using default base 0x%x\n", DEFAULT_BASE);
 		base = DEFAULT_BASE;
 	}
 
@@ -237,7 +237,7 @@ static int __init i2c_parport_init(void)
 		return -EBUSY;
 
 	if (irq != 0)
-		pr_info(DRVNAME ": using irq %d\n", irq);
+		pr_debug(DRVNAME ": using irq %d\n", irq);
 
 	if (!adapter_parm[type].getscl.val)
 		parport_algo_data.getscl = NULL;

@@ -258,11 +258,11 @@ static u8 get_via_model_d_vrm(void)
 	brand = ((brand >> 4) ^ (brand >> 2)) & 0x03;
 
 	if (vid > 0x3f) {
-		pr_info("Using %d-bit VID table for VIA %s CPU\n",
+		pr_debug("Using %d-bit VID table for VIA %s CPU\n",
 			7, brands[brand]);
 		return 14;
 	} else {
-		pr_info("Using %d-bit VID table for VIA %s CPU\n",
+		pr_debug("Using %d-bit VID table for VIA %s CPU\n",
 			6, brands[brand]);
 		/* Enable quirk for Eden */
 		return brand == 2 ? 131 : 13;
@@ -297,7 +297,7 @@ u8 vid_which_vrm(void)
 	if (vrm_ret == 134)
 		vrm_ret = get_via_model_d_vrm();
 	if (vrm_ret == 0)
-		pr_info("Unknown VRM version of your x86 CPU\n");
+		pr_debug("Unknown VRM version of your x86 CPU\n");
 	return vrm_ret;
 }
 
@@ -305,7 +305,7 @@ u8 vid_which_vrm(void)
 #else
 u8 vid_which_vrm(void)
 {
-	pr_info("Unknown VRM version of your CPU\n");
+	pr_debug("Unknown VRM version of your CPU\n");
 	return 0;
 }
 #endif

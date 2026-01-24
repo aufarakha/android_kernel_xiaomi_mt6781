@@ -324,7 +324,7 @@ drm_setclientcap(struct drm_device *dev, void *data, struct drm_file *file_priv)
 			return -EINVAL;
 		/* The modesetting DDX has a totally broken idea of atomic. */
 		if (current->comm[0] == 'X' && req->value == 1) {
-			pr_info("broken atomic modeset userspace detected, disabling atomic\n");
+			pr_debug("broken atomic modeset userspace detected, disabling atomic\n");
 			return -EOPNOTSUPP;
 		}
 		if (req->value > 2)

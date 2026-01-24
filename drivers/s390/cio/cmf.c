@@ -1297,7 +1297,7 @@ static int __init init_cmf(void)
 	default:
 		return -EINVAL;
 	}
-	pr_info("Channel measurement facility initialized using format "
+	pr_debug("Channel measurement facility initialized using format "
 		"%s (mode %s)\n", format_string, detect_string);
 	return 0;
 }

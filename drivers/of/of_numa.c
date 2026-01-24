@@ -91,7 +91,7 @@ static int __init of_numa_parse_distance_map_v1(struct device_node *map)
 	int entry_count;
 	int i;
 
-	pr_info("parsing numa-distance-map-v1\n");
+	pr_debug("parsing numa-distance-map-v1\n");
 
 	matrix = of_get_property(map, "distance-matrix", NULL);
 	if (!matrix) {

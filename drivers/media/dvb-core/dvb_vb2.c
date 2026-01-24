@@ -27,7 +27,7 @@ module_param(vb2_debug, int, 0644);
 #define dprintk(level, fmt, arg...)					      \
 	do {								      \
 		if (vb2_debug >= level)					      \
-			pr_info("vb2: %s: " fmt, __func__, ## arg); \
+			pr_debug("vb2: %s: " fmt, __func__, ## arg); \
 	} while (0)
 
 static int _queue_setup(struct vb2_queue *vq,

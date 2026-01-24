@@ -185,7 +185,7 @@ static int __init zevio_timer_add(struct device_node *node)
 
 		clockevents_config_and_register(&timer->clkevt,
 				clk_get_rate(timer->clk), 0x0001, 0xffff);
-		pr_info("Added %s as clockevent\n", timer->clockevent_name);
+		pr_debug("Added %s as clockevent\n", timer->clockevent_name);
 	}
 
 	writel(CNTL_STOP_TIMER, timer->timer2 + IO_CONTROL);
@@ -200,7 +200,7 @@ static int __init zevio_timer_add(struct device_node *node)
 			200, 16,
 			clocksource_mmio_readw_up);
 
-	pr_info("Added %s as clocksource\n", timer->clocksource_name);
+	pr_debug("Added %s as clocksource\n", timer->clocksource_name);
 
 	return 0;
 error_unmap:

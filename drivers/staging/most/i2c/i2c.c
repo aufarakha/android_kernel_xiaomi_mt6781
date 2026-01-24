@@ -99,7 +99,7 @@ static int configure_channel(struct most_interface *most_iface,
 			delay = msecs_to_jiffies(MSEC_PER_SEC / polling_rate);
 			dev->rx.delay = delay ? delay : 1;
 			pr = MSEC_PER_SEC / jiffies_to_msecs(dev->rx.delay);
-			pr_info("polling rate is %u Hz\n", pr);
+			pr_debug("polling rate is %u Hz\n", pr);
 		}
 	}
 

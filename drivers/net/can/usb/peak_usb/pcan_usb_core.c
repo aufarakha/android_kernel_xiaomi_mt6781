@@ -62,7 +62,7 @@ static const struct peak_usb_adapter *const peak_usb_adapters_list[] = {
 #define DUMP_WIDTH	16
 void pcan_dump_mem(char *prompt, void *p, int l)
 {
-	pr_info("%s dumping %s (%d bytes):\n",
+	pr_debug("%s dumping %s (%d bytes):\n",
 		PCAN_USB_DRIVER_NAME, prompt ? prompt : "memory", l);
 	print_hex_dump(KERN_INFO, PCAN_USB_DRIVER_NAME " ", DUMP_PREFIX_NONE,
 		       DUMP_WIDTH, 1, p, l, false);
@@ -1020,7 +1020,7 @@ static void __exit peak_usb_exit(void)
 	/* deregister this driver with the USB subsystem */
 	usb_deregister(&peak_usb_driver);
 
-	pr_info("%s: PCAN-USB interfaces driver unloaded\n",
+	pr_debug("%s: PCAN-USB interfaces driver unloaded\n",
 		PCAN_USB_DRIVER_NAME);
 }
 

@@ -86,7 +86,7 @@ void sched_mon_msg(int out, char *buf, ...)
 	if (out & TO_FTRACE)
 		trace_sched_mon_msg_rcuidle(str);
 	if (out & TO_KERNEL_LOG)
-		pr_info("%s\n", str);
+		pr_debug("%s\n", str);
 	if (out & TO_DEFERRED)
 		printk_deferred("%s\n", str);
 	if (out & TO_SRAM) {
@@ -830,7 +830,7 @@ static int __init init_sched_monitor(void)
 				 sched_mon_file[i].mode,
 				 dir[sched_mon_file[i].dir],
 				 sched_mon_file[i].proc_fops)) {
-			pr_info("create [%s] failed\n", sched_mon_file[i].name);
+			pr_debug("create [%s] failed\n", sched_mon_file[i].name);
 			return -ENOMEM;
 		}
 	}

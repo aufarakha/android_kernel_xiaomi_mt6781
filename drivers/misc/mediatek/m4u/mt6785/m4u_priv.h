@@ -24,10 +24,10 @@
 #include "m4u_reg.h"
 #include "../3.2/m4u_pgtable.h"
 
-#define M4UMSG(string, args...)	     pr_info("[M4U] "string, ##args)
-#define M4UINFO(string, args...)     pr_info("[M4U] "string, ##args)
+#define M4UMSG(string, args...)	     pr_debug("[M4U] "string, ##args)
+#define M4UINFO(string, args...)     pr_debug("[M4U] "string, ##args)
 
-#define m4u_info(string, args...)    pr_info("[M4U] "string, ##args)
+#define m4u_info(string, args...)    pr_debug("[M4U] "string, ##args)
 #define m4u_debug(string, args...)   pr_debug("[M4U] "string, ##args)
 
 
@@ -280,7 +280,7 @@ extern int gM4U_log_to_uart;
 	do {\
 		if (level > gM4U_log_level) {\
 			if (level > gM4U_log_to_uart)\
-				pr_info("[M4U] "string, ##args);\
+				pr_debug("[M4U] "string, ##args);\
 			else\
 				pr_debug("[M4U] "string, ##args);\
 		} \
@@ -292,7 +292,7 @@ extern int gM4U_log_to_uart;
 
 #ifdef CONFIG_MTK_AEE_FEATURE
 #define M4UERR(string, args...) do {\
-	pr_info("[M4U] error:"string, ##args);  \
+	pr_debug("[M4U] error:"string, ##args);  \
 		aee_kernel_exception("M4U", "[M4U] error:"string, ##args);  \
 	} while (0)
 
@@ -304,7 +304,7 @@ extern int gM4U_log_to_uart;
 					DB_OPT_DUMP_DISPLAY,            \
 					m4u_name,                       \
 					"[M4U] error"string, ##args);   \
-		pr_info("[M4U] error:"string, ##args);                  \
+		pr_debug("[M4U] error:"string, ##args);                  \
 	} while (0)
 /*aee_kernel_warning(m4u_name, "[M4U] error:"string,##args); */
 #else
@@ -317,7 +317,7 @@ extern int gM4U_log_to_uart;
 		if (seq_file)\
 			seq_printf(seq_file, fmt, ##args);\
 		else\
-			pr_info(fmt, ##args);\
+			pr_debug(fmt, ##args);\
 	} while (0)
 
 /* ======================================= */

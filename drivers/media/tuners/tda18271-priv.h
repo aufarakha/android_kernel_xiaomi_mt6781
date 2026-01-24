@@ -153,7 +153,7 @@ do {								\
 		tda_printk(st, KERN_DEBUG, fmt, ##arg);		\
 } while (0)
 
-#define tda_info(fmt, arg...)	pr_info(fmt, ##arg)
+#define tda_info(fmt, arg...)	pr_debug(fmt, ##arg)
 #define tda_warn(fmt, arg...)	tda_printk(priv, KERN_WARNING, fmt, ##arg)
 #define tda_err(fmt, arg...)	tda_printk(priv, KERN_ERR,     fmt, ##arg)
 #define tda_dbg(fmt, arg...)	tda_dprintk(priv, DBG_INFO,    fmt, ##arg)

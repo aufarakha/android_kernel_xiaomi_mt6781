@@ -1414,7 +1414,7 @@ static int __init i8042_pnp_init(void)
 	int err;
 
 	if (i8042_nopnp) {
-		pr_info("PNP detection disabled\n");
+		pr_debug("PNP detection disabled\n");
 		return 0;
 	}
 
@@ -1431,11 +1431,11 @@ static int __init i8042_pnp_init(void)
 #if defined(__ia64__)
 		return -ENODEV;
 #else
-		pr_info("PNP: No PS/2 controller found.\n");
+		pr_debug("PNP: No PS/2 controller found.\n");
 		if (x86_platform.legacy.i8042 !=
 				X86_LEGACY_I8042_EXPECTED_PRESENT)
 			return -ENODEV;
-		pr_info("Probing ports directly.\n");
+		pr_debug("Probing ports directly.\n");
 		return 0;
 #endif
 	}
@@ -1447,7 +1447,7 @@ static int __init i8042_pnp_init(void)
 		snprintf(aux_irq_str, sizeof(aux_irq_str),
 			"%d", i8042_pnp_aux_irq);
 
-	pr_info("PNP: PS/2 Controller [%s%s%s] at %#x,%#x irq %s%s%s\n",
+	pr_debug("PNP: PS/2 Controller [%s%s%s] at %#x,%#x irq %s%s%s\n",
 		i8042_pnp_kbd_name, (i8042_pnp_kbd_devices && i8042_pnp_aux_devices) ? "," : "",
 		i8042_pnp_aux_name,
 		i8042_pnp_data_reg, i8042_pnp_command_reg,

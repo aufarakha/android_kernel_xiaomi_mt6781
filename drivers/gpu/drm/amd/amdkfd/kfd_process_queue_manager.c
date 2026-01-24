@@ -52,7 +52,7 @@ static int find_available_queue_slot(struct process_queue_manager *pqm,
 	pr_debug("The new slot id %lu\n", found);
 
 	if (found >= KFD_MAX_NUM_OF_QUEUES_PER_PROCESS) {
-		pr_info("Cannot open more queues for process with pasid %d\n",
+		pr_debug("Cannot open more queues for process with pasid %d\n",
 				pqm->process->pasid);
 		return -ENOMEM;
 	}

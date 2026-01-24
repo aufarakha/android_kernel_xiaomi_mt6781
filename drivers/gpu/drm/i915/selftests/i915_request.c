@@ -395,7 +395,7 @@ static int live_nop_request(void *arg)
 		if (err)
 			goto out_unlock;
 
-		pr_info("Request latencies on %s: 1 = %lluns, %lu = %lluns\n",
+		pr_debug("Request latencies on %s: 1 = %lluns, %lu = %lluns\n",
 			engine->name,
 			ktime_to_ns(times[0]),
 			prime, div64_u64(ktime_to_ns(times[1]), prime));
@@ -540,7 +540,7 @@ static int live_empty_request(void *arg)
 		if (err)
 			goto out_batch;
 
-		pr_info("Batch latencies on %s: 1 = %lluns, %lu = %lluns\n",
+		pr_debug("Batch latencies on %s: 1 = %lluns, %lu = %lluns\n",
 			engine->name,
 			ktime_to_ns(times[0]),
 			prime, div64_u64(ktime_to_ns(times[1]), prime));

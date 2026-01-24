@@ -601,14 +601,14 @@ static void i915_switcheroo_set_state(struct pci_dev *pdev, enum vga_switcheroo_
 	pm_message_t pmm = { .event = PM_EVENT_SUSPEND };
 
 	if (state == VGA_SWITCHEROO_ON) {
-		pr_info("switched on\n");
+		pr_debug("switched on\n");
 		dev->switch_power_state = DRM_SWITCH_POWER_CHANGING;
 		/* i915 resume handler doesn't set to D0 */
 		pci_set_power_state(pdev, PCI_D0);
 		i915_resume_switcheroo(dev);
 		dev->switch_power_state = DRM_SWITCH_POWER_ON;
 	} else {
-		pr_info("switched off\n");
+		pr_debug("switched off\n");
 		dev->switch_power_state = DRM_SWITCH_POWER_CHANGING;
 		i915_suspend_switcheroo(dev, pmm);
 		dev->switch_power_state = DRM_SWITCH_POWER_OFF;

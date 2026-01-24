@@ -351,13 +351,13 @@ static void fec_dump(struct net_device *ndev)
 	int index = 0;
 
 	netdev_info(ndev, "TX ring dump\n");
-	pr_info("Nr     SC     addr       len  SKB\n");
+	pr_debug("Nr     SC     addr       len  SKB\n");
 
 	txq = fep->tx_queue[0];
 	bdp = txq->bd.base;
 
 	do {
-		pr_info("%3u %c%c 0x%04x 0x%08x %4u %p\n",
+		pr_debug("%3u %c%c 0x%04x 0x%08x %4u %p\n",
 			index,
 			bdp == txq->bd.cur ? 'S' : ' ',
 			bdp == txq->dirty_tx ? 'H' : ' ',

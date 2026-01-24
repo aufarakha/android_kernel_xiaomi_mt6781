@@ -170,7 +170,7 @@ static uint32_t atom_iio_execute(struct atom_context *ctx, int base,
 		case ATOM_IIO_END:
 			return temp;
 		default:
-			pr_info("Unknown IIO opcode\n");
+			pr_debug("Unknown IIO opcode\n");
 			return 0;
 		}
 }
@@ -194,18 +194,18 @@ static uint32_t atom_get_src_int(atom_exec_context *ctx, uint8_t attr,
 			val = gctx->card->reg_read(gctx->card, idx);
 			break;
 		case ATOM_IO_PCI:
-			pr_info("PCI registers are not implemented\n");
+			pr_debug("PCI registers are not implemented\n");
 			return 0;
 		case ATOM_IO_SYSIO:
-			pr_info("SYSIO registers are not implemented\n");
+			pr_debug("SYSIO registers are not implemented\n");
 			return 0;
 		default:
 			if (!(gctx->io_mode & 0x80)) {
-				pr_info("Bad IO mode\n");
+				pr_debug("Bad IO mode\n");
 				return 0;
 			}
 			if (!gctx->iio[gctx->io_mode & 0x7F]) {
-				pr_info("Undefined indirect IO read method %d\n",
+				pr_debug("Undefined indirect IO read method %d\n",
 					gctx->io_mode & 0x7F);
 				return 0;
 			}
@@ -470,18 +470,18 @@ static void atom_put_dst(atom_exec_context *ctx, int arg, uint8_t attr,
 				gctx->card->reg_write(gctx->card, idx, val);
 			break;
 		case ATOM_IO_PCI:
-			pr_info("PCI registers are not implemented\n");
+			pr_debug("PCI registers are not implemented\n");
 			return;
 		case ATOM_IO_SYSIO:
-			pr_info("SYSIO registers are not implemented\n");
+			pr_debug("SYSIO registers are not implemented\n");
 			return;
 		default:
 			if (!(gctx->io_mode & 0x80)) {
-				pr_info("Bad IO mode\n");
+				pr_debug("Bad IO mode\n");
 				return;
 			}
 			if (!gctx->iio[gctx->io_mode & 0xFF]) {
-				pr_info("Undefined indirect IO write method %d\n",
+				pr_debug("Undefined indirect IO write method %d\n",
 					gctx->io_mode & 0x7F);
 				return;
 			}
@@ -813,17 +813,17 @@ static void atom_op_postcard(atom_exec_context *ctx, int *ptr, int arg)
 
 static void atom_op_repeat(atom_exec_context *ctx, int *ptr, int arg)
 {
-	pr_info("unimplemented!\n");
+	pr_debug("unimplemented!\n");
 }
 
 static void atom_op_restorereg(atom_exec_context *ctx, int *ptr, int arg)
 {
-	pr_info("unimplemented!\n");
+	pr_debug("unimplemented!\n");
 }
 
 static void atom_op_savereg(atom_exec_context *ctx, int *ptr, int arg)
 {
-	pr_info("unimplemented!\n");
+	pr_debug("unimplemented!\n");
 }
 
 static void atom_op_setdatablock(atom_exec_context *ctx, int *ptr, int arg)
@@ -986,7 +986,7 @@ static void atom_op_switch(atom_exec_context *ctx, int *ptr, int arg)
 			}
 			(*ptr) += 2;
 		} else {
-			pr_info("Bad case\n");
+			pr_debug("Bad case\n");
 			return;
 		}
 	(*ptr) += 2;
@@ -1020,7 +1020,7 @@ static void atom_op_xor(atom_exec_context *ctx, int *ptr, int arg)
 
 static void atom_op_debug(atom_exec_context *ctx, int *ptr, int arg)
 {
-	pr_info("unimplemented!\n");
+	pr_debug("unimplemented!\n");
 }
 
 static struct {
@@ -1274,14 +1274,14 @@ struct atom_context *atom_parse(struct card_info *card, void *bios)
 	ctx->bios = bios;
 
 	if (CU16(0) != ATOM_BIOS_MAGIC) {
-		pr_info("Invalid BIOS magic\n");
+		pr_debug("Invalid BIOS magic\n");
 		kfree(ctx);
 		return NULL;
 	}
 	if (strncmp
 	    (CSTR(ATOM_ATI_MAGIC_PTR), ATOM_ATI_MAGIC,
 	     strlen(ATOM_ATI_MAGIC))) {
-		pr_info("Invalid ATI magic\n");
+		pr_debug("Invalid ATI magic\n");
 		kfree(ctx);
 		return NULL;
 	}
@@ -1290,7 +1290,7 @@ struct atom_context *atom_parse(struct card_info *card, void *bios)
 	if (strncmp
 	    (CSTR(base + ATOM_ROM_MAGIC_PTR), ATOM_ROM_MAGIC,
 	     strlen(ATOM_ROM_MAGIC))) {
-		pr_info("Invalid ATOM magic\n");
+		pr_debug("Invalid ATOM magic\n");
 		kfree(ctx);
 		return NULL;
 	}
@@ -1314,7 +1314,7 @@ struct atom_context *atom_parse(struct card_info *card, void *bios)
 			break;
 		}
 	}
-	pr_info("ATOM BIOS: %s\n", name);
+	pr_debug("ATOM BIOS: %s\n", name);
 
 	return ctx;
 }

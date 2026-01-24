@@ -122,7 +122,7 @@ static int __init ti_32k_timer_init(struct device_node *np)
 	}
 
 	sched_clock_register(omap_32k_read_sched_clock, 32, 32768);
-	pr_info("OMAP clocksource: 32k_counter at 32768 Hz\n");
+	pr_debug("OMAP clocksource: 32k_counter at 32768 Hz\n");
 
 	return 0;
 }

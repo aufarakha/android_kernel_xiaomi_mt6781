@@ -83,7 +83,7 @@ static int vv6410_probe(struct sd *sd)
 	if (data != 0x19)
 		return -ENODEV;
 
-	pr_info("vv6410 sensor detected\n");
+	pr_debug("vv6410 sensor detected\n");
 
 	sd->gspca_dev.cam.cam_mode = vv6410_mode;
 	sd->gspca_dev.cam.nmodes = ARRAY_SIZE(vv6410_mode);
@@ -179,11 +179,11 @@ static int vv6410_dump(struct sd *sd)
 	u8 i;
 	int err = 0;
 
-	pr_info("Dumping all vv6410 sensor registers\n");
+	pr_debug("Dumping all vv6410 sensor registers\n");
 	for (i = 0; i < 0xff && !err; i++) {
 		u16 data;
 		err = stv06xx_read_sensor(sd, i, &data);
-		pr_info("Register 0x%x contained 0x%x\n", i, data);
+		pr_debug("Register 0x%x contained 0x%x\n", i, data);
 	}
 	return (err < 0) ? err : 0;
 }

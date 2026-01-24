@@ -370,7 +370,7 @@ static int tc574_config(struct pcmcia_device *link)
 		outw(2<<11, ioaddr + RunnerRdCtrl);
 		mcr = inb(ioaddr + 2);
 		outw(0<<11, ioaddr + RunnerRdCtrl);
-		pr_info("  ASIC rev %d,", mcr>>3);
+		pr_debug("  ASIC rev %d,", mcr>>3);
 		EL3WINDOW(3);
 		config = inl(ioaddr + Wn3_Config);
 		lp->default_media = (config & Xcvr) >> Xcvr_shift;

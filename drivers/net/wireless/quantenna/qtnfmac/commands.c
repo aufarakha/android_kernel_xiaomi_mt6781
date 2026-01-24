@@ -1115,13 +1115,13 @@ qtnf_cmd_resp_proc_hw_info(struct qtnf_bus *bus,
 		return -EINVAL;
 	}
 
-	pr_info("fw_version=%d, MACs map %#x, alpha2=\"%c%c\", chains Tx=%u Rx=%u, capab=0x%x\n",
+	pr_debug("fw_version=%d, MACs map %#x, alpha2=\"%c%c\", chains Tx=%u Rx=%u, capab=0x%x\n",
 		hwinfo->fw_ver, hwinfo->mac_bitmap,
 		hwinfo->rd->alpha2[0], hwinfo->rd->alpha2[1],
 		hwinfo->total_tx_chain, hwinfo->total_rx_chain,
 		hwinfo->hw_capab);
 
-	pr_info("\nBuild name:            %s"  \
+	pr_debug("\nBuild name:            %s"  \
 		"\nBuild revision:        %s"  \
 		"\nBuild type:            %s"  \
 		"\nBuild label:           %s"  \
@@ -2619,7 +2619,7 @@ int qtnf_cmd_reg_notify(struct qtnf_bus *bus, struct regulatory_request *req)
 		ret = -EOPNOTSUPP;
 		break;
 	case QLINK_CMD_RESULT_EALREADY:
-		pr_info("regulatory domain is already set to %c%c",
+		pr_debug("regulatory domain is already set to %c%c",
 			req->alpha2[0], req->alpha2[1]);
 		ret = -EALREADY;
 		break;

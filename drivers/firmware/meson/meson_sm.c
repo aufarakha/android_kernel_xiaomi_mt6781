@@ -240,7 +240,7 @@ static int __init meson_sm_probe(struct platform_device *pdev)
 	}
 
 	fw.chip = chip;
-	pr_info("secure-monitor enabled\n");
+	pr_debug("secure-monitor enabled\n");
 
 	return 0;
 

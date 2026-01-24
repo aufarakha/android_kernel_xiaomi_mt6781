@@ -5647,7 +5647,7 @@ static int nv_probe(struct pci_dev *pci_dev, const struct pci_device_id *id)
 	static int printed_version;
 
 	if (!printed_version++)
-		pr_info("Reverse Engineered nForce ethernet driver. Version %s.\n",
+		pr_debug("Reverse Engineered nForce ethernet driver. Version %s.\n",
 			FORCEDETH_VERSION);
 
 	dev = alloc_etherdev(sizeof(struct fe_priv));

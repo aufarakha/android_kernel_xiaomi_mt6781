@@ -227,7 +227,7 @@ void __init acpi_hest_init(void)
 	unsigned int ghes_count = 0;
 
 	if (hest_disable) {
-		pr_info(HEST_PFX "Table parsing disabled.\n");
+		pr_debug(HEST_PFX "Table parsing disabled.\n");
 		return;
 	}
 
@@ -256,7 +256,7 @@ void __init acpi_hest_init(void)
 			goto err;
 	}
 
-	pr_info(HEST_PFX "Table parsing has been initialized.\n");
+	pr_debug(HEST_PFX "Table parsing has been initialized.\n");
 	return;
 err:
 	hest_disable = HEST_DISABLED;

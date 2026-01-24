@@ -326,7 +326,7 @@ static int _rtl_usb_init_rx(struct ieee80211_hw *hw)
 	rtlusb->usb_rx_segregate_hdl =
 		rtlpriv->cfg->usb_interface_cfg->usb_rx_segregate_hdl;
 
-	pr_info("rx_max_size %d, rx_urb_num %d, in_ep %d\n",
+	pr_debug("rx_max_size %d, rx_urb_num %d, in_ep %d\n",
 		rtlusb->rx_max_size, rtlusb->rx_urb_num, rtlusb->in_ep);
 	init_usb_anchor(&rtlusb->rx_submitted);
 	init_usb_anchor(&rtlusb->rx_cleanup_urbs);

@@ -67,7 +67,7 @@ static void scx200_wdt_ping(void)
 
 static void scx200_wdt_update_margin(void)
 {
-	pr_info("timer margin %d seconds\n", margin);
+	pr_debug("timer margin %d seconds\n", margin);
 	wdto_restart = margin * W_SCALE;
 }
 

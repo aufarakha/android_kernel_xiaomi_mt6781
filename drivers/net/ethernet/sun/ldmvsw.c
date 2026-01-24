@@ -390,7 +390,7 @@ static int vsw_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
 
 	netdev_info(dev, "LDOM vsw-port %pM\n", dev->dev_addr);
 
-	pr_info("%s: PORT ( remote-mac %pM%s )\n", dev->name,
+	pr_debug("%s: PORT ( remote-mac %pM%s )\n", dev->name,
 		port->raddr, " switch-port");
 
 	return 0;
@@ -472,7 +472,7 @@ static struct vio_driver vsw_port_driver = {
 
 static int __init vsw_init(void)
 {
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 	return vio_register_driver(&vsw_port_driver);
 }
 

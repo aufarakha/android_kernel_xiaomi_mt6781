@@ -41,7 +41,7 @@ static inline void write_to_printk(void *ctx, const char *str, size_t len,
 	if (cont)
 		pr_cont("%s", str);
 	else
-		pr_info("%s", str);
+		pr_debug("%s", str);
 }
 
 void __printf(2, 3) host1x_debug_output(struct output *o, const char *fmt, ...);

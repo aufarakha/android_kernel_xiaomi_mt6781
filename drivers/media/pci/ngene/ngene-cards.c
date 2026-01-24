@@ -1238,7 +1238,7 @@ static struct pci_driver ngene_pci_driver = {
 static __init int module_init_ngene(void)
 {
 	/* pr_*() since we don't have a device to use with dev_*() yet */
-	pr_info("nGene PCIE bridge driver, Copyright (C) 2005-2007 Micronas\n");
+	pr_debug("nGene PCIE bridge driver, Copyright (C) 2005-2007 Micronas\n");
 
 	return pci_register_driver(&ngene_pci_driver);
 }

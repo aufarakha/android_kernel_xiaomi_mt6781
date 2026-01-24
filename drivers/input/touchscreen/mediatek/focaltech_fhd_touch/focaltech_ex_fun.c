@@ -783,7 +783,7 @@ static int fts_parse_buf(const char *buf, size_t cmd_len)
 		FTS_DEBUG("read %02X, %d bytes", rw_op.reg, rw_op.len);
 	} else {
 		if (cmd_len < (length * 2 + 5)) {
-			pr_info("data invalided!\n");
+			pr_debug("data invalided!\n");
 			return -EINVAL;
 		}
 		FTS_DEBUG("write %02X, %d bytes", rw_op.reg, length);

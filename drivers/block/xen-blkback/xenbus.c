@@ -782,7 +782,7 @@ static void frontend_changed(struct xenbus_device *dev,
 	switch (frontend_state) {
 	case XenbusStateInitialising:
 		if (dev->state == XenbusStateClosed) {
-			pr_info("%s: prepare for reconnect\n", dev->nodename);
+			pr_debug("%s: prepare for reconnect\n", dev->nodename);
 			xenbus_switch_state(dev, XenbusStateInitWait);
 		}
 		break;
@@ -1082,7 +1082,7 @@ static int connect_ring(struct backend_info *be)
 	if (xen_blkif_alloc_rings(be->blkif))
 		return -ENOMEM;
 
-	pr_info("%s: using %d queues, protocol %d (%s) %s\n", dev->nodename,
+	pr_debug("%s: using %d queues, protocol %d (%s) %s\n", dev->nodename,
 		 be->blkif->nr_rings, be->blkif->blk_protocol, protocol,
 		 pers_grants ? "persistent grants" : "");
 

@@ -72,10 +72,10 @@ static noinline void do_usercopy_stack(bool to_user, bool bad_frame)
 	}
 
 #ifdef ARCH_HAS_CURRENT_STACK_POINTER
-	pr_info("stack     : %px\n", (void *)current_stack_pointer);
+	pr_debug("stack     : %px\n", (void *)current_stack_pointer);
 #endif
-	pr_info("good_stack: %px-%px\n", good_stack, good_stack + sizeof(good_stack));
-	pr_info("bad_stack : %px-%px\n", bad_stack, bad_stack + sizeof(good_stack));
+	pr_debug("good_stack: %px-%px\n", good_stack, good_stack + sizeof(good_stack));
+	pr_debug("bad_stack : %px-%px\n", bad_stack, bad_stack + sizeof(good_stack));
 
 	user_addr = vm_mmap(NULL, 0, PAGE_SIZE,
 			    PROT_READ | PROT_WRITE | PROT_EXEC,
@@ -86,14 +86,14 @@ static noinline void do_usercopy_stack(bool to_user, bool bad_frame)
 	}
 
 	if (to_user) {
-		pr_info("attempting good copy_to_user of local stack\n");
+		pr_debug("attempting good copy_to_user of local stack\n");
 		if (copy_to_user((void __user *)user_addr, good_stack,
 				 unconst + sizeof(good_stack))) {
 			pr_warn("copy_to_user failed unexpectedly?!\n");
 			goto free_user;
 		}
 
-		pr_info("attempting bad copy_to_user of distant stack\n");
+		pr_debug("attempting bad copy_to_user of distant stack\n");
 		if (copy_to_user((void __user *)user_addr, bad_stack,
 				 unconst + sizeof(good_stack))) {
 			pr_warn("copy_to_user failed, but lacked Oops\n");
@@ -107,14 +107,14 @@ static noinline void do_usercopy_stack(bool to_user, bool bad_frame)
 		if (!bad_frame)
 			goto free_user;
 
-		pr_info("attempting good copy_from_user of local stack\n");
+		pr_debug("attempting good copy_from_user of local stack\n");
 		if (copy_from_user(good_stack, (void __user *)user_addr,
 				   unconst + sizeof(good_stack))) {
 			pr_warn("copy_from_user failed unexpectedly?!\n");
 			goto free_user;
 		}
 
-		pr_info("attempting bad copy_from_user of distant stack\n");
+		pr_debug("attempting bad copy_from_user of distant stack\n");
 		if (copy_from_user(bad_stack, (void __user *)user_addr,
 				   unconst + sizeof(good_stack))) {
 			pr_warn("copy_from_user failed, but lacked Oops\n");
@@ -160,25 +160,25 @@ static void do_usercopy_heap_size(bool to_user)
 	test_kern_addr = one + 16;
 
 	if (to_user) {
-		pr_info("attempting good copy_to_user of correct size\n");
+		pr_debug("attempting good copy_to_user of correct size\n");
 		if (copy_to_user(test_user_addr, test_kern_addr, size / 2)) {
 			pr_warn("copy_to_user failed unexpectedly?!\n");
 			goto free_user;
 		}
 
-		pr_info("attempting bad copy_to_user of too large size\n");
+		pr_debug("attempting bad copy_to_user of too large size\n");
 		if (copy_to_user(test_user_addr, test_kern_addr, size)) {
 			pr_warn("copy_to_user failed, but lacked Oops\n");
 			goto free_user;
 		}
 	} else {
-		pr_info("attempting good copy_from_user of correct size\n");
+		pr_debug("attempting good copy_from_user of correct size\n");
 		if (copy_from_user(test_kern_addr, test_user_addr, size / 2)) {
 			pr_warn("copy_from_user failed unexpectedly?!\n");
 			goto free_user;
 		}
 
-		pr_info("attempting bad copy_from_user of too large size\n");
+		pr_debug("attempting bad copy_from_user of too large size\n");
 		if (copy_from_user(test_kern_addr, test_user_addr, size)) {
 			pr_warn("copy_from_user failed, but lacked Oops\n");
 			goto free_user;
@@ -235,25 +235,25 @@ static void do_usercopy_heap_whitelist(bool to_user)
 	size = (cache_size / 16) + unconst;
 
 	if (to_user) {
-		pr_info("attempting good copy_to_user inside whitelist\n");
+		pr_debug("attempting good copy_to_user inside whitelist\n");
 		if (copy_to_user(user_addr, buf + offset, size)) {
 			pr_warn("copy_to_user failed unexpectedly?!\n");
 			goto free_user;
 		}
 
-		pr_info("attempting bad copy_to_user outside whitelist\n");
+		pr_debug("attempting bad copy_to_user outside whitelist\n");
 		if (copy_to_user(user_addr, buf + offset - 1, size)) {
 			pr_warn("copy_to_user failed, but lacked Oops\n");
 			goto free_user;
 		}
 	} else {
-		pr_info("attempting good copy_from_user inside whitelist\n");
+		pr_debug("attempting good copy_from_user inside whitelist\n");
 		if (copy_from_user(buf + offset, user_addr, size)) {
 			pr_warn("copy_from_user failed unexpectedly?!\n");
 			goto free_user;
 		}
 
-		pr_info("attempting bad copy_from_user outside whitelist\n");
+		pr_debug("attempting bad copy_from_user outside whitelist\n");
 		if (copy_from_user(buf + offset - 1, user_addr, size)) {
 			pr_warn("copy_from_user failed, but lacked Oops\n");
 			goto free_user;
@@ -315,14 +315,14 @@ void lkdtm_USERCOPY_KERNEL(void)
 		return;
 	}
 
-	pr_info("attempting good copy_to_user from kernel rodata\n");
+	pr_debug("attempting good copy_to_user from kernel rodata\n");
 	if (copy_to_user((void __user *)user_addr, test_text,
 			 unconst + sizeof(test_text))) {
 		pr_warn("copy_to_user failed unexpectedly?!\n");
 		goto free_user;
 	}
 
-	pr_info("attempting bad copy_to_user from kernel text\n");
+	pr_debug("attempting bad copy_to_user from kernel text\n");
 	if (copy_to_user((void __user *)user_addr, vm_mmap,
 			 unconst + PAGE_SIZE)) {
 		pr_warn("copy_to_user failed, but lacked Oops\n");

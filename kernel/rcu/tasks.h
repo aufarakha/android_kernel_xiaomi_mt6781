@@ -410,13 +410,13 @@ static void __init rcu_tasks_bootup_oddness(void)
 {
 #if defined(CONFIG_TASKS_RCU) || defined(CONFIG_TASKS_TRACE_RCU)
 	if (rcu_task_stall_timeout != RCU_TASK_STALL_TIMEOUT)
-		pr_info("\tTasks-RCU CPU stall warnings timeout set to %d (rcu_task_stall_timeout).\n", rcu_task_stall_timeout);
+		pr_debug("\tTasks-RCU CPU stall warnings timeout set to %d (rcu_task_stall_timeout).\n", rcu_task_stall_timeout);
 #endif /* #ifdef CONFIG_TASKS_RCU */
 #ifdef CONFIG_TASKS_RCU
-	pr_info("\tTrampoline variant of Tasks RCU enabled.\n");
+	pr_debug("\tTrampoline variant of Tasks RCU enabled.\n");
 #endif /* #ifdef CONFIG_TASKS_RCU */
 #ifdef CONFIG_TASKS_TRACE_RCU
-	pr_info("\tTracing variant of Tasks RCU enabled.\n");
+	pr_debug("\tTracing variant of Tasks RCU enabled.\n");
 #endif /* #ifdef CONFIG_TASKS_TRACE_RCU */
 }
 

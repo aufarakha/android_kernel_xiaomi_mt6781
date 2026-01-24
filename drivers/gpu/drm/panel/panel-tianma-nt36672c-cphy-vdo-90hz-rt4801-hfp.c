@@ -123,7 +123,7 @@ static int _lcm_i2c_write_bytes(unsigned char addr, unsigned char value)
 	write_data[1] = value;
 	ret = i2c_master_send(client, write_data, 2);
 	if (ret < 0)
-		pr_info("[LCM][ERROR] _lcm_i2c write data fail !!\n");
+		pr_debug("[LCM][ERROR] _lcm_i2c write data fail !!\n");
 
 	return ret;
 }
@@ -205,11 +205,11 @@ static void tianma_panel_get_data(struct tianma *ctx)
 	u8 buffer[3] = { 0 };
 	static int ret;
 
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 
 	if (ret == 0) {
 		ret = tianma_dcs_read(ctx, 0x0A, buffer, 1);
-		pr_info("%s  0x%08x\n", __func__, buffer[0] | (buffer[1] << 8));
+		pr_debug("%s  0x%08x\n", __func__, buffer[0] | (buffer[1] << 8));
 		dev_info(ctx->dev, "return %d data(0x%08x) to dsi engine\n",
 			 ret, buffer[0] | (buffer[1] << 8));
 	}
@@ -245,9 +245,9 @@ static void tianma_panel_init(struct tianma *ctx)
 	gpiod_set_value(ctx->reset_gpio, 1);
 	usleep_range(10 * 1000, 15 * 1000);
 	devm_gpiod_put(ctx->dev, ctx->reset_gpio);
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 #if HFP_SUPPORT
-	pr_info("%s, fps:%d\n", __func__, current_fps);
+	pr_debug("%s, fps:%d\n", __func__, current_fps);
 	tianma_dcs_write_seq_static(ctx, 0xFF, 0x25);
 	tianma_dcs_write_seq_static(ctx, 0xFB, 0x01);
 	if (current_fps == 60)
@@ -269,7 +269,7 @@ static void tianma_panel_init(struct tianma *ctx)
 	msleep(120);
 	/* Display On*/
 	tianma_dcs_write_seq_static(ctx, 0x29);
-	pr_info("%s-\n", __func__);
+	pr_debug("%s-\n", __func__);
 }
 
 static int tianma_disable(struct drm_panel *panel)
@@ -294,7 +294,7 @@ static int tianma_unprepare(struct drm_panel *panel)
 
 	struct tianma *ctx = panel_to_tianma(panel);
 
-	pr_info("%s++\n", __func__);
+	pr_debug("%s++\n", __func__);
 
 	if (!ctx->prepared)
 		return 0;
@@ -330,7 +330,7 @@ static int tianma_prepare(struct drm_panel *panel)
 	struct tianma *ctx = panel_to_tianma(panel);
 	int ret;
 
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -371,7 +371,7 @@ static int tianma_prepare(struct drm_panel *panel)
 	lcd_queue_load_tp_fw();
 #endif
 
-	pr_info("%s-\n", __func__);
+	pr_debug("%s-\n", __func__);
 	return ret;
 }
 
@@ -539,7 +539,7 @@ static int tianma_setbacklight_cmdq(void *dsi, dcs_write_gce cb, void *handle,
 
 	if (level > 255)
 		level = 255;
-	pr_info("%s backlight = -%d\n", __func__, level);
+	pr_debug("%s backlight = -%d\n", __func__, level);
 	bl_tb0[1] = (u8)level;
 #if 0
 	char bl_tb0[] = {0x51, 0xf, 0xff};
@@ -635,7 +635,7 @@ static int mode_switch(struct drm_panel *panel, unsigned int cur_mode,
 	int ret = 0;
 	//struct drm_display_mode *m = get_mode_by_id(panel, dst_mode);
 
-	pr_info("%s cur_mode = %d dst_mode %d\n", __func__, cur_mode, dst_mode);
+	pr_debug("%s cur_mode = %d dst_mode %d\n", __func__, cur_mode, dst_mode);
 
 	if (dst_mode == 60) { /* 60 switch to 120 */
 		mode_switch_to_60(panel);
@@ -756,18 +756,18 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 		if (endpoint) {
 			remote_node = of_graph_get_remote_port_parent(endpoint);
 			if (!remote_node) {
-				pr_info("No panel connected,skip probe lcm\n");
+				pr_debug("No panel connected,skip probe lcm\n");
 				return -ENODEV;
 			}
-			pr_info("device node name:%s\n", remote_node->name);
+			pr_debug("device node name:%s\n", remote_node->name);
 		}
 	}
 	if (remote_node != dev->of_node) {
-		pr_info("%s+ skip probe due to not current lcm\n", __func__);
+		pr_debug("%s+ skip probe due to not current lcm\n", __func__);
 		return -ENODEV;
 	}
 
-	pr_info("%s+\n", __func__);
+	pr_debug("%s+\n", __func__);
 	ctx = devm_kzalloc(dev, sizeof(struct tianma), GFP_KERNEL);
 	if (!ctx)
 		return -ENOMEM;
@@ -835,7 +835,7 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 
 #endif
 
-	pr_info("%s- tianma,nt36672c,cphy,vdo,90hz,rt4801\n", __func__);
+	pr_debug("%s- tianma,nt36672c,cphy,vdo,90hz,rt4801\n", __func__);
 
 	return ret;
 }

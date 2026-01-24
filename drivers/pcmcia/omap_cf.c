@@ -271,7 +271,7 @@ static int __init omap_cf_probe(struct platform_device *pdev)
 
 	omap_writew(~(1 << seg), CF_CFG);
 
-	pr_info("%s: cs%d on irq %d\n", driver_name, seg, irq);
+	pr_debug("%s: cs%d on irq %d\n", driver_name, seg, irq);
 
 	/* NOTE:  better EMIFS setup might support more cards; but the
 	 * TRM only shows how to affect regular flash signals, not their

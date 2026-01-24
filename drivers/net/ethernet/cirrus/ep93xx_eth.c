@@ -201,7 +201,7 @@ static int ep93xx_mdio_read(struct net_device *dev, int phy_id, int reg)
 	}
 
 	if (i == 10) {
-		pr_info("mdio read timed out\n");
+		pr_debug("mdio read timed out\n");
 		data = 0xffff;
 	} else {
 		data = rdl(ep, REG_MIIDATA);
@@ -225,7 +225,7 @@ static void ep93xx_mdio_write(struct net_device *dev, int phy_id, int reg, int d
 	}
 
 	if (i == 10)
-		pr_info("mdio write timed out\n");
+		pr_debug("mdio write timed out\n");
 }
 
 static int ep93xx_rx(struct net_device *dev, int budget)

@@ -114,13 +114,13 @@ unsigned int pxa27x_get_clk_frequency_khz(int info)
 		}
 	}
 	if (info) {
-		pr_info("Run Mode clock: %ld.%02ldMHz\n",
+		pr_debug("Run Mode clock: %ld.%02ldMHz\n",
 			clks[1] / 1000000, (clks[1] % 1000000) / 10000);
-		pr_info("Turbo Mode clock: %ld.%02ldMHz\n",
+		pr_debug("Turbo Mode clock: %ld.%02ldMHz\n",
 			clks[2] / 1000000, (clks[2] % 1000000) / 10000);
-		pr_info("Memory clock: %ld.%02ldMHz\n",
+		pr_debug("Memory clock: %ld.%02ldMHz\n",
 			clks[3] / 1000000, (clks[3] % 1000000) / 10000);
-		pr_info("System bus clock: %ld.%02ldMHz\n",
+		pr_debug("System bus clock: %ld.%02ldMHz\n",
 			clks[4] / 1000000, (clks[4] % 1000000) / 10000);
 	}
 	return (unsigned int)clks[0] / KHz;

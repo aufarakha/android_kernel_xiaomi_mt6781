@@ -124,7 +124,7 @@ static int acpi_soft_cpu_online(unsigned int cpu)
 	if (pr->flags.need_hotplug_init) {
 		int ret;
 
-		pr_info("Will online and init hotplugged CPU: %d\n",
+		pr_debug("Will online and init hotplugged CPU: %d\n",
 			pr->id);
 		pr->flags.need_hotplug_init = 0;
 		ret = __acpi_processor_start(device);

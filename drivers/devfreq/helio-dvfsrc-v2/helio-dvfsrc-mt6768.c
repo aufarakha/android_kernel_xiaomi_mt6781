@@ -125,7 +125,7 @@ struct reg_config *dvfsrc_get_init_conf(void)
 		spmfw_idx = 1;
 	else
 		spmfw_idx = 0;
-	pr_info("dvfsrc init config index %d\n", spmfw_idx);
+	pr_debug("dvfsrc init config index %d\n", spmfw_idx);
 
 	return dvfsrc_init_configs[spmfw_idx];
 }
@@ -197,7 +197,7 @@ static int is_bypass_flavor(void)
 					"k68v1_64_vcore_dvfs_fix") != NULL)
 		r = 0;
 
-	pr_info("flavor check: %s, is_bypass: %d\n",
+	pr_debug("flavor check: %s, is_bypass: %d\n",
 		CONFIG_BUILD_ARM64_DTB_OVERLAY_IMAGE_NAMES, r);
 #endif
 	return r;
@@ -210,10 +210,10 @@ static int can_dvfsrc_enable(void)
 
 	if (is_bypass_flavor()) {
 		enable = 0;
-		pr_info("VCORE DVFS disable for special flavor\n");
+		pr_debug("VCORE DVFS disable for special flavor\n");
 	} else {
 		enable = 1;
-		pr_info("VCORE DVFS enable default\n");
+		pr_debug("VCORE DVFS enable default\n");
 	}
 #endif
 	return enable;
@@ -223,19 +223,19 @@ __weak int mtk_rgu_cfg_dvfsrc(int enable) { return 0; }
 
 __weak int emmc_autok(void)
 {
-	pr_info("NOT SUPPORT EMMC AUTOK\n");
+	pr_debug("NOT SUPPORT EMMC AUTOK\n");
 	return 0;
 }
 
 __weak int sd_autok(void)
 {
-	pr_info("NOT SUPPORT SD AUTOK\n");
+	pr_debug("NOT SUPPORT SD AUTOK\n");
 	return 0;
 }
 
 __weak int sdio_autok(void)
 {
-	pr_info("NOT SUPPORT SDIO AUTOK\n");
+	pr_debug("NOT SUPPORT SDIO AUTOK\n");
 	return 0;
 }
 
@@ -264,7 +264,7 @@ void finish_autok_task(void)
 #endif
 
 	if (force >= 0 && force < 16)
-		pr_info("autok task not release force opp: %d\n", force);
+		pr_debug("autok task not release force opp: %d\n", force);
 }
 
 void dvfsrc_autok_manager(void)
@@ -274,13 +274,13 @@ void dvfsrc_autok_manager(void)
 	begin_autok_task();
 
 	r = emmc_autok();
-	pr_info("EMMC autok done: %s\n", (r == 0) ? "Yes" : "No");
+	pr_debug("EMMC autok done: %s\n", (r == 0) ? "Yes" : "No");
 
 	r = sd_autok();
-	pr_info("SD autok done: %s\n", (r == 0) ? "Yes" : "No");
+	pr_debug("SD autok done: %s\n", (r == 0) ? "Yes" : "No");
 
 	r = sdio_autok();
-	pr_info("SDIO autok done: %s\n", (r == 0) ? "Yes" : "No");
+	pr_debug("SDIO autok done: %s\n", (r == 0) ? "Yes" : "No");
 
 	finish_autok_task();
 }
@@ -645,7 +645,7 @@ void dvfsrc_enable_dvfs_freq_hopping(int gps_on)
 	mtk_pm_qos_update_request(&gps_vcore_req, VCORE_OPP_0);
 	mtk_pm_qos_update_request(&gps_ddr_req, DDR_OPP_0);
 #if defined(CONFIG_MTK_PMIC_COMMON)
-	pr_info("[before]gps_on: %d, vcore: %d ddr: %d dvfsrc_level: 0x%x\n",
+	pr_debug("[before]gps_on: %d, vcore: %d ddr: %d dvfsrc_level: 0x%x\n",
 		gps_on,
 		vcore_pmic_to_uv(pmic_get_register_value(PMIC_VCORE_ADDR)),
 		get_dram_data_rate(),
@@ -658,7 +658,7 @@ void dvfsrc_enable_dvfs_freq_hopping(int gps_on)
 
 	is_freq_hopping = !!gps_on;
 #if defined(CONFIG_MTK_PMIC_COMMON)
-	pr_info("[after]gps_on: %d, vcore: %d ddr: %d dvfsrc_level: 0x%x\n",
+	pr_debug("[after]gps_on: %d, vcore: %d ddr: %d dvfsrc_level: 0x%x\n",
 		gps_on,
 		vcore_pmic_to_uv(pmic_get_register_value(PMIC_VCORE_ADDR)),
 		get_dram_data_rate(),

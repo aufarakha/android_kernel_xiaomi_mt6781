@@ -246,7 +246,7 @@ int vga_switcheroo_register_handler(
 	vgasr_priv.handler = handler;
 	vgasr_priv.handler_flags = handler_flags;
 	if (vga_switcheroo_ready()) {
-		pr_info("enabled\n");
+		pr_debug("enabled\n");
 		vga_switcheroo_enable();
 	}
 	mutex_unlock(&vgasr_mutex);
@@ -266,7 +266,7 @@ void vga_switcheroo_unregister_handler(void)
 	vgasr_priv.handler_flags = 0;
 	vgasr_priv.handler = NULL;
 	if (vgasr_priv.active) {
-		pr_info("disabled\n");
+		pr_debug("disabled\n");
 		vga_switcheroo_debugfs_fini(&vgasr_priv);
 		vgasr_priv.active = false;
 	}
@@ -316,7 +316,7 @@ static int register_client(struct pci_dev *pdev,
 		vgasr_priv.registered_clients++;
 
 	if (vga_switcheroo_ready()) {
-		pr_info("enabled\n");
+		pr_debug("enabled\n");
 		vga_switcheroo_enable();
 	}
 	mutex_unlock(&vgasr_mutex);
@@ -509,7 +509,7 @@ void vga_switcheroo_unregister_client(struct pci_dev *pdev)
 		kfree(client);
 	}
 	if (vgasr_priv.active && vgasr_priv.registered_clients < 2) {
-		pr_info("disabled\n");
+		pr_debug("disabled\n");
 		vga_switcheroo_debugfs_fini(&vgasr_priv);
 		vgasr_priv.active = false;
 	}
@@ -889,7 +889,7 @@ vga_switcheroo_debugfs_write(struct file *filp, const char __user *ubuf,
 			pr_err("switching failed stage 2 %d\n", ret);
 
 	} else {
-		pr_info("setting delayed switch to client %d\n", client->id);
+		pr_debug("setting delayed switch to client %d\n", client->id);
 		vgasr_priv.delayed_switch_active = true;
 		vgasr_priv.delayed_client_id = client_id;
 
@@ -968,7 +968,7 @@ int vga_switcheroo_process_delayed_switch(void)
 	if (!vgasr_priv.delayed_switch_active)
 		goto err;
 
-	pr_info("processing delayed switch to %d\n",
+	pr_debug("processing delayed switch to %d\n",
 		vgasr_priv.delayed_client_id);
 
 	client = find_client_from_id(&vgasr_priv.clients,

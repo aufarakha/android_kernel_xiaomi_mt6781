@@ -1594,7 +1594,7 @@ static int __init f71805f_find(int sioaddr, unsigned short *address,
 		sio_data->fnsel1 = superio_inb(sioaddr, SIO_REG_FNSEL1);
 		break;
 	default:
-		pr_info("Unsupported Fintek device, skipping\n");
+		pr_debug("Unsupported Fintek device, skipping\n");
 		goto exit;
 	}
 
@@ -1612,7 +1612,7 @@ static int __init f71805f_find(int sioaddr, unsigned short *address,
 	*address &= ~(REGION_LENGTH - 1);	/* Ignore 3 LSB */
 
 	err = 0;
-	pr_info("Found %s chip at %#x, revision %u\n",
+	pr_debug("Found %s chip at %#x, revision %u\n",
 		names[sio_data->kind], *address,
 		superio_inb(sioaddr, SIO_REG_DEVREV));
 

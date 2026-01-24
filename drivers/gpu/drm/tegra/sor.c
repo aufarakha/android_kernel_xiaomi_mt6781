@@ -1567,16 +1567,16 @@ static int calc_h_ref_to_sync(const struct drm_display_mode *mode,
 	hsw = mode->hsync_end - mode->hsync_start;
 	hbp = mode->htotal - mode->hsync_end;
 
-	pr_info("hfp: %u, hsw: %u, hbp: %u\n", hfp, hsw, hbp);
+	pr_debug("hfp: %u, hsw: %u, hbp: %u\n", hfp, hsw, hbp);
 
 	b = hfp - 1;
 
-	pr_info("a: %u, b: %u\n", a, b);
-	pr_info("a + hsw + hbp = %u\n", a + hsw + hbp);
+	pr_debug("a: %u, b: %u\n", a, b);
+	pr_debug("a + hsw + hbp = %u\n", a + hsw + hbp);
 
 	if (a + hsw + hbp <= 11) {
 		a = 1 + 11 - hsw - hbp;
-		pr_info("a: %u\n", a);
+		pr_debug("a: %u\n", a);
 	}
 
 	if (a > b)

@@ -172,7 +172,7 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 	rtlpriv->cfg->mod_params->disable_watchdog =
 		rtlpriv->cfg->mod_params->disable_watchdog;
 	if (rtlpriv->cfg->mod_params->disable_watchdog)
-		pr_info("watchdog disabled\n");
+		pr_debug("watchdog disabled\n");
 	rtlpriv->psc.reg_fwctrl_lps = 2;
 	rtlpriv->psc.reg_max_lps_awakeintvl = 2;
 
@@ -212,7 +212,7 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 
 	rtlpriv->max_fw_size = 0x8000;
 	/*load normal firmware*/
-	pr_info("Using firmware %s\n", fw_name);
+	pr_debug("Using firmware %s\n", fw_name);
 	err = request_firmware_nowait(THIS_MODULE, 1, fw_name,
 				      rtlpriv->io.dev, GFP_KERNEL, hw,
 				      rtl_fw_cb);
@@ -223,7 +223,7 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 		return 1;
 	}
 	/*load wowlan firmware*/
-	pr_info("Using firmware %s\n", wowlan_fw_name);
+	pr_debug("Using firmware %s\n", wowlan_fw_name);
 	err = request_firmware_nowait(THIS_MODULE, 1,
 				      wowlan_fw_name,
 				      rtlpriv->io.dev, GFP_KERNEL, hw,

@@ -22,7 +22,7 @@ static void dwmac4_dma_axi(void __iomem *ioaddr, struct stmmac_axi *axi)
 	u32 value = readl(ioaddr + DMA_SYS_BUS_MODE);
 	int i;
 
-	pr_info("dwmac4: Master AXI performs %s burst length\n",
+	pr_debug("dwmac4: Master AXI performs %s burst length\n",
 		(value & DMA_SYS_BUS_FB) ? "fixed" : "any");
 
 	if (axi->axi_lpi_en)

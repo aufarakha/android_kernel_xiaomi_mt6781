@@ -109,7 +109,7 @@ int mt_i2c_test_multi_wr(int id, int addr)
 	hw_trig_i2c_enable(adap);
 	ret = hw_trig_i2c_transfer(adap, msg, 4);
 	hw_trig_i2c_disable(adap);
-	pr_info("camera  0x5500 : %x 0x5501 : %x 0x5502 : %x 0x5503 : %x .\n",
+	pr_debug("camera  0x5500 : %x 0x5501 : %x 0x5502 : %x 0x5503 : %x .\n",
 		buf5[0], buf7[0], buf9[0], buf11[0]);
 	return ret;
 }
@@ -167,10 +167,10 @@ static ssize_t show_config(struct device *dev, struct device_attribute *attr,
 {
 	int len = strlen(data_buffer);
 
-	pr_info("Usage echo \"[bus_id] [address] [operation] [w_count]\n"
+	pr_debug("Usage echo \"[bus_id] [address] [operation] [w_count]\n"
 		"[r_count] [data]\" > ut\n");
 	memcpy(buff, data_buffer, len);
-	pr_info("Return Value:%s\n\n", data_buffer);
+	pr_debug("Return Value:%s\n\n", data_buffer);
 	return len;
 }
 
@@ -385,29 +385,29 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 	int scanf_ret = 0;
 	unsigned char tmpbuffer[128];
 
-	pr_info("%s\n", buf);
+	pr_debug("%s\n", buf);
 	scanf_ret = sscanf(buf, "%d %x %d %d %d %d %1023s",
 			   &bus_id, &address, &operation,
 			   &wr_number, &rd_number, &speedhz,
 			   data_buffer);
 	if (scanf_ret) {
-		pr_info("bus_id:%d,address:%x,operation:0x%x, speed:%d\n",
+		pr_debug("bus_id:%d,address:%x,operation:0x%x, speed:%d\n",
 		       bus_id, address, operation, speedhz);
 		if ((address != 0) && (operation <= 2)) {
 			length = strlen(data_buffer);
 
 			if (operation == 1) {
 				if ((length >> 1) != wr_number)
-					pr_info("Error length of data number = %d,length = %d\n",
+					pr_debug("Error length of data number = %d,length = %d\n",
 					       wr_number, length >> 1);
 				vir_addr_wr = kzalloc(wr_number, GFP_KERNEL);
 				if (vir_addr_wr == NULL) {
 
-					pr_info("alloc virtual memory failed\n");
+					pr_debug("alloc virtual memory failed\n");
 					goto err;
 				}
 				get_hexbuffer(data_buffer, vir_addr_wr);
-				pr_info("data_buffer:%s\n", data_buffer);
+				pr_debug("data_buffer:%s\n", data_buffer);
 
 
 			}
@@ -415,7 +415,7 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 				vir_addr_rd = kzalloc(rd_number, GFP_KERNEL);
 				if (vir_addr_rd == NULL) {
 
-					pr_info("alloc virtual memory failed\n");
+					pr_debug("alloc virtual memory failed\n");
 					goto err;
 				}
 			}
@@ -423,17 +423,17 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 				vir_addr_wr = kzalloc(wr_number, GFP_KERNEL);
 				if (vir_addr_wr == NULL) {
 
-					pr_info("alloc virtual memory failed\n");
+					pr_debug("alloc virtual memory failed\n");
 					goto err;
 				}
 				vir_addr_rd = kzalloc(rd_number, GFP_KERNEL);
 				if (vir_addr_rd == NULL) {
 					kfree(vir_addr_wr);
-					pr_info("alloc virtual memory failed\n");
+					pr_debug("alloc virtual memory failed\n");
 					goto err;
 				}
 				get_hexbuffer(data_buffer, vir_addr_wr);
-				pr_info("data_buffer:%s\n", data_buffer);
+				pr_debug("data_buffer:%s\n", data_buffer);
 			}
 
 			if (operation == 0) {	/* 0:WRRD 1:WR 2:RD */
@@ -448,13 +448,13 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 				/* buf_test = (char *)vir_addr_rd;
 				 *   if (buf_test[0] != 0x75) {
 				 *	fail_time++;
-				 *	pr_info("I2C press fail_time=%llu\n",
+				 *	pr_debug("I2C press fail_time=%llu\n",
 				 *		fail_time);
 				 *   }
 				 *  }
 				 */
 				t4 = sched_clock();
-				/* pr_info("test i2c wr-rd:hw time=%llu,
+				/* pr_debug("test i2c wr-rd:hw time=%llu,
 				 *	   total=%llu\n", t2-t1, t4-t3);
 				 */
 			} else {
@@ -466,7 +466,7 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 				buf_test = (char *)vir_addr_rd;
 
 				t6 = sched_clock();
-		/* pr_info("test i2c :hw time=%llu,total=%llu\n",
+		/* pr_debug("test i2c :hw time=%llu,total=%llu\n",
 		 *	   t2-t1, t6-t5);
 		 */
 			}
@@ -479,7 +479,7 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 					snprintf(data_buffer,
 						 sizeof(data_buffer),
 						 "1 %s", tmpbuffer);
-					pr_info("Actual return Value:%d %s\n",
+					pr_debug("Actual return Value:%d %s\n",
 						ret, data_buffer);
 				} else if (operation == 0) {
 					hex2string(vir_addr_rd, tmpbuffer,
@@ -487,18 +487,18 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 					snprintf(data_buffer,
 						 sizeof(data_buffer),
 						 "1 %s", tmpbuffer);
-					pr_info("Actual return Value:%d %s\n",
+					pr_debug("Actual return Value:%d %s\n",
 						ret, data_buffer);
 					if (strncmp(tmpbuffer, "68", 1)) {
 						fail_time++;
-						pr_info("data_buffer != 68, fail time=%llu\n",
+						pr_debug("data_buffer != 68, fail time=%llu\n",
 							fail_time);
 					}
 				} else {
 					snprintf(data_buffer,
 						 sizeof(data_buffer),
 						 "1 %s", "00");
-					pr_info("Actual return Value:%d %s\n",
+					pr_debug("Actual return Value:%d %s\n",
 						ret, data_buffer);
 				}
 
@@ -519,7 +519,7 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 					snprintf(data_buffer,
 						 sizeof(data_buffer),
 						 "0 %s", "unknown error");
-				pr_info("Actual return Value:%d %p\n", ret,
+				pr_debug("Actual return Value:%d %p\n", ret,
 					data_buffer);
 			}
 			kfree(vir_addr_rd);
@@ -560,21 +560,21 @@ static ssize_t set_config(struct device *dev, struct device_attribute *attr,
 				} else if (operation == 7) {
 					mt_i2c_test(1, 0x50);
 				} else {
-					pr_info("i2c debug system: Parameter invalid!\n");
+					pr_debug("i2c debug system: Parameter invalid!\n");
 				}
 			} else {
 				/*adap invalid */
-				pr_info("i2c debug system: get adap fail!\n");
+				pr_debug("i2c debug system: get adap fail!\n");
 			}
 		}
 	} else {
 		/*parameter invalid */
-		pr_info("i2c debug system: Parameter invalid!\n");
+		pr_debug("i2c debug system: Parameter invalid!\n");
 	}
 
 	return count;
  err:
-	pr_info("analyze failed\n");
+	pr_debug("analyze failed\n");
 	return -1;
 }
 
@@ -585,9 +585,9 @@ static int i2c_common_probe(struct i2c_client *client,
 {
 	int ret = 0;
 	/* your code here\A3\ACyour should save client in your own way */
-	pr_info("i2c_common device probe\n");
+	pr_debug("i2c_common device probe\n");
 	ret = device_create_file(&client->dev, &dev_attr_ut);
-	pr_info("i2c_common device probe ret = %d\n", ret);
+	pr_debug("i2c_common device probe ret = %d\n", ret);
 	return ret;
 }
 

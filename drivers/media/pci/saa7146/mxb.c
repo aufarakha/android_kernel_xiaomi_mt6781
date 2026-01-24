@@ -426,7 +426,7 @@ static int mxb_init_done(struct saa7146_dev* dev)
 				goto err;
 			}
 		}
-		pr_info("'sound arena module' detected\n");
+		pr_debug("'sound arena module' detected\n");
 	}
 err:
 	/* the rest for saa7146: you should definitely set some basic values
@@ -739,7 +739,7 @@ static int mxb_attach(struct saa7146_dev *dev, struct saa7146_pci_extension_data
 		}
 	}
 
-	pr_info("found Multimedia eXtension Board #%d\n", mxb_num);
+	pr_debug("found Multimedia eXtension Board #%d\n", mxb_num);
 
 	mxb_num++;
 	mxb_init_done(dev);

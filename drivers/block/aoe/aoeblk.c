@@ -205,7 +205,7 @@ aoedisk_add_debugfs(struct aoedev *d)
 	entry = debugfs_create_file(p, 0444, aoe_debugfs_dir, d,
 				    &aoe_debugfs_fops);
 	if (IS_ERR_OR_NULL(entry)) {
-		pr_info("aoe: cannot create debugfs file for %s\n",
+		pr_debug("aoe: cannot create debugfs file for %s\n",
 			d->gd->disk_name);
 		return;
 	}
@@ -332,7 +332,7 @@ aoeblk_ioctl(struct block_device *bdev, fmode_t mode, uint cmd, ulong arg)
 
 	/* udev calls scsi_id, which uses SG_IO, resulting in noise */
 	if (cmd != SG_IO)
-		pr_info("aoe: unknown ioctl 0x%x\n", cmd);
+		pr_debug("aoe: unknown ioctl 0x%x\n", cmd);
 
 	return -ENOTTY;
 }
@@ -456,7 +456,7 @@ aoeblk_init(void)
 		return -ENOMEM;
 	aoe_debugfs_dir = debugfs_create_dir("aoe", NULL);
 	if (IS_ERR_OR_NULL(aoe_debugfs_dir)) {
-		pr_info("aoe: cannot create debugfs directory\n");
+		pr_debug("aoe: cannot create debugfs directory\n");
 		aoe_debugfs_dir = NULL;
 	}
 	return 0;

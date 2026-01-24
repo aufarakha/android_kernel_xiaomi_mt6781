@@ -13,7 +13,7 @@ static int vdec_log_set_param(unsigned long h_vdec,
 {	int ret = 0;
 
 	if (in == NULL) {
-		pr_info("%s, in is null", __func__);
+		pr_debug("%s, in is null", __func__);
 		return -EINVAL;
 	}
 
@@ -22,7 +22,7 @@ static int vdec_log_set_param(unsigned long h_vdec,
 		ret = vcu_set_log((char *) in);
 		break;
 	default:
-		pr_info("invalid set parameter type=%d\n", type);
+		pr_debug("invalid set parameter type=%d\n", type);
 		ret = -EINVAL;
 		break;
 	}

@@ -215,7 +215,7 @@ err_nofree:
 	wg_ratelimiter_uninit();
 out:
 	if (success)
-		pr_info("ratelimiter self-tests: pass\n");
+		pr_debug("ratelimiter self-tests: pass\n");
 	else
 		pr_err("ratelimiter self-test %d: FAIL\n", test);
 

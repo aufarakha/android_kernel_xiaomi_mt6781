@@ -125,7 +125,7 @@ static struct quirk_entry quirk_asus_forceals = {
 
 static int dmi_matched(const struct dmi_system_id *dmi)
 {
-	pr_info("Identified laptop model '%s'\n", dmi->ident);
+	pr_debug("Identified laptop model '%s'\n", dmi->ident);
 	quirks = dmi->driver_data;
 	return 1;
 }
@@ -440,7 +440,7 @@ static void asus_nb_wmi_quirks(struct asus_wmi_driver *driver)
 			pr_warn("Unable to install key filter\n");
 			return;
 		}
-		pr_info("Using i8042 filter function for receiving events\n");
+		pr_debug("Using i8042 filter function for receiving events\n");
 	}
 }
 

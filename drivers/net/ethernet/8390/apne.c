@@ -139,7 +139,7 @@ struct net_device * __init apne_probe(int unit)
 	if ( !(AMIGAHW_PRESENT(PCMCIA)) )
 		return ERR_PTR(-ENODEV);
 
-	pr_info("Looking for PCMCIA ethernet card : ");
+	pr_debug("Looking for PCMCIA ethernet card : ");
 
 	/* check if a card is inserted */
 	if (!(PCMCIA_INSERTED)) {

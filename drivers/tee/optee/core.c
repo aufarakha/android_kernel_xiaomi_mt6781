@@ -361,10 +361,10 @@ static void optee_msg_get_os_revision(optee_invoke_fn *invoke_fn)
 		  &res.smccc);
 
 	if (res.result.build_id)
-		pr_info("revision %lu.%lu (%08lx)", res.result.major,
+		pr_debug("revision %lu.%lu (%08lx)", res.result.major,
 			res.result.minor, res.result.build_id);
 	else
-		pr_info("revision %lu.%lu", res.result.major, res.result.minor);
+		pr_debug("revision %lu.%lu", res.result.major, res.result.minor);
 }
 
 static bool optee_msg_api_revision_is_compatible(optee_invoke_fn *invoke_fn)
@@ -429,7 +429,7 @@ optee_config_shm_memremap(optee_invoke_fn *invoke_fn, void **memremaped_shm,
 
 	invoke_fn(OPTEE_SMC_GET_SHM_CONFIG, 0, 0, 0, 0, 0, 0, 0, &res.smccc);
 	if (res.result.status != OPTEE_SMC_RETURN_OK) {
-		pr_info("shm service not available\n");
+		pr_debug("shm service not available\n");
 		return ERR_PTR(-ENOENT);
 	}
 
@@ -523,7 +523,7 @@ static optee_invoke_fn *get_invoke_func(struct device_node *np)
 {
 	const char *method;
 
-	pr_info("probing for conduit method from DT.\n");
+	pr_debug("probing for conduit method from DT.\n");
 
 	if (of_property_read_string(np, "method", &method)) {
 		pr_warn("missing \"method\" property\n");
@@ -630,7 +630,7 @@ static struct optee *optee_probe(struct device_node *np)
 
 	optee_enable_shm_cache(optee);
 
-	pr_info("initialized driver\n");
+	pr_debug("initialized driver\n");
 	return optee;
 err:
 	if (optee) {

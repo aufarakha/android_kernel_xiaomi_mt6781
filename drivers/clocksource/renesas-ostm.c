@@ -241,14 +241,14 @@ static int __init ostm_init(struct device_node *np)
 
 		if (!ret) {
 			ostm_init_sched_clock(ostm, rate);
-			pr_info("ostm: used for clocksource\n");
+			pr_debug("ostm: used for clocksource\n");
 		}
 
 	} else {
 		ret = ostm_init_clkevt(ostm, irq, rate);
 
 		if (!ret)
-			pr_info("ostm: used for clock events\n");
+			pr_debug("ostm: used for clock events\n");
 	}
 
 err:

@@ -188,7 +188,7 @@ ingenic_pll_set_rate(struct clk_hw *hw, unsigned long req_rate,
 	rate = ingenic_pll_calc(clk_info, req_rate, parent_rate,
 			       &m, &n, &od);
 	if (rate != req_rate)
-		pr_info("ingenic-cgu: request '%s' rate %luHz, actual %luHz\n",
+		pr_debug("ingenic-cgu: request '%s' rate %luHz, actual %luHz\n",
 			clk_info->name, req_rate, rate);
 
 	spin_lock_irqsave(&cgu->lock, flags);

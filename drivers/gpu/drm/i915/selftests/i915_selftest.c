@@ -32,13 +32,13 @@ struct i915_selftest i915_selftest __read_mostly = {
 
 int i915_mock_sanitycheck(void)
 {
-	pr_info(DRIVER_NAME ": %s() - ok!\n", __func__);
+	pr_debug(DRIVER_NAME ": %s() - ok!\n", __func__);
 	return 0;
 }
 
 int i915_live_sanitycheck(struct drm_i915_private *i915)
 {
-	pr_info("%s: %s() - ok!\n", i915->drm.driver->name, __func__);
+	pr_debug("%s: %s() - ok!\n", i915->drm.driver->name, __func__);
 	return 0;
 }
 
@@ -121,7 +121,7 @@ static int __run_selftests(const char *name,
 
 	set_default_test_all(st, count);
 
-	pr_info(DRIVER_NAME ": Performing %s selftests with st_random_seed=0x%x st_timeout=%u\n",
+	pr_debug(DRIVER_NAME ": Performing %s selftests with st_random_seed=0x%x st_timeout=%u\n",
 		name, i915_selftest.random_seed, i915_selftest.timeout_ms);
 
 	/* Tests are listed in order in i915_*_selftests.h */

@@ -296,7 +296,7 @@ static int __init sja1000_isa_init(void)
 	if (err)
 		goto exit_free_devices;
 
-	pr_info("Legacy %s driver for max. %d devices registered\n",
+	pr_debug("Legacy %s driver for max. %d devices registered\n",
 		DRV_NAME, MAXDEV);
 
 	return 0;

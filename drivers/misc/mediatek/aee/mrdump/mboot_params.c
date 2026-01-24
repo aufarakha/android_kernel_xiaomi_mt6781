@@ -605,7 +605,7 @@ struct mboot_params_memory_info {
 
 static void mboot_params_fatal(const char *str)
 {
-	pr_info("mboot_params: FATAL:%s\n", str);
+	pr_debug("mboot_params: FATAL:%s\n", str);
 }
 
 extern void mrdump_mini_set_addr_size(unsigned int addr, unsigned int size);
@@ -623,7 +623,7 @@ static void mboot_params_parse_memory_info(struct mem_desc_t *sram,
 		memory_info = ioremap_wc((sram->start + sram->offset),
 				sizeof(struct mboot_params_memory_info));
 		if (!memory_info) {
-			pr_info("mboot_params: [DT] offset:0x%x not map\n",
+			pr_debug("mboot_params: [DT] offset:0x%x not map\n",
 					sram->offset);
 			mboot_params_fatal("memory_info not map");
 			return;
@@ -644,16 +644,16 @@ static void mboot_params_parse_memory_info(struct mem_desc_t *sram,
 			memcpy(p_memory_info, memory_info,
 				sizeof(struct mboot_params_memory_info));
 		} else {
-			pr_info("[DT] self (0x%x@0x%x)-0x%x@0x%x\n",
+			pr_debug("[DT] self (0x%x@0x%x)-0x%x@0x%x\n",
 					magic1, magic2,
 					dram_size, dram_addr);
-			pr_info("[DT] mrdump 0x%x@0x%x-0x%x@0x%x\n",
+			pr_debug("[DT] mrdump 0x%x@0x%x-0x%x@0x%x\n",
 					mini_size, mini_addr,
 					mrdump_size, mrdump_addr);
 			mboot_params_fatal("illegal magic number");
 		}
 	} else {
-		pr_info("mboot_params: [DT] offset:0x%x illegal\n",
+		pr_debug("mboot_params: [DT] offset:0x%x illegal\n",
 			sram->offset);
 		mboot_params_fatal("illegal offset");
 	}
@@ -671,12 +671,12 @@ static int __init mboot_params_early_init(void)
 	if (dt_get_mboot_params(&sram)) {
 		mboot_params_parse_memory_info(&sram, &memory_info_data);
 		if (sram.def_type == MBOOT_PARAMS_DEF_SRAM) {
-			pr_info("mboot_params: using sram:0x%x\n", sram.start);
+			pr_debug("mboot_params: using sram:0x%x\n", sram.start);
 			start = sram.start;
 			size  = sram.size;
 			bufp = ioremap_wc(sram.start, sram.size);
 		} else {
-			pr_info("mboot_params: unknown def type:%d\n",
+			pr_debug("mboot_params: unknown def type:%d\n",
 					sram.def_type);
 			mboot_params_fatal("unknown def type");
 			return -ENODEV;
@@ -693,12 +693,12 @@ static int __init mboot_params_early_init(void)
 		if (bufp) {
 			buffer_size = size;
 			if (bufp->sig != REBOOT_REASON_SIG) {
-				pr_info("mboot_params: illegal sig:0x%x\n",
+				pr_debug("mboot_params: illegal sig:0x%x\n",
 						bufp->sig);
 				mboot_params_fatal("illegal sig");
 			}
 		} else {
-			pr_info("mboot_params: ioremap failed, [0x%x, 0x%x]\n",
+			pr_debug("mboot_params: ioremap failed, [0x%x, 0x%x]\n",
 					start, size);
 			mboot_params_fatal("ioremap failed");
 		}

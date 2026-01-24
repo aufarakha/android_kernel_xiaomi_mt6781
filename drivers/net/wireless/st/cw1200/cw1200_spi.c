@@ -79,7 +79,7 @@ static int cw1200_spi_memcpy_fromio(struct hwbus_priv *self,
 	regaddr |= (count>>1);
 
 #ifdef SPI_DEBUG
-	pr_info("READ : %04d from 0x%02x (%04x)\n", count, addr, regaddr);
+	pr_debug("READ : %04d from 0x%02x (%04x)\n", count, addr, regaddr);
 #endif
 
 	/* Header is LE16 */
@@ -99,7 +99,7 @@ static int cw1200_spi_memcpy_fromio(struct hwbus_priv *self,
 	ret = spi_sync(self->func, &m);
 
 #ifdef SPI_DEBUG
-	pr_info("READ : ");
+	pr_debug("READ : ");
 	for (i = 0; i < t_addr.len; i++)
 		printk("%02x ", ((u8 *)t_addr.tx_buf)[i]);
 	printk(" : ");
@@ -144,7 +144,7 @@ static int cw1200_spi_memcpy_toio(struct hwbus_priv *self,
 	regaddr |= (count>>1);
 
 #ifdef SPI_DEBUG
-	pr_info("WRITE: %04d  to  0x%02x (%04x)\n", count, addr, regaddr);
+	pr_debug("WRITE: %04d  to  0x%02x (%04x)\n", count, addr, regaddr);
 #endif
 
 	/* Header is LE16 */
@@ -164,7 +164,7 @@ static int cw1200_spi_memcpy_toio(struct hwbus_priv *self,
 	}
 
 #ifdef SPI_DEBUG
-	pr_info("WRITE: ");
+	pr_debug("WRITE: ");
 	for (i = 0; i < t_addr.len; i++)
 		printk("%02x ", ((u8 *)t_addr.tx_buf)[i]);
 	printk(" : ");
@@ -179,7 +179,7 @@ static int cw1200_spi_memcpy_toio(struct hwbus_priv *self,
 	rval = spi_sync(self->func, &m);
 
 #ifdef SPI_DEBUG
-	pr_info("WROTE: %d\n", m.actual_length);
+	pr_debug("WROTE: %d\n", m.actual_length);
 #endif
 
 #if defined(__LITTLE_ENDIAN)
@@ -384,7 +384,7 @@ static int cw1200_spi_probe(struct spi_device *func)
 	/* And finally.. */
 	func->mode = SPI_MODE_0;
 
-	pr_info("cw1200_wlan_spi: Probe called (CS %d M %d BPW %d CLK %d)\n",
+	pr_debug("cw1200_wlan_spi: Probe called (CS %d M %d BPW %d CLK %d)\n",
 		func->chip_select, func->mode, func->bits_per_word,
 		func->max_speed_hz);
 

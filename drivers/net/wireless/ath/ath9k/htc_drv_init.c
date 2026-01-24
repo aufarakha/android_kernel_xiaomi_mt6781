@@ -1032,6 +1032,6 @@ module_init(ath9k_htc_init);
 static void __exit ath9k_htc_exit(void)
 {
 	ath9k_hif_usb_exit();
-	pr_info("Driver unloaded\n");
+	pr_debug("Driver unloaded\n");
 }
 module_exit(ath9k_htc_exit);

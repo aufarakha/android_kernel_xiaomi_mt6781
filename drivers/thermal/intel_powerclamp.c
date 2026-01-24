@@ -647,12 +647,12 @@ static int powerclamp_set_cur_state(struct thermal_cooling_device *cdev,
 	new_target_ratio = clamp(new_target_ratio, 0UL,
 				(unsigned long) (MAX_TARGET_RATIO-1));
 	if (set_target_ratio == 0 && new_target_ratio > 0) {
-		pr_info("Start idle injection to reduce power\n");
+		pr_debug("Start idle injection to reduce power\n");
 		set_target_ratio = new_target_ratio;
 		ret = start_power_clamp();
 		goto exit_set;
 	} else	if (set_target_ratio > 0 && new_target_ratio == 0) {
-		pr_info("Stop forced idle injection\n");
+		pr_debug("Stop forced idle injection\n");
 		end_power_clamp();
 		set_target_ratio = 0;
 	} else	/* adjust currently running */ {
@@ -688,7 +688,7 @@ static int __init powerclamp_probe(void)
 
 	/* The goal for idle time alignment is to achieve package cstate. */
 	if (!has_pkg_state_counter()) {
-		pr_info("No package C-state available\n");
+		pr_debug("No package C-state available\n");
 		return -ENODEV;
 	}
 

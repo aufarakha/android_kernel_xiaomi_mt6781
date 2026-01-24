@@ -2213,7 +2213,7 @@ GED_ERROR ged_kpi_dequeue_buffer_ts(int pid, u64 ullWdnd, int i32FrameID,
 	(struct GED_KPI_GPU_TS *)ged_alloc(sizeof(struct GED_KPI_GPU_TS));
 
 	if (!psMonitor) {
-		pr_info("[GED_KPI]: GED_ERROR_OOM in %s\n",
+		pr_debug("[GED_KPI]: GED_ERROR_OOM in %s\n",
 			__func__);
 		return GED_ERROR_OOM;
 	}
@@ -2264,7 +2264,7 @@ GED_ERROR ged_kpi_queue_buffer_ts(int pid, u64 ullWdnd, int i32FrameID,
 	(struct GED_KPI_GPU_TS *)ged_alloc(sizeof(struct GED_KPI_GPU_TS));
 
 	if (!psMonitor) {
-		pr_info("[GED_KPI]: GED_ERROR_OOM in %s\n",
+		pr_debug("[GED_KPI]: GED_ERROR_OOM in %s\n",
 			__func__);
 		return GED_ERROR_OOM;
 	}
@@ -2441,7 +2441,7 @@ GED_ERROR ged_kpi_system_init(void)
 		for (i = 0; i < GED_KPI_TOTAL_ITEMS; i++)
 			g_asKPI[i].ullWnd = 0x0 - 1;
 		gs_hashtable = ged_hashtable_create(10);
-		pr_info("[Hans] ged_kpi init done");
+		pr_debug("[Hans] ged_kpi init done");
 #ifdef GED_ENABLE_TIMER_BASED_DVFS_MARGIN
 		spin_lock_init(&gs_hashtableLock);
 #endif /* GED_ENABLE_TIMER_BASED_DVFS_MARGIN */

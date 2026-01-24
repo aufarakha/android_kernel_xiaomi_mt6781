@@ -304,13 +304,13 @@ static int empress_init(struct saa7134_dev *dev)
 	err = video_register_device(dev->empress_dev,VFL_TYPE_GRABBER,
 				    empress_nr[dev->nr]);
 	if (err < 0) {
-		pr_info("%s: can't register video device\n",
+		pr_debug("%s: can't register video device\n",
 		       dev->name);
 		video_device_release(dev->empress_dev);
 		dev->empress_dev = NULL;
 		return err;
 	}
-	pr_info("%s: registered device %s [mpeg]\n",
+	pr_debug("%s: registered device %s [mpeg]\n",
 	       dev->name, video_device_node_name(dev->empress_dev));
 
 	empress_signal_update(&dev->empress_workqueue);

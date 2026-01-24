@@ -440,7 +440,7 @@ static void xgene_enet_xgcle_bypass(struct xgene_enet_pdata *pdata,
 	CFG_CLE_FPSEL0_SET(&cb, fpsel);
 	CFG_CLE_NXTFPSEL0_SET(&cb, nxtfpsel);
 	xgene_enet_wr_csr(pdata, XCLE_BYPASS_REG1_ADDR, cb);
-	pr_info("+ cle_bypass: fpsel: %d nxtfpsel: %d\n", fpsel, nxtfpsel);
+	pr_debug("+ cle_bypass: fpsel: %d nxtfpsel: %d\n", fpsel, nxtfpsel);
 }
 
 static void xgene_enet_shutdown(struct xgene_enet_pdata *pdata)

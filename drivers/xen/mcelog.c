@@ -406,7 +406,7 @@ static int __init xen_late_init_mcelog(void)
 	if (ret)
 		goto deregister;
 
-	pr_info("/dev/mcelog registered by Xen\n");
+	pr_debug("/dev/mcelog registered by Xen\n");
 
 	return 0;
 

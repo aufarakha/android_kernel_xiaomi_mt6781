@@ -67,7 +67,7 @@ static int __init system_timer_of_register(struct device_node *np)
 			goto out_unmap;
 	}
 
-	pr_info("ARM System timer initialized as clocksource\n");
+	pr_debug("ARM System timer initialized as clocksource\n");
 
 	return 0;
 

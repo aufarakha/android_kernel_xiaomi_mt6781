@@ -57,7 +57,7 @@ do { \
 	if (evt) \
 		seq_printf(evt, fmt, ##args); \
 	if (!buff && !evt) { \
-		pr_info(fmt, ##args); \
+		pr_debug(fmt, ##args); \
 	} \
 } while (0)
 
@@ -352,11 +352,11 @@ start:
 			&earaio_obj.this_device->kobj,
 			KOBJ_CHANGE, envp);
 	if (ret) {
-		pr_info("[BLOCK_TAG] send uevt fail:%d", ret);
+		pr_debug("[BLOCK_TAG] send uevt fail:%d", ret);
 	} else {
 		ctx->uevt_state = boost;
 		if (mtk_btag_mictx_data_dump) {
-			pr_info("[BLOCK_TAG] uevt %s sent",
+			pr_debug("[BLOCK_TAG] uevt %s sent",
 				event_string);
 		}
 	}
@@ -400,7 +400,7 @@ void mtk_btag_earaio_boost(bool boost)
 
 	if (boost) {
 		if (mtk_btag_mictx_data_dump) {
-			pr_info("[BLOCK_TAG] boost-chk: size-top:%llu,%llu, fuse-top: %u,%u, boosted: %d\n",
+			pr_debug("[BLOCK_TAG] boost-chk: size-top:%llu,%llu, fuse-top: %u,%u, boosted: %d\n",
 				ctx->req.r.size_top, ctx->req.w.size_top,
 				ctx->top_r_pages, ctx->top_w_pages,
 				ctx->boosted);
@@ -435,7 +435,7 @@ static int mtk_btag_earaio_init(void)
 	earaio_obj.minor = MISC_DYNAMIC_MINOR;
 	ret = misc_register(&earaio_obj);
 	if (ret) {
-		pr_info("[BLOCK_TAG] register earaio obj error:%d\n",
+		pr_debug("[BLOCK_TAG] register earaio obj error:%d\n",
 			ret);
 		earaio_obj.minor = 0;
 		return ret;
@@ -445,7 +445,7 @@ static int mtk_btag_earaio_init(void)
 			&earaio_obj.this_device->kobj, KOBJ_ADD);
 	if (ret) {
 		misc_deregister(&earaio_obj);
-		pr_info("[BLOCK_TAG] add uevent fail:%d\n", ret);
+		pr_debug("[BLOCK_TAG] add uevent fail:%d\n", ret);
 		earaio_obj.minor = 0;
 		return ret;
 	}
@@ -633,11 +633,11 @@ void mtk_btag_mictx_dump(void)
 	ret = mtk_btag_mictx_get_data(&iostat);
 
 	if (ret) {
-		pr_info("[BLOCK_TAG] Mictx: Get data failed %d\n", ret);
+		pr_debug("[BLOCK_TAG] Mictx: Get data failed %d\n", ret);
 		return;
 	}
 
-	pr_info("[BLOCK_TAG] Mictx: d:%llu|qd:%u|tp-req:%u,%u|tp-all:%u,%u|rc:%u,%u|rs:%u,%u|wl:%u|top:%u\n",
+	pr_debug("[BLOCK_TAG] Mictx: d:%llu|qd:%u|tp-req:%u,%u|tp-all:%u,%u|rc:%u,%u|rs:%u,%u|wl:%u|top:%u\n",
 		iostat.duration, iostat.q_depth,
 		iostat.tp_req_r, iostat.tp_req_w,
 		iostat.tp_all_r, iostat.tp_all_w,
@@ -1125,7 +1125,7 @@ static ssize_t mtk_btag_main_write(struct file *file, const char __user *ubuf,
 			mtk_btag_enable = false;
 		}
 	} else if (cmd[0] != '0')
-		pr_info(TAG " %s: cmd[%c] is not supported\n", __func__, cmd[0]);
+		pr_debug(TAG " %s: cmd[%c] is not supported\n", __func__, cmd[0]);
 
 	mutex_lock(&mtk_btag_list_lock);
 	list_for_each_entry_safe(btag, n, &mtk_btag_list, list)
@@ -1260,7 +1260,7 @@ static ssize_t mtk_btag_mictx_sub_write(struct file *file,
 	else if (cmd[0] == '6')
 		mtk_btag_mictx_data_dump = 0;
 	else {
-		pr_info("[pidmap] invalid arg: 0x%x\n", cmd[0]);
+		pr_debug("[pidmap] invalid arg: 0x%x\n", cmd[0]);
 		goto err;
 	}
 
@@ -1345,10 +1345,10 @@ static bool mtk_btag_allocate_pidlogger(void)
 		synchronize_rcu();
 		if (old_pagelogger)
 			vfree(old_pagelogger);
-		pr_info(TAG " blockio: new page logger is allocated\n");
+		pr_debug(TAG " blockio: new page logger is allocated\n");
 		return true;
 	}
-	pr_info(TAG " blockio: fail to allocate mtk_btag_pagelogger\n");
+	pr_debug(TAG " blockio: fail to allocate mtk_btag_pagelogger\n");
 	return false;
 }
 
@@ -1381,10 +1381,10 @@ static bool mtk_btag_allocate_aee_buffer(void)
 		spin_unlock(&mtk_btag_lock);
 		synchronize_rcu();
 		kfree(old_aee_buffer);
-		pr_info(TAG " aeebuffer: new aee buffer is allocated\n");
+		pr_debug(TAG " aeebuffer: new aee buffer is allocated\n");
 		return true;
 	}
-	pr_info(TAG " aeebuffer: fail to allocate blockio_aee_buffer\n");
+	pr_debug(TAG " aeebuffer: fail to allocate blockio_aee_buffer\n");
 	return false;
 }
 
@@ -1518,7 +1518,7 @@ static int mtk_btag_init_procfs(void)
 	if (proc_entry)
 		proc_set_user(proc_entry, uid, gid);
 	else
-		pr_info("[BLOCK_TAG} %s: failed to initialize procfs", __func__);
+		pr_debug("[BLOCK_TAG} %s: failed to initialize procfs", __func__);
 
 	return 0;
 }
@@ -1646,7 +1646,7 @@ int mtk_btag_mictx_get_data(
 		((__u32)((ctx->idle_total >> 10) * 100) / (__u32)(dur >> 10));
 
 	if (mtk_btag_mictx_self_test) {
-		pr_info("[BLOCK_TAG] Mictx: fuse-top: %d, %d\n",
+		pr_debug("[BLOCK_TAG] Mictx: fuse-top: %d, %d\n",
 			ctx->top_r_pages, ctx->top_w_pages);
 	}
 
@@ -1703,7 +1703,7 @@ int mtk_btag_mictx_get_data(
 		iostat->q_depth = ctx->q_depth;
 
 	if (mtk_btag_mictx_self_test || mtk_btag_mictx_data_dump) {
-		pr_info("[BLOCK_TAG] Mictx: sz:%llu,%llu, sz-top:%llu,%llu,%llu, fuse-top: %u,%u, qd:%hu, wl:%hu\n",
+		pr_debug("[BLOCK_TAG] Mictx: sz:%llu,%llu, sz-top:%llu,%llu,%llu, fuse-top: %u,%u, qd:%hu, wl:%hu\n",
 			ctx->req.r.size, ctx->req.w.size,
 			ctx->req.r.size_top, ctx->req.w.size_top, top,
 			ctx->top_r_pages, ctx->top_w_pages,

@@ -233,7 +233,7 @@ static int w83627hf_init(struct watchdog_device *wdog, enum chips chip)
 			pr_warn("Stopping previously enabled watchdog until userland kicks in\n");
 			superio_outb(cr_wdt_timeout, 0);
 		} else {
-			pr_info("Watchdog already running. Resetting timeout to %d sec\n",
+			pr_debug("Watchdog already running. Resetting timeout to %d sec\n",
 				wdog->timeout);
 			superio_outb(cr_wdt_timeout, wdog->timeout);
 		}
@@ -468,7 +468,7 @@ static int __init wdt_init(void)
 			return chip;
 	}
 
-	pr_info("WDT driver for %s Super I/O chip initialising\n",
+	pr_debug("WDT driver for %s Super I/O chip initialising\n",
 		chip_name[chip]);
 
 	watchdog_init_timeout(&wdt_dev, timeout, NULL);
@@ -485,7 +485,7 @@ static int __init wdt_init(void)
 	if (ret)
 		return ret;
 
-	pr_info("initialized. timeout=%d sec (nowayout=%d)\n",
+	pr_debug("initialized. timeout=%d sec (nowayout=%d)\n",
 		wdt_dev.timeout, nowayout);
 
 	return ret;

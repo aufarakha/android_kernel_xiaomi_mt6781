@@ -519,7 +519,7 @@ static int qtnf_core_mac_attach(struct qtnf_bus *bus, unsigned int macid)
 	int ret;
 
 	if (!(bus->hw_info.mac_bitmap & BIT(macid))) {
-		pr_info("MAC%u is not active in FW\n", macid);
+		pr_debug("MAC%u is not active in FW\n", macid);
 		return 0;
 	}
 

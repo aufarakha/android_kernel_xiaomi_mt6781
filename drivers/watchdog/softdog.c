@@ -153,7 +153,7 @@ static int __init softdog_init(void)
 	if (ret)
 		return ret;
 
-	pr_info("initialized. soft_noboot=%d soft_margin=%d sec soft_panic=%d (nowayout=%d)\n",
+	pr_debug("initialized. soft_noboot=%d soft_margin=%d sec soft_panic=%d (nowayout=%d)\n",
 		soft_noboot, softdog_dev.timeout, soft_panic, nowayout);
 
 	return 0;

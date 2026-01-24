@@ -8573,7 +8573,7 @@ bnx2_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 	char str[40];
 
 	if (version_printed++ == 0)
-		pr_info("%s", version);
+		pr_debug("%s", version);
 
 	/* dev zeroed in init_etherdev */
 	dev = alloc_etherdev_mq(sizeof(*bp), TX_MAX_RINGS);

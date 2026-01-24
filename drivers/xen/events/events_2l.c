@@ -378,6 +378,6 @@ static const struct evtchn_ops evtchn_ops_2l = {
 
 void __init xen_evtchn_2l_init(void)
 {
-	pr_info("Using 2-level ABI\n");
+	pr_debug("Using 2-level ABI\n");
 	evtchn_ops = &evtchn_ops_2l;
 }

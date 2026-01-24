@@ -67,7 +67,7 @@ int ssb_pci_switch_core(struct ssb_bus *bus,
 	unsigned long flags;
 
 #if SSB_VERBOSE_PCICORESWITCH_DEBUG
-	pr_info("Switching to %s core, index %d\n",
+	pr_debug("Switching to %s core, index %d\n",
 		ssb_core_name(dev->id.coreid), dev->core_index);
 #endif
 

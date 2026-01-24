@@ -784,7 +784,7 @@ static int cvm_oct_probe(struct platform_device *pdev)
 				free_netdev(dev);
 			} else {
 				cvm_oct_device[CVMX_PIP_NUM_INPUT_PORTS] = dev;
-				pr_info("%s: POW send group %d, receive group %d\n",
+				pr_debug("%s: POW send group %d, receive group %d\n",
 					dev->name, pow_send_group,
 					pow_receive_group);
 			}

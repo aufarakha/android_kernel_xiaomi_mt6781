@@ -283,7 +283,7 @@ static int cw1200_sdio_probe(struct sdio_func *func,
 	struct hwbus_priv *self;
 	int status;
 
-	pr_info("cw1200_wlan_sdio: Probe called\n");
+	pr_debug("cw1200_wlan_sdio: Probe called\n");
 
 	/* We are only able to handle the wlan function */
 	if (func->num != 0x01)

@@ -776,7 +776,7 @@ int ssb_bus_host_soc_register(struct ssb_bus *bus, unsigned long baseaddr)
 
 	err = ssb_bus_register(bus, ssb_host_soc_get_invariants, baseaddr);
 	if (!err) {
-		pr_info("Sonics Silicon Backplane found at address 0x%08lX\n",
+		pr_debug("Sonics Silicon Backplane found at address 0x%08lX\n",
 			baseaddr);
 	}
 

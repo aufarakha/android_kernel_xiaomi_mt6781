@@ -149,7 +149,7 @@ static void eurwdt_activate_timer(void)
 		irq = 0;	/* if invalid we disable interrupt */
 	}
 	if (irq == 0)
-		pr_info("interrupt disabled\n");
+		pr_debug("interrupt disabled\n");
 
 	eurwdt_write_reg(WDT_TIMER_CFG, irq << 4);
 
@@ -454,7 +454,7 @@ static int __init eurwdt_init(void)
 	eurwdt_unlock_chip();
 
 	ret = 0;
-	pr_info("Eurotech WDT driver 0.01 at %X (Interrupt %d) - timeout event: %s\n",
+	pr_debug("Eurotech WDT driver 0.01 at %X (Interrupt %d) - timeout event: %s\n",
 		io, irq, (!strcmp("int", ev) ? "int" : "reboot"));
 
 out:

@@ -381,7 +381,7 @@ static int __init hdlc_module_init(void)
 {
 	int result;
 
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 	if ((result = register_netdevice_notifier(&hdlc_notifier)) != 0)
 		return result;
 	dev_add_pack(&hdlc_packet_type);

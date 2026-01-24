@@ -281,7 +281,7 @@ int __init oprofile_perf_init(struct oprofile_operations *ops)
 
 	num_counters = perf_num_counters();
 	if (num_counters <= 0) {
-		pr_info("oprofile: no performance counters\n");
+		pr_debug("oprofile: no performance counters\n");
 		ret = -ENODEV;
 		goto out;
 	}
@@ -290,7 +290,7 @@ int __init oprofile_perf_init(struct oprofile_operations *ops)
 			sizeof(struct op_counter_config), GFP_KERNEL);
 
 	if (!counter_config) {
-		pr_info("oprofile: failed to allocate %d "
+		pr_debug("oprofile: failed to allocate %d "
 				"counters\n", num_counters);
 		ret = -ENOMEM;
 		num_counters = 0;
@@ -301,7 +301,7 @@ int __init oprofile_perf_init(struct oprofile_operations *ops)
 		per_cpu(perf_events, cpu) = kcalloc(num_counters,
 				sizeof(struct perf_event *), GFP_KERNEL);
 		if (!per_cpu(perf_events, cpu)) {
-			pr_info("oprofile: failed to allocate %d perf events "
+			pr_debug("oprofile: failed to allocate %d perf events "
 					"for cpu %d\n", num_counters, cpu);
 			ret = -ENOMEM;
 			goto out;
@@ -318,7 +318,7 @@ int __init oprofile_perf_init(struct oprofile_operations *ops)
 	if (!ops->cpu_type)
 		ret = -ENODEV;
 	else
-		pr_info("oprofile: using %s\n", ops->cpu_type);
+		pr_debug("oprofile: using %s\n", ops->cpu_type);
 
 out:
 	if (ret)

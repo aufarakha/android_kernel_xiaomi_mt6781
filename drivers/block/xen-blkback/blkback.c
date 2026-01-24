@@ -536,9 +536,9 @@ static void xen_vbd_resize(struct xen_blkif *blkif)
 	struct xenbus_device *dev = xen_blkbk_xenbus(blkif->be);
 	unsigned long long new_size = vbd_sz(vbd);
 
-	pr_info("VBD Resize: Domid: %d, Device: (%d, %d)\n",
+	pr_debug("VBD Resize: Domid: %d, Device: (%d, %d)\n",
 		blkif->domid, MAJOR(vbd->pdevice), MINOR(vbd->pdevice));
-	pr_info("VBD Resize: new size %llu\n", new_size);
+	pr_debug("VBD Resize: new size %llu\n", new_size);
 	vbd->size = new_size;
 again:
 	err = xenbus_transaction_start(&xbt);
@@ -594,7 +594,7 @@ irqreturn_t xen_blkif_be_int(int irq, void *dev_id)
 
 static void print_stats(struct xen_blkif_ring *ring)
 {
-	pr_info("(%s): oo %3llu  |  rd %4llu  |  wr %4llu  |  f %4llu"
+	pr_debug("(%s): oo %3llu  |  rd %4llu  |  wr %4llu  |  f %4llu"
 		 "  |  ds %4llu | pg: %4u/%4d\n",
 		 current->comm, ring->st_oo_req,
 		 ring->st_rd_req, ring->st_wr_req,
@@ -1498,7 +1498,7 @@ static int __init xen_blkif_init(void)
 		return -ENODEV;
 
 	if (xen_blkif_max_ring_order > XENBUS_MAX_RING_GRANT_ORDER) {
-		pr_info("Invalid max_ring_order (%d), will use default max: %d.\n",
+		pr_debug("Invalid max_ring_order (%d), will use default max: %d.\n",
 			xen_blkif_max_ring_order, XENBUS_MAX_RING_GRANT_ORDER);
 		xen_blkif_max_ring_order = XENBUS_MAX_RING_GRANT_ORDER;
 	}

@@ -94,7 +94,7 @@ static int __init its_fsl_mc_msi_init(void)
 			continue;
 		}
 
-		pr_info("fsl-mc MSI: %pOF domain created\n", np);
+		pr_debug("fsl-mc MSI: %pOF domain created\n", np);
 	}
 
 	return 0;

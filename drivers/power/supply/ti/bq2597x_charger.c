@@ -504,18 +504,18 @@ static int bq2597x_check_charge_enabled(struct bq2597x *bq, bool *enabled)
 		if (!ret) {
 			if ((val & BQ2597X_CHG_EN_MASK) && (val1 &  BQ2597X_CONV_SWITCHING_STAT_MASK)) {
 			*enabled = true;
-			pr_info("BQ2597X status: enabled\n");
+			pr_debug("BQ2597X status: enabled\n");
 			return ret;
 			}
 		}
 		else {
-			pr_info("read BQ2597X_REG_0A error\n");
+			pr_debug("read BQ2597X_REG_0A error\n");
 		}
 	} else {
-		pr_info("read BQ2597X_REG_0C error\n");
+		pr_debug("read BQ2597X_REG_0C error\n");
 	}
 	*enabled = false;
-	pr_info("BQ2597X status: disabled\n");
+	pr_debug("BQ2597X status: disabled\n");
 	return ret;
 }
 

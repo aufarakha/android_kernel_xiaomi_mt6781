@@ -517,7 +517,7 @@ void __init cec_init(void)
 	INIT_DELAYED_WORK(&cec_work, cec_work_fn);
 	schedule_delayed_work(&cec_work, CEC_DECAY_DEFAULT_INTERVAL);
 
-	pr_info("Correctable Errors collector initialized.\n");
+	pr_debug("Correctable Errors collector initialized.\n");
 }
 
 int __init parse_cec_param(char *str)

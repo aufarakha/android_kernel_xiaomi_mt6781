@@ -99,7 +99,7 @@ static int polaris10_perform_btc(struct pp_hwmgr *hwmgr)
 
 	if (0 != smu_data->avfs_btc_param) {
 		if (0 != smu7_send_msg_to_smc_with_parameter(hwmgr, PPSMC_MSG_PerformBtc, smu_data->avfs_btc_param)) {
-			pr_info("[AVFS][SmuPolaris10_PerformBtc] PerformBTC SMU msg failed");
+			pr_debug("[AVFS][SmuPolaris10_PerformBtc] PerformBTC SMU msg failed");
 			result = -1;
 		}
 	}
@@ -182,7 +182,7 @@ static int polaris10_avfs_event_mgr(struct pp_hwmgr *hwmgr)
 		return -EINVAL);
 
 	if (smu_data->avfs_btc_param > 1) {
-		pr_info("[AVFS][Polaris10_AVFSEventMgr] AC BTC has not been successfully verified on Fiji. There may be in this setting.");
+		pr_debug("[AVFS][Polaris10_AVFSEventMgr] AC BTC has not been successfully verified on Fiji. There may be in this setting.");
 		PP_ASSERT_WITH_CODE(0 == smu7_setup_pwr_virus(hwmgr),
 		"[AVFS][Polaris10_AVFSEventMgr] Could not setup Pwr Virus for AVFS ",
 		return -EINVAL);

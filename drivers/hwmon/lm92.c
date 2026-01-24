@@ -292,7 +292,7 @@ static int lm92_detect(struct i2c_client *new_client,
 	man_id = i2c_smbus_read_word_data(new_client, LM92_REG_MAN_ID);
 
 	if ((config & 0xe0) == 0x00 && man_id == 0x0180)
-		pr_info("lm92: Found National Semiconductor LM92 chip\n");
+		pr_debug("lm92: Found National Semiconductor LM92 chip\n");
 	else
 		return -ENODEV;
 

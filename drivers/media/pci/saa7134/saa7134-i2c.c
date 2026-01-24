@@ -395,7 +395,7 @@ saa7134_i2c_eeprom(struct saa7134_dev *dev, unsigned char *eedata, int len)
 	dev->i2c_client.addr = 0xa0 >> 1;
 	buf = 0;
 	if (1 != (err = i2c_master_send(&dev->i2c_client,&buf,1))) {
-		pr_info("%s: Huh, no eeprom present (err=%d)?\n",
+		pr_debug("%s: Huh, no eeprom present (err=%d)?\n",
 		       dev->name,err);
 		return -1;
 	}
@@ -408,7 +408,7 @@ saa7134_i2c_eeprom(struct saa7134_dev *dev, unsigned char *eedata, int len)
 	for (i = 0; i < len; i += 16) {
 		int size = (len - i) > 16 ? 16 : len - i;
 
-		pr_info("i2c eeprom %02x: %*ph\n", i, size, &eedata[i]);
+		pr_debug("i2c eeprom %02x: %*ph\n", i, size, &eedata[i]);
 	}
 
 	return 0;
@@ -432,7 +432,7 @@ static void do_i2c_scan(struct i2c_client *c)
 		rc = i2c_master_recv(c,&buf,0);
 		if (rc < 0)
 			continue;
-		pr_info("i2c scan: found device @ 0x%x  [%s]\n",
+		pr_debug("i2c scan: found device @ 0x%x  [%s]\n",
 			 i << 1, i2c_devs[i] ? i2c_devs[i] : "???");
 	}
 }

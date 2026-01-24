@@ -57,7 +57,7 @@ static struct ArcProto rfc1051_proto = {
 
 static int __init arcnet_rfc1051_init(void)
 {
-	pr_info("%s\n", "RFC1051 \"simple standard\" (`s') encapsulation support loaded");
+	pr_debug("%s\n", "RFC1051 \"simple standard\" (`s') encapsulation support loaded");
 
 	arc_proto_map[ARC_P_IP_RFC1051]
 	    = arc_proto_map[ARC_P_ARP_RFC1051]

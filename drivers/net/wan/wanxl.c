@@ -752,7 +752,7 @@ static int wanxl_pci_init_one(struct pci_dev *pdev,
 	ramsize = stat;
 #endif
 
-	pr_info("%s: at 0x%X, %u KB of RAM at 0x%X, irq %u\n",
+	pr_debug("%s: at 0x%X, %u KB of RAM at 0x%X, irq %u\n",
 		pci_name(pdev), plx_phy, ramsize / 1024, mem_phy, pdev->irq);
 
 	/* Allocate IRQ */
@@ -795,7 +795,7 @@ static int wanxl_pci_init_one(struct pci_dev *pdev,
 		card->n_ports++;
 	}
 
-	pr_info("%s: port", pci_name(pdev));
+	pr_debug("%s: port", pci_name(pdev));
 	for (i = 0; i < ports; i++)
 		pr_cont("%s #%i: %s",
 			i ? "," : "", i, card->ports[i].dev->name);
@@ -829,7 +829,7 @@ static struct pci_driver wanxl_pci_driver = {
 static int __init wanxl_init_module(void)
 {
 #ifdef MODULE
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 #endif
 	return pci_register_driver(&wanxl_pci_driver);
 }

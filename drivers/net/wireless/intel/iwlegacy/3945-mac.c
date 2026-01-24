@@ -3899,15 +3899,15 @@ il3945_init(void)
 {
 
 	int ret;
-	pr_info(DRV_DESCRIPTION ", " DRV_VERSION "\n");
-	pr_info(DRV_COPYRIGHT "\n");
+	pr_debug(DRV_DESCRIPTION ", " DRV_VERSION "\n");
+	pr_debug(DRV_COPYRIGHT "\n");
 
 	/*
 	 * Disabling hardware scan means that mac80211 will perform scans
 	 * "the hard way", rather than using device's scan.
 	 */
 	if (il3945_mod_params.disable_hw_scan) {
-		pr_info("hw_scan is disabled\n");
+		pr_debug("hw_scan is disabled\n");
 		il3945_mac_ops.hw_scan = NULL;
 	}
 

@@ -106,7 +106,7 @@ static void rtl_fw_do_work(const struct firmware *firmware, void *context,
 			err = request_firmware(&firmware,
 					       rtlpriv->cfg->alt_fw_name,
 					       rtlpriv->io.dev);
-			pr_info("Loading alternative firmware %s\n",
+			pr_debug("Loading alternative firmware %s\n",
 				rtlpriv->cfg->alt_fw_name);
 			if (!err)
 				goto found_alt;

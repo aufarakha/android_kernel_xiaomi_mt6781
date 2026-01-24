@@ -365,7 +365,7 @@ int charger_manager_enable_otg(struct charger_consumer *consumer,
 
 	ret = charger_dev_enable_otg(chg_dev, en);
 	if (ret)
-		pr_info("%s: set otg_enable failed, ret:%d\n", __func__, ret);
+		pr_debug("%s: set otg_enable failed, ret:%d\n", __func__, ret);
 
 	return ret;
 }
@@ -446,7 +446,7 @@ int charger_manager_enable_power_path(struct charger_consumer *consumer,
 		if (!ret) {
 			bq_enable = !!val.intval;
 			if (bq_enable && en) {
-				pr_info("%s: bq chargeing enabled = %d\n", __func__, bq_enable);
+				pr_debug("%s: bq chargeing enabled = %d\n", __func__, bq_enable);
 				return 0;
 			}
 		}
@@ -821,7 +821,7 @@ int charger_manager_set_charging_enable_all(bool enable)
 {
 	union power_supply_propval val = {0,};
 
-	pr_info("%s: %d.\n", __func__, enable);
+	pr_debug("%s: %d.\n", __func__, enable);
 
 	if (pinfo == NULL)
 		return -1;
@@ -846,13 +846,13 @@ int charger_manager_set_charging_enable_all(bool enable)
 
 int charger_manager_set_input_suspend(int suspend)
 {
-	pr_info("%s suspend: %d.\n", __func__, suspend);
+	pr_debug("%s suspend: %d.\n", __func__, suspend);
 
 	if (pinfo == NULL)
 		return false;
 
 	if (pinfo->is_input_suspend == suspend) {
-		pr_info("%s same setting, return.\n", __func__);
+		pr_debug("%s same setting, return.\n", __func__);
 		return false;
 	}
 
@@ -1027,7 +1027,7 @@ static int charger_manager_set_input_current(int data)
 
 	val.intval = data;
 
-	pr_info("effective_icl = %d\n", val.intval);
+	pr_debug("effective_icl = %d\n", val.intval);
 
 	power_supply_set_property(pinfo->battery_psy,
 			POWER_SUPPLY_PROP_THERMAL_INPUT_CURRENT, &val);
@@ -1058,23 +1058,23 @@ int charger_manager_set_current_limit(int data, int type)
 	switch (type) {
 	case STEPCHG_FCC:
 		fcc[STEPCHG_FCC] = data;
-		pr_info("fcc[STEPCHG_FCC] = %d \n", fcc[STEPCHG_FCC]);
+		pr_debug("fcc[STEPCHG_FCC] = %d \n", fcc[STEPCHG_FCC]);
 		break;
 	case JEITA_FCC:
 		fcc[JEITA_FCC] = data;
-		pr_info("fcc[JEITA_FCC] = %d \n", fcc[JEITA_FCC]);
+		pr_debug("fcc[JEITA_FCC] = %d \n", fcc[JEITA_FCC]);
 		break;
 	case THERMAL_FCC:
 		fcc[THERMAL_FCC] = data;
-		pr_info("fcc[THERMAL_FCC] = %d\n", fcc[THERMAL_FCC]);
+		pr_debug("fcc[THERMAL_FCC] = %d\n", fcc[THERMAL_FCC]);
 		break;
 	case BQ_FCC:
 		fcc[BQ_FCC] = data;
-		pr_info("fcc[BQ_FCC] = %d\n", fcc[BQ_FCC]);
+		pr_debug("fcc[BQ_FCC] = %d\n", fcc[BQ_FCC]);
 		break;
 	case BAT_VERIFY_FCC:
 		fcc[BAT_VERIFY_FCC] = data;
-		pr_info("fcc[BAT_VERIFY_FCC] = %d\n", fcc[BAT_VERIFY_FCC]);
+		pr_debug("fcc[BAT_VERIFY_FCC] = %d\n", fcc[BAT_VERIFY_FCC]);
 		break;
 	default:
 		pr_err("abnormal type, no set effective_fcc\n");
@@ -1087,7 +1087,7 @@ int charger_manager_set_current_limit(int data, int type)
 	pinfo->effective_fcc = effective_fcc;
 	val.intval = pinfo->effective_fcc;
 
-	pr_info("effective_fcc = %d\n", val.intval);
+	pr_debug("effective_fcc = %d\n", val.intval);
 
 	power_supply_set_property(pinfo->battery_psy,
 			POWER_SUPPLY_PROP_FAST_CHARGE_CURRENT, &val);
@@ -1146,7 +1146,7 @@ int chg_set_fastcharge_mode(bool enable)
 		return rc;
 	}
 	if (enable && pval.intval >= 95) {
-		pr_info("ffc soc:%d is more than 95"
+		pr_debug("ffc soc:%d is more than 95"
 				"do not setfastcharge mode\n", pval.intval);
 		enable = false;
 	}
@@ -1158,7 +1158,7 @@ int chg_set_fastcharge_mode(bool enable)
 		return rc;
 	}
 	if (enable && (pval.intval > (pinfo->data.temp_t3_thres) * 10 || pval.intval <= (pinfo->data.temp_t2_thres) * 10)) {
-		pr_info("ffc temp:%d is abort"
+		pr_debug("ffc temp:%d is abort"
 				"do not setfastcharge mode\n", pval.intval);
 		enable = false;
 	}
@@ -1251,7 +1251,7 @@ void charger_manager_set_prop_system_temp_level(int temp_level)
 	union power_supply_propval val = {0,};
 	union power_supply_propval real_type = {0,};
 
-	pr_info("%s: charger_online=%d\n", __func__, charger_online);
+	pr_debug("%s: charger_online=%d\n", __func__, charger_online);
 
 	if (pinfo == NULL || pinfo->usb_psy == NULL)
 		return;
@@ -1296,18 +1296,18 @@ void charger_manager_set_prop_system_temp_level(int temp_level)
 		break;
 	}
 
-	pr_info("%s, system_temp_level:%d thermal_icl_ua:%d thermal_fcc_ua: %d usb_type:%d\n",
+	pr_debug("%s, system_temp_level:%d thermal_icl_ua:%d thermal_fcc_ua: %d usb_type:%d\n",
 			 __func__, pinfo->system_temp_level, thermal_icl_ua,
 			 thermal_fcc_ua, real_type.intval);
 	if (thermal_icl_ua) {
 		ret = charger_manager_set_input_current(thermal_icl_ua);
 		if (ret > 0)
-			pr_info("%s: set thermal input current success\n", __func__);
+			pr_debug("%s: set thermal input current success\n", __func__);
 	} else {
 		if (pinfo->data.enable_vote) {
 			ret = charger_manager_set_current_limit(thermal_fcc_ua, THERMAL_FCC);
 			if (ret > 0)
-				pr_info("%s: set thermal current limit success\n", __func__);
+				pr_debug("%s: set thermal current limit success\n", __func__);
 		}
 	}
 	power_supply_changed(pinfo->usb_psy);
@@ -1804,10 +1804,10 @@ void do_sw_jeita_state_machine(struct charger_manager *info)
 		fastcharge_mode = pval.intval;
 
 		if (pd_authentication || charger_type == POWER_SUPPLY_TYPE_USB_HVDCP_3P5) {
-			pr_info("ffc pd_authentication = %d, charger_type = %d\n", pd_authentication, charger_type);
+			pr_debug("ffc pd_authentication = %d, charger_type = %d\n", pd_authentication, charger_type);
 			if ( sw_jeita->sm != TEMP_T2_TO_T3 && fastcharge_mode) {
 				/* battery_temp > 48 || battery_temp <= 15 disable ffc*/
-				pr_info("ffc temp:%d disable fastcharge mode\n", info->battery_temp);
+				pr_debug("ffc temp:%d disable fastcharge mode\n", info->battery_temp);
 				pval.intval = false;
 				ret = power_supply_set_property(info->usb_psy,
 						POWER_SUPPLY_PROP_FASTCHARGE_MODE, &pval);
@@ -1816,7 +1816,7 @@ void do_sw_jeita_state_machine(struct charger_manager *info)
 				}
 			} else if (sw_jeita->sm == TEMP_T2_TO_T3 && !fastcharge_mode) {
 				/* battery_temp <= 46 || battery_temp > 17 recover*/
-				pr_info("ffc temp:%d enable fastcharge mode\n", info->battery_temp);
+				pr_debug("ffc temp:%d enable fastcharge mode\n", info->battery_temp);
 				pval.intval = true;
 				ret = power_supply_set_property(info->usb_psy,
 						POWER_SUPPLY_PROP_FASTCHARGE_MODE, &pval);
@@ -1826,7 +1826,7 @@ void do_sw_jeita_state_machine(struct charger_manager *info)
 			}
 		} else {
 			if(fastcharge_mode) {
-				pr_info("ffc temp:%d disable fastcharge mode\n", info->battery_temp);
+				pr_debug("ffc temp:%d disable fastcharge mode\n", info->battery_temp);
                                 pval.intval = false;
                                 ret = power_supply_set_property(info->usb_psy,
                                                 POWER_SUPPLY_PROP_FASTCHARGE_MODE, &pval);
@@ -1834,12 +1834,12 @@ void do_sw_jeita_state_machine(struct charger_manager *info)
                                         pr_err("ffc Set fastcharge mode failed, ret = %d\n", ret);
                                 }
 			} else {
-				pr_info("info->ffc_ieoc:%d",info->ffc_ieoc);
-				pr_info("info->data.non_ffc_ieoc:%d",info->data.non_ffc_ieoc);
+				pr_debug("info->ffc_ieoc:%d",info->ffc_ieoc);
+				pr_debug("info->data.non_ffc_ieoc:%d",info->data.non_ffc_ieoc);
 				if(info->ffc_ieoc != info->data.non_ffc_ieoc)
 				{
 					info->ffc_ieoc = info->data.non_ffc_ieoc;
-					pr_info("set none ffc ieoc default");
+					pr_debug("set none ffc ieoc default");
 					charger_dev_set_eoc_current(info->chg1_dev, info->ffc_ieoc);
 				}
 			}
@@ -1849,7 +1849,7 @@ void do_sw_jeita_state_machine(struct charger_manager *info)
 	if (info->data.enable_vote) {
 		ret = charger_manager_set_current_limit(jeita_current_limit, JEITA_FCC);
 		if (ret > 0)
-			pr_info("%s: set jeita current limit success\n", __func__);
+			pr_debug("%s: set jeita current limit success\n", __func__);
 	}
 
 	/* set CV after temperature changed */
@@ -1907,7 +1907,7 @@ int do_step_chg_state_machine(struct charger_manager *info)
 	rc = power_supply_get_property(info->bq_psy,
 			POWER_SUPPLY_PROP_TI_BATTERY_VOLTAGE, &val);
 	if (rc < 0) {
-		pr_info("Couldn't get fastcharge mode:%d\n", rc);
+		pr_debug("Couldn't get fastcharge mode:%d\n", rc);
 		return rc;
 	}
 	batt_vol = val.intval * 1000;
@@ -1915,12 +1915,12 @@ int do_step_chg_state_machine(struct charger_manager *info)
 	rc = power_supply_get_property(info->battery_psy,
 			POWER_SUPPLY_PROP_FAST_CHARGE_CURRENT, &val);
 	if (rc < 0) {
-		pr_info("Couldn't get fastcharge mode:%d\n", rc);
+		pr_debug("Couldn't get fastcharge mode:%d\n", rc);
 		return rc;
 	}
 	step_fcc = val.intval;
 
-	pr_info("step_chg batt_vol = %d\n", batt_vol);
+	pr_debug("step_chg batt_vol = %d\n", batt_vol);
 
 	if (info->data.enable_cv_step) {//cv_step
 		if (batt_vol > (info->data.step_a - TAPER_CV_HY)
@@ -1929,24 +1929,24 @@ int do_step_chg_state_machine(struct charger_manager *info)
 			step_fcc -= TAPER_STEP_MA;
 			charger_manager_set_current_limit(max(step_fcc, info->data.current_a), STEPCHG_FCC);
 			info->step_flag = STEP_A_TR;
-			pr_info("step_chg cv step STEP_A_TR vbatt = %d , set fcc %d\n", batt_vol, step_fcc);
+			pr_debug("step_chg cv step STEP_A_TR vbatt = %d , set fcc %d\n", batt_vol, step_fcc);
 		}
 		if (batt_vol > (info->data.step_b - TAPER_CV_HY) && step_fcc >= info->data.current_b) {
 			step_fcc -= TAPER_STEP_MA;
 			charger_manager_set_current_limit(max(step_fcc, info->data.current_b), STEPCHG_FCC);
 			info->step_flag = STEP_B_TR;
-			pr_info("step_chg cv step STEP_B_TR vbatt = %d , set fcc %d\n", batt_vol, step_fcc);
+			pr_debug("step_chg cv step STEP_B_TR vbatt = %d , set fcc %d\n", batt_vol, step_fcc);
 		}
 	} else {//no cv_step
 		if (batt_vol > info->data.step_a && info->step_flag != STEP_A_TR && info->step_flag != STEP_B_TR) {
 			charger_manager_set_current_limit(info->data.current_a, STEPCHG_FCC);
 			info->step_flag = STEP_A_TR;
-			pr_info("step_chg STEP_A_TR vbatt = %d , set fcc %d\n", batt_vol, info->data.current_a);
+			pr_debug("step_chg STEP_A_TR vbatt = %d , set fcc %d\n", batt_vol, info->data.current_a);
 		}
 		if (batt_vol > info->data.step_b && info->step_flag != STEP_B_TR) {
 			charger_manager_set_current_limit(info->data.current_b, STEPCHG_FCC);
 			info->step_flag = STEP_B_TR;
-			pr_info("step_chg STEP_B_TR vbatt = %d , set fcc %d\n", batt_vol, info->data.current_b);
+			pr_debug("step_chg STEP_B_TR vbatt = %d , set fcc %d\n", batt_vol, info->data.current_b);
 		}
 	}
 
@@ -1958,14 +1958,14 @@ int do_step_chg_state_machine(struct charger_manager *info)
 		if (batt_vol < info->data.step_a - info->data.step_hy_down_a) {
 			info->step_flag = NORMAL;
 			charger_manager_set_current_limit(info->data.current_max, STEPCHG_FCC);
-			pr_info("step_chg STEP_A_TR recover vbatt = %d\n", batt_vol);
+			pr_debug("step_chg STEP_A_TR recover vbatt = %d\n", batt_vol);
 		}
 		break;
 	case STEP_B_TR:
 		if (batt_vol < info->data.step_b - info->data.step_hy_down_b) {
 			info->step_flag = STEP_A_TR;
 			charger_manager_set_current_limit(info->data.current_a, STEPCHG_FCC);
-			pr_info("step_chg STEP_B_TR recover vbatt = %d\n", batt_vol);
+			pr_debug("step_chg STEP_B_TR recover vbatt = %d\n", batt_vol);
 		}
 		break;
 	default:
@@ -2333,10 +2333,10 @@ static int mtk_charger_plug_in(struct charger_manager *info,
 
 	rc = power_supply_get_property(pinfo->battery_psy,POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT,&temp_level);
 	if (rc < 0) {
-		pr_info("Couldn't get POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT mode:%d\n", rc);
+		pr_debug("Couldn't get POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT mode:%d\n", rc);
 		return false;
 	}
-	pr_info(" Get POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT mode:%d\n", temp_level.intval);
+	pr_debug(" Get POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT mode:%d\n", temp_level.intval);
 	charger_manager_set_prop_system_temp_level(temp_level.intval);
 
 	charger_dev_plug_in(info->chg1_dev);
@@ -4749,24 +4749,24 @@ static void usbpd_mi_vdm_received_cb(struct tcp_ny_uvdm uvdm)
 		return;
 
 	cmd = UVDM_HDR_CMD(uvdm.uvdm_data[0]);
-	pr_info("cmd = %d\n", cmd);
+	pr_debug("cmd = %d\n", cmd);
 
-	pr_info("uvdm.ack: %d, uvdm.uvdm_cnt: %d, uvdm.uvdm_svid: 0x%04x\n",
+	pr_debug("uvdm.ack: %d, uvdm.uvdm_cnt: %d, uvdm.uvdm_svid: 0x%04x\n",
 			uvdm.ack, uvdm.uvdm_cnt, uvdm.uvdm_svid);
 
 	switch (cmd) {
 	case USBPD_UVDM_CHARGER_VERSION:
 		pinfo->pd_adapter->vdm_data.ta_version = uvdm.uvdm_data[1];
-		pr_info("ta_version:%x\n", pinfo->pd_adapter->vdm_data.ta_version);
+		pr_debug("ta_version:%x\n", pinfo->pd_adapter->vdm_data.ta_version);
 		break;
 	case USBPD_UVDM_CHARGER_TEMP:
 		pinfo->pd_adapter->vdm_data.ta_temp = (uvdm.uvdm_data[1] & 0xFFFF) * 10;
-		pr_info("pinfo->pd_adapter->vdm_data.ta_temp:%d\n", pinfo->pd_adapter->vdm_data.ta_temp);
+		pr_debug("pinfo->pd_adapter->vdm_data.ta_temp:%d\n", pinfo->pd_adapter->vdm_data.ta_temp);
 		break;
 	case USBPD_UVDM_CHARGER_VOLTAGE:
 		pinfo->pd_adapter->vdm_data.ta_voltage = (uvdm.uvdm_data[1] & 0xFFFF) * 10;
 		pinfo->pd_adapter->vdm_data.ta_voltage *= 1000; /*V->mV*/
-		pr_info("ta_voltage:%d\n", pinfo->pd_adapter->vdm_data.ta_voltage);
+		pr_debug("ta_voltage:%d\n", pinfo->pd_adapter->vdm_data.ta_voltage);
 
 		if (usb_psy) {
 			ret = power_supply_get_property(usb_psy,
@@ -4776,7 +4776,7 @@ static void usbpd_mi_vdm_received_cb(struct tcp_ny_uvdm uvdm)
 				break;
 			}
 			usb_voltage = val.intval;
-			pr_info("usb voltage now:%d\n", usb_voltage);
+			pr_debug("usb voltage now:%d\n", usb_voltage);
 			ret = power_supply_get_property(usb_psy,
 				POWER_SUPPLY_PROP_INPUT_CURRENT_NOW, &val);
 			if (ret) {
@@ -4784,22 +4784,22 @@ static void usbpd_mi_vdm_received_cb(struct tcp_ny_uvdm uvdm)
 				break;
 			}
 			usb_current = val.intval / 1000;
-			pr_info("usb current now:%d\n", usb_current);
+			pr_debug("usb current now:%d\n", usb_current);
 
 			r_cable = (pinfo->pd_adapter->vdm_data.ta_voltage - usb_voltage) / usb_current;
-			pr_info("usb r_cable now:%dmohm\n", r_cable);
+			pr_debug("usb r_cable now:%dmohm\n", r_cable);
 		}
 		break;
 	case USBPD_UVDM_SESSION_SEED:
 		for (i = 0; i < USBPD_UVDM_SS_LEN; i++) {
 			pinfo->pd_adapter->vdm_data.s_secert[i] = uvdm.uvdm_data[i+1];
-			pr_info("usbpd s_secert uvdm.uvdm_data[%d]=0x%x", i+1, uvdm.uvdm_data[i+1]);
+			pr_debug("usbpd s_secert uvdm.uvdm_data[%d]=0x%x", i+1, uvdm.uvdm_data[i+1]);
 		}
 		break;
 	case USBPD_UVDM_AUTHENTICATION:
 		for (i = 0; i < USBPD_UVDM_SS_LEN; i++) {
 			pinfo->pd_adapter->vdm_data.digest[i] = uvdm.uvdm_data[i+1];
-			pr_info("usbpd digest[%d]=0x%x", i+1, uvdm.uvdm_data[i+1]);
+			pr_debug("usbpd digest[%d]=0x%x", i+1, uvdm.uvdm_data[i+1]);
 		}
 		break;
 	default:
@@ -4928,7 +4928,7 @@ static int mtk_charger_rerun_apsd(struct charger_manager *info)
 		return 0;
 
 	if (info->use_xmusb350_do_apsd) {
-		pr_info("use xmusb350 apsd rerun method\n");
+		pr_debug("use xmusb350 apsd rerun method\n");
 #ifdef CONFIG_XMUSB350_DET_CHG
 		if (charger_identify_psy == NULL)
 			charger_identify_psy = power_supply_get_by_name("Charger_Identify");
@@ -4944,7 +4944,7 @@ static int mtk_charger_rerun_apsd(struct charger_manager *info)
 #endif
 	} else {
 		/* to do */
-		pr_info("use mtk bc1.2 rerun or smb1351 apsd rerun method\n");
+		pr_debug("use mtk bc1.2 rerun or smb1351 apsd rerun method\n");
 	}
 
 	return 0;
@@ -4974,7 +4974,7 @@ static void mtk_charger_type_recheck_work(struct work_struct *work)
 	if (rc)
 		return;
 	info->real_charger_type = val.intval;
-	pr_info("typec_mode:%d, last:%d: real charger type:%d\n",
+	pr_debug("typec_mode:%d, last:%d: real charger type:%d\n",
 			typec_mode, last_charger_type, info->real_charger_type);
 
 	if (last_charger_type != info->real_charger_type)
@@ -4994,7 +4994,7 @@ static void mtk_charger_type_recheck_work(struct work_struct *work)
 			info->real_charger_type == POWER_SUPPLY_TYPE_USB_HVDCP ||
 			((info->real_charger_type == POWER_SUPPLY_TYPE_USB_FLOAT) &&
 			(typec_mode == POWER_SUPPLY_TYPEC_SINK_AUDIO_ADAPTER))) {
-		pr_info("hvdcp detect or PD or check_count = %d break\n",
+		pr_debug("hvdcp detect or PD or check_count = %d break\n",
 				info->check_count);
 		info->check_count = 0;
 		return;
@@ -5035,7 +5035,7 @@ static void mtk_charger_dcp_confirm_work(struct work_struct *work)
 	if (rc)
 		return;
 	charger_type = val.intval;
-	pr_info("real charger_type: %d\n", charger_type);
+	pr_debug("real charger_type: %d\n", charger_type);
 
 	if (charger_type == POWER_SUPPLY_TYPE_USB_DCP) {
 		info->dcp_confirmed = true;

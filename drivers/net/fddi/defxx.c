@@ -1135,7 +1135,7 @@ static int dfx_driver_init(struct net_device *dev, const char *print_name,
 		board_name = "DEFEA";
 	if (dfx_bus_pci)
 		board_name = "DEFPA";
-	pr_info("%s: %s at %s addr = 0x%llx, IRQ = %d, Hardware addr = %pMF\n",
+	pr_debug("%s: %s at %s addr = 0x%llx, IRQ = %d, Hardware addr = %pMF\n",
 		print_name, board_name, dfx_use_mmio ? "MMIO" : "I/O",
 		(long long)bar_start, dev->irq, dev->dev_addr);
 

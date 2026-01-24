@@ -1737,7 +1737,7 @@ static int smu7_get_evv_voltages(struct pp_hwmgr *hwmgr)
 						data->vddcgfx_leakage.count++;
 					}
 				} else {
-					pr_info("Error retrieving EVV voltage value!\n");
+					pr_debug("Error retrieving EVV voltage value!\n");
 				}
 			}
 		} else {
@@ -2552,7 +2552,7 @@ static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
 			PHM_PlatformCaps_EVV)) {
 		result = smu7_get_evv_voltages(hwmgr);
 		if (result) {
-			pr_info("Get EVV Voltage Failed.  Abort Driver loading!\n");
+			pr_debug("Get EVV Voltage Failed.  Abort Driver loading!\n");
 			return -EINVAL;
 		}
 	} else {
@@ -3921,9 +3921,9 @@ static int smu7_notify_link_speed_change_after_state_change(
 #ifdef CONFIG_ACPI
 		if (amdgpu_acpi_pcie_performance_request(hwmgr->adev, request, false)) {
 			if (PP_PCIEGen2 == target_link_speed)
-				pr_info("PSPP request to switch to Gen2 from Gen3 Failed!");
+				pr_debug("PSPP request to switch to Gen2 from Gen3 Failed!");
 			else
-				pr_info("PSPP request to switch to Gen1 from Gen2 Failed!");
+				pr_debug("PSPP request to switch to Gen1 from Gen2 Failed!");
 		}
 #endif
 	}
@@ -4800,7 +4800,7 @@ static bool smu7_check_clk_voltage_valid(struct pp_hwmgr *hwmgr,
 	struct smu7_hwmgr *data = (struct smu7_hwmgr *)(hwmgr->backend);
 
 	if (voltage < data->odn_dpm_table.min_vddc || voltage > data->odn_dpm_table.max_vddc) {
-		pr_info("OD voltage is out of range [%d - %d] mV\n",
+		pr_debug("OD voltage is out of range [%d - %d] mV\n",
 						data->odn_dpm_table.min_vddc,
 						data->odn_dpm_table.max_vddc);
 		return false;
@@ -4809,7 +4809,7 @@ static bool smu7_check_clk_voltage_valid(struct pp_hwmgr *hwmgr,
 	if (type == PP_OD_EDIT_SCLK_VDDC_TABLE) {
 		if (data->golden_dpm_table.sclk_table.dpm_levels[0].value > clk ||
 			hwmgr->platform_descriptor.overdriveLimit.engineClock < clk) {
-			pr_info("OD engine clock is out of range [%d - %d] MHz\n",
+			pr_debug("OD engine clock is out of range [%d - %d] MHz\n",
 				data->golden_dpm_table.sclk_table.dpm_levels[0].value/100,
 				hwmgr->platform_descriptor.overdriveLimit.engineClock/100);
 			return false;
@@ -4817,7 +4817,7 @@ static bool smu7_check_clk_voltage_valid(struct pp_hwmgr *hwmgr,
 	} else if (type == PP_OD_EDIT_MCLK_VDDC_TABLE) {
 		if (data->golden_dpm_table.mclk_table.dpm_levels[0].value > clk ||
 			hwmgr->platform_descriptor.overdriveLimit.memoryClock < clk) {
-			pr_info("OD memory clock is out of range [%d - %d] MHz\n",
+			pr_debug("OD memory clock is out of range [%d - %d] MHz\n",
 				data->golden_dpm_table.mclk_table.dpm_levels[0].value/100,
 				hwmgr->platform_descriptor.overdriveLimit.memoryClock/100);
 			return false;
@@ -4846,7 +4846,7 @@ static int smu7_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 				return -EINVAL);
 
 	if (!hwmgr->od_enabled) {
-		pr_info("OverDrive feature not enabled\n");
+		pr_debug("OverDrive feature not enabled\n");
 		return -EINVAL;
 	}
 
@@ -4875,7 +4875,7 @@ static int smu7_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 
 	for (i = 0; i < size; i += 3) {
 		if (i + 3 > size || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
-			pr_info("invalid clock voltage input \n");
+			pr_debug("invalid clock voltage input \n");
 			return 0;
 		}
 		input_level = input[i];

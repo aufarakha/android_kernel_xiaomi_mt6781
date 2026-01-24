@@ -116,7 +116,7 @@ static int st6422_probe(struct sd *sd)
 	if (sd->bridge != BRIDGE_ST6422)
 		return -ENODEV;
 
-	pr_info("st6422 sensor detected\n");
+	pr_debug("st6422 sensor detected\n");
 
 	sd->gspca_dev.cam.cam_mode = st6422_mode;
 	sd->gspca_dev.cam.nmodes = ARRAY_SIZE(st6422_mode);

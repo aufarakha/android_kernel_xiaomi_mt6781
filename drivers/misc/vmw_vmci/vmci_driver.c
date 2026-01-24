@@ -72,7 +72,7 @@ static int __init vmci_drv_init(void)
 				error);
 		} else {
 			vmci_guest_personality_initialized = true;
-			pr_info("Guest personality initialized and is %s\n",
+			pr_debug("Guest personality initialized and is %s\n",
 				vmci_guest_code_active() ?
 				"active" : "inactive");
 		}
@@ -85,7 +85,7 @@ static int __init vmci_drv_init(void)
 				error);
 		} else {
 			vmci_host_personality_initialized = true;
-			pr_info("Initialized host personality\n");
+			pr_debug("Initialized host personality\n");
 		}
 	}
 

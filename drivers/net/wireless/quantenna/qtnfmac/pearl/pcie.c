@@ -1203,9 +1203,9 @@ static void qtnf_fw_work_handler(struct work_struct *work)
 	qtnf_clear_state(&priv->bda->bda_ep_state, QTN_EP_FW_LOADRDY);
 
 	if (flashboot) {
-		pr_info("booting firmware from flash\n");
+		pr_debug("booting firmware from flash\n");
 	} else {
-		pr_info("starting firmware upload: %s\n", bus->fwname);
+		pr_debug("starting firmware upload: %s\n", bus->fwname);
 
 		ret = qtnf_ep_fw_load(priv, fw->data, fw->size);
 		release_firmware(fw);
@@ -1222,7 +1222,7 @@ static void qtnf_fw_work_handler(struct work_struct *work)
 	}
 
 	bus->fw_state = QTNF_FW_STATE_FW_DNLD_DONE;
-	pr_info("firmware is up and running\n");
+	pr_debug("firmware is up and running\n");
 
 	if (qtnf_poll_state(&priv->bda->bda_ep_state,
 			    QTN_EP_FW_QLINK_DONE, QTN_FW_QLINK_TIMEOUT_MS)) {
@@ -1476,13 +1476,13 @@ static struct pci_driver qtnf_pcie_drv_data = {
 
 static int __init qtnf_pcie_register(void)
 {
-	pr_info("register Quantenna QSR10g FullMAC PCIE driver\n");
+	pr_debug("register Quantenna QSR10g FullMAC PCIE driver\n");
 	return pci_register_driver(&qtnf_pcie_drv_data);
 }
 
 static void __exit qtnf_pcie_exit(void)
 {
-	pr_info("unregister Quantenna QSR10g FullMAC PCIE driver\n");
+	pr_debug("unregister Quantenna QSR10g FullMAC PCIE driver\n");
 	pci_unregister_driver(&qtnf_pcie_drv_data);
 }
 

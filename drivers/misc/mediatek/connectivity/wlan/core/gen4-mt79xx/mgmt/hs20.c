@@ -120,7 +120,7 @@ void hs20GenerateHS20IE(IN struct ADAPTER *prAdapter,
 	ucBssIndex = prMsduInfo->ucBssIndex;
 
 	if (!IS_BSS_INDEX_AIS(prAdapter, ucBssIndex) {
-		pr_info("[%s] prMsduInfo->ucBssIndex(%d) is not AIS\n",
+		pr_debug("[%s] prMsduInfo->ucBssIndex(%d) is not AIS\n",
 			__func__, ucBssIndex);
 		return;
 	}
@@ -189,7 +189,7 @@ void hs20FillExtCapIE(struct ADAPTER *prAdapter,
 			ELEM_EXT_CAP_WNM_NOTIFICATION_BIT);
 	}
 
-	pr_info("IE_SIZE(prExtCap) = %d, %d %d\n",
+	pr_debug("IE_SIZE(prExtCap) = %d, %d %d\n",
 		IE_SIZE(prExtCap), ELEM_HDR_LEN, ELEM_MAX_LEN_EXT_CAP);
 
 	ASSERT(IE_SIZE(prExtCap) <= (ELEM_HDR_LEN + ELEM_MAX_LEN_EXT_CAP));
@@ -605,7 +605,7 @@ uint32_t hs20SetBssidPool(IN struct ADAPTER *prAdapter,
 
 	prHS20Info = aisGetHS20Info(prAdapter, ucBssIndex);
 
-	pr_info("[%s]Set Bssid Pool! enable[%d] num[%d]\n",
+	pr_debug("[%s]Set Bssid Pool! enable[%d] num[%d]\n",
 		__func__, prParamBssidPool->fgIsEnable,
 		prParamBssidPool->ucNumBssidPool);
 
@@ -614,7 +614,7 @@ uint32_t hs20SetBssidPool(IN struct ADAPTER *prAdapter,
 			prHS20Info->arBssidPool[ucIdx].aucBSSID,
 			&prParamBssidPool->arBSSID[ucIdx]);
 
-		pr_info("[%s][%d][" MACSTR "]\n",
+		pr_debug("[%s][%d][" MACSTR "]\n",
 			__func__, ucIdx,
 			MAC2STR(prHS20Info->arBssidPool[ucIdx].aucBSSID));
 	}

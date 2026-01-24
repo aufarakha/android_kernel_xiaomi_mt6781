@@ -726,7 +726,7 @@ int fts_create_sysfs(struct i2c_client *client)
 		sysfs_remove_group(&client->dev.kobj, &fts_attribute_group);
 		return -EIO;
 	}
-	pr_info("fts:%s() - sysfs_create_group() succeeded.\n", __func__);
+	pr_debug("fts:%s() - sysfs_create_group() succeeded.\n", __func__);
 	/* HidI2c_To_StdI2c(client); */
 	return err;
 }

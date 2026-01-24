@@ -129,7 +129,7 @@ struct i40iw_cqp_compl_info {
 
 #define i40iw_pr_err(fmt, args ...) pr_err("%s: "fmt, __func__, ## args)
 
-#define i40iw_pr_info(fmt, args ...) pr_info("%s: " fmt, __func__, ## args)
+#define i40iw_pr_info(fmt, args ...) pr_debug("%s: " fmt, __func__, ## args)
 
 #define i40iw_pr_warn(fmt, args ...) pr_warn("%s: " fmt, __func__, ## args)
 

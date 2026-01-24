@@ -252,12 +252,12 @@ static int __init stm32_clocksource_init(struct timer_of *to)
 
 		stm32_timer_cnt = timer_of_base(to) + TIM_CNT;
 		sched_clock_register(stm32_read_sched_clock, bits, timer_of_rate(to));
-		pr_info("%s: STM32 sched_clock registered\n", name);
+		pr_debug("%s: STM32 sched_clock registered\n", name);
 
 		stm32_timer_delay.read_current_timer = stm32_read_delay;
 		stm32_timer_delay.freq = timer_of_rate(to);
 		register_current_timer_delay(&stm32_timer_delay);
-		pr_info("%s: STM32 delay timer registered\n", name);
+		pr_debug("%s: STM32 delay timer registered\n", name);
 	}
 
 	return clocksource_mmio_init(timer_of_base(to) + TIM_CNT, name,
@@ -281,7 +281,7 @@ static void __init stm32_clockevent_init(struct timer_of *to)
 	clockevents_config_and_register(&to->clkevt, timer_of_rate(to), 0x1,
 					(1 <<  bits) - 1);
 
-	pr_info("%pOF: STM32 clockevent driver initialized (%d bits)\n",
+	pr_debug("%pOF: STM32 clockevent driver initialized (%d bits)\n",
 		to->np, bits);
 }
 

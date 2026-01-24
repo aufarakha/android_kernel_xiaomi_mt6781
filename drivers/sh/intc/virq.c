@@ -230,7 +230,7 @@ restart:
 
 		activate_irq(irq);
 
-		pr_info("Setting up a chained VIRQ from %d -> %d\n",
+		pr_debug("Setting up a chained VIRQ from %d -> %d\n",
 			irq, entry->pirq);
 
 		intc_irq_xlate_set(irq, entry->enum_id, d);

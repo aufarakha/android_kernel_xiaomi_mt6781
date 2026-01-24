@@ -52,7 +52,7 @@ static void indydog_stop(void)
 	sgimc->cpuctrl0 &= ~SGIMC_CCTRL0_WDOG;
 	spin_unlock(&indydog_lock);
 
-	pr_info("Stopped watchdog timer\n");
+	pr_debug("Stopped watchdog timer\n");
 }
 
 static void indydog_ping(void)
@@ -75,7 +75,7 @@ static int indydog_open(struct inode *inode, struct file *file)
 	indydog_start();
 	indydog_ping();
 
-	pr_info("Started watchdog timer\n");
+	pr_debug("Started watchdog timer\n");
 
 	return nonseekable_open(inode, file);
 }
@@ -188,7 +188,7 @@ static int __init watchdog_init(void)
 		return ret;
 	}
 
-	pr_info("Hardware Watchdog Timer for SGI IP22: 0.3\n");
+	pr_debug("Hardware Watchdog Timer for SGI IP22: 0.3\n");
 
 	return 0;
 }

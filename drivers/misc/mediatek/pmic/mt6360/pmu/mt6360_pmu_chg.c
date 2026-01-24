@@ -3190,7 +3190,7 @@ static int typec_attach_thread(void *data)
 	bool typec_attach = false, ignore_usb = false;
 	union power_supply_propval val = {.intval = 0};
 
-	pr_info("%s: ++\n", __func__);
+	pr_debug("%s: ++\n", __func__);
 	while (!kthread_should_stop()) {
 		wait_event(mpci->attach_wq,
 			   atomic_read(&mpci->chrdet_start) > 0 ||

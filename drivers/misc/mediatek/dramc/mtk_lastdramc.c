@@ -113,7 +113,7 @@ static int __init set_single_channel_test_angent(int channel)
 		test_agent_base = (test_agent_base - rank_base) & 0xFFFFFFFF;
 
 		/* calculate DRAM base address (test_agent_base) */
-		/* pr_info("[LastDRAMC] reserved address before emi: */
+		/* pr_debug("[LastDRAMC] reserved address before emi: */
 		/* %llx\n", test_agent_base); */
 		for (bit_scramble = 11; bit_scramble < 17; bit_scramble++) {
 			bit_xor = (emi_conf >> (4*(bit_scramble-11))) & 0xf;
@@ -123,7 +123,7 @@ static int __init set_single_channel_test_angent(int channel)
 					<< bit_scramble;
 		}
 
-		/* pr_info("[LastDRAMC] reserved address after emi: %llx\n", */
+		/* pr_debug("[LastDRAMC] reserved address after emi: %llx\n", */
 		/* test_agent_base); */
 
 		if (channel_num > 1) {
@@ -142,7 +142,7 @@ static int __init set_single_channel_test_angent(int channel)
 			test_agent_base = temp |
 				(test_agent_base & ((0x1<<channel_position)-1));
 		}
-		/* pr_info("[LastDRAMC] reserved address after emi: %llx\n", */
+		/* pr_debug("[LastDRAMC] reserved address after emi: %llx\n", */
 		/* test_agent_base); */
 
 		/* set base address for test agent */
@@ -247,7 +247,7 @@ static int dram_calib_perf_check_probe(struct platform_device *pdev)
 			"k time too long: api error (0x%08lx)\n", val);
 		pr_err("[DRAMC] k time too long: api error (0x%08lx)\n", val);
 	} else {
-		pr_info("[DRAMC] k time optimized\n");
+		pr_debug("[DRAMC] k time optimized\n");
 	}
 
 	return 0;

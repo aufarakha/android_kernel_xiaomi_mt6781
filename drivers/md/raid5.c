@@ -7043,7 +7043,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
 
 		if (test_bit(In_sync, &rdev->flags)) {
 			char b[BDEVNAME_SIZE];
-			pr_info("md/raid:%s: device %s operational as raid disk %d\n",
+			pr_debug("md/raid:%s: device %s operational as raid disk %d\n",
 				mdname(mddev), bdevname(rdev->bdev, b), raid_disk);
 		} else if (rdev->saved_raid_disk != raid_disk)
 			/* Cannot rely on bitmap to complete recovery */
@@ -7078,7 +7078,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
 			((mddev->new_chunk_sectors << 9) / STRIPE_SIZE) * 4);
 		conf->min_nr_stripes = max(NR_STRIPES, stripes);
 		if (conf->min_nr_stripes != NR_STRIPES)
-			pr_info("md/raid:%s: force stripe size %d for reshape\n",
+			pr_debug("md/raid:%s: force stripe size %d for reshape\n",
 				mdname(mddev), conf->min_nr_stripes);
 	}
 	memory = conf->min_nr_stripes * (sizeof(struct stripe_head) +
@@ -7402,7 +7402,7 @@ static int raid5_run(struct mddev *mddev)
 		}
 	}
 
-	pr_info("md/raid:%s: raid level %d active with %d out of %d devices, algorithm %d\n",
+	pr_debug("md/raid:%s: raid level %d active with %d out of %d devices, algorithm %d\n",
 		mdname(mddev), conf->level,
 		mddev->raid_disks-mddev->degraded, mddev->raid_disks,
 		mddev->new_layout);

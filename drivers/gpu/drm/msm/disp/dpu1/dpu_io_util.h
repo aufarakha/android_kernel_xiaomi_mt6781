@@ -18,7 +18,7 @@
 #include <linux/types.h>
 
 #define DEV_DBG(fmt, args...)   pr_debug(fmt, ##args)
-#define DEV_INFO(fmt, args...)  pr_info(fmt, ##args)
+#define DEV_INFO(fmt, args...)  pr_debug(fmt, ##args)
 #define DEV_WARN(fmt, args...)  pr_warn(fmt, ##args)
 #define DEV_ERR(fmt, args...)   pr_err(fmt, ##args)
 

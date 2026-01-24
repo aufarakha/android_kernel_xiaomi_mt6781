@@ -601,7 +601,7 @@ static int __init wdt_init(void)
 	   if not reset to the default */
 	if (wdt_set_heartbeat(heartbeat)) {
 		wdt_set_heartbeat(WD_TIMO);
-		pr_info("heartbeat value must be 0 < heartbeat < 65536, using %d\n",
+		pr_debug("heartbeat value must be 0 < heartbeat < 65536, using %d\n",
 			WD_TIMO);
 	}
 
@@ -639,10 +639,10 @@ static int __init wdt_init(void)
 		goto outmisc;
 	}
 
-	pr_info("WDT500/501-P driver 0.10 at 0x%04x (Interrupt %d). heartbeat=%d sec (nowayout=%d)\n",
+	pr_debug("WDT500/501-P driver 0.10 at 0x%04x (Interrupt %d). heartbeat=%d sec (nowayout=%d)\n",
 		io, irq, heartbeat, nowayout);
 	if (type == 501)
-		pr_info("Fan Tachometer is %s\n",
+		pr_debug("Fan Tachometer is %s\n",
 			tachometer ? "Enabled" : "Disabled");
 	return 0;
 

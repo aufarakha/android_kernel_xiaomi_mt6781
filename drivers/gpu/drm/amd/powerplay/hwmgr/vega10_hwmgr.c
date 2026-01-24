@@ -593,7 +593,7 @@ static void vega10_patch_with_vdd_leakage(struct pp_hwmgr *hwmgr,
 	}
 
 	if (*voltage > ATOM_VIRTUAL_VOLTAGE_ID0)
-		pr_info("Voltage value looks like a Leakage ID but it's not patched\n");
+		pr_debug("Voltage value looks like a Leakage ID but it's not patched\n");
 }
 
 /**
@@ -1480,7 +1480,7 @@ static int vega10_populate_smc_link_levels(struct pp_hwmgr *hwmgr)
 		result = vega10_populate_single_lclk_level(hwmgr,
 				pcie_table->lclk[i], &(pp_table->LclkDid[i]));
 		if (result) {
-			pr_info("Populate LClock Level %d Failed!\n", i);
+			pr_debug("Populate LClock Level %d Failed!\n", i);
 			return result;
 		}
 	}
@@ -1493,7 +1493,7 @@ static int vega10_populate_smc_link_levels(struct pp_hwmgr *hwmgr)
 		result = vega10_populate_single_lclk_level(hwmgr,
 				pcie_table->lclk[j], &(pp_table->LclkDid[i]));
 		if (result) {
-			pr_info("Populate LClock Level %d Failed!\n", i);
+			pr_debug("Populate LClock Level %d Failed!\n", i);
 			return result;
 		}
 		i++;
@@ -2277,7 +2277,7 @@ static int vega10_acg_enable(struct pp_hwmgr *hwmgr)
 				data->smu_features[GNLD_ACG].smu_feature_bitmap))
 					data->smu_features[GNLD_ACG].enabled = true;
 		} else {
-			pr_info("[ACG_Enable] ACG BTC Returned Failed Status!\n");
+			pr_debug("[ACG_Enable] ACG BTC Returned Failed Status!\n");
 			data->smu_features[GNLD_ACG].enabled = false;
 		}
 	}
@@ -2618,7 +2618,7 @@ static int vega10_enable_thermal_protection(struct pp_hwmgr *hwmgr)
 
 	if (data->smu_features[GNLD_THERMAL].supported) {
 		if (data->smu_features[GNLD_THERMAL].enabled)
-			pr_info("THERMAL Feature Already enabled!");
+			pr_debug("THERMAL Feature Already enabled!");
 
 		PP_ASSERT_WITH_CODE(
 				!vega10_enable_smc_features(hwmgr,
@@ -2638,7 +2638,7 @@ static int vega10_disable_thermal_protection(struct pp_hwmgr *hwmgr)
 
 	if (data->smu_features[GNLD_THERMAL].supported) {
 		if (!data->smu_features[GNLD_THERMAL].enabled)
-			pr_info("THERMAL Feature Already disabled!");
+			pr_debug("THERMAL Feature Already disabled!");
 
 		PP_ASSERT_WITH_CODE(
 				!vega10_enable_smc_features(hwmgr,
@@ -2883,7 +2883,7 @@ static int vega10_enable_disable_PCC_limit_feature(struct pp_hwmgr *hwmgr, bool 
 
 	if (data->smu_features[GNLD_PCC_LIMIT].supported) {
 		if (enable == data->smu_features[GNLD_PCC_LIMIT].enabled)
-			pr_info("GNLD_PCC_LIMIT has been %s \n", enable ? "enabled" : "disabled");
+			pr_debug("GNLD_PCC_LIMIT has been %s \n", enable ? "enabled" : "disabled");
 		PP_ASSERT_WITH_CODE(!vega10_enable_smc_features(hwmgr,
 				enable, data->smu_features[GNLD_PCC_LIMIT].smu_feature_bitmap),
 				"Attempt to Enable PCC Limit feature Failed!",
@@ -3120,7 +3120,7 @@ static int vega10_apply_state_adjust_rules(struct pp_hwmgr *hwmgr,
 			request_ps->classification.ui_label);
 
 	if (vega10_ps->performance_level_count != 2)
-		pr_info("VI should always have 2 performance levels");
+		pr_debug("VI should always have 2 performance levels");
 
 	max_limits = adev->pm.ac_power ?
 			&(hwmgr->dyn_state.max_clock_voltage_on_ac) :
@@ -3389,7 +3389,7 @@ static uint32_t vega10_find_highest_dpm_level(
 				return i - 1;
 		}
 	} else {
-		pr_info("DPM Table Has Too Many Entries!");
+		pr_debug("DPM Table Has Too Many Entries!");
 		return MAX_REGULAR_DPM_NUMBER - 1;
 	}
 
@@ -3758,7 +3758,7 @@ int vega10_display_clock_voltage_request(struct pp_hwmgr *hwmgr,
 		clk_select = DSPCLK_PHYCLK;
 		break;
 	default:
-		pr_info("[DisplayClockVoltageRequest]Invalid Clock Type!");
+		pr_debug("[DisplayClockVoltageRequest]Invalid Clock Type!");
 		result = -1;
 		break;
 	}
@@ -3831,7 +3831,7 @@ static int vega10_notify_smc_display_config_after_ps_adjustment(
 					hwmgr, PPSMC_MSG_SetMinDeepSleepDcefclk,
 					min_clocks.dcefClockInSR / 100);
 		} else {
-			pr_info("Attempt to set Hard Min for DCEFCLK Failed!");
+			pr_debug("Attempt to set Hard Min for DCEFCLK Failed!");
 		}
 	} else {
 		pr_debug("Cannot find requested DCEFCLK!");
@@ -4712,7 +4712,7 @@ static bool vega10_check_clk_voltage_valid(struct pp_hwmgr *hwmgr,
 	struct vega10_single_dpm_table *golden_table;
 
 	if (voltage < odn_table->min_vddc || voltage > odn_table->max_vddc) {
-		pr_info("OD voltage is out of range [%d - %d] mV\n", odn_table->min_vddc, odn_table->max_vddc);
+		pr_debug("OD voltage is out of range [%d - %d] mV\n", odn_table->min_vddc, odn_table->max_vddc);
 		return false;
 	}
 
@@ -4720,7 +4720,7 @@ static bool vega10_check_clk_voltage_valid(struct pp_hwmgr *hwmgr,
 		golden_table = &(data->golden_dpm_table.gfx_table);
 		if (golden_table->dpm_levels[0].value > clk ||
 			hwmgr->platform_descriptor.overdriveLimit.engineClock < clk) {
-			pr_info("OD engine clock is out of range [%d - %d] MHz\n",
+			pr_debug("OD engine clock is out of range [%d - %d] MHz\n",
 				golden_table->dpm_levels[0].value/100,
 				hwmgr->platform_descriptor.overdriveLimit.engineClock/100);
 			return false;
@@ -4729,7 +4729,7 @@ static bool vega10_check_clk_voltage_valid(struct pp_hwmgr *hwmgr,
 		golden_table = &(data->golden_dpm_table.mem_table);
 		if (golden_table->dpm_levels[0].value > clk ||
 			hwmgr->platform_descriptor.overdriveLimit.memoryClock < clk) {
-			pr_info("OD memory clock is out of range [%d - %d] MHz\n",
+			pr_debug("OD memory clock is out of range [%d - %d] MHz\n",
 				golden_table->dpm_levels[0].value/100,
 				hwmgr->platform_descriptor.overdriveLimit.memoryClock/100);
 			return false;
@@ -4815,7 +4815,7 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 				return -EINVAL);
 
 	if (!hwmgr->od_enabled) {
-		pr_info("OverDrive feature not enabled\n");
+		pr_debug("OverDrive feature not enabled\n");
 		return -EINVAL;
 	}
 
@@ -4840,7 +4840,7 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 
 	for (i = 0; i < size; i += 3) {
 		if (i + 3 > size || input[i] >= podn_vdd_dep_table->count) {
-			pr_info("invalid clock voltage input\n");
+			pr_debug("invalid clock voltage input\n");
 			return 0;
 		}
 		input_level = input[i];

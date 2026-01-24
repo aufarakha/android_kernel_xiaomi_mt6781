@@ -282,7 +282,7 @@ static int au1xmmc_send_command(struct au1xmmc_host *host, int wait,
 		mmccmd |= SD_CMD_RT_3;
 		break;
 	default:
-		pr_info("au1xmmc: unhandled response type %02x\n",
+		pr_debug("au1xmmc: unhandled response type %02x\n",
 			mmc_resp_type(cmd));
 		return -EINVAL;
 	}
@@ -1067,7 +1067,7 @@ static int au1xmmc_probe(struct platform_device *pdev)
 	if (has_dbdma()) {
 		ret = au1xmmc_dbdma_init(host);
 		if (ret)
-			pr_info(DRIVER_NAME ": DBDMA init failed; using PIO\n");
+			pr_debug(DRIVER_NAME ": DBDMA init failed; using PIO\n");
 	}
 
 #ifdef CONFIG_LEDS_CLASS
@@ -1092,7 +1092,7 @@ static int au1xmmc_probe(struct platform_device *pdev)
 
 	platform_set_drvdata(pdev, host);
 
-	pr_info(DRIVER_NAME ": MMC Controller %d set up at %p"
+	pr_debug(DRIVER_NAME ": MMC Controller %d set up at %p"
 		" (mode=%s)\n", pdev->id, host->iobase,
 		host->flags & HOST_F_DMA ? "dma" : "pio");
 

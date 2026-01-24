@@ -197,7 +197,7 @@ static int ab3100_disable_regulator(struct regulator_dev *reg)
 	 * LDO D is a special regulator. When it is disabled, the entire
 	 * system is shut down. So this is handled specially.
 	 */
-	pr_info("Called ab3100_disable_regulator\n");
+	pr_debug("Called ab3100_disable_regulator\n");
 	if (abreg->regreg == AB3100_LDO_D) {
 		dev_info(&reg->dev, "disabling LDO D - shut down system\n");
 		/* Setting LDO D to 0x00 cuts the power to the SoC */

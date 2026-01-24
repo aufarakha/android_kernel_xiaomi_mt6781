@@ -1157,7 +1157,7 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 		goto out_release_adapter_res;
 	}
 
-	pr_info("%s: %s (rev %d), %s %dMHz/%d-bit\n",
+	pr_debug("%s: %s (rev %d), %s %dMHz/%d-bit\n",
 		adapter->name, bi->desc, adapter->params.chip_revision,
 		adapter->params.pci.is_pcix ? "PCIX" : "PCI",
 		adapter->params.pci.speed, adapter->params.pci.width);

@@ -185,7 +185,7 @@ static int __init ixp4xx_wdt_init(void)
 			WDIOF_CARDRESET : 0;
 	ret = misc_register(&ixp4xx_wdt_miscdev);
 	if (ret == 0)
-		pr_info("timer heartbeat %d sec\n", heartbeat);
+		pr_debug("timer heartbeat %d sec\n", heartbeat);
 	return ret;
 }
 

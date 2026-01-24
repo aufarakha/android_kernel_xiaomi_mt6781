@@ -179,7 +179,7 @@ static void hauppauge_eeprom(struct au0828_dev *dev, u8 *eeprom_data)
 		break;
 	}
 
-	pr_info("%s: hauppauge eeprom: model=%d\n",
+	pr_debug("%s: hauppauge eeprom: model=%d\n",
 	       __func__, tv.model);
 }
 

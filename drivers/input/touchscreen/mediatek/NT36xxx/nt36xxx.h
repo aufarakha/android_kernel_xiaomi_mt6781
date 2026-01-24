@@ -25,10 +25,10 @@
 #define I2C_HW_Address 0x62
 
 #define NVT_LOG(fmt, args...)    \
-	pr_info("[%s] %s %d: " fmt, NVT_I2C_NAME, \
+	pr_debug("[%s] %s %d: " fmt, NVT_I2C_NAME, \
 	__func__, __LINE__, ##args)
 #define NVT_ERR(fmt, args...)    \
-	pr_info("[%s] %s %d: " fmt, NVT_I2C_NAME, \
+	pr_debug("[%s] %s %d: " fmt, NVT_I2C_NAME, \
 	__func__, __LINE__, ##args)
 
 //---Input device info.---

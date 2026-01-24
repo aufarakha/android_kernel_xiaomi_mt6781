@@ -2747,7 +2747,7 @@ void cpuset_print_current_mems_allowed(void)
 	rcu_read_lock();
 
 	cgrp = task_cs(current)->css.cgroup;
-	pr_info("%s cpuset=", current->comm);
+	pr_debug("%s cpuset=", current->comm);
 	pr_cont_cgroup_name(cgrp);
 	pr_cont(" mems_allowed=%*pbl\n",
 		nodemask_pr_args(&current->mems_allowed));

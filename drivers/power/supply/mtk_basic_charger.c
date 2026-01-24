@@ -498,15 +498,15 @@ static int charger_dev_event(struct notifier_block *nb, unsigned long event,
 
 		break;
 	case CHARGER_DEV_NOTIFY_RECHG:
-		pr_info("%s: recharge\n", __func__);
+		pr_debug("%s: recharge\n", __func__);
 		break;
 	case CHARGER_DEV_NOTIFY_SAFETY_TIMEOUT:
 		info->safety_timeout = true;
-		pr_info("%s: safety timer timeout\n", __func__);
+		pr_debug("%s: safety timer timeout\n", __func__);
 		break;
 	case CHARGER_DEV_NOTIFY_VBUS_OVP:
 		info->vbusov_stat = data->vbusov_stat;
-		pr_info("%s: vbus ovp = %d\n", __func__, info->vbusov_stat);
+		pr_debug("%s: vbus ovp = %d\n", __func__, info->vbusov_stat);
 		break;
 	default:
 		return NOTIFY_DONE;

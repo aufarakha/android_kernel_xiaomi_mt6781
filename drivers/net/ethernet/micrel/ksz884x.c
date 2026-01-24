@@ -5290,10 +5290,10 @@ static irqreturn_t netdev_intr(int irq, void *dev_id)
 			u32 data;
 
 			hw->intr_mask &= ~KS884X_INT_TX_STOPPED;
-			pr_info("Tx stopped\n");
+			pr_debug("Tx stopped\n");
 			data = readl(hw->io + KS_DMA_TX_CTRL);
 			if (!(data & DMA_TX_ENABLE))
-				pr_info("Tx disabled\n");
+				pr_debug("Tx disabled\n");
 			break;
 		}
 	} while (0);

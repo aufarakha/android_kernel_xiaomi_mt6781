@@ -1393,7 +1393,7 @@ static int dss_probe_hardware(struct dss_device *dss)
 	dss->lcd_clk_source[1] = DSS_CLK_SRC_FCK;
 
 	rev = dss_read_reg(dss, DSS_REVISION);
-	pr_info("OMAP DSS rev %d.%d\n", FLD_GET(rev, 7, 4), FLD_GET(rev, 3, 0));
+	pr_debug("OMAP DSS rev %d.%d\n", FLD_GET(rev, 7, 4), FLD_GET(rev, 3, 0));
 
 	dss_runtime_put(dss);
 

@@ -200,7 +200,7 @@ static int sspm_device_probe(struct platform_device *pdev)
 		return -1;
 	}
 
-	pr_info("SSPM is ready to service IPI\n");
+	pr_debug("SSPM is ready to service IPI\n");
 #ifdef CONFIG_OF_RESERVED_MEM
 	if (sspm_reserve_memory_init(sspm_pdev)) {
 		pr_err("[SSPM] Reserved Memory Failed\n");
@@ -288,7 +288,7 @@ static int __init sspm_module_init(void)
 		pr_err("[SSPM] Platform Init Failed\n");
 		return -1;
 	}
-	pr_info("SSPM platform service is ready\n");
+	pr_debug("SSPM platform service is ready\n");
 #endif
 
 	sspm_lock_emi_mpu();

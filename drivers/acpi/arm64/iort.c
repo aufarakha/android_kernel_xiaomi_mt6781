@@ -1244,7 +1244,7 @@ static int  __init arm_smmu_v3_set_proximity(struct device *dev,
 			return -EINVAL;
 
 		set_dev_node(dev, node);
-		pr_info("SMMU-v3[%llx] Mapped to Proximity domain %d\n",
+		pr_debug("SMMU-v3[%llx] Mapped to Proximity domain %d\n",
 			smmu->base_address,
 			smmu->pxm);
 	}

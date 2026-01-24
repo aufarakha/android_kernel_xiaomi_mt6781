@@ -1804,7 +1804,7 @@ static void __exit ctcm_exit(void)
 	ccw_driver_unregister(&ctcm_ccw_driver);
 	root_device_unregister(ctcm_root_dev);
 	ctcm_unregister_dbf_views();
-	pr_info("CTCM driver unloaded\n");
+	pr_debug("CTCM driver unloaded\n");
 }
 
 /*
@@ -1812,7 +1812,7 @@ static void __exit ctcm_exit(void)
  */
 static void print_banner(void)
 {
-	pr_info("CTCM driver initialized\n");
+	pr_debug("CTCM driver initialized\n");
 }
 
 /**

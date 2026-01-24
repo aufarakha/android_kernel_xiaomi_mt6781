@@ -119,7 +119,7 @@ static int __init goldfish_pic_of_init(struct device_node *of_node,
 	irq_set_chained_handler_and_data(parent_irq,
 					 goldfish_pic_cascade, gfpic);
 
-	pr_info("Successfully registered.\n");
+	pr_debug("Successfully registered.\n");
 	return 0;
 
 out_destroy_generic_chip:

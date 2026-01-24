@@ -77,14 +77,14 @@ struct JpegDrvEncCtrlCfg {
 #define JPEG_DRV_ENC_NV12                     (0x02 << 3)
 #define JPEG_DRV_ENC_NV21                     (0x03 << 3)
 
-#define JPEG_MSG pr_info
-#define JPEG_WRN pr_info
-#define JPEG_ERR pr_info
-#define JPEG_VEB pr_info
+#define JPEG_MSG pr_debug
+#define JPEG_WRN pr_debug
+#define JPEG_ERR pr_debug
+#define JPEG_VEB pr_debug
 #define JPEG_LOG(level, format, args...)                       \
 	do {                                                        \
 		if ((jpg_dbg_level & level) == level)              \
-			pr_info("[JPEG] level=%d %s(),%d: " format "\n",\
+			pr_debug("[JPEG] level=%d %s(),%d: " format "\n",\
 				level, __func__, __LINE__, ##args);      \
 	} while (0)
 

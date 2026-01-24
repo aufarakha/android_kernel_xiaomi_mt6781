@@ -5294,7 +5294,7 @@ static struct pci_driver sky2_driver = {
 
 static int __init sky2_init_module(void)
 {
-	pr_info("driver version " DRV_VERSION "\n");
+	pr_debug("driver version " DRV_VERSION "\n");
 
 	sky2_debug_init();
 	return pci_register_driver(&sky2_driver);

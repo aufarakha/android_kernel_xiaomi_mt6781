@@ -2257,17 +2257,17 @@ static int sbmac_init(struct platform_device *pldev, long long base)
 		goto unreg_mdio;
 	}
 
-	pr_info("%s.%d: registered as %s\n", sbmac_string, idx, dev->name);
+	pr_debug("%s.%d: registered as %s\n", sbmac_string, idx, dev->name);
 
 	if (sc->rx_hw_checksum == ENABLE)
-		pr_info("%s: enabling TCP rcv checksum\n", dev->name);
+		pr_debug("%s: enabling TCP rcv checksum\n", dev->name);
 
 	/*
 	 * Display Ethernet address (this is called during the config
 	 * process so we need to finish off the config message that
 	 * was being displayed)
 	 */
-	pr_info("%s: SiByte Ethernet at 0x%08Lx, address: %pM\n",
+	pr_debug("%s: SiByte Ethernet at 0x%08Lx, address: %pM\n",
 	       dev->name, base, eaddr);
 
 	return 0;
@@ -2401,7 +2401,7 @@ static void sbmac_mii_poll(struct net_device *dev)
 			sc->sbm_duplex = sbmac_duplex_none;
 			sc->sbm_fc = sbmac_fc_disabled;
 			sc->sbm_pause = -1;
-			pr_info("%s: link unavailable\n", dev->name);
+			pr_debug("%s: link unavailable\n", dev->name);
 		}
 		return;
 	}
@@ -2415,7 +2415,7 @@ static void sbmac_mii_poll(struct net_device *dev)
 		fc = sbmac_fc_collision;
 	fc_chg = (sc->sbm_fc != fc);
 
-	pr_info("%s: link available: %dbase-%cD\n", dev->name, phy_dev->speed,
+	pr_debug("%s: link available: %dbase-%cD\n", dev->name, phy_dev->speed,
 		phy_dev->duplex == DUPLEX_FULL ? 'F' : 'H');
 
 	spin_lock_irqsave(&sc->sbm_lock, flags);

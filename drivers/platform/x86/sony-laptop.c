@@ -1186,7 +1186,7 @@ static int sony_nc_hotkeys_decode(u32 event, unsigned int handle)
 	}
 
 	if (!key_event->data)
-		pr_info("Unknown hotkey 0x%.2x/0x%.2x (handle 0x%.2x)\n",
+		pr_debug("Unknown hotkey 0x%.2x/0x%.2x (handle 0x%.2x)\n",
 				event, result, handle);
 
 	return ret;
@@ -2605,7 +2605,7 @@ static int sony_nc_highspeed_charging_setup(struct platform_device *pd)
 		/* some models advertise the handle but have no implementation
 		 * for it
 		 */
-		pr_info("No High Speed Charging capability found\n");
+		pr_debug("No High Speed Charging capability found\n");
 		return 0;
 	}
 
@@ -2852,7 +2852,7 @@ static int sony_nc_usb_charge_setup(struct platform_device *pd)
 		/* some models advertise the handle but have no implementation
 		 * for it
 		 */
-		pr_info("No USB Charge capability found\n");
+		pr_debug("No USB Charge capability found\n");
 		return 0;
 	}
 
@@ -3277,7 +3277,7 @@ static int sony_nc_add(struct acpi_device *device)
 		}
 	}
 
-	pr_info("SNC setup done.\n");
+	pr_debug("SNC setup done.\n");
 	return 0;
 
 out_sysfs:
@@ -3752,7 +3752,7 @@ static void sony_pic_detect_device_type(struct sony_pic_dev *dev)
 out:
 	pci_dev_put(pcidev);
 
-	pr_info("detected Type%d model\n",
+	pr_debug("detected Type%d model\n",
 		dev->model == SONYPI_DEVICE_TYPE1 ? 1 :
 		dev->model == SONYPI_DEVICE_TYPE2 ? 2 : 3);
 }
@@ -4327,7 +4327,7 @@ static int sonypi_compat_init(void)
 		goto err_free_kfifo;
 	}
 	if (minor == -1)
-		pr_info("device allocated minor is %d\n",
+		pr_debug("device allocated minor is %d\n",
 			sonypi_misc_device.minor);
 
 	return 0;
@@ -4816,7 +4816,7 @@ static int sony_pic_add(struct acpi_device *device)
 	if (result)
 		goto err_remove_pf;
 
-	pr_info("SPIC setup done.\n");
+	pr_debug("SPIC setup done.\n");
 	return 0;
 
 err_remove_pf:

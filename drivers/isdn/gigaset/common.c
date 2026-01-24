@@ -1137,7 +1137,7 @@ static int __init gigaset_init_module(void)
 	if (gigaset_debuglevel == 1)
 		gigaset_debuglevel = DEBUG_DEFAULT;
 
-	pr_info(DRIVER_DESC DRIVER_DESC_DEBUG "\n");
+	pr_debug(DRIVER_DESC DRIVER_DESC_DEBUG "\n");
 	gigaset_isdn_regdrv();
 	return 0;
 }

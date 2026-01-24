@@ -268,7 +268,7 @@ static void XGIfb_search_mode(struct xgifb_video_info *xgifb_info,
 			return;
 		}
 invalid_mode:
-	pr_info("Invalid mode '%s'\n", name);
+	pr_debug("Invalid mode '%s'\n", name);
 }
 
 static void XGIfb_search_vesamode(struct xgifb_video_info *xgifb_info,
@@ -291,7 +291,7 @@ static void XGIfb_search_vesamode(struct xgifb_video_info *xgifb_info,
 	}
 
 invalid:
-	pr_info("Invalid VESA mode 0x%x'\n", vesamode);
+	pr_debug("Invalid VESA mode 0x%x'\n", vesamode);
 }
 
 static int XGIfb_validate_mode(struct xgifb_video_info *xgifb_info, int myindex)
@@ -531,7 +531,7 @@ static void XGIfb_search_crt2type(const char *name)
 		i++;
 	}
 	if (XGIfb_crt2type < 0)
-		pr_info("Invalid CRT2 type: %s\n", name);
+		pr_debug("Invalid CRT2 type: %s\n", name);
 }
 
 static u8 XGIfb_search_refresh_rate(struct xgifb_video_info *xgifb_info,
@@ -582,7 +582,7 @@ static u8 XGIfb_search_refresh_rate(struct xgifb_video_info *xgifb_info,
 
 	if (xgifb_info->rate_idx > 0)
 		return xgifb_info->rate_idx;
-	pr_info("Unsupported rate %d for %dx%d\n",
+	pr_debug("Unsupported rate %d for %dx%d\n",
 		rate, xres, yres);
 	return 0;
 }
@@ -1455,7 +1455,7 @@ static int XGIfb_get_dram_size(struct xgifb_video_info *xgifb_info)
 
 	xgifb_info->video_size = xgifb_info->video_size * ChannelNum;
 
-	pr_info("SR14=%x DramSzie %x ChannelNum %x\n",
+	pr_debug("SR14=%x DramSzie %x ChannelNum %x\n",
 		reg, xgifb_info->video_size, ChannelNum);
 	return 0;
 }
@@ -1578,7 +1578,7 @@ static int __init XGIfb_setup(char *options)
 	if (!options || !*options)
 		return 0;
 
-	pr_info("Options: %s\n", options);
+	pr_debug("Options: %s\n", options);
 
 	while ((this_opt = strsep(&options, ",")) != NULL) {
 		if (!*this_opt)
@@ -1930,12 +1930,12 @@ static int xgifb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		break;
 	default:
 		xgifb_info->video_cmap_len = 16;
-		pr_info("Unsupported depth %d\n",
+		pr_debug("Unsupported depth %d\n",
 			xgifb_info->video_bpp);
 		break;
 	}
 
-	pr_info("Default mode is %dx%dx%d (%dHz)\n",
+	pr_debug("Default mode is %dx%dx%d (%dHz)\n",
 		xgifb_info->video_width, xgifb_info->video_height,
 		xgifb_info->video_bpp, xgifb_info->refresh_rate);
 

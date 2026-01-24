@@ -82,7 +82,7 @@ static void __init r9a06g032_smp_prepare_cpus(unsigned int max_cpus)
 		pr_err("CPU#1: invalid cpu-release-addr property\n");
 		return;
 	}
-	pr_info("CPU#1: cpu-release-addr %08x\n", bootaddr);
+	pr_debug("CPU#1: cpu-release-addr %08x\n", bootaddr);
 
 	cpu_bootaddr = ioremap(bootaddr, sizeof(bootaddr));
 }

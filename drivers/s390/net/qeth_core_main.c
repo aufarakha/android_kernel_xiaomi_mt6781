@@ -6610,7 +6610,7 @@ static int __init qeth_core_init(void)
 {
 	int rc;
 
-	pr_info("loading core functions\n");
+	pr_debug("loading core functions\n");
 	INIT_LIST_HEAD(&qeth_core_card_list.list);
 	INIT_LIST_HEAD(&qeth_dbf_list);
 	rwlock_init(&qeth_core_card_list.rwlock);
@@ -6677,7 +6677,7 @@ static void __exit qeth_core_exit(void)
 	kmem_cache_destroy(qeth_core_header_cache);
 	root_device_unregister(qeth_core_root_dev);
 	qeth_unregister_dbf_views();
-	pr_info("core functions removed\n");
+	pr_debug("core functions removed\n");
 }
 
 module_init(qeth_core_init);

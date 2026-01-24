@@ -38,7 +38,7 @@
          or internal inconsistency
      pr_warn() for error conditions that could have been predicated, like
          adding a device to an array when it has incompatible metadata
-     pr_info() for every interesting, very rare events, like an array starting
+     pr_debug() for every interesting, very rare events, like an array starting
          or stopping, or resync starting or stopping
      pr_debug() for everything else.
 
@@ -6136,7 +6136,7 @@ static int do_md_stop(struct mddev *mddev, int mode,
 	 * Free resources if final stop
 	 */
 	if (mode == 0) {
-		pr_info("md: %s stopped.\n", mdname(mddev));
+		pr_debug("md: %s stopped.\n", mdname(mddev));
 
 		if (mddev->bitmap_info.file) {
 			struct file *f = mddev->bitmap_info.file;
@@ -6167,7 +6167,7 @@ static void autorun_array(struct mddev *mddev)
 	if (list_empty(&mddev->disks))
 		return;
 
-	pr_info("md: running: ");
+	pr_debug("md: running: ");
 
 	rdev_for_each(rdev, mddev) {
 		char b[BDEVNAME_SIZE];
@@ -6200,7 +6200,7 @@ static void autorun_devices(int part)
 	struct mddev *mddev;
 	char b[BDEVNAME_SIZE];
 
-	pr_info("md: autorun ...\n");
+	pr_debug("md: autorun ...\n");
 	while (!list_empty(&pending_raid_disks)) {
 		int unit;
 		dev_t dev;
@@ -6267,7 +6267,7 @@ static void autorun_devices(int part)
 		}
 		mddev_put(mddev);
 	}
-	pr_info("md: ... autorun DONE.\n");
+	pr_debug("md: ... autorun DONE.\n");
 }
 #endif /* !MODULE */
 
@@ -8435,7 +8435,7 @@ void md_do_sync(struct md_thread *thread)
 				    mddev2->curr_resync >= mddev->curr_resync) {
 					if (mddev2_minor != mddev2->md_minor) {
 						mddev2_minor = mddev2->md_minor;
-						pr_info("md: delaying %s of %s until %s has finished (they share one or more physical units)\n",
+						pr_debug("md: delaying %s of %s until %s has finished (they share one or more physical units)\n",
 							desc, mdname(mddev),
 							mdname(mddev2));
 					}
@@ -8494,7 +8494,7 @@ void md_do_sync(struct md_thread *thread)
 		}
 	}
 
-	pr_info("md: %s of RAID array %s\n", desc, mdname(mddev));
+	pr_debug("md: %s of RAID array %s\n", desc, mdname(mddev));
 	pr_debug("md: minimum _guaranteed_  speed: %d KB/sec/disk.\n", speed_min(mddev));
 	pr_debug("md: using maximum available idle IO bandwidth (but not more than %d KB/sec) for %s.\n",
 		 speed_max(mddev), desc);
@@ -8649,7 +8649,7 @@ void md_do_sync(struct md_thread *thread)
 			}
 		}
 	}
-	pr_info("md: %s: %s %s.\n",mdname(mddev), desc,
+	pr_debug("md: %s: %s %s.\n",mdname(mddev), desc,
 		test_bit(MD_RECOVERY_INTR, &mddev->recovery)
 		? "interrupted" : "done");
 	/*
@@ -9275,7 +9275,7 @@ static void check_sb_changes(struct mddev *mddev, struct md_rdev *rdev)
 	if (mddev->dev_sectors != le64_to_cpu(sb->size)) {
 		ret = mddev->pers->resize(mddev, le64_to_cpu(sb->size));
 		if (ret)
-			pr_info("md-cluster: resize failed\n");
+			pr_debug("md-cluster: resize failed\n");
 		else
 			md_bitmap_update_sb(mddev->bitmap);
 	}
@@ -9290,7 +9290,7 @@ static void check_sb_changes(struct mddev *mddev, struct md_rdev *rdev)
 
 		if (test_bit(Candidate, &rdev2->flags)) {
 			if (role == 0xfffe) {
-				pr_info("md: Removing Candidate device %s because add failed\n", bdevname(rdev2->bdev,b));
+				pr_debug("md: Removing Candidate device %s because add failed\n", bdevname(rdev2->bdev,b));
 				md_kick_rdev_from_array(rdev2);
 				continue;
 			}
@@ -9303,7 +9303,7 @@ static void check_sb_changes(struct mddev *mddev, struct md_rdev *rdev)
 			if (rdev2->raid_disk == -1 && role != 0xffff) {
 				rdev2->saved_raid_disk = role;
 				ret = remove_and_add_spares(mddev, rdev2);
-				pr_info("Activated spare: %s\n",
+				pr_debug("Activated spare: %s\n",
 					bdevname(rdev2->bdev,b));
 				/* wakeup mddev->thread here, so array could
 				 * perform resync with the new activated disk */
@@ -9449,7 +9449,7 @@ static void autostart_arrays(int part)
 	i_scanned = 0;
 	i_passed = 0;
 
-	pr_info("md: Autodetecting RAID arrays.\n");
+	pr_debug("md: Autodetecting RAID arrays.\n");
 
 	mutex_lock(&detected_devices_mutex);
 	while (!list_empty(&all_detected_devices) && i_scanned < INT_MAX) {

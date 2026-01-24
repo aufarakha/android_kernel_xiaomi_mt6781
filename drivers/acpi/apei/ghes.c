@@ -1215,14 +1215,14 @@ static int __init ghes_init(void)
 	case HEST_NOT_FOUND:
 		return -ENODEV;
 	case HEST_DISABLED:
-		pr_info(GHES_PFX "HEST is not enabled!\n");
+		pr_debug(GHES_PFX "HEST is not enabled!\n");
 		return -EINVAL;
 	default:
 		break;
 	}
 
 	if (ghes_disable) {
-		pr_info(GHES_PFX "GHES is not enabled!\n");
+		pr_debug(GHES_PFX "GHES is not enabled!\n");
 		return -EINVAL;
 	}
 
@@ -1243,13 +1243,13 @@ static int __init ghes_init(void)
 
 	rc = apei_osc_setup();
 	if (rc == 0 && osc_sb_apei_support_acked)
-		pr_info(GHES_PFX "APEI firmware first mode is enabled by APEI bit and WHEA _OSC.\n");
+		pr_debug(GHES_PFX "APEI firmware first mode is enabled by APEI bit and WHEA _OSC.\n");
 	else if (rc == 0 && !osc_sb_apei_support_acked)
-		pr_info(GHES_PFX "APEI firmware first mode is enabled by WHEA _OSC.\n");
+		pr_debug(GHES_PFX "APEI firmware first mode is enabled by WHEA _OSC.\n");
 	else if (rc && osc_sb_apei_support_acked)
-		pr_info(GHES_PFX "APEI firmware first mode is enabled by APEI bit.\n");
+		pr_debug(GHES_PFX "APEI firmware first mode is enabled by APEI bit.\n");
 	else
-		pr_info(GHES_PFX "Failed to enable APEI firmware first mode.\n");
+		pr_debug(GHES_PFX "Failed to enable APEI firmware first mode.\n");
 
 	return 0;
 err_pool_exit:

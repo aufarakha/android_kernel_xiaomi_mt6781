@@ -1478,7 +1478,7 @@ MODULE_DEVICE_TABLE(pci, ips_id_table);
 
 static int ips_blacklist_callback(const struct dmi_system_id *id)
 {
-	pr_info("Blacklisted intel_ips for %s\n", id->ident);
+	pr_debug("Blacklisted intel_ips for %s\n", id->ident);
 	return 1;
 }
 

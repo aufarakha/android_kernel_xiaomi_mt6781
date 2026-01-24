@@ -205,7 +205,7 @@ static int __init npcm7xx_timer_init(struct device_node *np)
 	npcm7xx_clocksource_init();
 	npcm7xx_clockevents_init();
 
-	pr_info("Enabling NPCM7xx clocksource timer base: %px, IRQ: %d ",
+	pr_debug("Enabling NPCM7xx clocksource timer base: %px, IRQ: %d ",
 		timer_of_base(&npcm7xx_to), timer_of_irq(&npcm7xx_to));
 
 	return 0;

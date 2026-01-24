@@ -125,7 +125,7 @@ found:
 	priv->membase = mem;
 	priv->pcidev = pdev;
 
-	pr_info("AMD Geode RNG detected\n");
+	pr_debug("AMD Geode RNG detected\n");
 	err = hwrng_register(&geode_rng);
 	if (err) {
 		pr_err(PFX "RNG registering failed (%d)\n",

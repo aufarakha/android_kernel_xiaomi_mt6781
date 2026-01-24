@@ -452,7 +452,7 @@ static irqreturn_t xen_pcibk_guest_interrupt(int irq, void *dev_id)
 		dev_data->handled++;
 		if ((dev_data->handled % 1000) == 0) {
 			if (xen_test_irq_shared(irq)) {
-				pr_info("%s IRQ line is not shared "
+				pr_debug("%s IRQ line is not shared "
 					"with other domains. Turning ISR off\n",
 					 dev_data->irq_name);
 				dev_data->ack_intr = 0;

@@ -1167,23 +1167,23 @@ void cx23885_card_list(struct cx23885_dev *dev)
 
 	if (0 == dev->pci->subsystem_vendor &&
 	    0 == dev->pci->subsystem_device) {
-		pr_info("%s: Board has no valid PCIe Subsystem ID and can't\n"
+		pr_debug("%s: Board has no valid PCIe Subsystem ID and can't\n"
 			"%s: be autodetected. Pass card=<n> insmod option\n"
 			"%s: to workaround that. Redirect complaints to the\n"
 			"%s: vendor of the TV card.  Best regards,\n"
 			"%s:         -- tux\n",
 			dev->name, dev->name, dev->name, dev->name, dev->name);
 	} else {
-		pr_info("%s: Your board isn't known (yet) to the driver.\n"
+		pr_debug("%s: Your board isn't known (yet) to the driver.\n"
 			"%s: Try to pick one of the existing card configs via\n"
 			"%s: card=<n> insmod option.  Updating to the latest\n"
 			"%s: version might help as well.\n",
 			dev->name, dev->name, dev->name, dev->name);
 	}
-	pr_info("%s: Here is a list of valid choices for the card=<n> insmod option:\n",
+	pr_debug("%s: Here is a list of valid choices for the card=<n> insmod option:\n",
 	       dev->name);
 	for (i = 0; i < cx23885_bcount; i++)
-		pr_info("%s:    card=%d -> %s\n",
+		pr_debug("%s:    card=%d -> %s\n",
 			dev->name, i, cx23885_boards[i].name);
 }
 
@@ -1193,7 +1193,7 @@ static void viewcast_eeprom(struct cx23885_dev *dev, u8 *eeprom_data)
 
 	/* The serial number record begins with tag 0x59 */
 	if (*(eeprom_data + 0x00) != 0x59) {
-		pr_info("%s() eeprom records are undefined, no serial number\n",
+		pr_debug("%s() eeprom records are undefined, no serial number\n",
 			__func__);
 		return;
 	}
@@ -1203,7 +1203,7 @@ static void viewcast_eeprom(struct cx23885_dev *dev, u8 *eeprom_data)
 		(*(eeprom_data + 0x04) << 8) |
 		(*(eeprom_data + 0x03));
 
-	pr_info("%s: card '%s' sn# MM%d\n",
+	pr_debug("%s: card '%s' sn# MM%d\n",
 		dev->name,
 		cx23885_boards[dev->board].name,
 		sn);
@@ -1386,7 +1386,7 @@ static void hauppauge_eeprom(struct cx23885_dev *dev, u8 *eeprom_data)
 		break;
 	}
 
-	pr_info("%s: hauppauge eeprom: model=%d\n",
+	pr_debug("%s: hauppauge eeprom: model=%d\n",
 		dev->name, tv.model);
 }
 
@@ -2445,7 +2445,7 @@ void cx23885_card_setup(struct cx23885_dev *dev)
 			filename = "dvb-netup-altera-01.fw";
 			break;
 		}
-		pr_info("NetUP card rev=0x%x fw_filename=%s\n",
+		pr_debug("NetUP card rev=0x%x fw_filename=%s\n",
 			cinfo.rev, filename);
 
 		ret = request_firmware(&fw, filename, &dev->pci->dev);

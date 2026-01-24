@@ -895,7 +895,7 @@ static void mode_switch_60_to_90(struct drm_panel *panel,
 	enum MTK_PANEL_MODE_SWITCH_STAGE stage)
 {
 	struct lcm *ctx = panel_to_lcm(panel);
-	pr_info("%s: K7S for mode_switch_60_to_90\n", __func__);
+	pr_debug("%s: K7S for mode_switch_60_to_90\n", __func__);
 
 	/*lcm_dcs_write_seq_static(ctx, 0xF1, 0x5A, 0x5A, 0x5A, 0x5A);
  	lcm_dcs_write_seq_static(ctx, 0x60, 0x01);
@@ -907,7 +907,7 @@ static void mode_switch_90_to_60(struct drm_panel *panel,
 	enum MTK_PANEL_MODE_SWITCH_STAGE stage)
 {
 	struct lcm *ctx = panel_to_lcm(panel);
-	pr_info("%s: K7S for mode_switch_90_to_60\n", __func__);
+	pr_debug("%s: K7S for mode_switch_90_to_60\n", __func__);
 
 	/*lcm_dcs_write_seq_static(ctx, 0xF1, 0x5A, 0x5A, 0x5A, 0x5A);
  	lcm_dcs_write_seq_static(ctx, 0x60, 0x21);
@@ -918,7 +918,7 @@ static int mode_switch(struct drm_panel *panel, unsigned int cur_mode,
 		unsigned int dst_mode, enum MTK_PANEL_MODE_SWITCH_STAGE stage)
 {
 	int ret = 0;
-	pr_info("%s: K7S for mode_switch\n", __func__);
+	pr_debug("%s: K7S for mode_switch\n", __func__);
 	struct drm_display_mode *m = get_mode_by_id(panel, dst_mode);
 
 	if (m->vrefresh == 90) { /* 60 switch to 120 */
@@ -948,7 +948,7 @@ static void lcm_esd_restore_backlight(struct drm_panel *panel)
 	struct lcm *ctx = panel_to_lcm(panel);
 
 	//lcm_dcs_write(ctx, bl_level, ARRAY_SIZE(bl_level));
-	//pr_info("%s high_bl = 0x%x, low_bl = 0x%x \n", __func__, bl_level[1], bl_level[2]);
+	//pr_debug("%s high_bl = 0x%x, low_bl = 0x%x \n", __func__, bl_level[1], bl_level[2]);
 	lcm_dcs_write_seq_static(ctx, 0x51, 0x03, 0xFF);
   	pr_debug(" zgq add:lcm_esd_restore_backlight \n");
 	return;
@@ -1102,7 +1102,7 @@ static int msm_lcd_name_create_sysfs(void){
    }
    ret=sysfs_create_file(msm_lcd_name,&dev_attr_lcd_name.attr);
    if(ret){
-    pr_info("%s failed \n",__func__);
+    pr_debug("%s failed \n",__func__);
     kobject_del(msm_lcd_name);
    }
    return 0;

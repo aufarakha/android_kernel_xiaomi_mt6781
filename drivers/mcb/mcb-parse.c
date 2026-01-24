@@ -68,20 +68,20 @@ static int chameleon_parse_gdd(struct mcb_bus *bus,
 	 * next device, instead of completely stop the gdd parser
 	 */
 	if (mdev->bar > bar_count - 1) {
-		pr_info("No BAR for 16z%03d\n", mdev->id);
+		pr_debug("No BAR for 16z%03d\n", mdev->id);
 		ret = 0;
 		goto err;
 	}
 
 	dev_mapbase = cb[mdev->bar].addr;
 	if (!dev_mapbase) {
-		pr_info("BAR not assigned for 16z%03d\n", mdev->id);
+		pr_debug("BAR not assigned for 16z%03d\n", mdev->id);
 		ret = 0;
 		goto err;
 	}
 
 	if (dev_mapbase & 0x01) {
-		pr_info("IO mapped Device (16z%03d) not yet supported\n",
+		pr_debug("IO mapped Device (16z%03d) not yet supported\n",
 			mdev->id);
 		ret = 0;
 		goto err;

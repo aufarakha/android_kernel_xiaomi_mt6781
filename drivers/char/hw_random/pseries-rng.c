@@ -88,7 +88,7 @@ static struct vio_driver pseries_rng_driver = {
 
 static int __init rng_init(void)
 {
-	pr_info("Registering IBM pSeries RNG driver\n");
+	pr_debug("Registering IBM pSeries RNG driver\n");
 	return vio_register_driver(&pseries_rng_driver);
 }
 

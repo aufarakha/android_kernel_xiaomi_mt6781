@@ -133,8 +133,8 @@ static int __init com90io_probe(struct net_device *dev)
 	unsigned long airqmask;
 
 	if (BUGLVL(D_NORMAL)) {
-		pr_info("%s\n", "COM90xx IO-mapped mode support (by David Woodhouse et el.)");
-		pr_info("E-mail me if you actually test this driver, please!\n");
+		pr_debug("%s\n", "COM90xx IO-mapped mode support (by David Woodhouse et el.)");
+		pr_debug("E-mail me if you actually test this driver, please!\n");
 	}
 
 	if (!ioaddr) {

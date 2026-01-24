@@ -255,15 +255,15 @@ static void oaktrail_lvds_get_configuration_mode(struct drm_device *dev,
 				((ti->vblank_hi << 8) | ti->vblank_lo);
 		mode->clock = ti->pixel_clock * 10;
 #if 0
-		pr_info("hdisplay is %d\n", mode->hdisplay);
-		pr_info("vdisplay is %d\n", mode->vdisplay);
-		pr_info("HSS is %d\n", mode->hsync_start);
-		pr_info("HSE is %d\n", mode->hsync_end);
-		pr_info("htotal is %d\n", mode->htotal);
-		pr_info("VSS is %d\n", mode->vsync_start);
-		pr_info("VSE is %d\n", mode->vsync_end);
-		pr_info("vtotal is %d\n", mode->vtotal);
-		pr_info("clock is %d\n", mode->clock);
+		pr_debug("hdisplay is %d\n", mode->hdisplay);
+		pr_debug("vdisplay is %d\n", mode->vdisplay);
+		pr_debug("HSS is %d\n", mode->hsync_start);
+		pr_debug("HSE is %d\n", mode->hsync_end);
+		pr_debug("htotal is %d\n", mode->htotal);
+		pr_debug("VSS is %d\n", mode->vsync_start);
+		pr_debug("VSE is %d\n", mode->vsync_end);
+		pr_debug("vtotal is %d\n", mode->vtotal);
+		pr_debug("clock is %d\n", mode->clock);
 #endif
 		mode_dev->panel_fixed_mode = mode;
 	}

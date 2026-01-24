@@ -952,7 +952,7 @@ static void __init gic_init_physaddr(struct device_node *node)
 	struct resource res;
 	if (of_address_to_resource(node, 0, &res) == 0) {
 		gic_dist_physaddr = res.start;
-		pr_info("GIC physical location is %#lx\n", gic_dist_physaddr);
+		pr_debug("GIC physical location is %#lx\n", gic_dist_physaddr);
 	}
 }
 
@@ -1212,7 +1212,7 @@ static int __init __gic_init_bases(struct gic_chip_data *gic,
 					  gic_starting_cpu, NULL);
 		set_handle_irq(gic_handle_irq);
 		if (static_branch_likely(&supports_deactivate_key))
-			pr_info("GIC: Using split EOI/Deactivate mode\n");
+			pr_debug("GIC: Using split EOI/Deactivate mode\n");
 	}
 
 	if (static_branch_likely(&supports_deactivate_key) && gic == &gic_data[0]) {

@@ -745,7 +745,7 @@ int __init xen_pcibk_xenbus_register(void)
 	xen_pcibk_backend = &xen_pcibk_vpci_backend;
 	if (passthrough)
 		xen_pcibk_backend = &xen_pcibk_passthrough_backend;
-	pr_info("backend is %s\n", xen_pcibk_backend->name);
+	pr_debug("backend is %s\n", xen_pcibk_backend->name);
 	return xenbus_register_backend(&xen_pcibk_driver);
 }
 

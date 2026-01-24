@@ -80,7 +80,7 @@ static int rtl92cu_init_sw_vars(struct ieee80211_hw *hw)
 	}
 	/* provide name of alternative file */
 	rtlpriv->cfg->alt_fw_name = "rtlwifi/rtl8192cufw.bin";
-	pr_info("Loading firmware %s\n", fw_name);
+	pr_debug("Loading firmware %s\n", fw_name);
 	rtlpriv->max_fw_size = 0x4000;
 	err = request_firmware_nowait(THIS_MODULE, 1,
 				      fw_name, rtlpriv->io.dev,

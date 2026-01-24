@@ -2115,7 +2115,7 @@ release_both:
 release_1:
 		release_mem_region(res->start, SMC911X_IO_EXTENT);
 out:
-		pr_info("%s: not found (%d).\n", CARDNAME, ret);
+		pr_debug("%s: not found (%d).\n", CARDNAME, ret);
 	}
 #ifdef SMC_USE_DMA
 	else {

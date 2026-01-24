@@ -372,7 +372,7 @@ static int __init s3c_cpufreq_initclks(void)
 		return -ENOENT;
 	}
 
-	pr_info("%s: clocks f=%lu,h=%lu,p=%lu,a=%lu\n",
+	pr_debug("%s: clocks f=%lu,h=%lu,p=%lu,a=%lu\n",
 		__func__,
 		clk_get_rate(clk_fclk) / 1000,
 		clk_get_rate(clk_hclk) / 1000,
@@ -444,7 +444,7 @@ int s3c_cpufreq_register(struct s3c_cpufreq_info *info)
 		return -EINVAL;
 	}
 
-	pr_info("S3C24XX CPU Frequency driver, %s cpu support\n",
+	pr_debug("S3C24XX CPU Frequency driver, %s cpu support\n",
 		info->name);
 
 	/* check our driver info has valid data */
@@ -468,7 +468,7 @@ int __init s3c_cpufreq_setboard(struct s3c_cpufreq_board *board)
 	struct s3c_cpufreq_board *ours;
 
 	if (!board) {
-		pr_info("%s: no board data\n", __func__);
+		pr_debug("%s: no board data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -494,7 +494,7 @@ static int __init s3c_cpufreq_auto_io(void)
 		return -ENOENT;
 	}
 
-	pr_info("%s: working out IO settings\n", __func__);
+	pr_debug("%s: working out IO settings\n", __func__);
 
 	ret = (cpu_cur.info->get_iotiming)(&cpu_cur, &s3c24xx_iotiming);
 	if (ret)
@@ -549,7 +549,7 @@ static void s3c_cpufreq_update_loctkime(void)
 	val = calc_locktime(rate, cpu_cur.info->locktime_u) << bits;
 	val |= calc_locktime(rate, cpu_cur.info->locktime_m);
 
-	pr_info("%s: new locktime is 0x%08x\n", __func__, val);
+	pr_debug("%s: new locktime is 0x%08x\n", __func__, val);
 	__raw_writel(val, S3C2410_LOCKTIME);
 }
 
@@ -647,7 +647,7 @@ int s3c_plltab_register(struct cpufreq_frequency_table *plls,
 		vals += plls_no;
 		vals->frequency = CPUFREQ_TABLE_END;
 
-		pr_info("%d PLL entries\n", plls_no);
+		pr_debug("%d PLL entries\n", plls_no);
 	} else
 		pr_err("no memory for PLL tables\n");
 

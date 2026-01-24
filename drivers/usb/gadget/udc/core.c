@@ -1692,7 +1692,7 @@ int usb_gadget_probe_driver(struct usb_gadget_driver *driver)
 
 	if (!driver->match_existing_only) {
 		list_add_tail(&driver->pending, &gadget_driver_pending_list);
-		pr_info("udc-core: couldn't find an available UDC - added [%s] to list of pending drivers\n",
+		pr_debug("udc-core: couldn't find an available UDC - added [%s] to list of pending drivers\n",
 			driver->function);
 		ret = 0;
 	}

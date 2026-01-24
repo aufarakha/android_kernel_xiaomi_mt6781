@@ -389,7 +389,7 @@ static void *siano_media_device_register(struct smsusb_device_t *dev,
 		return NULL;
 	}
 
-	pr_info("media controller created\n");
+	pr_debug("media controller created\n");
 
 	return mdev;
 #else
@@ -515,7 +515,7 @@ static int smsusb_probe(struct usb_interface *intf,
 	char devpath[32];
 	int i, rc;
 
-	pr_info("board id=%lu, interface number %d\n",
+	pr_debug("board id=%lu, interface number %d\n",
 		 id->driver_info,
 		 intf->cur_altsetting->desc.bInterfaceNumber);
 
@@ -563,7 +563,7 @@ static int smsusb_probe(struct usb_interface *intf,
 
 		snprintf(devpath, sizeof(devpath), "usb\\%d-%s",
 			 udev->bus->busnum, udev->devpath);
-		pr_info("stellar device in cold state was found at %s.\n",
+		pr_debug("stellar device in cold state was found at %s.\n",
 			devpath);
 		rc = smsusb1_load_firmware(
 				udev, smscore_registry_getmode(devpath),
@@ -571,7 +571,7 @@ static int smsusb_probe(struct usb_interface *intf,
 
 		/* This device will reset and gain another USB ID */
 		if (!rc)
-			pr_info("stellar device now in warm state\n");
+			pr_debug("stellar device now in warm state\n");
 		else
 			pr_err("Failed to put stellar in warm state. Error: %d\n",
 			       rc);
@@ -581,7 +581,7 @@ static int smsusb_probe(struct usb_interface *intf,
 		rc = smsusb_init_device(intf, id->driver_info);
 	}
 
-	pr_info("Device initialized with return code %d\n", rc);
+	pr_debug("Device initialized with return code %d\n", rc);
 	sms_board_load_modules(id->driver_info);
 	return rc;
 }

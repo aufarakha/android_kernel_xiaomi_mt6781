@@ -50,7 +50,7 @@ static inline void snd_ivtv_unlock(struct snd_ivtv_card *itvsc)
 #define IVTV_ALSA_DEBUG(x, type, fmt, args...) \
 	do { \
 		if ((x) & ivtv_alsa_debug) \
-			pr_info("%s-alsa: " type ": " fmt, \
+			pr_debug("%s-alsa: " type ": " fmt, \
 				v4l2_dev->name , ## args); \
 	} while (0)
 
@@ -67,4 +67,4 @@ static inline void snd_ivtv_unlock(struct snd_ivtv_card *itvsc)
 	pr_warn("%s-alsa: " fmt, v4l2_dev->name , ## args)
 
 #define IVTV_ALSA_INFO(fmt, args...) \
-	pr_info("%s-alsa: " fmt, v4l2_dev->name , ## args)
+	pr_debug("%s-alsa: " fmt, v4l2_dev->name , ## args)

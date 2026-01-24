@@ -29,7 +29,7 @@ static int probe_current_pmu(struct arm_pmu *pmu,
 	unsigned int cpuid = read_cpuid_id();
 	int ret = -ENODEV;
 
-	pr_info("probing PMU on CPU %d\n", cpu);
+	pr_debug("probing PMU on CPU %d\n", cpu);
 
 	for (; info->init != NULL; info++) {
 		if ((cpuid & info->mask) != info->cpuid)
@@ -226,7 +226,7 @@ int arm_pmu_device_probe(struct platform_device *pdev,
 	}
 
 	if (ret) {
-		pr_info("%pOF: failed to probe PMU!\n", node);
+		pr_debug("%pOF: failed to probe PMU!\n", node);
 		goto out_free;
 	}
 
@@ -243,7 +243,7 @@ int arm_pmu_device_probe(struct platform_device *pdev,
 out_free_irqs:
 	armpmu_free_irqs(pmu);
 out_free:
-	pr_info("%pOF: failed to register PMU devices!\n", node);
+	pr_debug("%pOF: failed to register PMU devices!\n", node);
 	armpmu_free(pmu);
 	return ret;
 }

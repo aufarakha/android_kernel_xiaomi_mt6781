@@ -412,7 +412,7 @@ static int mt6358_irq_init(struct mt6358_chip *chip)
 static struct mt6358_chip *mt6358_pm_off;
 static void mt6358_power_off(void)
 {
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 	if (mt6358_pm_off){
 		#if defined(CONFIG_MTK_PMIC_CHIP_MT6357)
 			regmap_update_bits(mt6358_pm_off->regmap,
@@ -545,7 +545,7 @@ static struct platform_driver mt6358_driver = {
 
 static int __init mt6358_init(void)
 {
-	pr_info("%s!!\n", __func__);
+	pr_debug("%s!!\n", __func__);
 	return platform_driver_register(&mt6358_driver);
 }
 fs_initcall(mt6358_init);

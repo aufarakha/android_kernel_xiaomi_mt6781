@@ -875,7 +875,7 @@ netxen_check_options(struct netxen_adapter *adapter)
 						    brd_name))
 			strcpy(serial_num, "Unknown");
 
-		pr_info("%s: %s Board S/N %s  Chip rev 0x%x\n",
+		pr_debug("%s: %s Board S/N %s  Chip rev 0x%x\n",
 				module_name(THIS_MODULE),
 				brd_name, serial_num, adapter->ahw.revision_id);
 	}

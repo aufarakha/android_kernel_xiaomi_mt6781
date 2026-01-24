@@ -1059,7 +1059,7 @@ static int r6040_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 	int bar = 0;
 	u16 *adrp;
 
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 
 	err = pci_enable_device(pdev);
 	if (err)

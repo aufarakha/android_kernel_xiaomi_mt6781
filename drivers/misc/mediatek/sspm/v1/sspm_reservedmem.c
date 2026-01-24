@@ -145,7 +145,7 @@ int sspm_reserve_memory_init(struct platform_device *pdev)
 	ret = of_property_read_string(pdev->dev.of_node, "sspm_mem_key",
 			&mem_key);
 	if (ret) {
-		pr_info("[SSPM] cannot find property\n");
+		pr_debug("[SSPM] cannot find property\n");
 		return -EINVAL;
 	}
 
@@ -155,7 +155,7 @@ int sspm_reserve_memory_init(struct platform_device *pdev)
 				"sspm_mem_tbl")
 				/ MEMORY_TBL_ELEM_NUM;
 	if (sspm_mem_num <= 0) {
-		pr_info("[SSPM] SSPM_mem_tbl not found\n");
+		pr_debug("[SSPM] SSPM_mem_tbl not found\n");
 		sspm_mem_num = 0;
 	}
 	for (i = 0; i < sspm_mem_num; i++) {
@@ -164,7 +164,7 @@ int sspm_reserve_memory_init(struct platform_device *pdev)
 				i * MEMORY_TBL_ELEM_NUM,
 				&m_idx);
 		if (ret) {
-			pr_info("Cannot get memory index(%d)\n", i);
+			pr_debug("Cannot get memory index(%d)\n", i);
 			return -1;
 		}
 		ret = of_property_read_u32_index(pdev->dev.of_node,
@@ -172,7 +172,7 @@ int sspm_reserve_memory_init(struct platform_device *pdev)
 				(i * MEMORY_TBL_ELEM_NUM) + 1,
 				&m_size);
 		if (ret) {
-			pr_info("Cannot get memory size(%d)\n", i);
+			pr_debug("Cannot get memory size(%d)\n", i);
 			return -1;
 		}
 		if (m_idx >= NUMS_MEM_ID) {

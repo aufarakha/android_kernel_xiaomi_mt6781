@@ -833,7 +833,7 @@ static int lcm_prepare(struct drm_panel *panel)
 	struct lcm *ctx = panel_to_lcm(panel);
 	int ret;
 
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -1119,14 +1119,14 @@ static int lcm_probe(struct mipi_dsi_device *dsi)
 		if (endpoint) {
 			remote_node = of_graph_get_remote_port_parent(endpoint);
 			if (!remote_node) {
-				pr_info("No panel connected,skip probe lcm\n");
+				pr_debug("No panel connected,skip probe lcm\n");
 				return -ENODEV;
 			}
-			pr_info("device node name:%s\n", remote_node->name);
+			pr_debug("device node name:%s\n", remote_node->name);
 		}
 	}
 	if (remote_node != dev->of_node) {
-		pr_info("%s+ skip probe due to not current lcm\n", __func__);
+		pr_debug("%s+ skip probe due to not current lcm\n", __func__);
 		return -ENODEV;
 	}
 
@@ -1198,7 +1198,7 @@ static int lcm_probe(struct mipi_dsi_device *dsi)
 		return ret;
 #endif
 	check_is_need_fake_resolution(dev);
-	pr_info("%s-\n", __func__);
+	pr_debug("%s-\n", __func__);
 
 	return ret;
 }

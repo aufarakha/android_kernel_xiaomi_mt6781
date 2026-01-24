@@ -251,9 +251,9 @@ static void retrieve_netinfo(struct dim2_hdm *dev, struct mbo *mbo)
 {
 	u8 *data = mbo->virt_address;
 
-	pr_info("Node Address: 0x%03x\n", (u16)data[16] << 8 | data[17]);
+	pr_debug("Node Address: 0x%03x\n", (u16)data[16] << 8 | data[17]);
 	dev->link_state = data[18];
-	pr_info("NIState: %d\n", dev->link_state);
+	pr_debug("NIState: %d\n", dev->link_state);
 	memcpy(dev->mac_addrs, data + 19, 6);
 	dev->deliver_netinfo++;
 	wake_up_interruptible(&dev->netinfo_waitq);

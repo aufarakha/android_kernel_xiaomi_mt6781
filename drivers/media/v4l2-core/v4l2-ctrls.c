@@ -2700,7 +2700,7 @@ static void log_ctrl(const struct v4l2_ctrl *ctrl,
 	if (ctrl->type == V4L2_CTRL_TYPE_CTRL_CLASS)
 		return;
 
-	pr_info("%s%s%s: ", prefix, colon, ctrl->name);
+	pr_debug("%s%s%s: ", prefix, colon, ctrl->name);
 
 	ctrl->type_ops->log(ctrl);
 

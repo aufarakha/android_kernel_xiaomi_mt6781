@@ -63,13 +63,13 @@ static int fhctl_to_sspm_command(unsigned int cmd,
 		ret = sspm_ipi_send_sync(IPI_ID_FHCTL, IPI_OPT_POLLING,
 					ipi_data, FHCTL_D_LEN, &ack_data, 1);
 		if (ret != 0)
-			pr_info("sspm_ipi_send_sync error(%d) ret:%d - %d",
+			pr_debug("sspm_ipi_send_sync error(%d) ret:%d - %d",
 						cmd, ret, ack_data);
 		else if (ack_data < 0)
-			pr_info("cmd(%d) return error(%d)", cmd, ack_data);
+			pr_debug("cmd(%d) return error(%d)", cmd, ack_data);
 		break;
 	default:
-		pr_info("[Error]Undefined IPI command");
+		pr_debug("[Error]Undefined IPI command");
 		break;
 	} /* switch */
 
@@ -169,12 +169,12 @@ static int clk_mt_fh_sspm_pll_ssc_enable(struct clk_mt_fhctl *fh, int ssc_rate)
 	fh_ctl.result = 0;
 
 	if (fh->pll_data->pll_type == FH_PLL_TYPE_NOT_SUPPORT) {
-		pr_info("%s not support SSC.", fh->pll_data->pll_name);
+		pr_debug("%s not support SSC.", fh->pll_data->pll_name);
 		return -EPERM;
 	}
 
 	if (ssc_rate > MAX_SSC_RATE) {
-		pr_info("[Error] ssc_rate:%d over spec!!!", ssc_rate);
+		pr_debug("[Error] ssc_rate:%d over spec!!!", ssc_rate);
 		return -EINVAL;
 	}
 
@@ -189,7 +189,7 @@ static int clk_mt_fh_sspm_pll_ssc_enable(struct clk_mt_fhctl *fh, int ssc_rate)
 
 	fhctl_to_sspm_command(FH_DCTL_CMD_SSC_ENABLE, &ipi_data);
 
-	pr_info("PLL:%d ssc rate change [O]:%d => [N]:%d ",
+	pr_debug("PLL:%d ssc rate change [O]:%d => [N]:%d ",
 			pll_id, fh->pll_data->pll_default_ssc_rate, ssc_rate);
 
 	/* Update clock ssc rate variable. */
@@ -212,14 +212,14 @@ static int clk_mt_fh_sspm_pll_hopping(struct clk_mt_fhctl *fh,
 	/* CPU is forbidden hopping in AP side. (clk driver owner reqest) */
 	if ((fh->pll_data->pll_type == FH_PLL_TYPE_NOT_SUPPORT) ||
 			(fh->pll_data->pll_type == FH_PLL_TYPE_CPU)) {
-		pr_info("%s not support hopping in AP side.",
+		pr_debug("%s not support hopping in AP side.",
 					fh->pll_data->pll_name);
 		return 0;
 	}
 
 	cmd_id = FH_DCTL_CMD_GENERAL_DFS;
 
-	pr_info("[Hopping] PLL_ID:%d NEW_DDS:0x%x postdiv:%d",
+	pr_debug("[Hopping] PLL_ID:%d NEW_DDS:0x%x postdiv:%d",
 					pll_id, new_dds, postdiv);
 
 	memset(&ipi_data, 0, sizeof(struct fhctl_ipi_data));

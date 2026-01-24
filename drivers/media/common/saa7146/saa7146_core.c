@@ -35,9 +35,9 @@ static void dump_registers(struct saa7146_dev* dev)
 {
 	int i = 0;
 
-	pr_info(" @ %li jiffies:\n", jiffies);
+	pr_debug(" @ %li jiffies:\n", jiffies);
 	for (i = 0; i <= 0x148; i += 4)
-		pr_info("0x%03x: 0x%08x\n", i, saa7146_read(dev, i));
+		pr_debug("0x%03x: 0x%08x\n", i, saa7146_read(dev, i));
 }
 #endif
 
@@ -441,7 +441,7 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
 
 	/* the rest + print status message */
 
-	pr_info("found saa7146 @ mem %p (revision %d, irq %d) (0x%04x,0x%04x)\n",
+	pr_debug("found saa7146 @ mem %p (revision %d, irq %d) (0x%04x,0x%04x)\n",
 		dev->mem, dev->revision, pci->irq,
 		pci->subsystem_vendor, pci->subsystem_device);
 	dev->ext = ext;
@@ -553,14 +553,14 @@ int saa7146_register_extension(struct saa7146_extension* ext)
 	ext->driver.probe = saa7146_init_one;
 	ext->driver.remove = saa7146_remove_one;
 
-	pr_info("register extension '%s'\n", ext->name);
+	pr_debug("register extension '%s'\n", ext->name);
 	return pci_register_driver(&ext->driver);
 }
 
 int saa7146_unregister_extension(struct saa7146_extension* ext)
 {
 	DEB_EE("ext:%p\n", ext);
-	pr_info("unregister extension '%s'\n", ext->name);
+	pr_debug("unregister extension '%s'\n", ext->name);
 	pci_unregister_driver(&ext->driver);
 	return 0;
 }

@@ -782,7 +782,7 @@ static int get_pcie_table(struct pp_hwmgr *hwmgr,
 	if (atom_pcie_table->ucNumEntries <= pcie_count)
 		pcie_count = atom_pcie_table->ucNumEntries;
 	else
-		pr_info("Number of Pcie Entries exceed the number of"
+		pr_debug("Number of Pcie Entries exceed the number of"
 				" GFXCLK Dpm Levels!"
 				" Disregarding the excess entries...\n");
 

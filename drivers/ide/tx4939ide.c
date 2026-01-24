@@ -579,7 +579,7 @@ static int __init tx4939ide_probe(struct platform_device *pdev)
 	hw.irq = irq;
 	hw.dev = &pdev->dev;
 
-	pr_info("TX4939 IDE interface (base %#lx, irq %d)\n", mapbase, irq);
+	pr_debug("TX4939 IDE interface (base %#lx, irq %d)\n", mapbase, irq);
 	host = ide_host_alloc(&tx4939ide_port_info, hws, 1);
 	if (!host)
 		return -ENOMEM;

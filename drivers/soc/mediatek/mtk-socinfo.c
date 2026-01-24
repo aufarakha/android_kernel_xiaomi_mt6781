@@ -36,7 +36,7 @@ static int __init mediatek_socinfo_init(void)
 		return PTR_ERR(soc_dev);
 	}
 
-	pr_info("%s SoC detected.\n", attrs->soc_id);
+	pr_debug("%s SoC detected.\n", attrs->soc_id);
 
 	return 0;
 }

@@ -71,7 +71,7 @@ static int dcon_hw_init(struct dcon_priv *dcon, int is_init)
 	}
 
 	if (is_init) {
-		pr_info("Discovered DCON version %x\n", ver & 0xFF);
+		pr_debug("Discovered DCON version %x\n", ver & 0xFF);
 		rc = pdata->init(dcon);
 		if (rc != 0) {
 			pr_err("Unable to init.\n");
@@ -290,7 +290,7 @@ static void dcon_source_switch(struct work_struct *work)
 
 	switch (source) {
 	case DCON_SOURCE_CPU:
-		pr_info("%s to CPU\n", __func__);
+		pr_debug("%s to CPU\n", __func__);
 		/* Enable the scanline interrupt bit */
 		if (dcon_write(dcon, DCON_REG_MODE,
 			       dcon->disp_mode | MODE_SCAN_INT))
@@ -324,13 +324,13 @@ static void dcon_source_switch(struct work_struct *work)
 		pdata->set_dconload(1);
 		dcon->load_time = ktime_get();
 
-		pr_info("The CPU has control\n");
+		pr_debug("The CPU has control\n");
 		break;
 	case DCON_SOURCE_DCON:
 	{
 		ktime_t delta_t;
 
-		pr_info("%s to DCON\n", __func__);
+		pr_debug("%s to DCON\n", __func__);
 
 		/* Clear DCONLOAD - this implies that the DCON is in control */
 		pdata->set_dconload(0);
@@ -365,7 +365,7 @@ static void dcon_source_switch(struct work_struct *work)
 		}
 
 		dcon_blank_fb(dcon, true);
-		pr_info("The DCON has control\n");
+		pr_debug("The DCON has control\n");
 		break;
 	}
 	default:

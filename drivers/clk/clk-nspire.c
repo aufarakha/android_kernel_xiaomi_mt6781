@@ -132,7 +132,7 @@ static void __init nspire_clk_setup(struct device_node *node,
 	else
 		return;
 
-	pr_info("TI-NSPIRE Base: %uMHz CPU: %uMHz AHB: %uMHz\n",
+	pr_debug("TI-NSPIRE Base: %uMHz CPU: %uMHz AHB: %uMHz\n",
 		info.base_clock / MHZ,
 		info.base_clock / info.base_cpu_ratio / MHZ,
 		info.base_clock / info.base_ahb_ratio / MHZ);

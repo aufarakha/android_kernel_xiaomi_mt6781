@@ -284,7 +284,7 @@ static int __init mixcomwd_init(void)
 		goto error_misc_register_watchdog;
 	}
 
-	pr_info("MixCOM watchdog driver v%s, watchdog port at 0x%3x\n",
+	pr_debug("MixCOM watchdog driver v%s, watchdog port at 0x%3x\n",
 		VERSION, watchdog_port);
 
 	return 0;

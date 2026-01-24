@@ -176,7 +176,7 @@ enum mmap_types {
 	HFI1_MMAP_TOKEN_SET(OFFSET, (offset_in_page(addr))))
 
 #define dbg(fmt, ...)				\
-	pr_info(fmt, ##__VA_ARGS__)
+	pr_debug(fmt, ##__VA_ARGS__)
 
 static inline int is_valid_mmap(u64 token)
 {

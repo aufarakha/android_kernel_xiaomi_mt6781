@@ -4349,7 +4349,7 @@ static void nct6791_enable_io_mapping(int sioaddr)
 
 	val = superio_inb(sioaddr, NCT6791_REG_HM_IO_SPACE_LOCK_ENABLE);
 	if (val & 0x10) {
-		pr_info("Enabling hardware monitor logical device mappings.\n");
+		pr_debug("Enabling hardware monitor logical device mappings.\n");
 		superio_outb(sioaddr, NCT6791_REG_HM_IO_SPACE_LOCK_ENABLE,
 			     val & ~0x10);
 	}
@@ -4525,7 +4525,7 @@ static int __init nct6775_find(int sioaddr, struct nct6775_sio_data *sio_data)
 		nct6791_enable_io_mapping(sioaddr);
 
 	superio_exit(sioaddr);
-	pr_info("Found %s or compatible chip at %#x:%#x\n",
+	pr_debug("Found %s or compatible chip at %#x:%#x\n",
 		nct6775_sio_names[sio_data->kind], sioaddr, addr);
 	sio_data->sioreg = sioaddr;
 

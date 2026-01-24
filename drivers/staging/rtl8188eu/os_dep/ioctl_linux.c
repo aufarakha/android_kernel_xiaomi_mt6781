@@ -2938,7 +2938,7 @@ static int rtw_wx_set_priv(struct net_device *dev,
 
 			pmlmepriv->wps_probe_req_ie = rtw_malloc(cp_sz);
 			if (!pmlmepriv->wps_probe_req_ie) {
-				pr_info("%s()-%d: rtw_malloc() ERROR!\n", __func__, __LINE__);
+				pr_debug("%s()-%d: rtw_malloc() ERROR!\n", __func__, __LINE__);
 				ret =  -EINVAL;
 				goto FREE_EXT;
 			}

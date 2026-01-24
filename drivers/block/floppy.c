@@ -151,7 +151,7 @@
 #define DEBUGT 2
 
 #define DPRINT(format, args...) \
-	pr_info("floppy%d: " format, current_drive, ##args)
+	pr_debug("floppy%d: " format, current_drive, ##args)
 
 #define DCL_DEBUG		/* debug disk change line */
 #ifdef DCL_DEBUG
@@ -286,7 +286,7 @@ static inline void fallback_on_nodma_alloc(char **addr, size_t l)
 		return;		/* we have the memory */
 	if (can_use_virtual_dma != 2)
 		return;		/* no fallback allowed */
-	pr_info("DMA memory shortage. Temporarily falling back on virtual DMA\n");
+	pr_debug("DMA memory shortage. Temporarily falling back on virtual DMA\n");
 	*addr = (char *)nodma_mem_alloc(l);
 #else
 	return;
@@ -629,7 +629,7 @@ static inline void set_debugt(void)
 static inline void debugt(const char *func, const char *msg)
 {
 	if (DP->flags & DEBUGT)
-		pr_info("%s:%s dtime=%lu\n", func, msg, jiffies - debugtimer);
+		pr_debug("%s:%s dtime=%lu\n", func, msg, jiffies - debugtimer);
 }
 #else
 static inline void set_debugt(void) { }
@@ -858,7 +858,7 @@ static void set_fdc(int drive)
 		current_drive = drive;
 	}
 	if (new_fdc >= N_FDC) {
-		pr_info("bad fdc value\n");
+		pr_debug("bad fdc value\n");
 		return;
 	}
 	fdc = new_fdc;
@@ -1056,7 +1056,7 @@ static void setup_DMA(void)
 	if (raw_cmd->length == 0) {
 		int i;
 
-		pr_info("zero dma transfer size:");
+		pr_debug("zero dma transfer size:");
 		for (i = 0; i < raw_cmd->cmd_count; i++)
 			pr_cont("%x,", raw_cmd->cmd[i]);
 		pr_cont("\n");
@@ -1065,7 +1065,7 @@ static void setup_DMA(void)
 		return;
 	}
 	if (((unsigned long)raw_cmd->kernel_data) % 512) {
-		pr_info("non aligned address: %p\n", raw_cmd->kernel_data);
+		pr_debug("non aligned address: %p\n", raw_cmd->kernel_data);
 		cont->done(0);
 		FDCS->reset = 1;
 		return;
@@ -1693,9 +1693,9 @@ irqreturn_t floppy_interrupt(int irq, void *dev_id)
 	do_floppy = NULL;
 	if (fdc >= N_FDC || FDCS->address == -1) {
 		/* we don't even know which FDC is the culprit */
-		pr_info("DOR0=%x\n", fdc_state[0].dor);
-		pr_info("floppy interrupt on bizarre fdc %d\n", fdc);
-		pr_info("handler=%pf\n", handler);
+		pr_debug("DOR0=%x\n", fdc_state[0].dor);
+		pr_debug("floppy interrupt on bizarre fdc %d\n", fdc);
+		pr_debug("handler=%pf\n", handler);
 		is_alive(__func__, "bizarre fdc");
 		return IRQ_NONE;
 	}
@@ -1754,7 +1754,7 @@ static void reset_interrupt(void)
 	debugt(__func__, "");
 	result();		/* get the status ready for set_fdc */
 	if (FDCS->reset) {
-		pr_info("reset set in interrupt, calling %pf\n", cont->error);
+		pr_debug("reset set in interrupt, calling %pf\n", cont->error);
 		cont->error();	/* a reset just after a reset. BAD! */
 	}
 	cont->redo();
@@ -1792,44 +1792,44 @@ static void show_floppy(void)
 {
 	int i;
 
-	pr_info("\n");
-	pr_info("floppy driver state\n");
-	pr_info("-------------------\n");
-	pr_info("now=%lu last interrupt=%lu diff=%lu last called handler=%pf\n",
+	pr_debug("\n");
+	pr_debug("floppy driver state\n");
+	pr_debug("-------------------\n");
+	pr_debug("now=%lu last interrupt=%lu diff=%lu last called handler=%pf\n",
 		jiffies, interruptjiffies, jiffies - interruptjiffies,
 		lasthandler);
 
-	pr_info("timeout_message=%s\n", timeout_message);
-	pr_info("last output bytes:\n");
+	pr_debug("timeout_message=%s\n", timeout_message);
+	pr_debug("last output bytes:\n");
 	for (i = 0; i < OLOGSIZE; i++)
-		pr_info("%2x %2x %lu\n",
+		pr_debug("%2x %2x %lu\n",
 			output_log[(i + output_log_pos) % OLOGSIZE].data,
 			output_log[(i + output_log_pos) % OLOGSIZE].status,
 			output_log[(i + output_log_pos) % OLOGSIZE].jiffies);
-	pr_info("last result at %lu\n", resultjiffies);
-	pr_info("last redo_fd_request at %lu\n", lastredo);
+	pr_debug("last result at %lu\n", resultjiffies);
+	pr_debug("last redo_fd_request at %lu\n", lastredo);
 	print_hex_dump(KERN_INFO, "", DUMP_PREFIX_NONE, 16, 1,
 		       reply_buffer, resultsize, true);
 
-	pr_info("status=%x\n", fd_inb(FD_STATUS));
-	pr_info("fdc_busy=%lu\n", fdc_busy);
+	pr_debug("status=%x\n", fd_inb(FD_STATUS));
+	pr_debug("fdc_busy=%lu\n", fdc_busy);
 	if (do_floppy)
-		pr_info("do_floppy=%pf\n", do_floppy);
+		pr_debug("do_floppy=%pf\n", do_floppy);
 	if (work_pending(&floppy_work))
-		pr_info("floppy_work.func=%pf\n", floppy_work.func);
+		pr_debug("floppy_work.func=%pf\n", floppy_work.func);
 	if (delayed_work_pending(&fd_timer))
-		pr_info("delayed work.function=%p expires=%ld\n",
+		pr_debug("delayed work.function=%p expires=%ld\n",
 		       fd_timer.work.func,
 		       fd_timer.timer.expires - jiffies);
 	if (delayed_work_pending(&fd_timeout))
-		pr_info("timer_function=%p expires=%ld\n",
+		pr_debug("timer_function=%p expires=%ld\n",
 		       fd_timeout.work.func,
 		       fd_timeout.timer.expires - jiffies);
 
-	pr_info("cont=%p\n", cont);
-	pr_info("current_req=%p\n", current_req);
-	pr_info("command_status=%d\n", command_status);
-	pr_info("\n");
+	pr_debug("cont=%p\n", cont);
+	pr_debug("current_req=%p\n", current_req);
+	pr_debug("command_status=%d\n", command_status);
+	pr_debug("\n");
 }
 
 static void floppy_shutdown(struct work_struct *arg)
@@ -1853,7 +1853,7 @@ static void floppy_shutdown(struct work_struct *arg)
 		cont->done(0);
 		cont->redo();	/* this will recall reset when needed */
 	} else {
-		pr_info("no cont in shutdown!\n");
+		pr_debug("no cont in shutdown!\n");
 		process_fd_request();
 	}
 	is_alive(__func__, "");
@@ -2243,7 +2243,7 @@ static void request_done(int uptodate)
 	reschedule_timeout(MAXTIMEOUT, msg);
 
 	if (!req) {
-		pr_info("floppy.c: no request in request_done\n");
+		pr_debug("floppy.c: no request in request_done\n");
 		return;
 	}
 
@@ -2317,13 +2317,13 @@ static void rw_interrupt(void)
 	    DIV_ROUND_UP(in_sector_offset + current_count_sectors, ssize)) {
 		DPRINT("long rw: %x instead of %lx\n",
 		       nr_sectors, current_count_sectors);
-		pr_info("rs=%d s=%d\n", R_SECTOR, SECTOR);
-		pr_info("rh=%d h=%d\n", R_HEAD, HEAD);
-		pr_info("rt=%d t=%d\n", R_TRACK, TRACK);
-		pr_info("heads=%d eoc=%d\n", heads, eoc);
-		pr_info("spt=%d st=%d ss=%d\n",
+		pr_debug("rs=%d s=%d\n", R_SECTOR, SECTOR);
+		pr_debug("rh=%d h=%d\n", R_HEAD, HEAD);
+		pr_debug("rt=%d t=%d\n", R_TRACK, TRACK);
+		pr_debug("heads=%d eoc=%d\n", heads, eoc);
+		pr_debug("spt=%d st=%d ss=%d\n",
 			SECT_PER_TRACK, fsector_t, ssize);
-		pr_info("in_sector_offset=%d\n", in_sector_offset);
+		pr_debug("in_sector_offset=%d\n", in_sector_offset);
 	}
 
 	nr_sectors -= in_sector_offset;
@@ -2431,14 +2431,14 @@ static void copy_buffer(int ssize, int max_sector, int max_sector_2)
 	remaining = current_count_sectors << 9;
 	if (remaining > blk_rq_bytes(current_req) && CT(COMMAND) == FD_WRITE) {
 		DPRINT("in copy buffer\n");
-		pr_info("current_count_sectors=%ld\n", current_count_sectors);
-		pr_info("remaining=%d\n", remaining >> 9);
-		pr_info("current_req->nr_sectors=%u\n",
+		pr_debug("current_count_sectors=%ld\n", current_count_sectors);
+		pr_debug("remaining=%d\n", remaining >> 9);
+		pr_debug("current_req->nr_sectors=%u\n",
 			blk_rq_sectors(current_req));
-		pr_info("current_req->current_nr_sectors=%u\n",
+		pr_debug("current_req->current_nr_sectors=%u\n",
 			blk_rq_cur_sectors(current_req));
-		pr_info("max_sector=%d\n", max_sector);
-		pr_info("ssize=%d\n", ssize);
+		pr_debug("max_sector=%d\n", max_sector);
+		pr_debug("ssize=%d\n", ssize);
 	}
 
 	buffer_max = max(max_sector, buffer_max);
@@ -2460,14 +2460,14 @@ static void copy_buffer(int ssize, int max_sector, int max_sector_2)
 		    dma_buffer < floppy_track_buffer) {
 			DPRINT("buffer overrun in copy buffer %d\n",
 			       (int)((floppy_track_buffer - dma_buffer) >> 9));
-			pr_info("fsector_t=%d buffer_min=%d\n",
+			pr_debug("fsector_t=%d buffer_min=%d\n",
 				fsector_t, buffer_min);
-			pr_info("current_count_sectors=%ld\n",
+			pr_debug("current_count_sectors=%ld\n",
 				current_count_sectors);
 			if (CT(COMMAND) == FD_READ)
-				pr_info("read\n");
+				pr_debug("read\n");
 			if (CT(COMMAND) == FD_WRITE)
-				pr_info("write\n");
+				pr_debug("write\n");
 			break;
 		}
 		if (((unsigned long)buffer) % 512)
@@ -2506,7 +2506,7 @@ static void virtualdmabug_workaround(void)
 		hard_sectors = raw_cmd->length >> (7 + SIZECODE);
 		end_sector = SECTOR + hard_sectors - 1;
 		if (end_sector > SECT_PER_TRACK) {
-			pr_info("too many sectors %d > %d\n",
+			pr_debug("too many sectors %d > %d\n",
 				end_sector, SECT_PER_TRACK);
 			return;
 		}
@@ -2750,19 +2750,19 @@ static int make_raw_rw_request(void)
 		DPRINT("fractionary current count b=%lx s=%lx\n",
 		       raw_cmd->length, current_count_sectors);
 		if (raw_cmd->kernel_data != bio_data(current_req->bio))
-			pr_info("addr=%d, length=%ld\n",
+			pr_debug("addr=%d, length=%ld\n",
 				(int)((raw_cmd->kernel_data -
 				       floppy_track_buffer) >> 9),
 				current_count_sectors);
-		pr_info("st=%d ast=%d mse=%d msi=%d\n",
+		pr_debug("st=%d ast=%d mse=%d msi=%d\n",
 			fsector_t, aligned_sector_t, max_sector, max_size);
-		pr_info("ssize=%x SIZECODE=%d\n", ssize, SIZECODE);
-		pr_info("command=%x SECTOR=%d HEAD=%d, TRACK=%d\n",
+		pr_debug("ssize=%x SIZECODE=%d\n", ssize, SIZECODE);
+		pr_debug("command=%x SECTOR=%d HEAD=%d, TRACK=%d\n",
 			COMMAND, SECTOR, HEAD, TRACK);
-		pr_info("buffer drive=%d\n", buffer_drive);
-		pr_info("buffer track=%d\n", buffer_track);
-		pr_info("buffer_min=%d\n", buffer_min);
-		pr_info("buffer_max=%d\n", buffer_max);
+		pr_debug("buffer drive=%d\n", buffer_drive);
+		pr_debug("buffer track=%d\n", buffer_track);
+		pr_debug("buffer_min=%d\n", buffer_min);
+		pr_debug("buffer_max=%d\n", buffer_max);
 		return 0;
 	}
 
@@ -2773,14 +2773,14 @@ static int make_raw_rw_request(void)
 		    raw_cmd->kernel_data + raw_cmd->length >
 		    floppy_track_buffer + (max_buffer_sectors << 10)) {
 			DPRINT("buffer overrun in schedule dma\n");
-			pr_info("fsector_t=%d buffer_min=%d current_count=%ld\n",
+			pr_debug("fsector_t=%d buffer_min=%d current_count=%ld\n",
 				fsector_t, buffer_min, raw_cmd->length >> 9);
-			pr_info("current_count_sectors=%ld\n",
+			pr_debug("current_count_sectors=%ld\n",
 				current_count_sectors);
 			if (CT(COMMAND) == FD_READ)
-				pr_info("read\n");
+				pr_debug("read\n");
 			if (CT(COMMAND) == FD_WRITE)
-				pr_info("write\n");
+				pr_debug("write\n");
 			return 0;
 		}
 	} else if (raw_cmd->length > blk_rq_bytes(current_req) ||
@@ -2789,8 +2789,8 @@ static int make_raw_rw_request(void)
 		return 0;
 	} else if (raw_cmd->length < current_count_sectors << 9) {
 		DPRINT("more sectors than bytes\n");
-		pr_info("bytes=%ld\n", raw_cmd->length >> 9);
-		pr_info("sectors=%ld\n", current_count_sectors);
+		pr_debug("bytes=%ld\n", raw_cmd->length >> 9);
+		pr_debug("sectors=%ld\n", current_count_sectors);
 	}
 	if (raw_cmd->length == 0) {
 		DPRINT("zero dma transfer attempted from make_raw_request\n");
@@ -2957,7 +2957,7 @@ static int poll_drive(bool interruptible, int flag)
 
 static void reset_intr(void)
 {
-	pr_info("weird, reset interrupt called\n");
+	pr_debug("weird, reset interrupt called\n");
 }
 
 static const struct cont_t reset_cont = {
@@ -3383,7 +3383,7 @@ static int normalize_ioctl(unsigned int *cmd, int *size)
 			*size = _IOC_SIZE(*cmd);
 			*cmd = ioctl_table[i];
 			if (*size > _IOC_SIZE(*cmd)) {
-				pr_info("ioctl not yet supported\n");
+				pr_debug("ioctl not yet supported\n");
 				return -EFAULT;
 			}
 			return 0;
@@ -3993,7 +3993,7 @@ static void __init config_types(void)
 			if (!has_drive) {
 				prepend = "";
 				has_drive = true;
-				pr_info("Floppy drive(s):");
+				pr_debug("Floppy drive(s):");
 			} else {
 				prepend = ",";
 			}
@@ -4167,7 +4167,7 @@ static void floppy_rb0_cb(struct bio *bio)
 	int drive = cbdata->drive;
 
 	if (bio->bi_status) {
-		pr_info("floppy: error %d while reading block 0\n",
+		pr_debug("floppy: error %d while reading block 0\n",
 			bio->bi_status);
 		set_bit(FD_OPEN_SHOULD_FAIL_BIT, &UDRS->flags);
 	}
@@ -4295,17 +4295,17 @@ static char __init get_fdc_version(void)
 	if (r <= 0x00)
 		return FDC_NONE;	/* No FDC present ??? */
 	if ((r == 1) && (reply_buffer[0] == 0x80)) {
-		pr_info("FDC %d is an 8272A\n", fdc);
+		pr_debug("FDC %d is an 8272A\n", fdc);
 		return FDC_8272A;	/* 8272a/765 don't know DUMPREGS */
 	}
 	if (r != 10) {
-		pr_info("FDC %d init: DUMPREGS: unexpected return of %d bytes.\n",
+		pr_debug("FDC %d init: DUMPREGS: unexpected return of %d bytes.\n",
 			fdc, r);
 		return FDC_UNKNOWN;
 	}
 
 	if (!fdc_configure()) {
-		pr_info("FDC %d is an 82072\n", fdc);
+		pr_debug("FDC %d is an 82072\n", fdc);
 		return FDC_82072;	/* 82072 doesn't know CONFIGURE */
 	}
 
@@ -4313,49 +4313,49 @@ static char __init get_fdc_version(void)
 	if (need_more_output() == MORE_OUTPUT) {
 		output_byte(0);
 	} else {
-		pr_info("FDC %d is an 82072A\n", fdc);
+		pr_debug("FDC %d is an 82072A\n", fdc);
 		return FDC_82072A;	/* 82072A as found on Sparcs. */
 	}
 
 	output_byte(FD_UNLOCK);
 	r = result();
 	if ((r == 1) && (reply_buffer[0] == 0x80)) {
-		pr_info("FDC %d is a pre-1991 82077\n", fdc);
+		pr_debug("FDC %d is a pre-1991 82077\n", fdc);
 		return FDC_82077_ORIG;	/* Pre-1991 82077, doesn't know
 					 * LOCK/UNLOCK */
 	}
 	if ((r != 1) || (reply_buffer[0] != 0x00)) {
-		pr_info("FDC %d init: UNLOCK: unexpected return of %d bytes.\n",
+		pr_debug("FDC %d init: UNLOCK: unexpected return of %d bytes.\n",
 			fdc, r);
 		return FDC_UNKNOWN;
 	}
 	output_byte(FD_PARTID);
 	r = result();
 	if (r != 1) {
-		pr_info("FDC %d init: PARTID: unexpected return of %d bytes.\n",
+		pr_debug("FDC %d init: PARTID: unexpected return of %d bytes.\n",
 			fdc, r);
 		return FDC_UNKNOWN;
 	}
 	if (reply_buffer[0] == 0x80) {
-		pr_info("FDC %d is a post-1991 82077\n", fdc);
+		pr_debug("FDC %d is a post-1991 82077\n", fdc);
 		return FDC_82077;	/* Revised 82077AA passes all the tests */
 	}
 	switch (reply_buffer[0] >> 5) {
 	case 0x0:
 		/* Either a 82078-1 or a 82078SL running at 5Volt */
-		pr_info("FDC %d is an 82078.\n", fdc);
+		pr_debug("FDC %d is an 82078.\n", fdc);
 		return FDC_82078;
 	case 0x1:
-		pr_info("FDC %d is a 44pin 82078\n", fdc);
+		pr_debug("FDC %d is a 44pin 82078\n", fdc);
 		return FDC_82078;
 	case 0x2:
-		pr_info("FDC %d is a S82078B\n", fdc);
+		pr_debug("FDC %d is a S82078B\n", fdc);
 		return FDC_S82078B;
 	case 0x3:
-		pr_info("FDC %d is a National Semiconductor PC87306\n", fdc);
+		pr_debug("FDC %d is a National Semiconductor PC87306\n", fdc);
 		return FDC_87306;
 	default:
-		pr_info("FDC %d init: 82078 variant with unknown PARTID=%d.\n",
+		pr_debug("FDC %d init: 82078 variant with unknown PARTID=%d.\n",
 			fdc, reply_buffer[0] >> 5);
 		return FDC_82078_UNKN;
 	}
@@ -4926,15 +4926,15 @@ static void floppy_release_irq_and_dma(void)
 #ifndef __sparc__
 	for (drive = 0; drive < N_FDC * 4; drive++)
 		if (timer_pending(motor_off_timer + drive))
-			pr_info("motor off timer %d still active\n", drive);
+			pr_debug("motor off timer %d still active\n", drive);
 #endif
 
 	if (delayed_work_pending(&fd_timeout))
-		pr_info("floppy timer still active:%s\n", timeout_message);
+		pr_debug("floppy timer still active:%s\n", timeout_message);
 	if (delayed_work_pending(&fd_timer))
-		pr_info("auxiliary floppy timer still active\n");
+		pr_debug("auxiliary floppy timer still active\n");
 	if (work_pending(&floppy_work))
-		pr_info("work still pending\n");
+		pr_debug("work still pending\n");
 	old_fdc = fdc;
 	for (fdc = 0; fdc < N_FDC; fdc++)
 		if (FDCS->address != -1)

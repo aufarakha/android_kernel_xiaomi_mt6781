@@ -291,7 +291,7 @@ static int uli526x_init_one(struct pci_dev *pdev,
 	ULI526X_DBUG(0, "uli526x_init_one()", 0);
 
 	if (!printed_version++)
-		pr_info("%s\n", version);
+		pr_debug("%s\n", version);
 
 	/* Init network device */
 	dev = alloc_etherdev(sizeof(*db));
@@ -1807,7 +1807,7 @@ MODULE_PARM_DESC(mode, "ULi M5261/M5263: Bit 0: 10/100Mbps, bit 2: duplex, bit 8
 static int __init uli526x_init_module(void)
 {
 
-	pr_info("%s\n", version);
+	pr_debug("%s\n", version);
 	printed_version = 1;
 
 	ULI526X_DBUG(0, "init_module() ", debug);

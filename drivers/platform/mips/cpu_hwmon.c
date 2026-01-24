@@ -155,7 +155,7 @@ static int __init loongson_hwmon_init(void)
 {
 	int ret;
 
-	pr_info("Loongson Hwmon Enter...\n");
+	pr_debug("Loongson Hwmon Enter...\n");
 
 	cpu_hwmon_dev = hwmon_device_register(NULL);
 	if (IS_ERR(cpu_hwmon_dev)) {

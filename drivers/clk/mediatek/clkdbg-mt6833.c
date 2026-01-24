@@ -666,7 +666,7 @@ void print_subsys_reg(enum dbg_sys_id id)
 		return;
 
 	if (id >= dbg_sys_num || id < 0) {
-		pr_info("wrong id:%d\n", id);
+		pr_debug("wrong id:%d\n", id);
 		return;
 	}
 
@@ -680,7 +680,7 @@ void print_subsys_reg(enum dbg_sys_id id)
 		if (rns->base != rb_dump)
 			continue;
 
-		pr_info("%-18s: [0x%08x] = 0x%08x\n",
+		pr_debug("%-18s: [0x%08x] = 0x%08x\n",
 			rns->name, PHYSADDR(rns), clk_readl(ADDR(rns)));
 	}
 }

@@ -162,7 +162,7 @@ static int __init sun4v_wdt_init(void)
 	if (err)
 		goto out_hv_unreg;
 
-	pr_info("initialized (timeout=%ds, nowayout=%d)\n",
+	pr_debug("initialized (timeout=%ds, nowayout=%d)\n",
 		 wdd.timeout, nowayout);
 
 	mdesc_release(handle);

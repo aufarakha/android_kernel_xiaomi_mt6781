@@ -195,7 +195,7 @@ void ctcm_ccw_check_rc(struct channel *ch, int rc, char *msg)
 		CTCM_FUNTAIL, ch->id, msg, rc);
 	switch (rc) {
 	case -EBUSY:
-		pr_info("%s: The communication peer is busy\n",
+		pr_debug("%s: The communication peer is busy\n",
 			ch->id);
 		fsm_event(ch->fsm, CTC_EVENT_IO_EBUSY, ch);
 		break;

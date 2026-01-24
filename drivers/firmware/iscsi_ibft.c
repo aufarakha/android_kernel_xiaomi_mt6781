@@ -877,7 +877,7 @@ static int __init ibft_init(void)
 		acpi_find_ibft_region();
 
 	if (ibft_addr) {
-		pr_info("iBFT detected.\n");
+		pr_debug("iBFT detected.\n");
 
 		rc = ibft_check_device();
 		if (rc)

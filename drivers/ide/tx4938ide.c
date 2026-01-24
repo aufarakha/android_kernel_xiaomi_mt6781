@@ -175,7 +175,7 @@ static int __init tx4938ide_probe(struct platform_device *pdev)
 	hw.irq = irq;
 	hw.dev = &pdev->dev;
 
-	pr_info("TX4938 IDE interface (base %#lx, ctl %#lx, irq %d)\n",
+	pr_debug("TX4938 IDE interface (base %#lx, ctl %#lx, irq %d)\n",
 		mapbase, mapctl, hw.irq);
 	if (pdata->gbus_clock)
 		tx4938ide_tune_ebusc(pdata->ebus_ch, pdata->gbus_clock, 0);

@@ -5039,8 +5039,8 @@ static int __init rtl8192_usb_module_init(void)
 		return ret;
 	}
 
-	pr_info("\nLinux kernel driver for RTL8192 based WLAN cards\n");
-	pr_info("Copyright (c) 2007-2008, Realsil Wlan\n");
+	pr_debug("\nLinux kernel driver for RTL8192 based WLAN cards\n");
+	pr_debug("Copyright (c) 2007-2008, Realsil Wlan\n");
 	RT_TRACE(COMP_INIT, "Initializing module");
 	RT_TRACE(COMP_INIT, "Wireless extensions version %d", WIRELESS_EXT);
 	rtl8192_proc_module_init();

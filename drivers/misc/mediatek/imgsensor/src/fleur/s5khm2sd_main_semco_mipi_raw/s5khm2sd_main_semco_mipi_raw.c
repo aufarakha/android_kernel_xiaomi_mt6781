@@ -52,7 +52,7 @@
 #define AWB_B_GAIN_ADDR 0x0D86
 
 #define LOG_TAG "s5khm2sd_semco_"
-#define S5KHM2SD_SEMCO_LOG_INF(format, args...) pr_info(LOG_TAG "[%s] " format, __func__, ##args)
+#define S5KHM2SD_SEMCO_LOG_INF(format, args...) pr_debug(LOG_TAG "[%s] " format, __func__, ##args)
 #define S5KHM2SD_SEMCO_LOG_DBG(format, args...) pr_debug(LOG_TAG "[%s] " format, __func__, ##args)
 #define VENDOR_ID 0x03
 

@@ -174,7 +174,7 @@ int smu7_send_msg_to_smc(struct pp_hwmgr *hwmgr, uint16_t msg)
 	if (ret == 0xFE)
 		pr_debug("last message was not supported\n");
 	else if (ret != 1)
-		pr_info("\n last message was failed ret is %d\n", ret);
+		pr_debug("\n last message was failed ret is %d\n", ret);
 
 	cgs_write_register(hwmgr->device, mmSMC_RESP_0, 0);
 	cgs_write_register(hwmgr->device, mmSMC_MESSAGE_0, msg);
@@ -186,7 +186,7 @@ int smu7_send_msg_to_smc(struct pp_hwmgr *hwmgr, uint16_t msg)
 	if (ret == 0xFE)
 		pr_debug("message %x was not supported\n", msg);
 	else if (ret != 1)
-		pr_info("\n failed to send message %x ret is %d \n",  msg, ret);
+		pr_debug("\n failed to send message %x ret is %d \n",  msg, ret);
 
 	return 0;
 }
@@ -223,7 +223,7 @@ int smu7_send_msg_to_smc_offset(struct pp_hwmgr *hwmgr)
 	PHM_WAIT_FIELD_UNEQUAL(hwmgr, SMC_RESP_0, SMC_RESP, 0);
 
 	if (1 != PHM_READ_FIELD(hwmgr->device, SMC_RESP_0, SMC_RESP))
-		pr_info("Failed to send Message.\n");
+		pr_debug("Failed to send Message.\n");
 
 	return 0;
 }
@@ -333,7 +333,7 @@ static uint32_t smu7_get_mask_for_firmware_type(uint32_t fw_type)
 		result = UCODE_ID_RLC_G_MASK;
 		break;
 	default:
-		pr_info("UCode type is out of range! \n");
+		pr_debug("UCode type is out of range! \n");
 		result = 0;
 	}
 
@@ -382,7 +382,7 @@ int smu7_request_smu_load_fw(struct pp_hwmgr *hwmgr)
 	int r = 0;
 
 	if (!hwmgr->reload_fw) {
-		pr_info("skip reloading...\n");
+		pr_debug("skip reloading...\n");
 		return 0;
 	}
 

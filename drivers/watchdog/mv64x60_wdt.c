@@ -306,7 +306,7 @@ static struct platform_driver mv64x60_wdt_driver = {
 
 static int __init mv64x60_wdt_init(void)
 {
-	pr_info("MV64x60 watchdog driver\n");
+	pr_debug("MV64x60 watchdog driver\n");
 
 	return platform_driver_register(&mv64x60_wdt_driver);
 }

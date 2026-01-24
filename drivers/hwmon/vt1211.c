@@ -1315,7 +1315,7 @@ static int __init vt1211_find(int sio_cip, unsigned short *address)
 	}
 
 	err = 0;
-	pr_info("Found VT1211 chip at 0x%04x, revision %u\n",
+	pr_debug("Found VT1211 chip at 0x%04x, revision %u\n",
 		*address, superio_inb(sio_cip, SIO_VT1211_DEVREV));
 
 EXIT:

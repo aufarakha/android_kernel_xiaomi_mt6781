@@ -641,7 +641,7 @@ static struct pci_driver sta2x11_mfd_driver = {
 
 static int __init sta2x11_mfd_init(void)
 {
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 	return pci_register_driver(&sta2x11_mfd_driver);
 }
 

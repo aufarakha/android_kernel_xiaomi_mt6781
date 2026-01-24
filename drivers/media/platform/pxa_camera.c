@@ -2195,7 +2195,7 @@ static int pxa_camera_sensor_bound(struct v4l2_async_notifier *notifier,
 		goto out_sensor_poweroff;
 
 	v4l2_fill_pix_format(pix, mf);
-	pr_info("%s(): colorspace=0x%x pixfmt=0x%x\n",
+	pr_debug("%s(): colorspace=0x%x pixfmt=0x%x\n",
 		__func__, pix->colorspace, pix->pixelformat);
 
 	err = pxa_camera_init_videobuf2(pcdev);

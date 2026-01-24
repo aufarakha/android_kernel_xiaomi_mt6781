@@ -69,13 +69,13 @@ unsigned int pxa3xx_get_clk_frequency_khz(int info)
 		}
 	}
 	if (info) {
-		pr_info("RO Mode clock: %ld.%02ldMHz\n",
+		pr_debug("RO Mode clock: %ld.%02ldMHz\n",
 			clks[1] / 1000000, (clks[0] % 1000000) / 10000);
-		pr_info("Run Mode clock: %ld.%02ldMHz\n",
+		pr_debug("Run Mode clock: %ld.%02ldMHz\n",
 			clks[2] / 1000000, (clks[1] % 1000000) / 10000);
-		pr_info("Turbo Mode clock: %ld.%02ldMHz\n",
+		pr_debug("Turbo Mode clock: %ld.%02ldMHz\n",
 			clks[3] / 1000000, (clks[2] % 1000000) / 10000);
-		pr_info("System bus clock: %ld.%02ldMHz\n",
+		pr_debug("System bus clock: %ld.%02ldMHz\n",
 			clks[4] / 1000000, (clks[4] % 1000000) / 10000);
 	}
 	return (unsigned int)clks[0] / KHz;
@@ -266,7 +266,7 @@ static unsigned long clk_pxa3xx_cpll_get_rate(struct clk_hw *hw,
 	__asm__ __volatile__("mrc\tp14, 0, %0, c6, c0, 0" : "=r"(xclkcfg));
 	t = xclkcfg & 0x1;
 
-	pr_info("RJK: parent_rate=%lu, xl=%u, xn=%u\n", parent_rate, xl, xn);
+	pr_debug("RJK: parent_rate=%lu, xl=%u, xn=%u\n", parent_rate, xl, xn);
 	return t ? parent_rate * xl * xn : parent_rate * xl;
 }
 PARENTS(clk_pxa3xx_cpll) = { "osc_13mhz" };

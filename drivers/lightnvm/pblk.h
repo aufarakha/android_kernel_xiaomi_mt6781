@@ -716,7 +716,7 @@ struct pblk_line_ws {
 #define pblk_err(pblk, fmt, ...)			\
 	pr_err("pblk %s: " fmt, pblk->disk->disk_name, ##__VA_ARGS__)
 #define pblk_info(pblk, fmt, ...)			\
-	pr_info("pblk %s: " fmt, pblk->disk->disk_name, ##__VA_ARGS__)
+	pr_debug("pblk %s: " fmt, pblk->disk->disk_name, ##__VA_ARGS__)
 #define pblk_warn(pblk, fmt, ...)			\
 	pr_warn("pblk %s: " fmt, pblk->disk->disk_name, ##__VA_ARGS__)
 #define pblk_debug(pblk, fmt, ...)			\

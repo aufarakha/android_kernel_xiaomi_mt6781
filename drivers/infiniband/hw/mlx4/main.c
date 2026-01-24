@@ -1623,7 +1623,7 @@ static int __mlx4_ib_create_default_rules(
 		ret = parse_flow_attr(mdev->dev, 0, &ib_spec,
 				      mlx4_spec);
 		if (ret < 0) {
-			pr_info("invalid parsing\n");
+			pr_debug("invalid parsing\n");
 			return -EINVAL;
 		}
 
@@ -2844,7 +2844,7 @@ static void *mlx4_ib_add(struct mlx4_dev *dev)
 		list_add_tail(&new_counter_index->list,
 			      &ibdev->counters_table[i].counters_list);
 		ibdev->counters_table[i].default_counter = counter_index;
-		pr_info("counter index %d for port %d allocated %d\n",
+		pr_debug("counter index %d for port %d allocated %d\n",
 			counter_index, i + 1, allocated);
 	}
 	if (mlx4_is_bonded(dev))

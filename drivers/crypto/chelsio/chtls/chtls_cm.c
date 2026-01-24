@@ -694,7 +694,7 @@ static int chtls_pass_open_rpl(struct chtls_dev *cdev, struct sk_buff *skb)
 	}
 
 	if (rpl->status != CPL_ERR_NONE) {
-		pr_info("Unexpected PASS_OPEN_RPL status %u for STID %u\n",
+		pr_debug("Unexpected PASS_OPEN_RPL status %u for STID %u\n",
 			rpl->status, stid);
 	} else {
 		cxgb4_free_stid(cdev->tids, stid, listen_ctx->lsk->sk_family);
@@ -717,7 +717,7 @@ static int chtls_close_listsrv_rpl(struct chtls_dev *cdev, struct sk_buff *skb)
 	listen_ctx = (struct listen_ctx *)data;
 
 	if (rpl->status != CPL_ERR_NONE) {
-		pr_info("Unexpected CLOSE_LISTSRV_RPL status %u for STID %u\n",
+		pr_debug("Unexpected CLOSE_LISTSRV_RPL status %u for STID %u\n",
 			rpl->status, stid);
 	} else {
 		cxgb4_free_stid(cdev->tids, stid, listen_ctx->lsk->sk_family);
@@ -1177,7 +1177,7 @@ static void chtls_pass_accept_request(struct sock *sk,
 	newsk = lookup_tid(cdev->tids, tid);
 	stid = PASS_OPEN_TID_G(ntohl(req->tos_stid));
 	if (newsk) {
-		pr_info("tid (%d) already in use\n", tid);
+		pr_debug("tid (%d) already in use\n", tid);
 		return;
 	}
 
@@ -1276,7 +1276,7 @@ static int chtls_pass_accept_req(struct chtls_dev *cdev, struct sk_buff *skb)
 	lsk = ctx->lsk;
 
 	if (unlikely(tid >= cdev->tids->ntids)) {
-		pr_info("passive open TID %u too large\n", tid);
+		pr_debug("passive open TID %u too large\n", tid);
 		return 1;
 	}
 
@@ -1727,7 +1727,7 @@ static void chtls_peer_close(struct sock *sk, struct sk_buff *skb)
 			chtls_timewait(sk);
 		break;
 	default:
-		pr_info("cpl_peer_close in bad state %d\n", sk->sk_state);
+		pr_debug("cpl_peer_close in bad state %d\n", sk->sk_state);
 	}
 
 	if (!sock_flag(sk, SOCK_DEAD)) {
@@ -1777,7 +1777,7 @@ static void chtls_close_con_rpl(struct sock *sk, struct sk_buff *skb)
 			chtls_abort_conn(sk, skb);
 		break;
 	default:
-		pr_info("close_con_rpl in bad state %d\n", sk->sk_state);
+		pr_debug("close_con_rpl in bad state %d\n", sk->sk_state);
 	}
 	kfree_skb(skb);
 }

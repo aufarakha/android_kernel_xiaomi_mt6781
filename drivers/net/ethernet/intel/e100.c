@@ -3173,8 +3173,8 @@ static struct pci_driver e100_driver = {
 static int __init e100_init_module(void)
 {
 	if (((1 << debug) - 1) & NETIF_MSG_DRV) {
-		pr_info("%s, %s\n", DRV_DESCRIPTION, DRV_VERSION);
-		pr_info("%s\n", DRV_COPYRIGHT);
+		pr_debug("%s, %s\n", DRV_DESCRIPTION, DRV_VERSION);
+		pr_debug("%s\n", DRV_COPYRIGHT);
 	}
 	return pci_register_driver(&e100_driver);
 }

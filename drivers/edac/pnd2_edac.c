@@ -355,15 +355,15 @@ static void mk_region(char *name, struct region *rp, u64 base, u64 limit)
 static void mk_region_mask(char *name, struct region *rp, u64 base, u64 mask)
 {
 	if (mask == 0) {
-		pr_info(FW_BUG "MOT mask cannot be zero\n");
+		pr_debug(FW_BUG "MOT mask cannot be zero\n");
 		return;
 	}
 	if (mask != GENMASK_ULL(PND_MAX_PHYS_BIT, __ffs(mask))) {
-		pr_info(FW_BUG "MOT mask not power of two\n");
+		pr_debug(FW_BUG "MOT mask not power of two\n");
 		return;
 	}
 	if (base & ~mask) {
-		pr_info(FW_BUG "MOT region base/mask alignment error\n");
+		pr_debug(FW_BUG "MOT region base/mask alignment error\n");
 		return;
 	}
 	rp->base = base;

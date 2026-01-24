@@ -92,7 +92,7 @@ static void __sdhci_o2_execute_tuning(struct sdhci_host *host, u32 opcode)
 		mdelay(1);
 	}
 
-	pr_info("%s: Tuning failed, falling back to fixed sampling clock\n",
+	pr_debug("%s: Tuning failed, falling back to fixed sampling clock\n",
 		mmc_hostname(host->mmc));
 	sdhci_reset_tuning(host);
 }
@@ -270,7 +270,7 @@ static void sdhci_pci_o2_enable_msi(struct sdhci_pci_chip *chip,
 
 	ret = pci_find_capability(chip->pdev, PCI_CAP_ID_MSI);
 	if (!ret) {
-		pr_info("%s: unsupport msi, use INTx irq\n",
+		pr_debug("%s: unsupport msi, use INTx irq\n",
 			mmc_hostname(host->mmc));
 		return;
 	}
@@ -323,7 +323,7 @@ int sdhci_pci_o2_probe_slot(struct sdhci_pci_slot *slot)
 			if (ret)
 				return -EIO;
 			if (reg & (1 << 4)) {
-				pr_info("%s: emmc 1.8v flag is set, force 1.8v signaling voltage\n",
+				pr_debug("%s: emmc 1.8v flag is set, force 1.8v signaling voltage\n",
 					mmc_hostname(host->mmc));
 				host->flags &= ~SDHCI_SIGNALING_330;
 				host->flags |= SDHCI_SIGNALING_180;

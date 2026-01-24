@@ -191,7 +191,7 @@ static int parse_dt(struct device *dev, struct syna_tcm_board_data *bdata)
 	} else {
 		bdata->ubl_i2c_addr = 0;
 	}
-	pr_info("parse dts:bdata->irq_gpio = %d,\n"
+	pr_debug("parse dts:bdata->irq_gpio = %d,\n"
 		"bdata->irq_on_state = %d,\n"
 		"bdata->pwr_reg_name = %d, bdata->bus_reg_name = %d,\n"
 		"bdata->power_gpio= %d, bdata->power_on_state = %d,\n"

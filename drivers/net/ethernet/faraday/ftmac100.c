@@ -1198,7 +1198,7 @@ static struct platform_driver ftmac100_driver = {
  *****************************************************************************/
 static int __init ftmac100_init(void)
 {
-	pr_info("Loading version " DRV_VERSION " ...\n");
+	pr_debug("Loading version " DRV_VERSION " ...\n");
 	return platform_driver_register(&ftmac100_driver);
 }
 

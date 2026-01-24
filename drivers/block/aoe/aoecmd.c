@@ -466,7 +466,7 @@ resend(struct aoedev *d, struct frame *f)
 	skb = f->skb;
 	if (ifrotate(t) == NULL) {
 		/* probably can't happen, but set it up to fail anyway */
-		pr_info("aoe: resend: no interfaces to rotate to.\n");
+		pr_debug("aoe: resend: no interfaces to rotate to.\n");
 		ktcomplete(f, NULL);
 		return;
 	}
@@ -1156,7 +1156,7 @@ noskb:		if (buf)
 		break;
 	case ATA_CMD_ID_ATA:
 		if (skb->len < 512) {
-			pr_info("%s e%ld.%d.  skb->len=%d need=512\n",
+			pr_debug("%s e%ld.%d.  skb->len=%d need=512\n",
 				"aoe: runt data size in ataid from",
 				(long) d->aoemajor, d->aoeminor,
 				skb->len);
@@ -1169,7 +1169,7 @@ noskb:		if (buf)
 		spin_unlock_irq(&d->lock);
 		break;
 	default:
-		pr_info("aoe: unrecognized ata command %2.2Xh for %d.%d\n",
+		pr_debug("aoe: unrecognized ata command %2.2Xh for %d.%d\n",
 			ahout->cmdstat,
 			be16_to_cpu(get_unaligned(&hin->major)),
 			hin->minor);
@@ -1479,7 +1479,7 @@ addtgt(struct aoedev *d, char *addr, ulong nframes)
 	return *tt = t;
 
  nomem:
-	pr_info("aoe: cannot allocate memory to add target\n");
+	pr_debug("aoe: cannot allocate memory to add target\n");
 	return NULL;
 }
 
@@ -1496,7 +1496,7 @@ setdbcnt(struct aoedev *d)
 			bcnt = (*t)->minbcnt;
 	if (bcnt != d->maxbcnt) {
 		d->maxbcnt = bcnt;
-		pr_info("aoe: e%ld.%d: setting %d byte data frames\n",
+		pr_debug("aoe: e%ld.%d: setting %d byte data frames\n",
 			d->aoemajor, d->aoeminor, bcnt);
 	}
 }
@@ -1561,12 +1561,12 @@ aoecmd_cfg_rsp(struct sk_buff *skb)
 		return;
 	}
 	if (aoemajor == 0xffff) {
-		pr_info("aoe: e%ld.%d: broadcast shelf number invalid\n",
+		pr_debug("aoe: e%ld.%d: broadcast shelf number invalid\n",
 			aoemajor, (int) h->minor);
 		return;
 	}
 	if (h->minor == 0xff) {
-		pr_info("aoe: e%ld.%d: broadcast slot number invalid\n",
+		pr_debug("aoe: e%ld.%d: broadcast slot number invalid\n",
 			aoemajor, (int) h->minor);
 		return;
 	}
@@ -1577,7 +1577,7 @@ aoecmd_cfg_rsp(struct sk_buff *skb)
 
 	d = aoedev_by_aoeaddr(aoemajor, h->minor, 1);
 	if (d == NULL) {
-		pr_info("aoe: device allocation failure\n");
+		pr_debug("aoe: device allocation failure\n");
 		return;
 	}
 

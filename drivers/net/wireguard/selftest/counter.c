@@ -104,7 +104,7 @@ bool __init wg_packet_counter_selftest(void)
 #undef T_INIT
 
 	if (success)
-		pr_info("nonce counter self-tests: pass\n");
+		pr_debug("nonce counter self-tests: pass\n");
 	kfree(counter);
 	return success;
 }

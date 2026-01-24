@@ -247,7 +247,7 @@ static int ks8695wdt_probe(struct platform_device *pdev)
 	if (res)
 		return res;
 
-	pr_info("KS8695 Watchdog Timer enabled (%d seconds%s)\n",
+	pr_debug("KS8695 Watchdog Timer enabled (%d seconds%s)\n",
 		wdt_time, nowayout ? ", nowayout" : "");
 	return 0;
 }
@@ -302,7 +302,7 @@ static int __init ks8695_wdt_init(void)
 	   if not reset to the default */
 	if (ks8695_wdt_settimeout(wdt_time)) {
 		ks8695_wdt_settimeout(WDT_DEFAULT_TIME);
-		pr_info("ks8695_wdt: wdt_time value must be 1 <= wdt_time <= %i"
+		pr_debug("ks8695_wdt: wdt_time value must be 1 <= wdt_time <= %i"
 					", using %d\n", wdt_time, WDT_MAX_TIME);
 	}
 	return platform_driver_register(&ks8695wdt_driver);

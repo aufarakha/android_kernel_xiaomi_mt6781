@@ -140,9 +140,9 @@ static int is_processor_present(acpi_handle handle)
 	 * _STA is mandatory for a processor that supports hot plug
 	 */
 	if (status == AE_NOT_FOUND)
-		pr_info(PREFIX "Processor does not support hot plug\n");
+		pr_debug(PREFIX "Processor does not support hot plug\n");
 	else
-		pr_info(PREFIX "Processor Device is not present");
+		pr_debug(PREFIX "Processor Device is not present");
 	return 0;
 }
 

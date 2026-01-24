@@ -380,7 +380,7 @@ static int __init xen_tmem_init(void)
 
 		tmem_frontswap_poolid = -1;
 		frontswap_register_ops(&tmem_frontswap_ops);
-		pr_info("frontswap enabled, RAM provided by Xen Transcendent Memory%s\n",
+		pr_debug("frontswap enabled, RAM provided by Xen Transcendent Memory%s\n",
 			s);
 	}
 #endif
@@ -394,7 +394,7 @@ static int __init xen_tmem_init(void)
 			pr_warn("xen-tmem: failed to enable cleancache: %d\n",
 				err);
 		else
-			pr_info("cleancache enabled, RAM provided by "
+			pr_debug("cleancache enabled, RAM provided by "
 				"Xen Transcendent Memory\n");
 	}
 #endif

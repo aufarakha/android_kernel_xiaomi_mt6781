@@ -756,7 +756,7 @@ struct dvb_frontend *dib0070_attach(struct dvb_frontend *fe, struct i2c_adapter 
 	if (dib0070_reset(fe) != 0)
 		goto free_mem;
 
-	pr_info("DiB0070: successfully identified\n");
+	pr_debug("DiB0070: successfully identified\n");
 	memcpy(&fe->ops.tuner_ops, &dib0070_ops, sizeof(struct dvb_tuner_ops));
 
 	fe->tuner_priv = state;

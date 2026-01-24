@@ -252,7 +252,7 @@ static int at91wdt_probe(struct platform_device *pdev)
 	if (res)
 		dev_warn(dev, "failed to register restart handler\n");
 
-	pr_info("AT91 Watchdog Timer enabled (%d seconds%s)\n",
+	pr_debug("AT91 Watchdog Timer enabled (%d seconds%s)\n",
 		wdt_time, nowayout ? ", nowayout" : "");
 	return 0;
 }
@@ -321,7 +321,7 @@ static int __init at91_wdt_init(void)
 	   if not reset to the default */
 	if (at91_wdt_settimeout(wdt_time)) {
 		at91_wdt_settimeout(WDT_DEFAULT_TIME);
-		pr_info("wdt_time value must be 1 <= wdt_time <= 256, using %d\n",
+		pr_debug("wdt_time value must be 1 <= wdt_time <= 256, using %d\n",
 			wdt_time);
 	}
 

@@ -115,20 +115,20 @@ static void __init nomadik_src_init(void)
 	writel(val, src_base + SRC_CR);
 
 	val = readl(src_base + SRC_XTALCR);
-	pr_info("SXTALO is %s\n",
+	pr_debug("SXTALO is %s\n",
 		(val & SRC_XTALCR_SXTALDIS) ? "disabled" : "enabled");
-	pr_info("MXTAL is %s\n",
+	pr_debug("MXTAL is %s\n",
 		(val & SRC_XTALCR_MXTALSTAT) ? "enabled" : "disabled");
 	if (of_property_read_bool(np, "disable-sxtalo")) {
 		/* The machine uses an external oscillator circuit */
 		val |= SRC_XTALCR_SXTALDIS;
-		pr_info("disabling SXTALO\n");
+		pr_debug("disabling SXTALO\n");
 	}
 	if (of_property_read_bool(np, "disable-mxtalo")) {
 		/* Disable this too: also run by external oscillator */
 		val |= SRC_XTALCR_MXTALOVER;
 		val &= ~SRC_XTALCR_MXTALEN;
-		pr_info("disabling MXTALO\n");
+		pr_debug("disabling MXTALO\n");
 	}
 	writel(val, src_base + SRC_XTALCR);
 	register_reboot_notifier(&nomadik_clk_reboot_notifier);

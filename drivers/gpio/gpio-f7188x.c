@@ -470,13 +470,13 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
 		sio->type = f81866;
 		break;
 	default:
-		pr_info(DRVNAME ": Unsupported Fintek device 0x%04x\n", devid);
+		pr_debug(DRVNAME ": Unsupported Fintek device 0x%04x\n", devid);
 		goto err;
 	}
 	sio->addr = addr;
 	err = 0;
 
-	pr_info(DRVNAME ": Found %s at %#x, revision %d\n",
+	pr_debug(DRVNAME ": Found %s at %#x, revision %d\n",
 		f7188x_names[sio->type],
 		(unsigned int) addr,
 		(int) superio_inb(addr, SIO_DEVREV));

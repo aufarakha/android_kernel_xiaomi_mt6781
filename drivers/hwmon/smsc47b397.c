@@ -335,7 +335,7 @@ static int __init smsc47b397_find(void)
 	addr = (superio_inb(SUPERIO_REG_BASE_MSB) << 8)
 		 |  superio_inb(SUPERIO_REG_BASE_LSB);
 
-	pr_info("found SMSC %s (base address 0x%04x, revision %u)\n",
+	pr_debug("found SMSC %s (base address 0x%04x, revision %u)\n",
 		name, addr, rev);
 
 	superio_exit();

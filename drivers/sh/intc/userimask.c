@@ -77,7 +77,7 @@ int register_intc_userimask(unsigned long addr)
 	if (unlikely(!uimask))
 		return -ENOMEM;
 
-	pr_info("userimask support registered for levels 0 -> %d\n",
+	pr_debug("userimask support registered for levels 0 -> %d\n",
 		intc_get_dfl_prio_level() - 1);
 
 	return 0;

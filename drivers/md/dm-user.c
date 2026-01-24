@@ -795,7 +795,7 @@ static ssize_t dev_write(struct kiocb *iocb, struct iov_iter *from)
 		mutex_lock(&c->target->lock);
 		msg = msg_get_from_user(c, c->cur_from_user->msg.seq);
 		if (msg == NULL) {
-			pr_info("user provided an invalid messag seq of %llx\n",
+			pr_debug("user provided an invalid messag seq of %llx\n",
 				old->msg.seq);
 			mutex_unlock(&c->target->lock);
 			c->from_user_error = -EINVAL;

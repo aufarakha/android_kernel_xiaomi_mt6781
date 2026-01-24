@@ -842,12 +842,12 @@ static int __init dell_setup_rfkill(void)
 			dell_rbtn_notifier_unregister_func = NULL;
 		}
 	} else {
-		pr_info("Symbols from dell-rbtn acpi driver are not available\n");
+		pr_debug("Symbols from dell-rbtn acpi driver are not available\n");
 		ret = -ENODEV;
 	}
 
 	if (ret == 0) {
-		pr_info("Using dell-rbtn acpi driver for receiving events\n");
+		pr_debug("Using dell-rbtn acpi driver for receiving events\n");
 	} else if (ret != -ENODEV) {
 		pr_warn("Unable to register dell rbtn notifier\n");
 		goto err_filter;
@@ -857,7 +857,7 @@ static int __init dell_setup_rfkill(void)
 			pr_warn("Unable to install key filter\n");
 			goto err_filter;
 		}
-		pr_info("Using i8042 filter function for receiving events\n");
+		pr_debug("Using i8042 filter function for receiving events\n");
 	}
 
 	return 0;

@@ -874,13 +874,13 @@ static int phy_switch_usb2uart_gpio(enum PORT_MODE portmode)
 	/* SET USB to UART GPIO to UART0 */
 	node = of_find_compatible_node(NULL, NULL, "mediatek,gpio");
 	if (!node) {
-		pr_info("error: can't find GPIO node\n");
+		pr_debug("error: can't find GPIO node\n");
 		return -EINVAL;
 	}
 
 	gpio_base = of_iomap(node, 0);
 	if (!gpio_base) {
-		pr_info("error: iomap fail for GPIO\n");
+		pr_debug("error: iomap fail for GPIO\n");
 		return -EINVAL;
 	}
 

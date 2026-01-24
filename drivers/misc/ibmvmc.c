@@ -1250,7 +1250,7 @@ static long ibmvmc_ioctl_sethmcid(struct ibmvmc_file_session *session,
 	/* Make sure buffer is NULL terminated before trying to print it */
 	memset(print_buffer, 0, HMC_ID_LEN + 1);
 	strncpy(print_buffer, hmc->hmc_id, HMC_ID_LEN);
-	pr_info("ibmvmc: sethmcid: Set HMC ID: \"%s\"\n", print_buffer);
+	pr_debug("ibmvmc: sethmcid: Set HMC ID: \"%s\"\n", print_buffer);
 
 	memcpy(buffer->real_addr_local, hmc->hmc_id, HMC_ID_LEN);
 	/* RDMA over ID, send open msg, change state to ibmhmc_state_opening */
@@ -2352,14 +2352,14 @@ static int __init ibmvmc_module_init(void)
 	int rc, i, j;
 
 	ibmvmc.state = ibmvmc_state_initial;
-	pr_info("ibmvmc: version %s\n", IBMVMC_DRIVER_VERSION);
+	pr_debug("ibmvmc: version %s\n", IBMVMC_DRIVER_VERSION);
 
 	rc = misc_register(&ibmvmc_miscdev);
 	if (rc) {
 		pr_err("ibmvmc: misc registration failed\n");
 		goto misc_register_failed;
 	}
-	pr_info("ibmvmc: node %d:%d\n", MISC_MAJOR,
+	pr_debug("ibmvmc: node %d:%d\n", MISC_MAJOR,
 		ibmvmc_miscdev.minor);
 
 	/* Initialize data structures */
@@ -2399,7 +2399,7 @@ misc_register_failed:
 
 static void __exit ibmvmc_module_exit(void)
 {
-	pr_info("ibmvmc: module exit\n");
+	pr_debug("ibmvmc: module exit\n");
 	vio_unregister_driver(&ibmvmc_driver);
 	misc_deregister(&ibmvmc_miscdev);
 }

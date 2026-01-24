@@ -392,7 +392,7 @@ static int igt_evict_contexts(void *arg)
 	} while (1);
 	drm_mm_remove_node(&hole);
 	mutex_unlock(&i915->drm.struct_mutex);
-	pr_info("Filled GGTT with %lu 1MiB nodes\n", count);
+	pr_debug("Filled GGTT with %lu 1MiB nodes\n", count);
 
 	/* Overfill the GGTT with context objects and so try to evict one. */
 	for_each_engine(engine, i915, id) {
@@ -444,7 +444,7 @@ static int igt_evict_contexts(void *arg)
 		mutex_unlock(&i915->drm.struct_mutex);
 
 		onstack_fence_fini(&fence);
-		pr_info("Submitted %lu contexts/requests on %s\n",
+		pr_debug("Submitted %lu contexts/requests on %s\n",
 			count, engine->name);
 
 		mock_file_free(i915, file);

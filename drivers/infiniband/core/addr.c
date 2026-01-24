@@ -121,7 +121,7 @@ static void ib_nl_process_good_ip_rsep(const struct nlmsghdr *nlh)
 	spin_unlock_bh(&lock);
 
 	if (!found)
-		pr_info("Couldn't find request waiting for DGID: %pI6\n",
+		pr_debug("Couldn't find request waiting for DGID: %pI6\n",
 			&gid);
 }
 

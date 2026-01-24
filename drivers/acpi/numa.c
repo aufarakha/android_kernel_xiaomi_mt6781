@@ -298,7 +298,7 @@ acpi_numa_memory_affinity_init(struct acpi_srat_mem_affinity *ma)
 
 	node_set(node, numa_nodes_parsed);
 
-	pr_info("SRAT: Node %u PXM %u [mem %#010Lx-%#010Lx]%s%s\n",
+	pr_debug("SRAT: Node %u PXM %u [mem %#010Lx-%#010Lx]%s%s\n",
 		node, pxm,
 		(unsigned long long) start, (unsigned long long) end - 1,
 		hotpluggable ? " hotplug" : "",
@@ -324,7 +324,7 @@ static int __init acpi_parse_slit(struct acpi_table_header *table)
 	struct acpi_table_slit *slit = (struct acpi_table_slit *)table;
 
 	if (!slit_valid(slit)) {
-		pr_info("SLIT table looks invalid. Not used.\n");
+		pr_debug("SLIT table looks invalid. Not used.\n");
 		return -EINVAL;
 	}
 	acpi_numa_slit_init(slit);

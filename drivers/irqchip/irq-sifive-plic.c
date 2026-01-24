@@ -246,7 +246,7 @@ static int __init plic_init(struct device_node *node,
 		nr_mapped++;
 	}
 
-	pr_info("mapped %d interrupts to %d (out of %d) handlers.\n",
+	pr_debug("mapped %d interrupts to %d (out of %d) handlers.\n",
 		nr_irqs, nr_mapped, nr_handlers);
 	set_handle_irq(plic_handle_irq);
 	return 0;

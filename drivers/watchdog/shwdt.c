@@ -315,7 +315,7 @@ static int __init sh_wdt_init(void)
 		     clock_division_ratio > 0x7)) {
 		clock_division_ratio = WTCSR_CKS_4096;
 
-		pr_info("divisor must be 0x5<=x<=0x7, using %d\n",
+		pr_debug("divisor must be 0x5<=x<=0x7, using %d\n",
 			clock_division_ratio);
 	}
 

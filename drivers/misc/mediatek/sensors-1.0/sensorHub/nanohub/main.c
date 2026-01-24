@@ -1007,7 +1007,7 @@ static int __init nanohub_init(void)
 #ifdef CONFIG_NANOHUB_MTK_IPI
 		ret = nanohub_ipi_init();
 #endif
-	pr_info("nanohub: loaded; ret=%d\n", ret);
+	pr_debug("nanohub: loaded; ret=%d\n", ret);
 	return ret;
 }
 

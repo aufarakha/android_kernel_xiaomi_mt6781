@@ -4564,7 +4564,7 @@ static int __init mtip_init(void)
 {
 	int error;
 
-	pr_info(MTIP_DRV_NAME " Version " MTIP_DRV_VERSION "\n");
+	pr_debug(MTIP_DRV_NAME " Version " MTIP_DRV_VERSION "\n");
 
 	spin_lock_init(&dev_lock);
 

@@ -247,7 +247,7 @@ static int mace_probe(struct platform_device *pdev)
 	dev->netdev_ops		= &mace_netdev_ops;
 	dev->watchdog_timeo	= TX_TIMEOUT;
 
-	pr_info("Onboard MACE, hardware address %pM, chip revision 0x%04X\n",
+	pr_debug("Onboard MACE, hardware address %pM, chip revision 0x%04X\n",
 		dev->dev_addr, mp->chipid);
 
 	err = register_netdev(dev);

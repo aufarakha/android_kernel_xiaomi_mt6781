@@ -1113,7 +1113,7 @@ static void omap_gpio_show_rev(struct gpio_bank *bank)
 		return;
 
 	rev = readw_relaxed(bank->base + bank->regs->revision);
-	pr_info("OMAP GPIO hardware version %d.%d\n",
+	pr_debug("OMAP GPIO hardware version %d.%d\n",
 		(rev >> 4) & 0x0f, rev & 0x0f);
 
 	called = true;

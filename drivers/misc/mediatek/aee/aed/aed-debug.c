@@ -234,7 +234,7 @@ static ssize_t proc_generate_wdt_read(struct file *file,
 /* kprobe pre_handler: called just before the probed instruction is executed */
 static int handler_pre(struct kprobe *p, struct pt_regs *regs)
 {
-	pr_info("process_name:[%s], pid = %d.\n", current->comm, current->pid);
+	pr_debug("process_name:[%s], pid = %d.\n", current->comm, current->pid);
 	return 0;
 }
 
@@ -280,9 +280,9 @@ static int register_kprobe_kpd_irq_handler(void)
 	/* All set to register with Kprobes */
 	ret = register_kprobe(&kp_kpd_irq_handler);
 	if (ret < 0)
-		pr_info("register_kprobe failed, returned %d\n", ret);
+		pr_debug("register_kprobe failed, returned %d\n", ret);
 	else
-		pr_info("Planted kprobe at %p, press Vol+/- to trigger.\n",
+		pr_debug("Planted kprobe at %p, press Vol+/- to trigger.\n",
 				kp_kpd_irq_handler.addr);
 	return ret;
 }
@@ -305,16 +305,16 @@ static noinline void buffer_over_flow(void)
 {
 	int n;
 
-	pr_info("test case : buffer overflow\n");
+	pr_debug("test case : buffer overflow\n");
 	n = stack_overflow_routine(10, 1, 22);
-	pr_info("%s: %d\n", __func__, n);
+	pr_debug("%s: %d\n", __func__, n);
 }
 
 static noinline void access_null_pointer(void)
 {
 	void *p = NULL;
 
-	pr_info("test case : derefence Null pointer\n");
+	pr_debug("test case : derefence Null pointer\n");
 	*((unsigned int *)p) = 0xDEAD;
 }
 
@@ -326,12 +326,12 @@ static noinline void double_free(void)
 	if (p == NULL)
 		return;
 
-	pr_info("test case : double free\n");
+	pr_debug("test case : double free\n");
 	for (i = 0; i < 32; i++)
 		p[i] = (char)i;
-	pr_info("aee_ut_ke: call free\n");
+	pr_debug("aee_ut_ke: call free\n");
 	kfree(p);
-	pr_info("aee_ut_ke: call free again\n");
+	pr_debug("aee_ut_ke: call free again\n");
 	kfree(p);
 }
 
@@ -340,9 +340,9 @@ static noinline void devide_by_0(void)
 	int ZERO = 0;
 	int number;
 
-	pr_info("test case: division by %d\n", ZERO);
+	pr_debug("test case: division by %d\n", ZERO);
 	number = 100 / ZERO;
-	pr_info("%s: %d\n", __func__, number);
+	pr_debug("%s: %d\n", __func__, number);
 }
 
 /**********END panic case**********/
@@ -573,14 +573,14 @@ static ssize_t proc_generate_md32_read(struct file *file, char __user *buf,
 		ptr[i] = (i % 26) + 'a';
 
 	if (sprintf(buffer, "MD32 EE log here\n") < 0)
-		pr_info("%s: sprintf failed\n", __func__);
+		pr_debug("%s: sprintf failed\n", __func__);
 	aed_md32_exception((int *)buffer, (int)sizeof(buffer), (int *)ptr,
 			TEST_MD32_PHY_SIZE, __FILE__);
 	vfree(ptr);
 
 	len = snprintf(buffer, BUFSIZE, "MD32 EE Generated\n");
 	if (len < 0)
-		pr_info("%s: snprintf failed\n", __func__);
+		pr_debug("%s: snprintf failed\n", __func__);
 	if (copy_to_user(buf, buffer, len)) {
 		pr_notice("%s fail to output info.\n", __func__);
 		return -EFAULT;
@@ -614,14 +614,14 @@ static ssize_t proc_generate_scp_read(struct file *file,
 		ptr[i] = (i % 26) + 'a';
 
 	if (sprintf(buffer, "SCP EE log here\n") < 0)
-		pr_info("%s: sprintf failed\n", __func__);
+		pr_debug("%s: sprintf failed\n", __func__);
 	aed_scp_exception((int *)buffer, (int)sizeof(buffer), (int *)ptr,
 						TEST_SCP_PHY_SIZE, __FILE__);
 	vfree(ptr);
 
 	len = snprintf(buffer, BUFSIZE, "SCP EE Generated\n");
 	if (len < 0)
-		pr_info("%s: snprintf failed\n", __func__);
+		pr_debug("%s: snprintf failed\n", __func__);
 	if (copy_to_user(buf, buffer, len)) {
 		pr_notice("%s fail to output info.\n", __func__);
 		return -EFAULT;

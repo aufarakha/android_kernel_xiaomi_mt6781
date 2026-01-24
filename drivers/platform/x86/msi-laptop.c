@@ -598,7 +598,7 @@ static struct quirk_entry quirk_load_scm_ro_model = {
 
 static int dmi_check_cb(const struct dmi_system_id *dmi)
 {
-	pr_info("Identified laptop model '%s'\n", dmi->ident);
+	pr_debug("Identified laptop model '%s'\n", dmi->ident);
 
 	quirks = dmi->driver_data;
 
@@ -1118,7 +1118,7 @@ static int __init msi_init(void)
 			set_auto_brightness(auto_brightness);
 	}
 
-	pr_info("driver " MSI_DRIVER_VERSION " successfully loaded\n");
+	pr_debug("driver " MSI_DRIVER_VERSION " successfully loaded\n");
 
 	return 0;
 
@@ -1169,7 +1169,7 @@ static void __exit msi_cleanup(void)
 			set_auto_brightness(1);
 	}
 
-	pr_info("driver unloaded\n");
+	pr_debug("driver unloaded\n");
 }
 
 module_init(msi_init);

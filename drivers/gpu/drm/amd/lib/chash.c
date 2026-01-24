@@ -621,7 +621,7 @@ static int __init chash_init(void)
 
 		do_div(ts_delta_us, 1000);
 		do_div(iters_per_second, ts_delta_us);
-		pr_info("chash: self test took %llu us, %llu iterations/s\n",
+		pr_debug("chash: self test took %llu us, %llu iterations/s\n",
 			ts_delta_us, iters_per_second);
 	} else {
 		pr_err("chash: self test failed: %d\n", ret);

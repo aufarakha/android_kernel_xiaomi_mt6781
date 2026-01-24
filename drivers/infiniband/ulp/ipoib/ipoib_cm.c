@@ -1368,7 +1368,7 @@ static void ipoib_cm_tx_start(struct work_struct *work)
 		 */
 		path = __path_find(dev, neigh->daddr + QPN_AND_OPTIONS_OFFSET);
 		if (!path) {
-			pr_info("%s ignore not valid path %pI6\n",
+			pr_debug("%s ignore not valid path %pI6\n",
 				__func__,
 				neigh->daddr + QPN_AND_OPTIONS_OFFSET);
 			goto free_neigh;

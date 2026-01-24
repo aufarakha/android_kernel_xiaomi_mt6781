@@ -24,7 +24,7 @@ void sm750_set_chip_type(unsigned short devId, u8 revId)
 		/* SM750 and SM750LE are different in their revision ID only. */
 		if (revId == SM750LE_REVISION_ID) {
 			chip = SM750LE;
-			pr_info("found sm750le\n");
+			pr_debug("found sm750le\n");
 		}
 	} else {
 		chip = SM_UNKNOWN;

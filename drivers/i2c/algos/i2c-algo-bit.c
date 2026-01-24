@@ -248,7 +248,7 @@ static int test_bus(struct i2c_adapter *i2c_adap)
 	}
 
 	if (adap->getscl == NULL)
-		pr_info("%s: Testing SDA only, SCL is not readable\n", name);
+		pr_debug("%s: Testing SDA only, SCL is not readable\n", name);
 
 	sda = getsda(adap);
 	scl = (adap->getscl == NULL) ? 1 : getscl(adap);
@@ -318,7 +318,7 @@ static int test_bus(struct i2c_adapter *i2c_adap)
 	if (adap->post_xfer)
 		adap->post_xfer(i2c_adap);
 
-	pr_info("%s: Test OK\n", name);
+	pr_debug("%s: Test OK\n", name);
 	return 0;
 bailout:
 	sdahi(adap);

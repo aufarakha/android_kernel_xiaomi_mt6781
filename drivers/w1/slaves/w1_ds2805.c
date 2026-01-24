@@ -179,7 +179,7 @@ retry:
 		dev_err(&sl->dev,
 			"could not write to eeprom, scratchpad compare failed %d times\n",
 			W1_F0D_READ_RETRIES);
-		pr_info("%s: rdbuf = %#x %#x data = %#x %#x\n",
+		pr_debug("%s: rdbuf = %#x %#x data = %#x %#x\n",
 		    __func__, rdbuf[0], rdbuf[1], data[0], data[1]);
 
 		return -1;
@@ -295,13 +295,13 @@ static struct w1_family w1_family_2d = {
 
 static int __init w1_f0d_init(void)
 {
-	pr_info("%s()\n", __func__);
+	pr_debug("%s()\n", __func__);
 	return w1_register_family(&w1_family_2d);
 }
 
 static void __exit w1_f0d_fini(void)
 {
-	pr_info("%s()\n", __func__);
+	pr_debug("%s()\n", __func__);
 	w1_unregister_family(&w1_family_2d);
 }
 

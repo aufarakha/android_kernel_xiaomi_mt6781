@@ -399,7 +399,7 @@ static int __init watchdog_init(void)
 	   if not reset to the default */
 	if (timeout < 1 || timeout >= 18000) {
 		timeout = WATCHDOG_TIMEOUT;
-		pr_info("timeout value must be 0 < timeout < 18000, using %d\n",
+		pr_debug("timeout value must be 0 < timeout < 18000, using %d\n",
 			timeout);
 	}
 
@@ -419,7 +419,7 @@ static int __init watchdog_init(void)
 		goto unreg_reboot;
 	}
 
-	pr_info("initialized. timeout=%d sec (nowayout=%d)\n",
+	pr_debug("initialized. timeout=%d sec (nowayout=%d)\n",
 		timeout, nowayout);
 
 out:

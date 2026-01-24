@@ -1053,7 +1053,7 @@ int lbs_start_card(struct lbs_private *priv)
 	if (!lbs_disablemesh)
 		lbs_init_mesh(priv);
 	else
-		pr_info("%s: mesh disabled\n", dev->name);
+		pr_debug("%s: mesh disabled\n", dev->name);
 
 	ret = lbs_cfg_register(priv);
 	if (ret) {

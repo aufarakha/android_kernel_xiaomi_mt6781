@@ -597,7 +597,7 @@ static void dsi_perf_show(struct dsi_data *dsi, const char *name)
 
 	total_bytes = dsi->update_bytes;
 
-	pr_info("DSI(%s): %u us + %u us = %u us (%uHz), %u bytes, %u kbytes/sec\n",
+	pr_debug("DSI(%s): %u us + %u us = %u us (%uHz), %u bytes, %u kbytes/sec\n",
 		name,
 		setup_us,
 		trans_us,

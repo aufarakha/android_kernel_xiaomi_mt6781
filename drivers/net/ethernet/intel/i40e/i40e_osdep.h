@@ -49,7 +49,7 @@ struct i40e_virt_mem {
 #define i40e_debug(h, m, s, ...)				\
 do {								\
 	if (((m) & (h)->debug_mask))				\
-		pr_info("i40e %02x:%02x.%x " s,			\
+		pr_debug("i40e %02x:%02x.%x " s,			\
 			(h)->bus.bus_id, (h)->bus.device,	\
 			(h)->bus.func, ##__VA_ARGS__);		\
 } while (0)

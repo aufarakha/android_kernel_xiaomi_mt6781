@@ -254,7 +254,7 @@ static int phram_setup(const char *val)
 	if (ret)
 		goto error;
 
-	pr_info("%s device: %#llx at %#llx\n", name, len, start);
+	pr_debug("%s device: %#llx at %#llx\n", name, len, start);
 	return 0;
 
 error:

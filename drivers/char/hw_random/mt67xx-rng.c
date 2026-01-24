@@ -63,7 +63,7 @@ static int mt67xx_rng_probe(struct platform_device *pdev)
 	int ret;
 	struct mt67xx_rng_priv *priv;
 
-	pr_info(PFX "driver registered\n");
+	pr_debug(PFX "driver registered\n");
 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
 	if (!priv)
 		return -ENOMEM;

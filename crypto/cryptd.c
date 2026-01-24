@@ -118,7 +118,7 @@ static int cryptd_init_queue(struct cryptd_queue *queue,
 		crypto_init_queue(&cpu_queue->queue, max_cpu_qlen);
 		INIT_WORK(&cpu_queue->work, cryptd_queue_worker);
 	}
-	pr_info("cryptd: max_cpu_qlen set to %d\n", max_cpu_qlen);
+	pr_debug("cryptd: max_cpu_qlen set to %d\n", max_cpu_qlen);
 	return 0;
 }
 

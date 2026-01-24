@@ -606,7 +606,7 @@ static int tuner_probe(struct i2c_client *client,
 		memset(buffer, 0, sizeof(buffer));
 		rc = i2c_master_recv(client, buffer, sizeof(buffer));
 		if (rc >= 0)
-			pr_info("I2C RECV = %*ph\n", rc, buffer);
+			pr_debug("I2C RECV = %*ph\n", rc, buffer);
 	}
 
 	/* autodetection code based on the i2c addr */
@@ -713,7 +713,7 @@ register_client:
 	set_type(client, t->type, t->mode_mask, t->config, t->fe.callback);
 	list_add_tail(&t->list, &tuner_list);
 
-	pr_info("Tuner %d found with type(s)%s%s.\n",
+	pr_debug("Tuner %d found with type(s)%s%s.\n",
 		   t->type,
 		   t->mode_mask & T_RADIO ? " Radio" : "",
 		   t->mode_mask & T_ANALOG_TV ? " TV" : "");
@@ -959,7 +959,7 @@ static v4l2_std_id tuner_fixup_std(struct tuner *t, v4l2_std_id std)
 		case 'K':
 			return V4L2_STD_NTSC_M_KR;
 		default:
-			pr_info("ntsc= argument not recognised\n");
+			pr_debug("ntsc= argument not recognised\n");
 			break;
 		}
 	}
@@ -1058,10 +1058,10 @@ static void tuner_status(struct dvb_frontend *fe)
 		freq = t->tv_freq / 16;
 		freq_fraction = (t->tv_freq % 16) * 100 / 16;
 	}
-	pr_info("Tuner mode:      %s%s\n", p,
+	pr_debug("Tuner mode:      %s%s\n", p,
 		   t->standby ? " on standby mode" : "");
-	pr_info("Frequency:       %lu.%02lu MHz\n", freq, freq_fraction);
-	pr_info("Standard:        0x%08lx\n", (unsigned long)t->std);
+	pr_debug("Frequency:       %lu.%02lu MHz\n", freq, freq_fraction);
+	pr_debug("Standard:        0x%08lx\n", (unsigned long)t->std);
 	if (t->mode != V4L2_TUNER_RADIO)
 		return;
 	if (fe_tuner_ops->get_status) {
@@ -1069,15 +1069,15 @@ static void tuner_status(struct dvb_frontend *fe)
 
 		fe_tuner_ops->get_status(&t->fe, &tuner_status);
 		if (tuner_status & TUNER_STATUS_LOCKED)
-			pr_info("Tuner is locked.\n");
+			pr_debug("Tuner is locked.\n");
 		if (tuner_status & TUNER_STATUS_STEREO)
-			pr_info("Stereo:          yes\n");
+			pr_debug("Stereo:          yes\n");
 	}
 	if (analog_ops->has_signal) {
 		u16 signal;
 
 		if (!analog_ops->has_signal(fe, &signal))
-			pr_info("Signal strength: %hu\n", signal);
+			pr_debug("Signal strength: %hu\n", signal);
 	}
 }
 

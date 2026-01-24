@@ -67,7 +67,7 @@ static void flash_copy_to(struct map_info *map, unsigned long to,
 	const u8 *src = from;
 	u32 dest = to;
 
-	pr_info("%s: offset 0x%x: length %zu\n", __func__, dest, len);
+	pr_debug("%s: offset 0x%x: length %zu\n", __func__, dest, len);
 	while (len) {
 		u16 data = 0xffff;
 

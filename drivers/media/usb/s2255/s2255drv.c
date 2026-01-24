@@ -641,7 +641,7 @@ static void s2255_fillbuff(struct s2255_vc *vc,
 			       vc->width * vc->height * 2);
 			break;
 		default:
-			pr_info("s2255: unknown format?\n");
+			pr_debug("s2255: unknown format?\n");
 		}
 		vc->last_frame = -1;
 	} else {
@@ -1456,7 +1456,7 @@ static int s2255_open(struct file *file)
 	case S2255_FW_LOADED_DSPWAIT:
 		/* give S2255_LOAD_TIMEOUT time for firmware to load in case
 		   driver loaded and then device immediately opened */
-		pr_info("%s waiting for firmware load\n", __func__);
+		pr_debug("%s waiting for firmware load\n", __func__);
 		wait_event_timeout(dev->fw_data->wait_fw,
 				   ((atomic_read(&dev->fw_data->fw_state)
 				     == S2255_FW_SUCCESS) ||
@@ -1475,14 +1475,14 @@ static int s2255_open(struct file *file)
 	case S2255_FW_SUCCESS:
 		break;
 	case S2255_FW_FAILED:
-		pr_info("2255 firmware load failed.\n");
+		pr_debug("2255 firmware load failed.\n");
 		return -ENODEV;
 	case S2255_FW_DISCONNECTING:
-		pr_info("%s: disconnecting\n", __func__);
+		pr_debug("%s: disconnecting\n", __func__);
 		return -ENODEV;
 	case S2255_FW_LOADED_DSPWAIT:
 	case S2255_FW_NOTLOADED:
-		pr_info("%s: firmware not loaded, please retry\n",
+		pr_debug("%s: firmware not loaded, please retry\n",
 			__func__);
 		/*
 		 * Timeout on firmware load means device unusable.
@@ -1493,7 +1493,7 @@ static int s2255_open(struct file *file)
 			   S2255_FW_FAILED);
 		return -EAGAIN;
 	default:
-		pr_info("%s: unknown state\n", __func__);
+		pr_debug("%s: unknown state\n", __func__);
 		return -EFAULT;
 	}
 	if (!vc->configured) {
@@ -1686,7 +1686,7 @@ static int s2255_probe_v4l(struct s2255_dev *dev)
 			  video_device_node_name(&vc->vdev));
 
 	}
-	pr_info("Sensoray 2255 V4L driver Revision: %s\n",
+	pr_debug("Sensoray 2255 V4L driver Revision: %s\n",
 		S2255_VERSION);
 	/* if no channels registered, return error and probe will fail*/
 	if (refcount_read(&dev->num_channels) == 0) {
@@ -1781,7 +1781,7 @@ static int save_frame(struct s2255_dev *dev, struct s2255_pipeinfo *pipe_info)
 					if ((dev->chn_ready & 0x0f) != 0x0f)
 						break;
 					/* all channels ready */
-					pr_info("s2255: fw loaded\n");
+					pr_debug("s2255: fw loaded\n");
 					atomic_set(&dev->fw_data->fw_state,
 						   S2255_FW_SUCCESS);
 					wake_up(&dev->fw_data->wait_fw);
@@ -1794,7 +1794,7 @@ static int save_frame(struct s2255_dev *dev, struct s2255_pipeinfo *pipe_info)
 						le32_to_cpu(pdword[3]), cc);
 					break;
 				default:
-					pr_info("s2255 unknown resp\n");
+					pr_debug("s2255 unknown resp\n");
 				}
 				pdata++;
 				break;
@@ -1958,7 +1958,7 @@ static int s2255_create_sys_buffers(struct s2255_vc *vc)
 		vc->buffer.frame[i].lpvbits = vmalloc(reqsize);
 		vc->buffer.frame[i].size = reqsize;
 		if (vc->buffer.frame[i].lpvbits == NULL) {
-			pr_info("out of memory.  using less frames\n");
+			pr_debug("out of memory.  using less frames\n");
 			vc->buffer.dwFrames = i;
 			break;
 		}
@@ -2006,12 +2006,12 @@ static int s2255_board_init(struct s2255_dev *dev)
 	/* query the firmware */
 	fw_ver = s2255_get_fx2fw(dev);
 
-	pr_info("s2255: usb firmware version %d.%d\n",
+	pr_debug("s2255: usb firmware version %d.%d\n",
 		(fw_ver >> 8) & 0xff,
 		fw_ver & 0xff);
 
 	if (fw_ver < S2255_CUR_USB_FWVER)
-		pr_info("s2255: newer USB firmware available\n");
+		pr_debug("s2255: newer USB firmware available\n");
 
 	for (j = 0; j < MAX_CHANNELS; j++) {
 		struct s2255_vc *vc = &dev->vc[j];
@@ -2314,10 +2314,10 @@ static int s2255_probe(struct usb_interface *interface,
 		/* make sure firmware is the latest */
 		__le32 *pRel;
 		pRel = (__le32 *) &dev->fw_data->fw->data[fw_size - 4];
-		pr_info("s2255 dsp fw version %x\n", le32_to_cpu(*pRel));
+		pr_debug("s2255 dsp fw version %x\n", le32_to_cpu(*pRel));
 		dev->dsp_fw_ver = le32_to_cpu(*pRel);
 		if (dev->dsp_fw_ver < S2255_CUR_DSP_FWVER)
-			pr_info("s2255: f2255usb.bin out of date.\n");
+			pr_debug("s2255: f2255usb.bin out of date.\n");
 		if (dev->pid == 0x2257 &&
 				dev->dsp_fw_ver < S2255_MIN_DSP_COLORFILTER)
 			pr_warn("2257 needs firmware %d or above.\n",

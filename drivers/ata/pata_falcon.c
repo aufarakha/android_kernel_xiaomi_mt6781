@@ -130,7 +130,7 @@ static int pata_falcon_init_one(void)
 	if (!MACH_IS_ATARI || !ATARIHW_PRESENT(IDE))
 		return -ENODEV;
 
-	pr_info(DRV_NAME ": Atari Falcon PATA controller\n");
+	pr_debug(DRV_NAME ": Atari Falcon PATA controller\n");
 
 	pdev = platform_device_register_simple(DRV_NAME, 0, NULL, 0);
 	if (IS_ERR(pdev))

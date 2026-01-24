@@ -257,7 +257,7 @@ void hv_fcopy_onchannelcallback(void *context)
 				fcopy_versions, FCOPY_VER_COUNT,
 				NULL, &fcopy_srv_version)) {
 
-			pr_info("FCopy IC version %d.%d\n",
+			pr_debug("FCopy IC version %d.%d\n",
 				fcopy_srv_version >> 16,
 				fcopy_srv_version & 0xFFFF);
 		}

@@ -2846,7 +2846,7 @@ static void leadtek_eeprom(struct cx88_core *core, u8 *eeprom_data)
 		break;
 	}
 
-	pr_info("Leadtek Winfast 2000XP Expert config: tuner=%d, eeprom[0]=0x%02x\n",
+	pr_debug("Leadtek Winfast 2000XP Expert config: tuner=%d, eeprom[0]=0x%02x\n",
 		core->board.tuner_type, eeprom_data[0]);
 }
 
@@ -2906,7 +2906,7 @@ static void hauppauge_eeprom(struct cx88_core *core, u8 *eeprom_data)
 		break;
 	}
 
-	pr_info("hauppauge eeprom: model=%d\n", tv.model);
+	pr_debug("hauppauge eeprom: model=%d\n", tv.model);
 }
 
 /*
@@ -2953,7 +2953,7 @@ static void gdi_eeprom(struct cx88_core *core, u8 *eeprom_data)
 	const char *name = (eeprom_data[0x0d] < ARRAY_SIZE(gdi_tuner))
 		? gdi_tuner[eeprom_data[0x0d]].name : NULL;
 
-	pr_info("GDI: tuner=%s\n", name ? name : "unknown");
+	pr_debug("GDI: tuner=%s\n", name ? name : "unknown");
 	if (!name)
 		return;
 	core->board.tuner_type = gdi_tuner[eeprom_data[0x0d]].id;
@@ -3605,24 +3605,24 @@ static int cx88_pci_quirks(const char *name, struct pci_dev *pci)
 
 	/* check pci quirks */
 	if (pci_pci_problems & PCIPCI_TRITON) {
-		pr_info("quirk: PCIPCI_TRITON -- set TBFX\n");
+		pr_debug("quirk: PCIPCI_TRITON -- set TBFX\n");
 		ctrl |= CX88X_EN_TBFX;
 	}
 	if (pci_pci_problems & PCIPCI_NATOMA) {
-		pr_info("quirk: PCIPCI_NATOMA -- set TBFX\n");
+		pr_debug("quirk: PCIPCI_NATOMA -- set TBFX\n");
 		ctrl |= CX88X_EN_TBFX;
 	}
 	if (pci_pci_problems & PCIPCI_VIAETBF) {
-		pr_info("quirk: PCIPCI_VIAETBF -- set TBFX\n");
+		pr_debug("quirk: PCIPCI_VIAETBF -- set TBFX\n");
 		ctrl |= CX88X_EN_TBFX;
 	}
 	if (pci_pci_problems & PCIPCI_VSFX) {
-		pr_info("quirk: PCIPCI_VSFX -- set VSFX\n");
+		pr_debug("quirk: PCIPCI_VSFX -- set VSFX\n");
 		ctrl |= CX88X_EN_VSFX;
 	}
 #ifdef PCIPCI_ALIMAGIK
 	if (pci_pci_problems & PCIPCI_ALIMAGIK) {
-		pr_info("quirk: PCIPCI_ALIMAGIK -- latency fixup\n");
+		pr_debug("quirk: PCIPCI_ALIMAGIK -- latency fixup\n");
 		lat = 0x0A;
 	}
 #endif
@@ -3638,7 +3638,7 @@ static int cx88_pci_quirks(const char *name, struct pci_dev *pci)
 		pci_write_config_byte(pci, CX88X_DEVCTRL, value);
 	}
 	if (lat != UNSET) {
-		pr_info("setting pci latency timer to %d\n", latency);
+		pr_debug("setting pci latency timer to %d\n", latency);
 		pci_write_config_byte(pci, PCI_LATENCY_TIMER, latency);
 	}
 	return 0;
@@ -3754,7 +3754,7 @@ struct cx88_core *cx88_core_create(struct pci_dev *pci, int nr)
 	if (!core->board.num_frontends && (core->board.mpeg & CX88_MPEG_DVB))
 		core->board.num_frontends = 1;
 
-	pr_info("subsystem: %04x:%04x, board: %s [card=%d,%s], frontend(s): %d\n",
+	pr_debug("subsystem: %04x:%04x, board: %s [card=%d,%s], frontend(s): %d\n",
 		pci->subsystem_vendor, pci->subsystem_device, core->board.name,
 		core->boardnr, card[core->nr] == core->boardnr ?
 		"insmod option" : "autodetected",

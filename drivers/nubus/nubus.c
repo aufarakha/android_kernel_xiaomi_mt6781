@@ -861,7 +861,7 @@ static void __init nubus_scan_bus(void)
 {
 	int slot;
 
-	pr_info("NuBus: Scanning NuBus slots.\n");
+	pr_debug("NuBus: Scanning NuBus slots.\n");
 	for (slot = 9; slot < 15; slot++) {
 		nubus_probe_slot(slot);
 	}

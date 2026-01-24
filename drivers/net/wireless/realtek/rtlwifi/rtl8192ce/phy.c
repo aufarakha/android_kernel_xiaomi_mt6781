@@ -297,10 +297,10 @@ bool rtl92c_phy_config_rf_with_headerfile(struct ieee80211_hw *hw,
 		break;
 	case RF90_PATH_C:
 	case RF90_PATH_D:
-		pr_info("Incorrect rfpath %#x\n", rfpath);
+		pr_debug("Incorrect rfpath %#x\n", rfpath);
 		break;
 	default:
-		pr_info("switch case %#x not processed\n", rfpath);
+		pr_debug("switch case %#x not processed\n", rfpath);
 		break;
 	}
 	return true;
@@ -340,7 +340,7 @@ void rtl92ce_phy_set_bw_mode_callback(struct ieee80211_hw *hw)
 		rtl_write_byte(rtlpriv, REG_RRSR + 2, reg_prsr_rsc);
 		break;
 	default:
-		pr_info("unknown bandwidth: %#X\n", rtlphy->current_chan_bw);
+		pr_debug("unknown bandwidth: %#X\n", rtlphy->current_chan_bw);
 		break;
 	}
 

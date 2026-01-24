@@ -1443,7 +1443,7 @@ static struct hsi_client_driver cs_hsi_driver = {
 
 static int __init cs_char_init(void)
 {
-	pr_info("CMT speech driver added\n");
+	pr_debug("CMT speech driver added\n");
 	return hsi_register_client_driver(&cs_hsi_driver);
 }
 module_init(cs_char_init);
@@ -1451,7 +1451,7 @@ module_init(cs_char_init);
 static void __exit cs_char_exit(void)
 {
 	hsi_unregister_client_driver(&cs_hsi_driver);
-	pr_info("CMT speech driver removed\n");
+	pr_debug("CMT speech driver removed\n");
 }
 module_exit(cs_char_exit);
 

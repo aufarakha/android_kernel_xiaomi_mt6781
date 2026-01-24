@@ -813,7 +813,7 @@ static void ufile_disassociate_ucontext(struct ib_ucontext *ibcontext)
 
 	owning_mm = get_task_mm(owning_process);
 	if (!owning_mm) {
-		pr_info("no mm, disassociate ucontext is pending task termination\n");
+		pr_debug("no mm, disassociate ucontext is pending task termination\n");
 		while (1) {
 			put_task_struct(owning_process);
 			usleep_range(1000, 2000);
@@ -821,7 +821,7 @@ static void ufile_disassociate_ucontext(struct ib_ucontext *ibcontext)
 						      PIDTYPE_PID);
 			if (!owning_process ||
 			    owning_process->state == TASK_DEAD) {
-				pr_info("disassociate ucontext done, task was terminated\n");
+				pr_debug("disassociate ucontext done, task was terminated\n");
 				/* in case task was dead need to release the
 				 * task struct.
 				 */

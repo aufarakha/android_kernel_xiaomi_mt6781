@@ -168,7 +168,7 @@ static int fitpc2_wdt_release(struct inode *inode, struct file *file)
 {
 	if (test_bit(WDT_OK_TO_CLOSE, &wdt_status)) {
 		wdt_disable();
-		pr_info("Device disabled\n");
+		pr_debug("Device disabled\n");
 	} else {
 		pr_warn("Device closed unexpectedly - timer will not stop\n");
 		wdt_enable();
@@ -206,7 +206,7 @@ static int __init fitpc2_wdt_init(void)
 	if (!brd_name || !strstr(brd_name, "SBC-FITPC2"))
 		return -ENODEV;
 
-	pr_info("%s found\n", brd_name);
+	pr_debug("%s found\n", brd_name);
 
 	if (!request_region(COMMAND_PORT, 1, WATCHDOG_NAME)) {
 		pr_err("I/O address 0x%04x already in use\n", COMMAND_PORT);

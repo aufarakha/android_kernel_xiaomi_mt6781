@@ -1752,7 +1752,7 @@ static int update_invalid_user_pages(struct amdkfd_process_info *process_info,
 						   mem->user_pages);
 		if (ret) {
 			mem->user_pages[0] = NULL;
-			pr_info("%s: Failed to get user pages: %d\n",
+			pr_debug("%s: Failed to get user pages: %d\n",
 				__func__, ret);
 			/* Pretend it succeeded. It will fail later
 			 * with a VM fault if the GPU tries to access

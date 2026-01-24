@@ -120,8 +120,8 @@ MODULE_PARM_DESC(debug, "Debug level (0=none,...,16=all)");
 static int __init
 ixgb_init_module(void)
 {
-	pr_info("%s - version %s\n", ixgb_driver_string, ixgb_driver_version);
-	pr_info("%s\n", ixgb_copyright);
+	pr_debug("%s - version %s\n", ixgb_driver_string, ixgb_driver_version);
+	pr_debug("%s\n", ixgb_copyright);
 
 	return pci_register_driver(&ixgb_driver);
 }

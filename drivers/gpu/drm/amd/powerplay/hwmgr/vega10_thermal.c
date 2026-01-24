@@ -552,7 +552,7 @@ int vega10_thermal_setup_fan_table(struct pp_hwmgr *hwmgr)
 				(uint8_t *)(&(data->smc_state_table.pp_table)),
 				PPTABLE, false);
 	if (ret)
-		pr_info("Failed to update Fan Control Table in PPTable!");
+		pr_debug("Failed to update Fan Control Table in PPTable!");
 
 	return ret;
 }
