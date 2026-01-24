@@ -215,15 +215,26 @@ static void aw8622_haptic_stop_play_work(struct work_struct *work)
 
 	pr_debug("%s enter\n", __func__);
 
-	if (!haptic->is_actived) {
-		dev_err(haptic->dev, "%s logic error\n", __func__);
-	}
-
 	mutex_lock(&haptic->mutex_lock);
-	cancel_delayed_work_sync(&haptic->hw_off_work);
-	queue_delayed_work(haptic->aw8622_wq, &haptic->hw_off_work, 30 * HZ);
 
-	aw8622_haptic_stop(haptic);
+	hrtimer_cancel(&haptic->timer); // Đảm bảo timer đã dừng
+	
+    cancel_delayed_work_sync(&haptic->hw_off_work);
+    
+	if (haptic->is_actived) {
+		pr_debug("%s: Stopping active haptic\n", __func__);
+        
+		aw8622_haptic_stop(haptic); 
+        
+        haptic->is_actived = false;
+
+		queue_delayed_work(haptic->aw8622_wq, &haptic->hw_off_work, 30 * HZ);
+        // -------------------------------------------------------------
+        
+	} else {
+		pr_debug("%s: Haptic already inactive\n", __func__);
+	}
+    
 	mutex_unlock(&haptic->mutex_lock);
 }
 
@@ -312,20 +323,18 @@ static ssize_t aw8622_activate_store(struct device *dev,
 	pr_debug("%s: value=%d\n", __func__, val);
 
 	mutex_lock(&haptic->mutex_lock);
-	if (val == 1) {
-		if (!haptic->is_actived) {
-			haptic->is_actived = true;
-			queue_work(haptic->aw8622_wq, &haptic->play_work);
-		}
-	} else {
-		if (haptic->is_actived) {
-			if (hrtimer_try_to_cancel(&haptic->timer) > 0) {
-				dev_info(haptic->dev, "%s Manually stop haptic\n", __func__);
-				queue_work(haptic->aw8622_wq, &haptic->stop_play_work);
-			}
-		}
-	}
-	mutex_unlock(&haptic->mutex_lock);
+    if (val == 1) {
+        if (!haptic->is_actived) {
+            haptic->is_actived = true;
+            queue_work(haptic->aw8622_wq, &haptic->play_work);
+        }
+    } else {
+        if (haptic->is_actived) {
+            dev_info(haptic->dev, "%s Manually stop haptic\n", __func__);
+            queue_work(haptic->aw8622_wq, &haptic->stop_play_work);
+        }
+    }
+    mutex_unlock(&haptic->mutex_lock);
 
 	return count;
 }
