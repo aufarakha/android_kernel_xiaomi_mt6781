@@ -60,20 +60,20 @@ static void aw8622_hw_off_work(struct work_struct *delay_work) {
 	p_delayed_work = container_of(delay_work, struct delayed_work, work);
 	haptic = container_of(p_delayed_work, struct aw8622_haptic, hw_off_work);
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 
 	mutex_lock(&haptic->mutex_lock);
 	if (haptic->is_actived) {
-		pr_debug("%s is active hw off failed\n", __func__);
+		pr_info("%s is active hw off failed\n", __func__);
 		mutex_unlock(&haptic->mutex_lock);
 		return;
 	}
 
 	if (!haptic->is_actived) {
-		pr_debug("%s hw off success\n", __func__);
+		pr_info("%s hw off success\n", __func__);
 		gpio_set_value(haptic->hwen_gpio, 0);
 		udelay(1000);
-		pr_debug("%s pwm call mt_pwm_disable\n", __func__);
+		pr_info("%s pwm call mt_pwm_disable\n", __func__);
 		mt_pwm_disable(haptic->pwm_ch, aw8622_pwm_old_mode_config.pmic_pad);
 		haptic->is_power_on = false;
 	}
@@ -102,7 +102,7 @@ static void aw8622_switch_pwm_gpio_mode(struct aw8622_haptic *haptic, int mode)
 	}
 
 	pinctrl_select_state(haptic->ppinctrl_pwm, pins_state);
-	pr_debug("%s() switched to mode:%d\n", __func__, mode);
+	pr_info("%s() switched to mode:%d\n", __func__, mode);
 }
 
 static int aw8622_state_init(struct aw8622_haptic *haptic) {
@@ -119,15 +119,8 @@ static int aw8622_update_pwm_frequency(struct aw8622_haptic *haptic)
 {
 	int err = 0;
 	unsigned int data_width, thresh;
-	static unsigned int last_freq = 0;
 
-	if (haptic->frequency == 0)
-		return -EINVAL;
-
-	if (haptic->frequency == last_freq)
-		return 0;
-
-	pr_debug("%s frequency=%u Hz\n", __func__, haptic->frequency);
+	pr_info("%s frequency=%u Hz\n", __func__, haptic->frequency);
 
 	mt_pwm_disable(aw8622_pwm_old_mode_config.pwm_no, aw8622_pwm_old_mode_config.pmic_pad);
 	mt_pwm_clk_sel_hal(aw8622_pwm_old_mode_config.pwm_no, CLK_26M);
@@ -142,9 +135,6 @@ static int aw8622_update_pwm_frequency(struct aw8622_haptic *haptic)
 	err = pwm_set_spec_config(&aw8622_pwm_old_mode_config);
 	if (err < 0) {
 		dev_err(haptic->dev, "%s pwm_set_spec_config failed\n", __func__);
-		last_freq = 0;
-	} else {
-		last_freq = haptic->frequency;
 	}
 
 	return err;
@@ -163,7 +153,7 @@ static void aw8622_haptic_stop(struct aw8622_haptic *haptic)
 
 static int aw8622_play_wave(struct aw8622_haptic *haptic)
 {
-	pr_debug("%s enter\n", __func__);
+	pr_info("%s enter\n", __func__);
 
 	if (haptic->is_power_on) {
 		mt_pwm_disable(aw8622_pwm_old_mode_config.pwm_no, aw8622_pwm_old_mode_config.pmic_pad);
@@ -187,7 +177,7 @@ static enum hrtimer_restart aw8622_haptic_timer_func(struct hrtimer *timer)
 {
 	struct aw8622_haptic *haptic = container_of(timer, struct aw8622_haptic, timer);
 
-	pr_debug("%s enter\n", __func__);
+	pr_info("%s enter\n", __func__);
 	queue_work(haptic->aw8622_wq, &haptic->stop_play_work);
 
 	return HRTIMER_NORESTART;
@@ -198,7 +188,7 @@ static void aw8622_haptic_play_work(struct work_struct *work)
 	struct aw8622_haptic *haptic = container_of(work, struct aw8622_haptic, play_work);
 	int ret = 0;
 
-	pr_debug("%s enter\n", __func__);
+	pr_info("%s enter\n", __func__);
 
 	if (haptic->is_actived) {
 		ret = aw8622_play_wave(haptic);
@@ -213,28 +203,17 @@ static void aw8622_haptic_stop_play_work(struct work_struct *work)
 {
 	struct aw8622_haptic *haptic = container_of(work, struct aw8622_haptic, stop_play_work);
 
-	pr_debug("%s enter\n", __func__);
+	pr_info("%s enter\n", __func__);
+
+	if (!haptic->is_actived) {
+		dev_err(haptic->dev, "%s logic error\n", __func__);
+	}
 
 	mutex_lock(&haptic->mutex_lock);
+	cancel_delayed_work_sync(&haptic->hw_off_work);
+	queue_delayed_work(haptic->aw8622_wq, &haptic->hw_off_work, 30 * HZ);
 
-	hrtimer_cancel(&haptic->timer); // Đảm bảo timer đã dừng
-	
-    cancel_delayed_work_sync(&haptic->hw_off_work);
-    
-	if (haptic->is_actived) {
-		pr_debug("%s: Stopping active haptic\n", __func__);
-        
-		aw8622_haptic_stop(haptic); 
-        
-        haptic->is_actived = false;
-
-		queue_delayed_work(haptic->aw8622_wq, &haptic->hw_off_work, 30 * HZ);
-        // -------------------------------------------------------------
-        
-	} else {
-		pr_debug("%s: Haptic already inactive\n", __func__);
-	}
-    
+	aw8622_haptic_stop(haptic);
 	mutex_unlock(&haptic->mutex_lock);
 }
 
@@ -293,9 +272,9 @@ static int aw8622_parse_devicetree_info(struct aw8622_haptic *haptic)
 		err = PTR_ERR(haptic->ppinctrl_pwm);
 	}
 
-	pr_debug("%s dt info def_pwm_freq=%uHz center_freq=%u\n",
+	pr_info("%s dt info def_pwm_freq=%uHz center_freq=%u\n",
 			__func__, haptic->default_pwm_freq, haptic->center_freq);
-	pr_debug("%s dt info pwm_ch=%u\n", __func__, haptic->pwm_ch);
+	pr_info("%s dt info pwm_ch=%u\n", __func__, haptic->pwm_ch);
 
 	return err;
 }
@@ -320,21 +299,23 @@ static ssize_t aw8622_activate_store(struct device *dev,
 	if (rc < 0)
 		return rc;
 
-	pr_debug("%s: value=%d\n", __func__, val);
+	pr_info("%s: value=%d\n", __func__, val);
 
 	mutex_lock(&haptic->mutex_lock);
-    if (val == 1) {
-        if (!haptic->is_actived) {
-            haptic->is_actived = true;
-            queue_work(haptic->aw8622_wq, &haptic->play_work);
-        }
-    } else {
-        if (haptic->is_actived) {
-            dev_info(haptic->dev, "%s Manually stop haptic\n", __func__);
-            queue_work(haptic->aw8622_wq, &haptic->stop_play_work);
-        }
-    }
-    mutex_unlock(&haptic->mutex_lock);
+	if (val == 1) {
+		if (!haptic->is_actived) {
+			haptic->is_actived = true;
+			queue_work(haptic->aw8622_wq, &haptic->play_work);
+		}
+	} else {
+		if (haptic->is_actived) {
+			if (hrtimer_try_to_cancel(&haptic->timer) > 0) {
+				dev_info(haptic->dev, "%s Manually stop haptic\n", __func__);
+				queue_work(haptic->aw8622_wq, &haptic->stop_play_work);
+			}
+		}
+	}
+	mutex_unlock(&haptic->mutex_lock);
 
 	return count;
 }
@@ -358,7 +339,7 @@ static ssize_t aw8622_duration_store(struct device *dev,
 	if (rc < 0)
 		return rc;
 
-	pr_debug("%s: duration=%d\n", __func__, val);
+	pr_info("%s: duration=%d\n", __func__, val);
 
 	if (val <= 0)
 		return count;
@@ -395,7 +376,7 @@ static ssize_t aw8622_frequency_store(struct device *dev,
 		return -EINVAL;
 	}
 
-	pr_debug("%s: frequency=%u Hz\n", __func__, val);
+	pr_info("%s: frequency=%u Hz\n", __func__, val);
 
 	mutex_lock(&haptic->mutex_lock);
 	haptic->frequency = val;
@@ -428,7 +409,7 @@ static ssize_t aw8622_hwen_store(struct device *dev,
 	if (rc < 0)
 		return rc;
 
-	pr_debug("%s: value=%d\n", __func__, val);
+	pr_info("%s: value=%d\n", __func__, val);
 
 	if (val == 1) {
 		gpio_set_value(haptic->hwen_gpio, 1);
@@ -469,7 +450,7 @@ static int aw8622_haptic_probe(struct platform_device *pdev)
 	struct aw8622_haptic *haptic;
 	int err;
 
-	pr_debug("%s enter\n", __func__);
+	pr_info("%s enter\n", __func__);
 
 	haptic = devm_kzalloc(&pdev->dev, sizeof(*haptic), GFP_KERNEL);
 	if (!haptic)
@@ -518,7 +499,7 @@ static int aw8622_haptic_probe(struct platform_device *pdev)
 		return err;
 	}
 
-	pr_debug("%s probe success (default frequency: %u Hz)\n", __func__, haptic->frequency);
+	pr_info("%s probe success (default frequency: %u Hz)\n", __func__, haptic->frequency);
 	return 0;
 }
 
@@ -546,7 +527,7 @@ static int __maybe_unused aw8622_haptic_suspend(struct device *dev)
 	if (haptic->is_power_on) {
 		gpio_set_value(haptic->hwen_gpio, 0);
 		udelay(500);
-		pr_debug("%s pwm call mt_pwm_disable\n", __func__);
+		pr_info("%s pwm call mt_pwm_disable\n", __func__);
 		mt_pwm_disable(aw8622_pwm_old_mode_config.pwm_no, aw8622_pwm_old_mode_config.pmic_pad);
 		haptic->is_power_on = false;
 	}
@@ -556,7 +537,7 @@ static int __maybe_unused aw8622_haptic_suspend(struct device *dev)
 
 static int __maybe_unused aw8622_haptic_resume(struct device *dev)
 {
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	return 0;
 }
 
