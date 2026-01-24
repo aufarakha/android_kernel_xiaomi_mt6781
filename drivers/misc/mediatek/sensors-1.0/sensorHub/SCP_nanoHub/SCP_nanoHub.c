@@ -445,7 +445,7 @@ int scp_sensorHub_req_send(union SCP_SENSOR_HUB_DATA *data,
 	}
 	ret = SCP_sensorHub_ipi_txrx((unsigned char *)data);
 	if (ret != 0 || data->rsp.errCode != 0)
-		return -1;
+		return 0;
 	return 0;
 }
 
