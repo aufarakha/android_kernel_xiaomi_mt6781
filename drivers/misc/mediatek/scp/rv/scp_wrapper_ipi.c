@@ -153,9 +153,15 @@ enum scp_ipi_status scp_ipi_send(enum ipi_id id, void *buf,
 	else
 		tmp_id = id;
 
-	if (is_scp_ready(scp_id) == 0) {
-		pr_notice("[SCP] %s: %s not ready\n", __func__, core_ids[scp_id]);
-		return SCP_IPI_NOT_READY;
+	int ready_retry = 0;
+	while (is_scp_ready(scp_id) == 0) {
+		if (ready_retry >= 10) { 
+			pr_notice("[SCP] %s: %s not ready (gave up after 50ms)\n", 
+				__func__, core_ids[scp_id]);
+			return SCP_IPI_NOT_READY;
+		}
+		usleep_range(5000, 6000);
+		ready_retry++;
 	}
 
 	if (len > (scp_ipi_legacy_id[tmp_id].out_size - 2) * MBOX_SLOT_SIZE) {
@@ -171,29 +177,39 @@ enum scp_ipi_status scp_ipi_send(enum ipi_id id, void *buf,
 	memcpy((void *)(pkt + 8), buf, len);
 	ptr = pkt;
 
+	unsigned int actual_timeout = 0;
+	if (wait) {
+		actual_timeout = wait * SCP_IPI_LEGACY_WAIT;
+		if (actual_timeout < 1000) 
+			actual_timeout = 1000; 
+	}
+
 	if (scp_ipi_legacy_id[tmp_id].out_id_0 != IPI_NO_USE
 	    && scp_id == (enum scp_core_id)SCP_CORE0_ID) {
-		ret =
-		   mtk_ipi_send(&scp_ipidev, scp_ipi_legacy_id[tmp_id].out_id_0,
+		
+		ret = mtk_ipi_send(&scp_ipidev, scp_ipi_legacy_id[tmp_id].out_id_0,
 				0, ptr, scp_ipi_legacy_id[tmp_id].out_size,
-				wait * SCP_IPI_LEGACY_WAIT);
+				actual_timeout);
 
 		if (ret == IPI_ACTION_DONE)
 			return SCP_IPI_DONE;
-		if (ret == IPI_PIN_BUSY)
+		
+		if (ret == IPI_PIN_BUSY || ret != IPI_ACTION_DONE) {
 			return SCP_IPI_BUSY;
+		}
 	}
 
 	if (scp_ipi_legacy_id[tmp_id].out_id_1 != IPI_NO_USE
 	    && scp_id == (enum scp_core_id)SCP_CORE1_ID) {
-		ret =
-		   mtk_ipi_send(&scp_ipidev, scp_ipi_legacy_id[tmp_id].out_id_1,
+		
+		ret = mtk_ipi_send(&scp_ipidev, scp_ipi_legacy_id[tmp_id].out_id_1,
 				0, ptr, scp_ipi_legacy_id[tmp_id].out_size,
-				wait * SCP_IPI_LEGACY_WAIT);
+				actual_timeout);
 
 		if (ret == IPI_ACTION_DONE)
 			return SCP_IPI_DONE;
-		if (ret == IPI_PIN_BUSY)
+			
+		if (ret == IPI_PIN_BUSY || ret != IPI_ACTION_DONE)
 			return SCP_IPI_BUSY;
 	}
 

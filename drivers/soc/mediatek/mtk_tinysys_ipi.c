@@ -355,8 +355,15 @@ int mtk_ipi_send(struct mtk_ipi_device *ipidev, int ipi_id,
 	ipidev->table[ipi_id].trysend_count = 1;
 
 	while (wait_us > 0 && ret) {
-		udelay(IPI_POLLING_INTERVAL_US);
-		wait_us -= IPI_POLLING_INTERVAL_US;
+		if (opt == IPI_SEND_POLLING) {
+			udelay(IPI_POLLING_INTERVAL_US);
+			wait_us -= IPI_POLLING_INTERVAL_US;
+		} else {
+			unsigned long sleep_us = IPI_POLLING_INTERVAL_US;
+			if (sleep_us < 50) sleep_us = 50; 
+			usleep_range(sleep_us, sleep_us + 100);
+			wait_us -= sleep_us;
+		}
 		ret = rpmsg_trysend(ipidev->table[ipi_id].ept, data, len);
 		ipidev->table[ipi_id].trysend_count++;
 	}
