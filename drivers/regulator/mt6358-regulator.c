@@ -521,17 +521,32 @@ static const u32 vsim2_voltages[] = {
 	3100000,
 };
 
-
 static int mt6358_regulator_disable(struct regulator_dev *rdev)
 {
 	int ret = 0;
+	const char *name = rdev->desc->name;
 
 	if (rdev->use_count == 0) {
+
+		if (strcmp(name, "vdram1") == 0 || 
+			strcmp(name, "vcore") == 0 || 
+			strcmp(name, "vmodem") == 0) {
+			
+			dev_warn(&rdev->dev, "PM: Blocked disable request for CRITICAL rail: %s\n", name);
+			return 0;
+		}
+
 		dev_notice(&rdev->dev, "%s:%s should not be disable.(use_count=0)\n"
 			, __func__
-			, rdev->desc->name);
+			, name);
 		ret = -1;
 	} else {
+
+		if (strcmp(name, "vdram1") == 0 || strcmp(name, "vcore") == 0) {
+			dev_warn(&rdev->dev, "PM: Force keeping %s enabled during suspend\n", name);
+			return 0; 
+		}
+
 		ret = regulator_disable_regmap(rdev);
 	}
 
