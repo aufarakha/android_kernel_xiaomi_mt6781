@@ -78,32 +78,39 @@ static unsigned int pmic_scp_set_regulator(struct mtk_regulator mt_reg,
 	unsigned int min_uV = mt_reg.desc.min_uV;
 	unsigned int uV_step = mt_reg.desc.uV_step;
 	unsigned int n_voltages = mt_reg.desc.n_voltages;
+	unsigned int max_uV = min_uV + (uV_step * (n_voltages - 1));
 	unsigned short set_step = 0;
 	unsigned short get_step = 0;
 
-	set_step = (voltage - min_uV) / uV_step;
-	if (voltage < min_uV || set_step >= n_voltages) {
-		pr_notice("[%s] SSHUB_%s Set Wrong voltage=%duV is unsupportable range %d-%duV\n"
-			  , __func__
-			  , mt_reg.desc.name
-			  , voltage
-			  , min_uV
-			  , (n_voltages * uV_step + min_uV));
-		return voltage;
+	if (voltage < min_uV) {
+		pr_err("[PMIC] %s requested %duV, forcing to floor %duV\n",
+			  mt_reg.desc.name, voltage, min_uV);
+		voltage = min_uV;
+	} else if (voltage > max_uV) {
+		pr_warn("[PMIC] %s requested %duV, capping at max %duV\n",
+			  mt_reg.desc.name, voltage, max_uV);
+		voltage = max_uV;
 	}
+
+	set_step = (voltage - min_uV) / uV_step;
+
 	pr_info("SSHUB_%s Expected %svolt step = %d\n",
-		mt_reg.desc.name, is_sleep_vol?"sleep ":"", set_step);
+		mt_reg.desc.name, is_sleep_vol ? "sleep " : "", set_step);
+
 	pmic_set_register_value(vosel_reg, set_step);
+
 	udelay(220);
+
 	get_step = pmic_get_register_value(vosel_reg);
 	if (get_step != set_step) {
-		pr_notice("[%s] Set SSHUB_%s Voltage fail with step = %d, read voltage = %duV\n"
-			  , __func__, mt_reg.desc.name, set_step
-			  , (get_step * uV_step + min_uV));
-		return voltage;
+		pr_err("[PMIC] %s set fail! Target: %d, HW: %d\n",
+			  mt_reg.desc.name, set_step, get_step);
+		return -1;
 	}
+
 	pr_info("Set SSHUB_%s %sVoltage to %duV pass\n",
-		mt_reg.desc.name, is_sleep_vol?"sleep ":"", voltage);
+		mt_reg.desc.name, is_sleep_vol ? "sleep " : "", voltage);
+
 	return 0;
 }
 
