@@ -188,39 +188,50 @@
 	};
 };
 
- &i2c5 {
+&i2c5 {
 	status = "okay";
 	bq2589x-charger@6A {
-			status = "okay";
-			compatible = "ti,bq25890";
-			reg = <0x6A>;
-			interrupt-parent = <&pio>;
-			interrupts = <1 IRQ_TYPE_EDGE_FALLING 1 0>;
-			ti,irq-gpio = <&pio 1 0>;
-			ti,bq2589x,charge-detect-enable;
-			interrupt-names = "chr_stat";
-			ti,CB1 = <&pio 42 0>;
-			ti,CB2 = <&pio 43 0>;
+		status = "okay";
+		compatible = "ti,bq25890";
+		reg = <0x6A>;
+		
+		interrupt-parent = <&pio>;
+		interrupts = <1 IRQ_TYPE_EDGE_FALLING 1 0>;
+		ti,irq-gpio = <&pio 1 0>;
+		ti,bq2589x,charge-detect-enable;
+		interrupt-names = "chr_stat";
+		ti,CB1 = <&pio 42 0>;
+		ti,CB2 = <&pio 43 0>;
+
+		charger_name = "primary_chg"; 
+		
+		ti,bq2589x,usb-vlim = <4500000>;
+		ti,bq2589x,usb-ilim = <3000000>; 
+		
+		ti,bq2589x,usb-vreg = <4448000>; 
+		
+		ti,bq2589x,usb-ichg = <2000000>;
+		
+		ti,bq2589x,precharge-current = <128000>;
+		ti,bq2589x,termination-current = <128000>;
+		
+		ti,bq2589x,boost-voltage = <4998000>;
+		ti,bq2589x,boost-current = <1000000>;
+		
+		ti,bq2589x,use-ilim-pin;
 	};
+
 	bq2597x-standalone@66 {
 		compatible = "ti,bq2597x-standalone";
 		reg = <0x66>;
 		interrupt-parent = <&pio>;
 		interrupts = <10 IRQ_TYPE_EDGE_FALLING 10 0>;
 		pinctrl-names = "chargerpump";
-//		pinctrl-0 = <&bq2597x_int_default>;
 		pinctrl-0 = <&bq2597x_int_default &bq2597x_int_suspend>;
 
-		//ti,bq2597x,bat-ovp-disable;
 		ti,bq2597x,bat-ovp-alarm-disable;
-		//ti,bq2597x,bat-ocp-disable;
-		//ti,bq2597x,bat-ocp-alarm-disable;
 		ti,bq2597x,bat-ucp-alarm-disable;
 		ti,bq2597x,bat-ucp-disable;
-
-		//ti,bq2597x,bus-ovp-alarm-disable;
-		//ti,bq2597x,bus-ocp-disable;
-		//ti,bq2597x,bus-ocp-alarm-disable;
 		ti,bq2597x,bat-therm-disable;
 		ti,bq2597x,bus-therm-disable;
 		ti,bq2597x,die-therm-disable;
@@ -232,21 +243,16 @@
 
 		ti,bq2597x,bus-ovp-threshold = <12000>;
 		ti,bq2597x,bus-ovp-alarm-threshold = <11000>;
-		//ti,bq2597x,bus-ocp-threshold = <2200>;
-		//ti,bq2597x,bus-ocp-alarm-threshold = <2000>;
 		ti,bq2597x,bus-ocp-threshold = <3750>;
 		ti,bq2597x,bus-ocp-alarm-threshold = <3500>;
 
-		//ti,bq2597x,bat-ucp-alarm-threshold = <2000>;
-
-		ti,bq2597x,bat-therm-threshold = <0x15>;/*4.1%*/
-		ti,bq2597x,bus-therm-threshold = <0x15>;/*4.1%*/
+		ti,bq2597x,bat-therm-threshold = <0x15>;
+		ti,bq2597x,bus-therm-threshold = <0x15>;
 		ti,bq2597x,die-therm-threshold = <145>;
 
 		ti,bq2597x,ac-ovp-threshold = <14>;
 		ti,bq2597x,sense-resistor-mohm = <5>;
 
-		//sc8551,bypass-enable;
 		sc8551,ac-ovp-threshold = <13>;
 	};
 };
