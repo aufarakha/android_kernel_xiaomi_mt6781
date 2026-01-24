@@ -22,7 +22,7 @@ CONFIG_SCHED_MC=y
 CONFIG_NR_CPUS=8
 CONFIG_ARM64_DMA_USE_IOMMU=y
 CONFIG_RANDOMIZE_BASE=y
-CONFIG_CMDLINE="root=/dev/ram vmalloc=496M slub_max_order=0 slub_debug=- ramoops_memreserve=4M"
+CONFIG_CMDLINE="root=/dev/ram vmalloc=496M ramoops_memreserve=4M log_buf_len=256K quiet"
 # CONFIG_EFI is not set
 CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE=y
 CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE_NAMES="mediatek/mt6781"
