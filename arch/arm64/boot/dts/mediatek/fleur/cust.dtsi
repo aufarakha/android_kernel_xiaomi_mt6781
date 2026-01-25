@@ -107,7 +107,11 @@
 	#size-cells = <0>;
 	clock-frequency = <400000>;
 	mediatek,use-open-drain;
-	status = "okay";
+	chargepump_mtk:chargepump@66 {
+		compatible = "mediatek,chargepump";
+		reg = <0x66>;
+		status = "okay";
+	};
 
 	usb_type_c_mtk:usb_type_c@4e {
 		compatible = "mediatek,usb_type_c";
@@ -115,73 +119,6 @@
 		status = "okay";
 	};
 
-	bq2589x-charger@6A {
-		status = "okay";
-		compatible = "ti,bq25890";
-		reg = <0x6A>;
-		
-		interrupt-parent = <&pio>;
-		interrupts = <1 IRQ_TYPE_EDGE_FALLING 1 0>;
-		ti,irq-gpio = <&pio 1 0>;
-		ti,bq2589x,charge-detect-enable;
-		interrupt-names = "chr_stat";
-		
-		ti,CB1 = <&pio 42 0>; 
-		ti,CB2 = <&pio 43 0>;
-
-		charger_name = "primary_chg"; 
-
-		ti,bq2589x,usb-vlim = <4500000>; 
-		ti,bq2589x,usb-ilim = <3000000>;
-		ti,bq2589x,usb-vreg = <4448000>;
-		ti,bq2589x,usb-ichg = <2000000>;
-		
-		ti,bq2589x,precharge-current = <128000>;
-		ti,bq2589x,termination-current = <128000>;
-
-		ti,bq2589x,boost-voltage = <4998000>;
-		ti,bq2589x,boost-current = <1000000>;
-		
-		ti,bq2589x,use-ilim-pin;
-	};
-
-	bq2597x-standalone@66 {
-		compatible = "ti,bq2597x-standalone";
-		reg = <0x66>;
-		status = "okay";
-		
-		interrupt-parent = <&pio>;
-		interrupts = <10 IRQ_TYPE_EDGE_FALLING 10 0>;
-		
-		pinctrl-names = "chargerpump";
-		pinctrl-0 = <&bq2597x_int_default &bq2597x_int_suspend>;
-
-		ti,bq2597x,bat-ovp-threshold = <4525>;
-		ti,bq2597x,bat-ovp-alarm-threshold = <4490>;
-		ti,bq2597x,bat-ocp-threshold = <7000>;
-		ti,bq2597x,bat-ocp-alarm-threshold = <6000>;
-
-		ti,bq2597x,bus-ovp-threshold = <12000>;
-		ti,bq2597x,bus-ovp-alarm-threshold = <11000>;
-		ti,bq2597x,bus-ocp-threshold = <3750>;
-		ti,bq2597x,bus-ocp-alarm-threshold = <3500>;
-
-		ti,bq2597x,bat-therm-threshold = <0x15>;
-		ti,bq2597x,bus-therm-threshold = <0x15>;
-		ti,bq2597x,die-therm-threshold = <145>;
-		
-		ti,bq2597x,ac-ovp-threshold = <14>;
-		ti,bq2597x,sense-resistor-mohm = <5>;
-
-		ti,bq2597x,bat-ovp-alarm-disable;
-		ti,bq2597x,bat-ucp-disable;
-		ti,bq2597x,bat-ucp-alarm-disable;
-		ti,bq2597x,bat-therm-disable;
-		ti,bq2597x,bus-therm-disable;
-		ti,bq2597x,die-therm-disable;
-		
-		sc8551,ac-ovp-threshold = <13>;
-	};
 };
 
 &i2c6 {
