@@ -509,7 +509,7 @@
 #endif
 
 
-//#include "fleur/cust.dtsi"
+#include "fleur/cust.dtsi"
 #include "mediatek/cust_mt6781_camera.dtsi"
 #include "mediatek/cust_foursemi_audio.dtsi"
 #include "mediatek/cust_aw87xxx_audio.dtsi"
