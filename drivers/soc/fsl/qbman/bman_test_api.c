@@ -100,7 +100,7 @@ void bman_test_api(void)
 
 	bufs_init();
 
-	pr_debug("%s(): Starting\n", __func__);
+	pr_info("%s(): Starting\n", __func__);
 
 	pool = bman_new_pool();
 	if (!pool) {
@@ -143,7 +143,7 @@ do_loop:
 
 	/* Clean up */
 	bman_free_pool(pool);
-	pr_debug("%s(): Finished\n", __func__);
+	pr_info("%s(): Finished\n", __func__);
 	return;
 
 failed:

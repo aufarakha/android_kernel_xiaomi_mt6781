@@ -85,11 +85,11 @@ static void tianma_panel_get_data(struct tianma *ctx)
 	u8 buffer[3] = {0};
 	static int ret;
 
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 
 	if (ret == 0) {
 		ret = tianma_dcs_read(ctx, 0x0A, buffer, 1);
-		pr_debug("%s  0x%08x\n", __func__,
+		pr_info("%s  0x%08x\n", __func__,
 			buffer[0] | (buffer[1] << 8));
 		dev_info(ctx->dev, "return %d data(0x%08x) to dsi engine\n",
 			 ret, buffer[0] | (buffer[1] << 8));
@@ -126,7 +126,7 @@ static void tianma_panel_init(struct tianma *ctx)
 	gpiod_set_value(ctx->reset_gpio, 1);
 	usleep_range(10 * 1000, 15 * 1000);
 	devm_gpiod_put(ctx->dev, ctx->reset_gpio);
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 	//tianma_dcs_write_seq_static(ctx, 0xFF, 0x25);
 	//msleep(100);
 	//tianma_dcs_write_seq_static(ctx, 0xFB, 0x01);
@@ -144,7 +144,7 @@ static void tianma_panel_init(struct tianma *ctx)
 	msleep(120);
 
 	tianma_dcs_write_seq_static(ctx, 0x29);
-	pr_debug("%s-\n", __func__);
+	pr_info("%s-\n", __func__);
 }
 
 static int tianma_disable(struct drm_panel *panel)
@@ -168,7 +168,7 @@ static int tianma_unprepare(struct drm_panel *panel)
 {
 	struct tianma *ctx = panel_to_tianma(panel);
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 
 	if (!ctx->prepared)
 		return 0;
@@ -192,7 +192,7 @@ static int tianma_prepare(struct drm_panel *panel)
 	struct tianma *ctx = panel_to_tianma(panel);
 	int ret;
 
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -207,7 +207,7 @@ static int tianma_prepare(struct drm_panel *panel)
 #ifdef PANEL_SUPPORT_READBACK
 	tianma_panel_get_data(ctx);
 #endif
-	pr_debug("%s-\n", __func__);
+	pr_info("%s-\n", __func__);
 	return ret;
 }
 
@@ -678,7 +678,7 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 	struct device_node *backlight;
 	int ret;
 
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 	ctx = devm_kzalloc(dev, sizeof(struct tianma), GFP_KERNEL);
 	if (!ctx)
 		return -ENOMEM;
@@ -730,7 +730,7 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 		return ret;
 #endif
 
-	pr_debug("%s-\n", __func__);
+	pr_info("%s-\n", __func__);
 
 	return ret;
 }

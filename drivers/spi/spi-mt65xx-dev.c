@@ -12,7 +12,7 @@
 
 static bool spi_auto_test_flag;
 
-#define SPI_DEBUG(fmt, args...) pr_debug(fmt, ##args)
+#define SPI_DEBUG(fmt, args...) pr_info(fmt, ##args)
 
 struct mtk_spi {
 	void __iomem *base;

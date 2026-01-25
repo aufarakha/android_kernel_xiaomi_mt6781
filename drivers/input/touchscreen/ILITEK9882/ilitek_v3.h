@@ -150,19 +150,19 @@
 
 #define ILI_INFO(fmt, arg...)						\
 ({									\
-	pr_debug("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
+	pr_info("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
 })									\
 
 #define ILI_ERR(fmt, arg...)						\
 ({									\
-	pr_debug("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
+	pr_info("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
 })									\
 
 extern bool debug_en;
 #define ILI_DBG(fmt, arg...)						\
 do {									\
 	if (debug_en)						\
-	pr_debug("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
+	pr_info("ILITEK: (%s, %d): " fmt, __func__, __LINE__, ##arg);	\
 } while (0)
 
 #define ERR_ALLOC_MEM(X)	((IS_ERR(X) || X == NULL) ? 1 : 0)

@@ -231,7 +231,7 @@ static void fh_switch2fhctl(enum FH_PLL_ID pll_id, int i_control)
 	unsigned int mask = 0;
 
 	if ((pll_id >= FH_PLL_NUM || pll_id < 0)) {
-		pr_debug("Invalid pll id!\n");
+		pr_info("Invalid pll id!\n");
 		return;
 	}
 
@@ -279,7 +279,7 @@ static void fh_sync_ncpo_to_fhctl_dds(enum FH_PLL_ID pll_id)
 	unsigned long reg_dst = 0;
 
 	if ((pll_id >= FH_PLL_NUM || pll_id < 0)) {
-		pr_debug("Invalid pll id!\n");
+		pr_info("Invalid pll id!\n");
 		return;
 	}
 
@@ -400,7 +400,7 @@ static int __freqhopping_ctrl(struct freqhopping_ioctl *fh_ctl, bool enable)
 
 	/* Check the out of range of frequency hopping PLL ID */
 	if ((fh_ctl->pll_id >= FH_PLL_NUM || fh_ctl->pll_id < 0)) {
-		pr_debug("Invalid pll id!\n");
+		pr_info("Invalid pll id!\n");
 		return -1;
 	}
 
@@ -504,7 +504,7 @@ static int mt_fh_hal_hopping(enum FH_PLL_ID pll_id, unsigned int dds_value)
 	FH_MSG_DEBUG("%s for pll %d:", __func__, pll_id);
 
 	if ((pll_id >= FH_PLL_NUM || pll_id < 0)) {
-		pr_debug("Invalid pll id!\n");
+		pr_info("Invalid pll id!\n");
 		return -1;
 	}
 
@@ -601,7 +601,7 @@ static int mt_fh_hal_general_pll_dfs(enum FH_PLL_ID pll_id, unsigned int target_
 	unsigned long flags = 0;
 
 	if ((pll_id >= FH_PLL_NUM || pll_id < 0)) {
-		pr_debug("Invalid pll id!\n");
+		pr_info("Invalid pll id!\n");
 		return -1;
 	}
 

@@ -260,7 +260,7 @@ static loff_t rmidev_llseek(struct file *filp, loff_t off, int whence)
 	struct rmidev_data *dev_data = filp->private_data;
 
 	if (IS_ERR(dev_data)) {
-		pr_debug("%s: Pointer of char device data is invalid", __func__);
+		pr_info("%s: Pointer of char device data is invalid", __func__);
 		return -EBADF;
 	}
 
@@ -313,7 +313,7 @@ static ssize_t rmidev_read(struct file *filp, char __user *buf, size_t count,
 	struct rmidev_data *dev_data = filp->private_data;
 
 	if (IS_ERR(dev_data)) {
-		pr_debug("%s: Pointer of char device data is invalid", __func__);
+		pr_info("%s: Pointer of char device data is invalid", __func__);
 		return -EBADF;
 	}
 
@@ -356,7 +356,7 @@ static ssize_t rmidev_write(struct file *filp, const char __user *buf,
 	struct rmidev_data *dev_data = filp->private_data;
 
 	if (IS_ERR(dev_data)) {
-		pr_debug("%s: Pointer of char device data is invalid", __func__);
+		pr_info("%s: Pointer of char device data is invalid", __func__);
 		return -EBADF;
 	}
 
@@ -484,7 +484,7 @@ static int rmidev_create_device_class(void)
 	rmidev_device_class = class_create(THIS_MODULE, DEVICE_CLASS_NAME);
 
 	if (IS_ERR(rmidev_device_class)) {
-		pr_debug("%s: Failed to create /dev/%s\n", __func__,
+		pr_info("%s: Failed to create /dev/%s\n", __func__,
 		       CHAR_DEVICE_NAME);
 		return -ENODEV;
 	}

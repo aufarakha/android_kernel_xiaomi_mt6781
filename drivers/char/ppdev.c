@@ -877,7 +877,7 @@ static int __init ppdev_init(void)
 		goto out_class;
 	}
 
-	pr_debug(PP_VERSION "\n");
+	pr_info(PP_VERSION "\n");
 	goto out;
 
 out_class:

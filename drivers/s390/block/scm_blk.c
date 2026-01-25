@@ -382,7 +382,7 @@ static void scm_blk_handle_error(struct scm_request *scmrq)
 	case EQC_WR_PROHIBIT:
 		spin_lock_irqsave(&bdev->lock, flags);
 		if (bdev->state != SCM_WR_PROHIBIT)
-			pr_debug("%lx: Write access to the SCM increment is suspended\n",
+			pr_info("%lx: Write access to the SCM increment is suspended\n",
 				(unsigned long) bdev->scmdev->address);
 		bdev->state = SCM_WR_PROHIBIT;
 		spin_unlock_irqrestore(&bdev->lock, flags);
@@ -527,7 +527,7 @@ void scm_blk_set_available(struct scm_blk_dev *bdev)
 
 	spin_lock_irqsave(&bdev->lock, flags);
 	if (bdev->state == SCM_WR_PROHIBIT)
-		pr_debug("%lx: Write access to the SCM increment is restored\n",
+		pr_info("%lx: Write access to the SCM increment is restored\n",
 			(unsigned long) bdev->scmdev->address);
 	bdev->state = SCM_OPER;
 	spin_unlock_irqrestore(&bdev->lock, flags);

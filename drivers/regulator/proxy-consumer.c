@@ -212,7 +212,7 @@ static int __init regulator_proxy_consumer_remove_all(void)
 	proxy_consumers_removed = true;
 
 	if (!list_empty(&proxy_consumer_list))
-		pr_debug("removing legacy regulator proxy consumer requests\n");
+		pr_info("removing legacy regulator proxy consumer requests\n");
 
 	list_for_each_entry_safe(consumer, temp, &proxy_consumer_list, list) {
 		regulator_proxy_consumer_remove(consumer);

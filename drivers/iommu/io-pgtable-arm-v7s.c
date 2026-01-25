@@ -1411,7 +1411,7 @@ static int __init arm_v7s_do_selftests(void)
 
 	selftest_running = false;
 
-	pr_debug("self test ok\n");
+	pr_info("self test ok\n");
 	return 0;
 }
 subsys_initcall(arm_v7s_do_selftests);

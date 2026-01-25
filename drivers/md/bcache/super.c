@@ -767,7 +767,7 @@ static void bcache_device_free(struct bcache_device *d)
 	lockdep_assert_held(&bch_register_lock);
 
 	if (disk)
-		pr_debug("%s stopped", disk->disk_name);
+		pr_info("%s stopped", disk->disk_name);
 	else
 		pr_err("bcache device (NULL gendisk) stopped");
 
@@ -1052,7 +1052,7 @@ static void cached_dev_detach_finish(struct work_struct *w)
 
 	mutex_unlock(&bch_register_lock);
 
-	pr_debug("Caching disabled for %s", dc->backing_dev_name);
+	pr_info("Caching disabled for %s", dc->backing_dev_name);
 
 	/* Drop ref we took in cached_dev_detach() */
 	closure_put(&dc->disk.cl);
@@ -1201,7 +1201,7 @@ int bch_cached_dev_attach(struct cached_dev *dc, struct cache_set *c,
 	/* Allow the writeback thread to proceed */
 	up_write(&dc->writeback_lock);
 
-	pr_debug("Caching %s as %s on set %pU",
+	pr_info("Caching %s as %s on set %pU",
 		dc->backing_dev_name,
 		dc->disk.disk->disk_name,
 		dc->disk.c->sb.set_uuid);
@@ -1342,7 +1342,7 @@ static void register_bdev(struct cache_sb *sb, struct page *sb_page,
 	if (bch_cache_accounting_add_kobjs(&dc->accounting, &dc->disk.kobj))
 		goto err;
 
-	pr_debug("registered backing device %s", dc->backing_dev_name);
+	pr_info("registered backing device %s", dc->backing_dev_name);
 
 	list_add(&dc->list, &uncached_devices);
 	/* attach to a matched cache set if it exists */
@@ -1492,7 +1492,7 @@ bool bch_cache_set_error(struct cache_set *c, const char *fmt, ...)
 		return false;
 
 	if (test_and_set_bit(CACHE_SET_IO_DISABLE, &c->flags))
-		pr_debug("CACHE_SET_IO_DISABLE already set");
+		pr_info("CACHE_SET_IO_DISABLE already set");
 
 	/*
 	 * XXX: we can be called from atomic context
@@ -1556,7 +1556,7 @@ static void cache_set_free(struct closure *cl)
 	list_del(&c->list);
 	mutex_unlock(&bch_register_lock);
 
-	pr_debug("Cache set %pU unregistered", c->sb.set_uuid);
+	pr_info("Cache set %pU unregistered", c->sb.set_uuid);
 	wake_up(&unregister_wait);
 
 	closure_debug_destroy(&c->cl);
@@ -2176,7 +2176,7 @@ static int register_cache(struct cache_sb *sb, struct page *sb_page,
 		goto out;
 	}
 
-	pr_debug("registered cache device %s", ca->cache_dev_name);
+	pr_info("registered cache device %s", ca->cache_dev_name);
 
 out:
 	kobject_put(&ca->kobj);
@@ -2309,7 +2309,7 @@ out:
 err_close:
 	blkdev_put(bdev, FMODE_READ|FMODE_WRITE|FMODE_EXCL);
 err:
-	pr_debug("error %s: %s", path, err);
+	pr_info("error %s: %s", path, err);
 	ret = -EINVAL;
 	goto out;
 }
@@ -2332,7 +2332,7 @@ static int bcache_reboot(struct notifier_block *n, unsigned long code, void *x)
 		    list_empty(&uncached_devices))
 			goto out;
 
-		pr_debug("Stopping all devices:");
+		pr_info("Stopping all devices:");
 
 		list_for_each_entry_safe(c, tc, &bch_cache_sets, list)
 			bch_cache_set_stop(c);
@@ -2361,7 +2361,7 @@ static int bcache_reboot(struct notifier_block *n, unsigned long code, void *x)
 		finish_wait(&unregister_wait, &wait);
 
 		if (stopped)
-			pr_debug("All devices stopped");
+			pr_info("All devices stopped");
 		else
 			pr_notice("Timeout waiting for devices to be closed");
 out:

@@ -1569,7 +1569,7 @@ static int rt9465_probe(struct i2c_client *i2c,
 	int ret = 0;
 	struct rt9465_info *info = NULL;
 
-	pr_debug("%s (%s)\n", __func__, RT9465_DRV_VERSION);
+	pr_info("%s (%s)\n", __func__, RT9465_DRV_VERSION);
 
 	info = devm_kzalloc(&i2c->dev, sizeof(struct rt9465_info), GFP_KERNEL);
 	if (!info)
@@ -1636,7 +1636,7 @@ static int rt9465_remove(struct i2c_client *i2c)
 	int ret = 0;
 	struct rt9465_info *info = i2c_get_clientdata(i2c);
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 
 	if (info) {
 		if (info->chg_dev)
@@ -1658,7 +1658,7 @@ static void rt9465_shutdown(struct i2c_client *i2c)
 	int ret = 0;
 	struct rt9465_info *info = i2c_get_clientdata(i2c);
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 
 	if (info) {
 		ret = rt9465_reset_chip(info);
@@ -1731,9 +1731,9 @@ static int __init rt9465_init(void)
 	int ret = 0;
 
 #ifdef CONFIG_OF
-	pr_debug("%s: with dts\n", __func__);
+	pr_info("%s: with dts\n", __func__);
 #else
-	pr_debug("%s: without dts\n", __func__);
+	pr_info("%s: without dts\n", __func__);
 	i2c_register_board_info(RT9465_BUSNUM, &rt9465_i2c_board_info, 1);
 #endif
 

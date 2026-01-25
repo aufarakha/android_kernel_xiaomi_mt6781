@@ -192,7 +192,7 @@ static void parport_attach(struct parport *port)
 	port->ops->enable_irq(port);
 	device->index = index;
 
-	pr_debug("attached to %s\n", port->name);
+	pr_info("attached to %s\n", port->name);
 
 	return;
 
@@ -239,7 +239,7 @@ static int __init pps_parport_init(void)
 {
 	int ret;
 
-	pr_debug(DRVDESC "\n");
+	pr_info(DRVDESC "\n");
 
 	if (clear_wait > CLEAR_WAIT_MAX) {
 		pr_err("clear_wait value should be not greater"

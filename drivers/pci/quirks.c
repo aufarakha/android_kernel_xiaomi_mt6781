@@ -1893,7 +1893,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1639, quirk_ryzen_xhci_d3hot);
 static int dmi_disable_ioapicreroute(const struct dmi_system_id *d)
 {
 	noioapicreroute = 1;
-	pr_debug("%s detected: disable boot interrupt reroute\n", d->ident);
+	pr_info("%s detected: disable boot interrupt reroute\n", d->ident);
 
 	return 0;
 }

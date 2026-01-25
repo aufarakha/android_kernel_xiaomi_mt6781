@@ -217,11 +217,11 @@ static ssize_t dvfsrc_debug_store(struct device *dev,
 
 	if (sscanf(buf, "%31s 0x%x 0x%x", cmd, &val, &val2) == 3 ||
 			sscanf(buf, "%31s %d %d", cmd, &val, &val2) == 3)
-		pr_debug("dvfsrc_debug cmd: %s, val1: %d(0x%x) val2: %d(0x%x)\n",
+		pr_info("dvfsrc_debug cmd: %s, val1: %d(0x%x) val2: %d(0x%x)\n",
 			cmd, val, val, val2, val2);
 	else if (sscanf(buf, "%31s 0x%x", cmd, &val) == 2 ||
 			sscanf(buf, "%31s %d", cmd, &val) == 2)
-		pr_debug("dvfsrc_debug cmd: %s, val: %d(0x%x)\n", cmd, val, val);
+		pr_info("dvfsrc_debug cmd: %s, val: %d(0x%x)\n", cmd, val, val);
 
 	if (!strcmp(cmd, "kir_emi"))
 		pm_qos_update_request(&dvfsrc_emi_request, val);

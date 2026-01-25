@@ -939,7 +939,7 @@ static int commit_data(int type, int data)
 
 	get_vvpu_efuse();
 	if (ret < 0) {
-		pr_debug("%s: type: 0x%x, data: 0x%x, opp: %d, level: %d\n",
+		pr_info("%s: type: 0x%x, data: 0x%x, opp: %d, level: %d\n",
 				__func__, type, data, opp, level);
 		apu_get_power_info();
 		apu_dvfs_dump_reg(NULL);
@@ -966,7 +966,7 @@ char *apu_dvfs_dump_reg(char *ptr)
 	if (ptr)
 		ptr += sprintf(ptr, "%s\n", buf);
 	else
-		pr_debug("%s\n", buf);
+		pr_info("%s\n", buf);
 
 	return ptr;
 }

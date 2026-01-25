@@ -29,7 +29,7 @@ module_param(debug, int, 0644);
 #define dprintk(level, fmt, args...)					\
 	do {								\
 		if (debug >= level)					\
-			pr_debug("mtk-dma-contig: " fmt, ##args);	\
+			pr_info("mtk-dma-contig: " fmt, ##args);	\
 	} while (0)
 
 /*********************************************/

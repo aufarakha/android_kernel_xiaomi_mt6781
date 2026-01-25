@@ -132,7 +132,7 @@ static int clk_mt6779_aud_probe(struct platform_device *pdev)
 	}
 
 #if CCF_SUBSYS_DEBUG
-	pr_debug("%s(): clk data number: %d\n", __func__, clk_data->clk_num);
+	pr_info("%s(): clk data number: %d\n", __func__, clk_data->clk_num);
 #endif
 
 	mtk_clk_register_gates(node, audio_clks, ARRAY_SIZE(audio_clks),

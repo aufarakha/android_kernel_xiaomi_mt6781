@@ -43,7 +43,7 @@ do { \
 	if (ccci_debug_enable == CCCI_LOG_ALL_MOBILE) \
 		pr_debug("[ccci%d/" tag "]" fmt, (idx+1), ##args); \
 	else if (ccci_debug_enable == CCCI_LOG_ALL_UART) \
-		pr_debug("[ccci%d/" tag "]" fmt, (idx+1), ##args); \
+		pr_info("[ccci%d/" tag "]" fmt, (idx+1), ##args); \
 } while (0)
 
 #define CCCI_LEGACY_ALWAYS_LOG(idx, tag, fmt, args...) \
@@ -53,7 +53,7 @@ do { \
 		pr_debug("[ccci%d/" tag "]" fmt, (idx+1), ##args); \
 	else if (ccci_debug_enable == CCCI_LOG_ALL_UART \
 			|| ccci_debug_enable == CCCI_LOG_CRITICAL_UART) \
-		pr_debug("[ccci%d/" tag "]" fmt, (idx+1), ##args); \
+		pr_info("[ccci%d/" tag "]" fmt, (idx+1), ##args); \
 } while (0)
 
 #define CCCI_LEGACY_ERR_LOG(idx, tag, fmt, args...) \

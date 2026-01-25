@@ -177,7 +177,7 @@ found:
 	priv->pmbase = pmbase;
 	priv->pcidev = pdev;
 
-	pr_debug(DRV_NAME " detected\n");
+	pr_info(DRV_NAME " detected\n");
 	err = hwrng_register(&amd_rng);
 	if (err) {
 		pr_err(DRV_NAME " registering failed (%d)\n", err);

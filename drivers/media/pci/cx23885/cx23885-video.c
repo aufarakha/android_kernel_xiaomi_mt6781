@@ -1305,11 +1305,11 @@ int cx23885_video_register(struct cx23885_dev *dev)
 	err = video_register_device(dev->video_dev, VFL_TYPE_GRABBER,
 				    video_nr[dev->nr]);
 	if (err < 0) {
-		pr_debug("%s: can't register video device\n",
+		pr_info("%s: can't register video device\n",
 			dev->name);
 		goto fail_unreg;
 	}
-	pr_debug("%s: registered device %s [v4l2]\n",
+	pr_info("%s: registered device %s [v4l2]\n",
 	       dev->name, video_device_node_name(dev->video_dev));
 
 	/* register VBI device */
@@ -1323,11 +1323,11 @@ int cx23885_video_register(struct cx23885_dev *dev)
 	err = video_register_device(dev->vbi_dev, VFL_TYPE_VBI,
 				    vbi_nr[dev->nr]);
 	if (err < 0) {
-		pr_debug("%s: can't register vbi device\n",
+		pr_info("%s: can't register vbi device\n",
 			dev->name);
 		goto fail_unreg;
 	}
-	pr_debug("%s: registered device %s\n",
+	pr_info("%s: registered device %s\n",
 	       dev->name, video_device_node_name(dev->vbi_dev));
 
 	/* Register ALSA audio device */

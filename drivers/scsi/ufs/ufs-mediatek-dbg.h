@@ -29,7 +29,7 @@ do { \
 	if (evt) \
 		seq_printf(evt, fmt, ##args); \
 	if (!buff && !evt) { \
-		pr_debug(fmt, ##args); \
+		pr_info(fmt, ##args); \
 	} \
 } while (0)
 

@@ -105,7 +105,7 @@ void __init acpi_osi_setup(char *str)
 		return;
 
 	if (str == NULL || *str == '\0') {
-		pr_debug("_OSI method disabled\n");
+		pr_info("_OSI method disabled\n");
 		acpi_gbl_create_osi_method = FALSE;
 		return;
 	}
@@ -228,7 +228,7 @@ static void __init acpi_osi_setup_late(void)
 	if (osi_config.default_disabling) {
 		status = acpi_update_interfaces(osi_config.default_disabling);
 		if (ACPI_SUCCESS(status))
-			pr_debug("Disabled all _OSI OS vendors%s\n",
+			pr_info("Disabled all _OSI OS vendors%s\n",
 				osi_config.default_disabling ==
 				ACPI_DISABLE_ALL_STRINGS ?
 				" and feature groups" : "");
@@ -242,11 +242,11 @@ static void __init acpi_osi_setup_late(void)
 		if (osi->enable) {
 			status = acpi_install_interface(str);
 			if (ACPI_SUCCESS(status))
-				pr_debug("Added _OSI(%s)\n", str);
+				pr_info("Added _OSI(%s)\n", str);
 		} else {
 			status = acpi_remove_interface(str);
 			if (ACPI_SUCCESS(status))
-				pr_debug("Deleted _OSI(%s)\n", str);
+				pr_info("Deleted _OSI(%s)\n", str);
 		}
 	}
 }

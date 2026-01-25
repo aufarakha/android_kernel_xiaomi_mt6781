@@ -978,7 +978,7 @@ static int __init pnv_php_init(void)
 {
 	struct device_node *dn;
 
-	pr_debug(DRIVER_DESC " version: " DRIVER_VERSION "\n");
+	pr_info(DRIVER_DESC " version: " DRIVER_VERSION "\n");
 	for_each_compatible_node(dn, NULL, "ibm,ioda2-phb")
 		pnv_php_register(dn);
 

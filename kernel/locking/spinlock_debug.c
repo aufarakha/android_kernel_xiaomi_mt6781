@@ -321,7 +321,7 @@ static void show_cpu_backtrace(void *info)
 {
 	call_single_data_t *csd;
 
-	pr_debug("========== The call trace of lock owner on CPU%d ==========\n",
+	pr_info("========== The call trace of lock owner on CPU%d ==========\n",
 		raw_smp_processor_id());
 	dump_stack();
 
@@ -400,7 +400,7 @@ static void __spin_lock_debug(raw_spinlock_t *lock)
 			continue;
 
 		get_spin_lock_name(lock, lock_name);
-		pr_debug("(%s)(%p) spin time: %llu ms(from %lld.%06lu), raw_lock: 0x%08x, magic: %08x, held by %s/%d on CPU#%d(from %lld.%06lu)\n",
+		pr_info("(%s)(%p) spin time: %llu ms(from %lld.%06lu), raw_lock: 0x%08x, magic: %08x, held by %s/%d on CPU#%d(from %lld.%06lu)\n",
 			lock_name, lock,
 			msec_high(t2 - t1), sec_high(t1), sec_low(t1),
 			*((unsigned int *)&lock->raw_lock), lock->magic,
@@ -449,7 +449,7 @@ static void __spin_lock_debug(raw_spinlock_t *lock)
 
 			smp_call_function_single_async(owner_cpu, csd);
 		} else {
-			pr_debug("(%s) recursive deadlock on CPU%d\n",
+			pr_info("(%s) recursive deadlock on CPU%d\n",
 				lock_name, owner_cpu);
 		}
 	}
@@ -480,7 +480,7 @@ spin_lock_check_spinning_time(raw_spinlock_t *lock, unsigned long long ts)
 		char lock_name[MAX_LOCK_NAME];
 
 		get_spin_lock_name(lock, lock_name);
-		pr_debug("spinning for (%s)(%p) from [%lld.%06lu] to [%lld.%06lu], total %llu ms\n",
+		pr_info("spinning for (%s)(%p) from [%lld.%06lu] to [%lld.%06lu], total %llu ms\n",
 			lock_name, lock,
 			sec_high(ts), sec_low(ts),
 			sec_high(te), sec_low(te),
@@ -497,13 +497,13 @@ static void spin_lock_check_holding_time(raw_spinlock_t *lock)
 		return;
 
 	get_spin_lock_name(lock, name);
-	pr_debug("hold spinlock (%s)(%p) from [%lld.%06lu] to [%lld.%06lu], total %llu ms\n",
+	pr_info("hold spinlock (%s)(%p) from [%lld.%06lu] to [%lld.%06lu], total %llu ms\n",
 		name, lock,
 		sec_high(lock->lock_t), sec_low(lock->lock_t),
 		sec_high(lock->unlock_t), sec_low(lock->unlock_t),
 		msec_high(lock->unlock_t - lock->lock_t));
 
-	pr_debug("========== The call trace of lock owner on CPU%d ==========\n",
+	pr_info("========== The call trace of lock owner on CPU%d ==========\n",
 		raw_smp_processor_id());
 	dump_stack();
 

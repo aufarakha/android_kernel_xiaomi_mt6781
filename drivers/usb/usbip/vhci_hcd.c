@@ -935,7 +935,7 @@ static int vhci_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
 
 		unlink->seqnum = atomic_inc_return(&vhci_hcd->seqnum);
 		if (unlink->seqnum == 0xffff)
-			pr_debug("seqnum max\n");
+			pr_info("seqnum max\n");
 
 		unlink->unlink_seqnum = priv->seqnum;
 
@@ -968,7 +968,7 @@ static void vhci_device_unlink_cleanup(struct vhci_device *vdev)
 		struct urb *urb;
 
 		/* give back urb of unsent unlink request */
-		pr_debug("unlink cleanup tx %lu\n", unlink->unlink_seqnum);
+		pr_info("unlink cleanup tx %lu\n", unlink->unlink_seqnum);
 
 		urb = pickup_urb_and_free_priv(vdev, unlink->unlink_seqnum);
 		if (!urb) {
@@ -1001,11 +1001,11 @@ static void vhci_device_unlink_cleanup(struct vhci_device *vdev)
 			list);
 
 		/* give back URB of unanswered unlink request */
-		pr_debug("unlink cleanup rx %lu\n", unlink->unlink_seqnum);
+		pr_info("unlink cleanup rx %lu\n", unlink->unlink_seqnum);
 
 		urb = pickup_urb_and_free_priv(vdev, unlink->unlink_seqnum);
 		if (!urb) {
-			pr_debug("the urb (seqnum %lu) was already given back\n",
+			pr_info("the urb (seqnum %lu) was already given back\n",
 				unlink->unlink_seqnum);
 			list_del(&unlink->list);
 			kfree(unlink);
@@ -1057,7 +1057,7 @@ static void vhci_shutdown_connection(struct usbip_device *ud)
 		kthread_stop_put(vdev->ud.tcp_tx);
 		vdev->ud.tcp_tx = NULL;
 	}
-	pr_debug("stop threads\n");
+	pr_info("stop threads\n");
 
 	/* active connection is closed */
 	if (vdev->ud.tcp_socket) {
@@ -1065,7 +1065,7 @@ static void vhci_shutdown_connection(struct usbip_device *ud)
 		vdev->ud.tcp_socket = NULL;
 		vdev->ud.sockfd = -1;
 	}
-	pr_debug("release socket\n");
+	pr_info("release socket\n");
 
 	vhci_device_unlink_cleanup(vdev);
 
@@ -1091,7 +1091,7 @@ static void vhci_shutdown_connection(struct usbip_device *ud)
 	 */
 	rh_port_disconnect(vdev);
 
-	pr_debug("disconnect device\n");
+	pr_info("disconnect device\n");
 }
 
 static void vhci_device_reset(struct usbip_device *ud)
@@ -1247,7 +1247,7 @@ static int vhci_start(struct usb_hcd *hcd)
 			vhci_finish_attr_group();
 			return err;
 		}
-		pr_debug("created sysfs %s\n", hcd_name(hcd));
+		pr_info("created sysfs %s\n", hcd_name(hcd));
 	}
 
 	return 0;

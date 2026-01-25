@@ -691,7 +691,7 @@ static int vm_cmdline_set(const char *device,
 		vm_cmdline_parent_registered = 1;
 	}
 
-	pr_debug("Registering device virtio-mmio.%d at 0x%llx-0x%llx, IRQ %d.\n",
+	pr_info("Registering device virtio-mmio.%d at 0x%llx-0x%llx, IRQ %d.\n",
 		       vm_cmdline_id,
 		       (unsigned long long)resources[0].start,
 		       (unsigned long long)resources[0].end,

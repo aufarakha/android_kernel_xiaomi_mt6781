@@ -185,7 +185,7 @@ static void gpt_devs_init(void)
 	for (i = 0; i < NR_GPTS; i++) {
 		gpt_devs[i].id = i;
 		gpt_devs[i].base_addr = GPT1_BASE + 0x10 * i;
-		pr_debug("gpt%d, base=0x%lx\n",
+		pr_info("gpt%d, base=0x%lx\n",
 			i + 1, (unsigned long)gpt_devs[i].base_addr);
 	}
 
@@ -327,7 +327,7 @@ static irqreturn_t gpt_handler(int irq, void *dev_id)
 		else
 			handlers[id]((unsigned long)dev_id);
 	} else
-		pr_debug("GPT id is %d\n", id);
+		pr_info("GPT id is %d\n", id);
 
 #ifdef _MTK_TIMER_DBG_AEE_DUMP
 	gpt_time_int_handler_exit = sched_clock();
@@ -510,7 +510,7 @@ static int mt_gpt_clkevt_next_event(unsigned long cycles,
 	__gpt_stop(dev);
 
 	if (cycles < 3) {
-		pr_debug("[mt_gpt] invalid cycles < 3\n");
+		pr_info("[mt_gpt] invalid cycles < 3\n");
 		cycles = 3;
 	}
 
@@ -623,17 +623,17 @@ static void clkevt_handler(unsigned long data)
 	cpu = mt_irq_dump_cpu(evt->irq);
 
 	if (cpu < 0) {
-		pr_debug("[mt_gpt] invalid irq query! ret %d\n", cpu);
+		pr_info("[mt_gpt] invalid irq query! ret %d\n", cpu);
 		err = 1;
 	} else {
 		if (cpu != smp_processor_id()) {
-			pr_debug("[mt_gpt] wrong irq! irq_cpu %d, cur_cpu %d\n",
+			pr_info("[mt_gpt] wrong irq! irq_cpu %d, cur_cpu %d\n",
 				cpu, smp_processor_id());
 			err = 1;
 		}
 
 		if (cpu != evt->irq_affinity_on) {
-			pr_debug("[mt_gpt] wrong affinity! irq_cpu %d, affinity %d\n",
+			pr_info("[mt_gpt] wrong affinity! irq_cpu %d, affinity %d\n",
 				cpu, evt->irq_affinity_on);
 			err = 1;
 		}
@@ -655,7 +655,7 @@ static inline void setup_clksrc(u32 freq)
 	struct clocksource *cs = &gpt_clocksource;
 	struct mt_gpt_device *dev = id_to_dev(GPT_CLKSRC_ID);
 
-	pr_debug("setup_clksrc1: dev->base_addr=0x%lx GPT2_CON=0x%x\n",
+	pr_info("setup_clksrc1: dev->base_addr=0x%lx GPT2_CON=0x%x\n",
 		(unsigned long)dev->base_addr, __raw_readl(dev->base_addr));
 
 	/* add GPT_NOIRQEN flag to avoid irq asserted because
@@ -667,7 +667,7 @@ static inline void setup_clksrc(u32 freq)
 	/* clocksource_register(cs); */
 	clocksource_register_hz(cs, freq);
 
-	pr_debug("setup_clksrc2: dev->base_addr=0x%lx GPT2_CON=0x%x\n",
+	pr_info("setup_clksrc2: dev->base_addr=0x%lx GPT2_CON=0x%x\n",
 		(unsigned long)dev->base_addr, __raw_readl(dev->base_addr));
 }
 
@@ -701,7 +701,7 @@ static inline void setup_clkevt(u32 freq, int irq)
 
 	__gpt_get_cmp(dev, cmp);
 
-	pr_debug("apxgpt%d: clkdiv=%d, cmp=%d, hz=%d, freq=%d\n",
+	pr_info("apxgpt%d: clkdiv=%d, cmp=%d, hz=%d, freq=%d\n",
 		GPT_CLKEVT_ID + 1, clkdiv, cmp[0], HZ, freq);
 
 	clockevents_register_device(evt);
@@ -716,12 +716,12 @@ static void __init mt_gpt_init_acao(struct device_node *node)
 
 	clk_evt = of_clk_get(node, 0);
 	if (IS_ERR(clk_evt)) {
-		pr_debug("can't get timer clk_evt\n");
+		pr_info("can't get timer clk_evt\n");
 		return;
 	}
 
 	if (clk_prepare_enable(clk_evt)) {
-		pr_debug("can't prepare clk_evt\n");
+		pr_info("can't prepare clk_evt\n");
 		clk_put(clk_evt);
 		return;
 	}
@@ -736,7 +736,7 @@ static void __init mt_gpt_init_acao(struct device_node *node)
 
 	setup_clkevt(freq, gpt_timers.tmr_irq);
 
-	pr_debug("acao clkevt, freq=%d\n",	freq);
+	pr_info("acao clkevt, freq=%d\n",	freq);
 
 }
 
@@ -768,7 +768,7 @@ int request_gpt(unsigned int id, unsigned int mode, unsigned int clksrc,
 		return -EINVAL;
 
 	if (dev->flags & GPT_IN_USE) {
-		pr_debug("%s: GPT%d is in use!\n", __func__, (id + 1));
+		pr_info("%s: GPT%d is in use!\n", __func__, (id + 1));
 		return -EBUSY;
 	}
 
@@ -808,7 +808,7 @@ int start_gpt(unsigned int id)
 		return -EINVAL;
 
 	if (!(dev->flags & GPT_IN_USE)) {
-		pr_debug("%s: GPT%d is not in use!\n", __func__, id);
+		pr_info("%s: GPT%d is not in use!\n", __func__, id);
 		return -EBUSY;
 	}
 
@@ -830,7 +830,7 @@ int stop_gpt(unsigned int id)
 		return -EINVAL;
 
 	if (!(dev->flags & GPT_IN_USE)) {
-		pr_debug("%s: GPT%d is not in use!\n", __func__, id);
+		pr_info("%s: GPT%d is not in use!\n", __func__, id);
 		return -EBUSY;
 	}
 
@@ -851,7 +851,7 @@ int restart_gpt(unsigned int id)
 		return -EINVAL;
 
 	if (!(dev->flags & GPT_IN_USE)) {
-		pr_debug("%s: GPT%d is not in use!\n", __func__, id);
+		pr_info("%s: GPT%d is not in use!\n", __func__, id);
 		return -EBUSY;
 	}
 
@@ -873,7 +873,7 @@ int gpt_is_counting(unsigned int id)
 		return -EINVAL;
 
 	if (!(dev->flags & GPT_IN_USE)) {
-		pr_debug("%s: GPT%d is not in use!\n", __func__, id);
+		pr_info("%s: GPT%d is not in use!\n", __func__, id);
 		return -EBUSY;
 	}
 
@@ -1001,7 +1001,7 @@ int gpt_set_clk(unsigned int id, unsigned int clksrc, unsigned int clkdiv)
 		return -EINVAL;
 
 	if (!(dev->flags & GPT_IN_USE)) {
-		pr_debug("%s: GPT%d is not in use!\n", __func__, id);
+		pr_info("%s: GPT%d is not in use!\n", __func__, id);
 		return -EBUSY;
 	}
 
@@ -1028,7 +1028,7 @@ static int __init mt_gpt_init(struct device_node *node)
 	/* Setup IO addresses */
 	gpt_timers.tmr_regs = of_iomap(node, 0);
 
-	pr_debug("base=0x%lx, irq=%d\n",
+	pr_info("base=0x%lx, irq=%d\n",
 		(unsigned long)gpt_timers.tmr_regs, gpt_timers.tmr_irq);
 
 	/* setup gpt itself */

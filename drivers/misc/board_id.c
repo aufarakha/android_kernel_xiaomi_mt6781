@@ -35,7 +35,7 @@ EXPORT_SYMBOL(get_board_new_version);
 static int __init setup_board_new_version(char *str)
 {
 	board_new_version = simple_strtol(str, NULL, 10);
-	pr_debug("board_id_hwlevel : %d\n", board_new_version);
+	pr_info("board_id_hwlevel : %d\n", board_new_version);
 	return 1;
 }
 __setup("androidboot.board.new_version=", setup_board_new_version);
@@ -65,7 +65,7 @@ EXPORT_SYMBOL(board_id_get_hwname);
 static int __init setup_board_id_hwname(char *str)
 {
 	strcpy(board_id_hwname, str);
-	pr_debug("board_id_hwname : %s\n", board_id_hwname);
+	pr_info("board_id_hwname : %s\n", board_id_hwname);
 	return 1;
 }
 __setup("androidboot.hwname=", setup_board_id_hwname);
@@ -96,11 +96,11 @@ static int __init setup_board_id_hwlevel(char *str)
 {
 	if (!strcmp("MP", str)) {
 		board_id_hwlevel = 9;
-		pr_debug("board_id_hwlevel : %d (MP)\n", board_id_hwlevel);
+		pr_info("board_id_hwlevel : %d (MP)\n", board_id_hwlevel);
 		return 1;
 	}
 	board_id_hwlevel = simple_strtol(str, NULL, 10);
-	pr_debug("board_id_hwlevel : %d\n", board_id_hwlevel);
+	pr_info("board_id_hwlevel : %d\n", board_id_hwlevel);
 	return 1;
 }
 __setup("androidboot.hwlevel=", setup_board_id_hwlevel);
@@ -151,7 +151,7 @@ static int __init setup_board_id_hwversion(char *str)
 	strcpy(buf, str);
 	if(!strncmp(buf,"Unknown",7))
         {
-          pr_debug("board_id_hwversion: %d\n", buf);
+          pr_info("board_id_hwversion: %d\n", buf);
           return 1;
         }
 	str_n = buf;
@@ -160,9 +160,9 @@ static int __init setup_board_id_hwversion(char *str)
 	str_p = strsep(&str_n, ".");
 	board_id_hwversion_major_num = simple_strtoul(str_p, NULL, 10);
 	board_id_hwversion_minor_num = simple_strtoul(str_n, NULL, 10);
-	pr_debug("board_id_hwversion_product_num : %d\n", board_id_hwversion_product_num);
-	pr_debug("board_id_hwversion_major_num : %d\n", board_id_hwversion_major_num);
-	pr_debug("board_id_hwversion_minor_num : %d\n", board_id_hwversion_minor_num);
+	pr_info("board_id_hwversion_product_num : %d\n", board_id_hwversion_product_num);
+	pr_info("board_id_hwversion_major_num : %d\n", board_id_hwversion_major_num);
+	pr_info("board_id_hwversion_minor_num : %d\n", board_id_hwversion_minor_num);
 	return 1;
 }
 __setup("androidboot.hwversion=", setup_board_id_hwversion);

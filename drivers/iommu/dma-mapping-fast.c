@@ -349,7 +349,7 @@ static int __init atomic_pool_init(void)
 				  gen_pool_first_fit_order_align,
 				  NULL);
 
-		pr_debug("DMA: preallocated %zu KiB pool for atomic allocations\n",
+		pr_info("DMA: preallocated %zu KiB pool for atomic allocations\n",
 			atomic_pool_size / 1024);
 		return 0;
 	}

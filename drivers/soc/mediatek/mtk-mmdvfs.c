@@ -201,7 +201,7 @@ static int regulator_event_notify(struct notifier_block *nb,
 			drv_data->need_change_voltage = false;
 			drv_data->request_voltage = uV;
 		}
-		pr_debug("regulator event=ABORT_VOLTAGE_CHANGE voltage=%lu\n",
+		pr_info("regulator event=ABORT_VOLTAGE_CHANGE voltage=%lu\n",
 			uV);
 	}
 	return 0;

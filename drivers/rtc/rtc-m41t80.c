@@ -754,12 +754,12 @@ static int wdt_ioctl(struct file *file, unsigned int cmd,
 			return -EFAULT;
 
 		if (rv & WDIOS_DISABLECARD) {
-			pr_debug("disable watchdog\n");
+			pr_info("disable watchdog\n");
 			wdt_disable();
 		}
 
 		if (rv & WDIOS_ENABLECARD) {
-			pr_debug("enable watchdog\n");
+			pr_info("enable watchdog\n");
 			wdt_ping();
 		}
 

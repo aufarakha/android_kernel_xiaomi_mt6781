@@ -371,7 +371,7 @@ static ssize_t stmmac_store(struct device *dev,
 			 reg, origin, readl(tmp_addr));
 	} else if (!strncmp(buf, "dump_mac", 8)) {
 		for (i = 0; i < 0x1300 / 0x10 + 1; i++) {
-			pr_debug("%08x:\t%08x\t%08x\t%08x\t%08x\t\n",
+			pr_info("%08x:\t%08x\t%08x\t%08x\t%08x\t\n",
 				reg + i * 16,
 				readl(priv->ioaddr + i * 0x10),
 				readl(priv->ioaddr + i * 0x10 + 0x4),

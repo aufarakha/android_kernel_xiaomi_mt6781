@@ -76,7 +76,7 @@ static unsigned int pmic_ipi_config_interface(unsigned int RegNum,
 
 	if (RegNum == 0x20) {
 		dump_stack();
-		pr_debug("[%s] ipi_config: Regnum:%d, val:%d,MASK:%d,SHIFT,%d\n",
+		pr_info("[%s] ipi_config: Regnum:%d, val:%d,MASK:%d,SHIFT,%d\n",
 			__func__, RegNum, val, MASK, SHIFT);
 	}
 	send.cmd[0] = MAIN_PMIC_WRITE_REGISTER;
@@ -103,7 +103,7 @@ static int pmic_ipi_reg_write(void *context, const void *data, size_t count)
 	}
 	ret = pmic_ipi_config_interface(reg, val, 0xFFFF, 0, 1);
 	if (ret) {
-		pr_debug("[%s]fail with ret=%d, reg=0x%x val=0x%x\n",
+		pr_info("[%s]fail with ret=%d, reg=0x%x val=0x%x\n",
 			__func__, ret, reg, val);
 		return -EINVAL;
 	}
@@ -135,7 +135,7 @@ static int pmic_ipi_reg_update_bits(void *context, unsigned int reg,
 
 	ret = pmic_ipi_config_interface(reg, val, mask, 0, 1);
 	if (ret) {
-		pr_debug("[%s]fail with ret=%d, reg=0x%x mask=0x%x val=0x%x\n",
+		pr_info("[%s]fail with ret=%d, reg=0x%x mask=0x%x val=0x%x\n",
 			__func__, ret, reg, mask, val);
 		return -EINVAL;
 	}

@@ -402,12 +402,12 @@ static int __init c101_init(void)
 {
 	if (hw == NULL) {
 #ifdef MODULE
-		pr_debug("no card initialized\n");
+		pr_info("no card initialized\n");
 #endif
 		return -EINVAL;	/* no parameters specified, abort */
 	}
 
-	pr_debug("%s\n", version);
+	pr_info("%s\n", version);
 
 	do {
 		unsigned long irq, ram;

@@ -219,7 +219,7 @@ static int EC_FLAGS_CLEAR_ON_RESUME; /* Needs acpi_ec_clear() on boot/resume */
 #endif
 
 #define ec_log_raw(fmt, ...) \
-	pr_debug(fmt "\n", ##__VA_ARGS__)
+	pr_info(fmt "\n", ##__VA_ARGS__)
 #define ec_dbg_raw(fmt, ...) \
 	pr_debug(fmt "\n", ##__VA_ARGS__)
 #define ec_log(filter, fmt, ...) \
@@ -517,7 +517,7 @@ static void acpi_ec_clear(struct acpi_ec *ec)
 	if (unlikely(i == ACPI_EC_CLEAR_MAX))
 		pr_warn("Warning: Maximum of %d stale EC events cleared\n", i);
 	else
-		pr_debug("%d stale EC events cleared\n", i);
+		pr_info("%d stale EC events cleared\n", i);
 }
 
 static void acpi_ec_enable_event(struct acpi_ec *ec)
@@ -2097,13 +2097,13 @@ static int param_set_event_clearing(const char *val,
 
 	if (!strncmp(val, "status", sizeof("status") - 1)) {
 		ec_event_clearing = ACPI_EC_EVT_TIMING_STATUS;
-		pr_debug("Assuming SCI_EVT clearing on EC_SC accesses\n");
+		pr_info("Assuming SCI_EVT clearing on EC_SC accesses\n");
 	} else if (!strncmp(val, "query", sizeof("query") - 1)) {
 		ec_event_clearing = ACPI_EC_EVT_TIMING_QUERY;
-		pr_debug("Assuming SCI_EVT clearing on QR_EC writes\n");
+		pr_info("Assuming SCI_EVT clearing on QR_EC writes\n");
 	} else if (!strncmp(val, "event", sizeof("event") - 1)) {
 		ec_event_clearing = ACPI_EC_EVT_TIMING_EVENT;
-		pr_debug("Assuming SCI_EVT clearing on event reads\n");
+		pr_info("Assuming SCI_EVT clearing on event reads\n");
 	} else
 		result = -EINVAL;
 	return result;

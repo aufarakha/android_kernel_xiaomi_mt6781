@@ -400,33 +400,33 @@ static int spi_slave_probe(struct spi_device *spi)
 	slv_data.spi = spi;
 	ret = of_property_read_u8(nc, "slave-drive-strength", &(slv_data.slave_drive_strength));
 	if (ret)
-		pr_debug("slave-drive-strength isn't setting!\n");
+		pr_info("slave-drive-strength isn't setting!\n");
 	else
-		pr_debug("slave-drive-strength = %d\n", slv_data.slave_drive_strength);
+		pr_info("slave-drive-strength = %d\n", slv_data.slave_drive_strength);
 
 	ret = of_property_read_u8(nc, "high-speed-tick-delay", &(slv_data.high_speed_tick_delay));
 	if (ret)
-		pr_debug("high-speed-tick-delay isn't setting!\n");
+		pr_info("high-speed-tick-delay isn't setting!\n");
 	else
-		pr_debug("high-speed-tick-delay = %d\n", slv_data.high_speed_tick_delay);
+		pr_info("high-speed-tick-delay = %d\n", slv_data.high_speed_tick_delay);
 
 	ret = of_property_read_u8(nc, "low-speed-tick-delay", &(slv_data.low_speed_tick_delay));
 	if (ret)
-		pr_debug("low-speed-tick-delay isn't setting!\n");
+		pr_info("low-speed-tick-delay isn't setting!\n");
 	else
-		pr_debug("low-speed-tick-delay = %d\n", slv_data.low_speed_tick_delay);
+		pr_info("low-speed-tick-delay = %d\n", slv_data.low_speed_tick_delay);
 
 	ret = of_property_read_u8(nc, "high-speed-early-trans", &(slv_data.high_speed_early_trans));
 	if (ret)
-		pr_debug("high-speed-early-trans isn't setting!\n");
+		pr_info("high-speed-early-trans isn't setting!\n");
 	else
-		pr_debug("high-speed-early-trans = %d\n", slv_data.high_speed_early_trans);
+		pr_info("high-speed-early-trans = %d\n", slv_data.high_speed_early_trans);
 
 	ret = of_property_read_u8(nc, "low-speed-early-trans", &(slv_data.low_speed_early_trans));
 	if (ret)
-		pr_debug("low-speed-early-trans isn't setting!\n");
+		pr_info("low-speed-early-trans isn't setting!\n");
 	else
-		pr_debug("low-speed-early-trans = %d\n", slv_data.low_speed_early_trans);
+		pr_info("low-speed-early-trans = %d\n", slv_data.low_speed_early_trans);
 
 	if (spi->mode & SPI_TX_DUAL)
 		slv_data.tx_nbits = SPI_NBITS_DUAL;

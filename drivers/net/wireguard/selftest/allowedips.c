@@ -464,7 +464,7 @@ static __init struct wg_peer *init_peer(void)
 #define maybe_fail() do {                                               \
 		++i;                                                    \
 		if (!_s) {                                              \
-			pr_debug("allowedips self-test %zu: FAIL\n", i); \
+			pr_info("allowedips self-test %zu: FAIL\n", i); \
 			success = false;                                \
 		}                                                       \
 	} while (0)
@@ -654,7 +654,7 @@ bool __init wg_allowedips_selftest(void)
 		success = randomized_test();
 
 	if (success)
-		pr_debug("allowedips self-tests: pass\n");
+		pr_info("allowedips self-tests: pass\n");
 
 free:
 	wg_allowedips_free(&t, &mutex);

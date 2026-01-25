@@ -203,7 +203,7 @@ enum chip_type_t {
 #endif
 
 /* Log define */
-#define GTP_INFO(fmt, arg...) pr_debug("<<-GTP-INFO->> " fmt "\n", ##arg)
+#define GTP_INFO(fmt, arg...) pr_info("<<-GTP-INFO->> " fmt "\n", ##arg)
 #define GTP_ERROR(fmt, arg...) pr_debug("<<-GTP-ERROR->> " fmt "\n", ##arg)
 #define GTP_DEBUG(fmt, arg...)                                                 \
 	do {                                                                   \

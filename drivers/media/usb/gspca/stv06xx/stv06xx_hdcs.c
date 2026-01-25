@@ -372,7 +372,7 @@ static int hdcs_probe_1x00(struct sd *sd)
 	if (ret < 0 || sensor != 0x08)
 		return -ENODEV;
 
-	pr_debug("HDCS-1000/1100 sensor detected\n");
+	pr_info("HDCS-1000/1100 sensor detected\n");
 
 	sd->gspca_dev.cam.cam_mode = hdcs1x00_mode;
 	sd->gspca_dev.cam.nmodes = ARRAY_SIZE(hdcs1x00_mode);
@@ -429,7 +429,7 @@ static int hdcs_probe_1020(struct sd *sd)
 	if (ret < 0 || sensor != 0x10)
 		return -ENODEV;
 
-	pr_debug("HDCS-1020 sensor detected\n");
+	pr_info("HDCS-1020 sensor detected\n");
 
 	sd->gspca_dev.cam.cam_mode = hdcs1020_mode;
 	sd->gspca_dev.cam.nmodes = ARRAY_SIZE(hdcs1020_mode);
@@ -531,11 +531,11 @@ static int hdcs_dump(struct sd *sd)
 	u16 reg, val;
 	int err = 0;
 
-	pr_debug("Dumping sensor registers:\n");
+	pr_info("Dumping sensor registers:\n");
 
 	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH && !err; reg++) {
 		err = stv06xx_read_sensor(sd, reg, &val);
-		pr_debug("reg 0x%02x = 0x%02x\n", reg, val);
+		pr_info("reg 0x%02x = 0x%02x\n", reg, val);
 	}
 	return (err < 0) ? err : 0;
 }

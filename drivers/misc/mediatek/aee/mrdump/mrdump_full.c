@@ -90,7 +90,7 @@ int __init mrdump_full_init(void)
 	/* TODO: remove flush APIs after full ramdump support  HW_Reboot*/
 	aee__flush_dcache_area(mrdump_cblock,
 			sizeof(struct mrdump_control_block));
-	pr_debug("%s: MT-RAMDUMP enabled done\n", __func__);
+	pr_info("%s: MT-RAMDUMP enabled done\n", __func__);
 #if IS_ENABLED(CONFIG_SYSFS)
 	if (sysfs_create_group(kernel_kobj, &attr_group)) {
 		pr_notice("MT-RAMDUMP: sysfs create sysfs failed\n");

@@ -596,7 +596,7 @@ static void nvmet_rdma_read_data_done(struct ib_cq *cq, struct ib_wc *wc)
 		nvmet_req_uninit(&rsp->req);
 		nvmet_rdma_release_rsp(rsp);
 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
-			pr_debug("RDMA READ for CQE 0x%p failed with status %s (%d).\n",
+			pr_info("RDMA READ for CQE 0x%p failed with status %s (%d).\n",
 				wc->wr_cqe, ib_wc_status_msg(wc->status), wc->status);
 			nvmet_rdma_error_comp(queue);
 		}
@@ -869,7 +869,7 @@ static int nvmet_rdma_init_srq(struct nvmet_rdma_device *ndev)
 		 * If SRQs aren't supported we just go ahead and use normal
 		 * non-shared receive queues.
 		 */
-		pr_debug("SRQ requested but not supported.\n");
+		pr_info("SRQ requested but not supported.\n");
 		return 0;
 	}
 
@@ -1573,7 +1573,7 @@ static int nvmet_rdma_add_port(struct nvmet_port *port)
 		goto out_destroy_id;
 	}
 
-	pr_debug("enabling port %d (%pISpcs)\n",
+	pr_info("enabling port %d (%pISpcs)\n",
 		le16_to_cpu(port->disc_addr.portid), (struct sockaddr *)&addr);
 	port->priv = cm_id;
 	return 0;
@@ -1648,7 +1648,7 @@ static void nvmet_rdma_remove_one(struct ib_device *ib_device, void *client_data
 		if (queue->dev->device != ib_device)
 			continue;
 
-		pr_debug("Removing queue %d\n", queue->idx);
+		pr_info("Removing queue %d\n", queue->idx);
 		list_del_init(&queue->queue_list);
 		__nvmet_rdma_queue_disconnect(queue);
 	}

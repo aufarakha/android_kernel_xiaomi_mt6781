@@ -3888,7 +3888,7 @@ static int isNeedMfgFakePowerOn(enum subsys_id id)
 		// if gpu dfd is triggered, the power control will be locked
 		// so we need to do fake power on
 		if (gpu_dfd_status & MFG_DFD_TRIGGER) {
-			pr_debug("%s:power on, MFG_MISC_CON(0x%x)\n",
+			pr_info("%s:power on, MFG_MISC_CON(0x%x)\n",
 				__func__, gpu_dfd_status);
 			isGpuDfdTriggered = 1;
 		}

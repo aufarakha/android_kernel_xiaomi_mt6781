@@ -19,11 +19,11 @@
 		aee_kernel_warning_api(__FILE__, __LINE__, \
 			DB_OPT_MMPROFILE_BUFFER | DB_OPT_NE_JBT_TRACES, \
 			vcu_name, "[VCU] error:"string, ##args); \
-	pr_debug("[VCU] error:"string, ##args);  \
+	pr_info("[VCU] error:"string, ##args);  \
 	} while (0)
 #else
 #define vcu_aee_print(string, args...) do {\
-		pr_debug("[VCU] error:"string, ##args);  \
+		pr_info("[VCU] error:"string, ##args);  \
 	} while (0)
 
 #endif

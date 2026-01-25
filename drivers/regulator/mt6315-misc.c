@@ -54,13 +54,13 @@ static void mt6315_S3_default_vosel(void)
 
 	mt6315 = mt6315_find_chip_sid(MT6315_SLAVE_ID_3);
 	if (!mt6315) {
-		pr_debug("%s MT6315S3 not ready.\n", __func__);
+		pr_info("%s MT6315S3 not ready.\n", __func__);
 		return;
 	}
 
 	regmap = mt6315->regmap;
 	if (!regmap) {
-		pr_debug("%s null regmap.\n", __func__);
+		pr_info("%s null regmap.\n", __func__);
 		return;
 	}
 
@@ -80,7 +80,7 @@ static void mt6315_S3_default_vosel(void)
 		regmap_write(regmap, MT6315_PMIC_RG_BUCK_VBUCK1_VOSEL_ADDR,
 			     g_vmodem_vosel);
 #endif
-		pr_debug("[%s] set vmodem=0x%x, vnr=0x%x, vsram_md=0x%x\n"
+		pr_info("[%s] set vmodem=0x%x, vnr=0x%x, vsram_md=0x%x\n"
 			, __func__, g_vmodem_vosel, g_vnr_vosel,
 			g_vsram_md_vosel);
 	} else {
@@ -100,7 +100,7 @@ static void mt6315_S3_default_vosel(void)
 		regmap_read(regmap, MT6315_PMIC_DA_VBUCK4_VOSEL_ADDR,
 			    &g_vsram_md_vosel);
 #endif
-		pr_debug("[%s] record vmodem=0x%x, vnr=0x%x, vsram_md=0x%x\n"
+		pr_info("[%s] record vmodem=0x%x, vnr=0x%x, vsram_md=0x%x\n"
 			, __func__, g_vmodem_vosel, g_vnr_vosel,
 			g_vsram_md_vosel);
 	}
@@ -166,16 +166,16 @@ int is_mt6315_exist(void)
 {
 #if defined(CONFIG_MACH_MT6885) || defined(CONFIG_MACH_MT6873) \
 || defined(CONFIG_MACH_MT6893)
-	pr_debug("%s S3:%d S6:%d S7:%d\n", __func__, is_mt6315_S3_exist()
+	pr_info("%s S3:%d S6:%d S7:%d\n", __func__, is_mt6315_S3_exist()
 	       , is_mt6315_S6_exist(), is_mt6315_S7_exist());
 	if (is_mt6315_S3_exist() && is_mt6315_S6_exist() &&
 	    is_mt6315_S7_exist())
 		return 1;
 #elif defined(CONFIG_MACH_MT6833) || defined(CONFIG_MACH_MT6853)
-	pr_debug("%s S3:%d\n", __func__, is_mt6315_S3_exist());
+	pr_info("%s S3:%d\n", __func__, is_mt6315_S3_exist());
 	return is_mt6315_S3_exist();
 #elif defined(CONFIG_MACH_MT6877)
-	pr_debug("%s S3:%d S6:%d\n", __func__, is_mt6315_S3_exist()
+	pr_info("%s S3:%d S6:%d\n", __func__, is_mt6315_S3_exist()
 	       , is_mt6315_S6_exist());
 	if (is_mt6315_S3_exist() && is_mt6315_S6_exist())
 		return 1;
@@ -202,7 +202,7 @@ static void mt6315_vbuck1_lp_setting(struct regmap *regmap,
 			0x1 << MT6315_PMIC_RG_BUCK_VBUCK1_HW0_OP_CFG_SHIFT,
 			cfg << MT6315_PMIC_RG_BUCK_VBUCK1_HW0_OP_CFG_SHIFT);
 	} else {
-		pr_debug("%s non support user control(%d).\n", __func__, user);
+		pr_info("%s non support user control(%d).\n", __func__, user);
 	}
 }
 
@@ -224,7 +224,7 @@ static void mt6315_vbuck2_lp_setting(struct regmap *regmap,
 			0x1 << MT6315_PMIC_RG_BUCK_VBUCK2_HW0_OP_CFG_SHIFT,
 			cfg << MT6315_PMIC_RG_BUCK_VBUCK2_HW0_OP_CFG_SHIFT);
 	} else {
-		pr_debug("%s non support user control(%d).\n", __func__, user);
+		pr_info("%s non support user control(%d).\n", __func__, user);
 	}
 }
 
@@ -246,7 +246,7 @@ static void mt6315_vbuck3_lp_setting(struct regmap *regmap,
 			0x1 << MT6315_PMIC_RG_BUCK_VBUCK3_HW0_OP_CFG_SHIFT,
 			cfg << MT6315_PMIC_RG_BUCK_VBUCK3_HW0_OP_CFG_SHIFT);
 	} else {
-		pr_debug("%s non support user control(%d).\n", __func__, user);
+		pr_info("%s non support user control(%d).\n", __func__, user);
 	}
 }
 
@@ -268,7 +268,7 @@ static void mt6315_vbuck4_lp_setting(struct regmap *regmap,
 			0x1 << MT6315_PMIC_RG_BUCK_VBUCK4_HW0_OP_CFG_SHIFT,
 			cfg << MT6315_PMIC_RG_BUCK_VBUCK4_HW0_OP_CFG_SHIFT);
 	} else {
-		pr_debug("%s non support user control(%d).\n", __func__, user);
+		pr_info("%s non support user control(%d).\n", __func__, user);
 	}
 }
 
@@ -282,13 +282,13 @@ static void mt6315_lp_set(unsigned char slave_id, unsigned char buck_id,
 
 	mt6315 = mt6315_find_chip_sid(slave_id);
 	if (!mt6315) {
-		pr_debug("%s MT6315S%d not ready\n", __func__, slave_id);
+		pr_info("%s MT6315S%d not ready\n", __func__, slave_id);
 		return;
 	}
 
 	regmap = mt6315->regmap;
 	if (!regmap) {
-		pr_debug("%s null regmap.\n", __func__);
+		pr_info("%s null regmap.\n", __func__);
 		return;
 	}
 
@@ -301,7 +301,7 @@ static void mt6315_lp_set(unsigned char slave_id, unsigned char buck_id,
 	else if (buck_id == 4)
 		mt6315_vbuck4_lp_setting(regmap, user, op_mode, op_en, op_cfg);
 	else
-		pr_debug("%s invalid buck_id=%d.\n", __func__, buck_id);
+		pr_info("%s invalid buck_id=%d.\n", __func__, buck_id);
 }
 
 /* enable VDIG18 SRCLKEN low power mode */
@@ -312,13 +312,13 @@ static void mt6315_vdig18_hw_op_set(unsigned char slave_id, unsigned char en)
 
 	mt6315 = mt6315_find_chip_sid(slave_id);
 	if (!mt6315) {
-		pr_debug("%s MT6315S%d not ready\n", __func__, slave_id);
+		pr_info("%s MT6315S%d not ready\n", __func__, slave_id);
 		return;
 	}
 
 	regmap = mt6315->regmap;
 	if (!regmap) {
-		pr_debug("%s null regmap.\n", __func__);
+		pr_info("%s null regmap.\n", __func__);
 		return;
 	}
 
@@ -406,7 +406,7 @@ static void mt6315_misc_initial_setting(u32 sid)
 		break;
 
 	default:
-		pr_debug("unsupported chip sid: %d\n", sid);
+		pr_info("unsupported chip sid: %d\n", sid);
 		return;
 	}
 }
@@ -421,5 +421,5 @@ void mt6315_misc_init(u32 sid, struct regmap *regmap)
 
 	mt6315_misc_initial_setting(sid);
 
-	pr_debug("%s sid=%d done\n", __func__, sid);
+	pr_info("%s sid=%d done\n", __func__, sid);
 }

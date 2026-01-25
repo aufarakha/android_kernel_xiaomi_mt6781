@@ -7884,7 +7884,7 @@ static int __init megasas_init(void)
 	/*
 	 * Announce driver version and other information
 	 */
-	pr_debug("megasas: %s\n", MEGASAS_VERSION);
+	pr_info("megasas: %s\n", MEGASAS_VERSION);
 
 	spin_lock_init(&poll_aen_lock);
 

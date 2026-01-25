@@ -2195,7 +2195,7 @@ static int syna_tcm_identify(struct syna_tcm_hcd *tcm_hcd, bool id)
 
 	resp_buf = NULL;
 	resp_buf_size = 0;
-	pr_debug("firmware start to %s!!!\n", __func__);
+	pr_info("firmware start to %s!!!\n", __func__);
 
 	mutex_lock(&tcm_hcd->identify_mutex);
 
@@ -2223,7 +2223,7 @@ static int syna_tcm_identify(struct syna_tcm_hcd *tcm_hcd, bool id)
 			resp_buf_size,
 			MIN(sizeof(tcm_hcd->id_info), resp_length));
 	if (retval < 0) {
-		pr_debug("synap failed to copy identification info\n");
+		pr_info("synap failed to copy identification info\n");
 		goto exit;
 	}
 

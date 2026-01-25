@@ -1448,18 +1448,18 @@ static int nvt_tp_power_on_reinit(void)
 {
 	int32_t ret;
 
-	pr_debug("%s is called\n", __func__);
+	pr_info("%s is called\n", __func__);
 
 	/* do esd recovery, bootloader reset */
 	ret = nvt_ts_suspend(&ts->client->dev);
 	if (ret) {
-		pr_debug("%s  is called suspend %d\n", __func__, ret);
+		pr_info("%s  is called suspend %d\n", __func__, ret);
 		return ret;
 	}
 
 	ret = nvt_ts_resume(&ts->client->dev);
 	if (ret)
-		pr_debug("%s  is called resume %d\n", __func__, ret);
+		pr_info("%s  is called resume %d\n", __func__, ret);
 
 	return ret;
 }
@@ -1822,7 +1822,7 @@ static int32_t nvt_ts_probe(struct spi_device *client)
 	NVT_LOG("end\n");
 
 #ifdef CONFIG_DRM_MEDIATEK
-	pr_debug("%s, disp notifier register func!\n", __func__);
+	pr_info("%s, disp notifier register func!\n", __func__);
 	if (mtk_panel_tch_handle_init()) {
 		retval = mtk_panel_tch_handle_init();
 		*retval = (void *)nvt_tp_power_on_reinit;

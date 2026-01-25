@@ -753,7 +753,7 @@ static int mt6362_set_scenario(int scenario)
 {
 	/* notify charger to increase or decrease voltage */
 	if (!flashlight_charger_consumer) {
-		pr_debug("Failed with no charger consumer handler.\n");
+		pr_info("Failed with no charger consumer handler.\n");
 		return -1;
 	}
 
@@ -761,7 +761,7 @@ static int mt6362_set_scenario(int scenario)
 	if (scenario & FLASHLIGHT_SCENARIO_CAMERA_MASK) {
 		if (!is_decrease_voltage) {
 #ifdef CONFIG_MTK_CHARGER
-			pr_debug("Decrease voltage level.\n");
+			pr_info("Decrease voltage level.\n");
 			charger_manager_enable_high_voltage_charging(
 					flashlight_charger_consumer, false);
 #endif
@@ -770,7 +770,7 @@ static int mt6362_set_scenario(int scenario)
 	} else {
 		if (is_decrease_voltage) {
 #ifdef CONFIG_MTK_CHARGER
-			pr_debug("Increase voltage level.\n");
+			pr_info("Increase voltage level.\n");
 			charger_manager_enable_high_voltage_charging(
 					flashlight_charger_consumer, true);
 #endif
@@ -799,7 +799,7 @@ static int mt6362_release(void)
 	/* If camera NE, we need to enable pe by ourselves*/
 	if (fd_use_count == 0 && is_decrease_voltage) {
 #ifdef CONFIG_MTK_CHARGER
-		pr_debug("Increase voltage level.\n");
+		pr_info("Increase voltage level.\n");
 		charger_manager_enable_high_voltage_charging(
 				flashlight_charger_consumer, true);
 #endif
@@ -820,25 +820,25 @@ static int mt6362_ioctl(unsigned int cmd, unsigned long arg)
 	channel = fl_arg->channel;
 
 	if (channel >= MT6362_FLASH_LEDMAX || channel < 0) {
-		pr_debug("Failed with error channel\n");
+		pr_info("Failed with error channel\n");
 		return -EINVAL;
 	}
 
 	flcdev = mt6362_flash_class[channel];
 	if (flcdev == NULL) {
-		pr_debug("Get flcdev failed\n");
+		pr_info("Get flcdev failed\n");
 		return -EINVAL;
 	}
 
 	lcdev = &flcdev->led_cdev;
 	if (lcdev == NULL) {
-		pr_debug("Get lcdev failed\n");
+		pr_info("Get lcdev failed\n");
 		return -EINVAL;
 	}
 
 	switch (cmd) {
 	case FLASH_IOC_SET_ONOFF:
-		pr_debug("FLASH_IOC_SET_ONOFF(%d): %d\n",
+		pr_info("FLASH_IOC_SET_ONOFF(%d): %d\n",
 				channel, (int)fl_arg->arg);
 		mt6362_fled_brightness_set(lcdev, (int)fl_arg->arg);
 		break;
@@ -1061,7 +1061,7 @@ static int mt6362_leds_probe(struct platform_device *pdev)
 	flashlight_charger_consumer = charger_manager_get_by_name(
 			&pdev->dev, CHARGER_SUPPLY_NAME);
 	if (!flashlight_charger_consumer) {
-		pr_debug("Failed to get charger manager.\n");
+		pr_info("Failed to get charger manager.\n");
 		return -EFAULT;
 	}
 #endif

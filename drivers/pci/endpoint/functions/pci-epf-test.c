@@ -98,7 +98,7 @@ static void pci_epf_test_print_rate(const char *ops, u64 size,
 	/* calculate the rate */
 	do_div(rate, (uint32_t)ns);
 
-	pr_debug("\n%s => Size: %llu bytes\t DMA: %s\t Time: %llu.%09u seconds\t"
+	pr_info("\n%s => Size: %llu bytes\t DMA: %s\t Time: %llu.%09u seconds\t"
 		"Rate: %llu KB/s\n", ops, size, dma ? "YES" : "NO",
 		(u64)ts.tv_sec, (u32)ts.tv_nsec, rate / 1024);
 }

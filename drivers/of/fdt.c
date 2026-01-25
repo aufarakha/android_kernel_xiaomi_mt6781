@@ -672,7 +672,7 @@ static int __init __reserved_mem_reserve_reg(unsigned long node,
 			pr_debug("Reserved memory: reserved region for node '%s': base %pa, size %lu MiB\n",
 				uname, &base, (unsigned long)(size / SZ_1M));
 		else
-			pr_debug("Reserved memory: failed to reserve memory for node '%s': base %pa, size %lu MiB\n",
+			pr_info("Reserved memory: failed to reserve memory for node '%s': base %pa, size %lu MiB\n",
 				uname, &base, (unsigned long)(size / SZ_1M));
 
 		len -= t_len;
@@ -979,7 +979,7 @@ const void * __init of_flat_dt_match_machine(const void *default_match,
 		return NULL;
 	}
 
-	pr_debug("Machine model: %s\n", of_flat_dt_get_machine_name());
+	pr_info("Machine model: %s\n", of_flat_dt_get_machine_name());
 
 	return best_data;
 }

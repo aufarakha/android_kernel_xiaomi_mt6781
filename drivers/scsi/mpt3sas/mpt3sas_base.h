@@ -167,7 +167,7 @@ struct mpt3sas_nvme_cmd {
 #define ioc_warn(ioc, fmt, ...)						\
 	pr_warn("%s: " fmt, (ioc)->name, ##__VA_ARGS__)
 #define ioc_info(ioc, fmt, ...)						\
-	pr_debug("%s: " fmt, (ioc)->name, ##__VA_ARGS__)
+	pr_info("%s: " fmt, (ioc)->name, ##__VA_ARGS__)
 
 /*
  *  WarpDrive Specific Log codes

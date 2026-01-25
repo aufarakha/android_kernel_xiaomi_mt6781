@@ -539,7 +539,7 @@ static inline int syna_tcm_write(struct syna_tcm_hcd *tcm_hcd,
 static inline ssize_t syna_tcm_show_error(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
-	pr_debug("%s: Attribute not readable\n",
+	pr_info("%s: Attribute not readable\n",
 			__func__);
 
 	return -EPERM;
@@ -548,7 +548,7 @@ static inline ssize_t syna_tcm_show_error(struct device *dev,
 static inline ssize_t syna_tcm_store_error(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t count)
 {
-	pr_debug("%s: Attribute not writable\n",
+	pr_info("%s: Attribute not writable\n",
 			__func__);
 
 	return -EPERM;
@@ -562,7 +562,7 @@ static inline int secure_memcpy(unsigned char *dest, unsigned int dest_size,
 		return -EINVAL;
 
 	if (count > dest_size || count > src_size) {
-		pr_debug("%s: src_size = %d, dest_size = %d, count = %d\n",
+		pr_info("%s: src_size = %d, dest_size = %d, count = %d\n",
 				__func__, src_size, dest_size, count);
 		return -EINVAL;
 	}

@@ -46,7 +46,7 @@
 #define rdev_warn(rdev, fmt, ...)					\
 	pr_warn("%s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
 #define rdev_info(rdev, fmt, ...)					\
-	pr_debug("%s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
+	pr_info("%s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
 #define rdev_dbg(rdev, fmt, ...)					\
 	pr_debug("%s: " fmt, rdev_get_name(rdev), ##__VA_ARGS__)
 
@@ -2011,7 +2011,7 @@ int regulator_register_supply_alias(struct device *dev, const char *id,
 
 	list_add(&map->list, &regulator_supply_alias_list);
 
-	pr_debug("Adding alias for supply %s,%s -> %s,%s\n",
+	pr_info("Adding alias for supply %s,%s -> %s,%s\n",
 		id, dev_name(dev), alias_id, dev_name(alias_dev));
 
 	return 0;

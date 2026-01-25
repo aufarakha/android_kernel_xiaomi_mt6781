@@ -155,7 +155,7 @@ void ppm_notifier(void)
 		smp_method = of_get_property(dn, "smp-method", NULL);
 		if (smp_method != NULL) {
 			if (!strcmp("disabled", smp_method)) {
-				pr_debug("[ENTER Hotplug DEBUG MODE!!!]\n");
+				pr_info("[ENTER Hotplug DEBUG MODE!!!]\n");
 				return;
 			}
 		}

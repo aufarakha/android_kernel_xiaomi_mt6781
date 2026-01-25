@@ -795,12 +795,12 @@ static int rt5133_regulator_notify(struct notifier_block *nb,
 		goto out;
 
 	if (data == NULL) {
-		pr_debug("%s: data gets null pointer\n", __func__);
+		pr_info("%s: data gets null pointer\n", __func__);
 		goto out;
 	}
 
 	idx = *(int *)data;
-	pr_debug("%s, ldo(%d), event = %d\n", __func__, idx, (int)event);
+	pr_info("%s, ldo(%d), event = %d\n", __func__, idx, (int)event);
 
 	idx = idx - 1;
 	if (idx < 0)

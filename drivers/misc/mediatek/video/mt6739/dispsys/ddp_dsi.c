@@ -1071,7 +1071,7 @@ unsigned int dsi_phy_get_clk(enum DISP_MODULE_ENUM module)
 	unsigned int pll_preserve = (1 <<
 		(DSI_PHY_REG[i]->MIPITX_DSI_PLL_CON4.RG_DSI_PLL_RESERVED));
 
-	pr_debug("%s, pcw: %d, prediv: %d, posdiv: %d, txdiv0: %d, txdiv1: %d, preserve: %d\n",
+	pr_info("%s, pcw: %d, prediv: %d, posdiv: %d, txdiv0: %d, txdiv1: %d, preserve: %d\n",
 		__func__, pcw, prediv, posdiv, txdiv0, txdiv1, pll_preserve);
 	j = prediv * posdiv * txdiv0 * txdiv1 * pll_preserve;
 	if (j > 0)
@@ -2838,11 +2838,11 @@ static void DSI_PHY_CLK_LP_PerLine_config(enum DISP_MODULE_ENUM module,
 			v_c = (timcon3.CLK_HS_POST + timcon2.CLK_TRAIL) *
 				lane_num;
 
-			pr_debug("===>v_a-v_b=0x%x,HSTX_CKLP_WC=0x%x\n",
+			pr_info("===>v_a-v_b=0x%x,HSTX_CKLP_WC=0x%x\n",
 				(v_a - v_b), hstx_ckl_wc);
-			pr_debug("===>v_b+v_c=0x%x,HFP_WC=0x%x\n",
+			pr_info("===>v_b+v_c=0x%x,HFP_WC=0x%x\n",
 				(v_b + v_c), hfp.HFP_WC);
-			pr_debug("===>Will Reconfig in order to fulfill LP clock lane per line\n");
+			pr_info("===>Will Reconfig in order to fulfill LP clock lane per line\n");
 
 			DSI_OUTREG32(cmdq, &DSI_REG[i]->DSI_HFP_WC,
 				     (v_b + v_c + DIFF_CLK_LANE_LP));
@@ -2874,11 +2874,11 @@ static void DSI_PHY_CLK_LP_PerLine_config(enum DISP_MODULE_ENUM module,
 			v_c = (timcon3.CLK_HS_POST + timcon2.CLK_TRAIL) *
 				lane_num;
 
-			pr_debug("===>v_a-v_b=0x%x,HSTX_CKLP_WC=0x%x\n",
+			pr_info("===>v_a-v_b=0x%x,HSTX_CKLP_WC=0x%x\n",
 				(v_a - v_b), hstx_ckl_wc);
-			pr_debug("===>v_b+v_c=0x%x,HFP_WC=0x%x\n",
+			pr_info("===>v_b+v_c=0x%x,HFP_WC=0x%x\n",
 				(v_b+v_c), hfp.HFP_WC);
-			pr_debug("===>Will Reconfig in order to fulfill LP clock lane per line\n");
+			pr_info("===>Will Reconfig in order to fulfill LP clock lane per line\n");
 
 			DSI_OUTREG32(cmdq, &DSI_REG[i]->DSI_HFP_WC,
 				     (v_b + v_c + DIFF_CLK_LANE_LP));
@@ -2912,11 +2912,11 @@ static void DSI_PHY_CLK_LP_PerLine_config(enum DISP_MODULE_ENUM module,
 			v_c = (timcon3.CLK_HS_POST +
 				timcon2.CLK_TRAIL) * lane_num;
 
-			pr_debug("===>v_a-v_b=0x%x,HSTX_CKLP_WC=0x%x\n",
+			pr_info("===>v_a-v_b=0x%x,HSTX_CKLP_WC=0x%x\n",
 				(v_a - v_b), hstx_ckl_wc);
-			pr_debug("===>v_b+v_c=0x%x,HFP_WC=0x%x\n",
+			pr_info("===>v_b+v_c=0x%x,HFP_WC=0x%x\n",
 				(v_b + v_c), hfp.HFP_WC);
-			pr_debug("===>Will Reconfig in order to fulfill LP clock lane per line\n");
+			pr_info("===>Will Reconfig in order to fulfill LP clock lane per line\n");
 
 			DSI_OUTREG32(cmdq, &DSI_REG[i]->DSI_HFP_WC,
 				     (v_b + v_c + DIFF_CLK_LANE_LP));
@@ -3349,7 +3349,7 @@ int ddp_dsi_switch_mode(enum DISP_MODULE_ENUM module, void *cmdq_handle,
 	int wait_count = 100;
 
 	if (dsi_currect_mode == mode) {
-		pr_debug("[%s] not need switch mode, current mode = %d, switch to %d\n",
+		pr_info("[%s] not need switch mode, current mode = %d, switch to %d\n",
 			__func__, dsi_currect_mode, mode);
 		return 0;
 	}
@@ -3590,7 +3590,7 @@ int ddp_dsi_switch_mode(enum DISP_MODULE_ENUM module, void *cmdq_handle,
 		}
 
 		if (wait_count == 0) {
-			pr_debug("[C2V]after c2v switch, dsi state is not idle[0x%08x]\n",
+			pr_info("[C2V]after c2v switch, dsi state is not idle[0x%08x]\n",
 				DSI_REG[i]->DSI_STATE_DBG6.CMTRL_STATE);
 			dsi_analysis(module);
 			DSI_DumpRegisters(module, 2);
@@ -3681,7 +3681,7 @@ int ddp_dsi_ioctl(enum DISP_MODULE_ENUM module, void *cmdq_handle,
 			unsigned int *p = (unsigned int *)params;
 			unsigned int vfp = p[0];
 
-			pr_debug("[%s] DDP_DSI_PORCH_CHANGE vfp=%d\n",
+			pr_info("[%s] DDP_DSI_PORCH_CHANGE vfp=%d\n",
 				__func__, vfp);
 			ddp_dsi_porch_setting(module, cmdq_handle,
 					DSI_VFP, vfp);
@@ -3696,7 +3696,7 @@ int ddp_dsi_ioctl(enum DISP_MODULE_ENUM module, void *cmdq_handle,
 			unsigned int *p = (unsigned int *)params;
 			unsigned int addr = p[0];
 
-			pr_debug("[%s] DDP_DSI_PORCH_ADDR addr=0x%x\n",
+			pr_info("[%s] DDP_DSI_PORCH_ADDR addr=0x%x\n",
 				__func__, addr);
 			DSI_Get_Porch_Addr(module, params);
 		}

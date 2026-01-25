@@ -38,7 +38,7 @@ extern void show_task_mem(void) __attribute__((weak));
 extern void mtk_dump_gpu_memory_usage(void) __attribute__((weak));
 
 #ifdef CONFIG_MTK_HANG_DETECT_LOG
-#define hang_log pr_debug
+#define hang_log pr_info
 #else
 #define hang_log no_printk
 #endif

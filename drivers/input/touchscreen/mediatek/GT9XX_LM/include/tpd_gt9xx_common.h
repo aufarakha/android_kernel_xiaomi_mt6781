@@ -200,7 +200,7 @@ enum chip_type_t {
 #endif
 
 /* Log define */
-/* #define GTP_INFO(fmt, arg...)       pr_debug("<<-GTP-INFO->> "fmt"\n", */
+/* #define GTP_INFO(fmt, arg...)       pr_info("<<-GTP-INFO->> "fmt"\n", */
 /* ##arg) */
 /* #define GTP_ERROR(fmt, arg...)      pr_debug("<<-GTP-ERROR->> "fmt"\n", */
 /* ##arg) */
@@ -218,7 +218,7 @@ enum chip_type_t {
 #define GTP_INFO(fmt, arg...)                                                  \
 	do {                                                                   \
 		if (GTP_INFO_ON)                                               \
-			pr_debug("<<-GTP-INFO->> " fmt "\n", ##arg);            \
+			pr_info("<<-GTP-INFO->> " fmt "\n", ##arg);            \
 	} while (0)
 #define GTP_DEBUG_ARRAY(array, num)                                            \
 	do {                                                                   \

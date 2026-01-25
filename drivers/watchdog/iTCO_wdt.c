@@ -486,7 +486,7 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
 	/* Check chipset's NO_REBOOT bit */
 	if (p->update_no_reboot_bit(p->no_reboot_priv, false) &&
 	    iTCO_vendor_check_noreboot_on()) {
-		pr_debug("unable to reset NO_REBOOT flag, device disabled by hardware/BIOS\n");
+		pr_info("unable to reset NO_REBOOT flag, device disabled by hardware/BIOS\n");
 		return -ENODEV;	/* Cannot reset NO_REBOOT bit */
 	}
 
@@ -516,7 +516,7 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
 		return -EBUSY;
 	}
 
-	pr_debug("Found a %s TCO device (Version=%d, TCOBASE=0x%04llx)\n",
+	pr_info("Found a %s TCO device (Version=%d, TCOBASE=0x%04llx)\n",
 		pdata->name, pdata->version, (u64)TCOBASE(p));
 
 	/* Clear out the (probably old) status */
@@ -560,7 +560,7 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
 	   if not reset to the default */
 	if (iTCO_wdt_set_timeout(&p->wddev, heartbeat)) {
 		iTCO_wdt_set_timeout(&p->wddev, WATCHDOG_TIMEOUT);
-		pr_debug("timeout value out of range, using %d\n",
+		pr_info("timeout value out of range, using %d\n",
 			WATCHDOG_TIMEOUT);
 	}
 
@@ -571,7 +571,7 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	pr_debug("initialized. heartbeat=%d sec (nowayout=%d)\n",
+	pr_info("initialized. heartbeat=%d sec (nowayout=%d)\n",
 		heartbeat, nowayout);
 
 	return 0;
@@ -649,7 +649,7 @@ static struct platform_driver iTCO_wdt_driver = {
 
 static int __init iTCO_wdt_init_module(void)
 {
-	pr_debug("Intel TCO WatchDog Timer Driver v%s\n", DRV_VERSION);
+	pr_info("Intel TCO WatchDog Timer Driver v%s\n", DRV_VERSION);
 
 	return platform_driver_register(&iTCO_wdt_driver);
 }
@@ -657,7 +657,7 @@ static int __init iTCO_wdt_init_module(void)
 static void __exit iTCO_wdt_cleanup_module(void)
 {
 	platform_driver_unregister(&iTCO_wdt_driver);
-	pr_debug("Watchdog Module Unloaded\n");
+	pr_info("Watchdog Module Unloaded\n");
 }
 
 module_init(iTCO_wdt_init_module);

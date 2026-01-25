@@ -399,7 +399,7 @@ int ddp_main_modules_clk_on(void)
 		ddp_get_module_driver(m)->power_on)
 		ddp_get_module_driver(m)->power_on(m, NULL);
 
-	pr_debug("CG0 0x%x, CG1 0x%x\n",
+	pr_info("CG0 0x%x, CG1 0x%x\n",
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON0),
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON1));
 	return ret;
@@ -435,7 +435,7 @@ int ddp_ext_modules_clk_on(void)
 		}
 	}
 
-	pr_debug("CG0 0x%x, CG1 0x%x\n",
+	pr_info("CG0 0x%x, CG1 0x%x\n",
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON0),
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON1));
 	return ret;
@@ -471,7 +471,7 @@ int ddp_ovl2mem_modules_clk_on(void)
 		}
 	}
 
-	pr_debug("CG0 0x%x, CG1 0x%x\n",
+	pr_info("CG0 0x%x, CG1 0x%x\n",
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON0),
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON1));
 	return ret;
@@ -501,7 +501,7 @@ int ddp_main_modules_clk_off(void)
 			/* module driver power off */
 			m_drv = ddp_get_module_driver(m);
 			if (m_drv->power_on && m_drv->power_off) {
-				pr_debug("%s power_off\n",
+				pr_info("%s power_off\n",
 					ddp_get_module_name(m));
 				m_drv->power_off(m, NULL);
 			} else {
@@ -522,7 +522,7 @@ int ddp_main_modules_clk_off(void)
 	/* --TOP CLK-- */
 	ddp_clk_top_clk_switch(false);
 
-	pr_debug("CG0 0x%x, CG1 0x%x\n",
+	pr_info("CG0 0x%x, CG1 0x%x\n",
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON0),
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON1));
 	return ret;
@@ -546,7 +546,7 @@ int ddp_ext_modules_clk_off(void)
 			/* module driver power off */
 			m_drv = ddp_get_module_driver(m);
 			if (m_drv->power_on && m_drv->power_off) {
-				pr_debug("%s power_off\n",
+				pr_info("%s power_off\n",
 					ddp_get_module_name(m));
 				m_drv->power_off(m, NULL);
 			} else {
@@ -560,7 +560,7 @@ int ddp_ext_modules_clk_off(void)
 	/* --TOP CLK-- */
 	ddp_clk_top_clk_switch(false);
 
-	pr_debug("CG0 0x%x, CG1 0x%x\n",
+	pr_info("CG0 0x%x, CG1 0x%x\n",
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON0),
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON1));
 	return ret;
@@ -584,7 +584,7 @@ int ddp_ovl2mem_modules_clk_off(void)
 			m_drv = ddp_get_module_driver(m);
 			/* module driver power off */
 			if (m_drv->power_on && m_drv->power_off) {
-				pr_debug("%s power_off\n",
+				pr_info("%s power_off\n",
 					ddp_get_module_name(m));
 				m_drv->power_off(m, NULL);
 			} else {
@@ -598,7 +598,7 @@ int ddp_ovl2mem_modules_clk_off(void)
 	/* --TOP CLK-- */
 	ddp_clk_top_clk_switch(false);
 
-	pr_debug("CG0 0x%x, CG1 0x%x\n",
+	pr_info("CG0 0x%x, CG1 0x%x\n",
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON0),
 		clk_readl(DISP_REG_CONFIG_MMSYS_CG_CON1));
 	return ret;
@@ -613,7 +613,7 @@ int ddp_module_clk_enable(enum DISP_MODULE_TYPE_ENUM module_t)
 	enum DISP_MODULE_ENUM module_id = DISP_MODULE_UNKNOWN;
 
 	number = ddp_get_module_num_by_t(module_t);
-	pr_debug("[%s] module type = %d, module num on this type = %d\n",
+	pr_info("[%s] module type = %d, module num on this type = %d\n",
 		__func__, module_t, number);
 	for (i = 0; i < number; i++) {
 		module_id = ddp_get_module_id_by_idx(module_t, i);
@@ -635,7 +635,7 @@ int ddp_module_clk_disable(enum DISP_MODULE_TYPE_ENUM module_t)
 	enum DISP_MODULE_ENUM module_id = DISP_MODULE_UNKNOWN;
 
 	number = ddp_get_module_num_by_t(module_t);
-	pr_debug("[%s] module type = %d, module num on this type = %d\n",
+	pr_info("[%s] module type = %d, module num on this type = %d\n",
 		__func__, module_t, number);
 	for (i = 0; i < number; i++) {
 		module_id = ddp_get_module_id_by_idx(module_t, i);

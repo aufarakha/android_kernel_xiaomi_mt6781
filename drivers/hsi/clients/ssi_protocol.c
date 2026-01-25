@@ -1183,7 +1183,7 @@ static struct hsi_client_driver ssip_driver = {
 
 static int __init ssip_init(void)
 {
-	pr_debug("SSI protocol aka McSAAB added\n");
+	pr_info("SSI protocol aka McSAAB added\n");
 
 	return hsi_register_client_driver(&ssip_driver);
 }
@@ -1192,7 +1192,7 @@ module_init(ssip_init);
 static void __exit ssip_exit(void)
 {
 	hsi_unregister_client_driver(&ssip_driver);
-	pr_debug("SSI protocol driver removed\n");
+	pr_info("SSI protocol driver removed\n");
 }
 module_exit(ssip_exit);
 

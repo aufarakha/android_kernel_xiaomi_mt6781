@@ -4546,7 +4546,7 @@ int save_modules(char *mbuf, int mbufsize)
 	int i, search_nm;
 
 	if (mbuf == NULL || mbufsize <= 0) {
-		pr_debug("mrdump: module info buffer wrong(sz:%d)\n", mbufsize);
+		pr_info("mrdump: module info buffer wrong(sz:%d)\n", mbufsize);
 		return 0;
 	}
 
@@ -4556,7 +4556,7 @@ int save_modules(char *mbuf, int mbufsize)
 		if (mod->state == MODULE_STATE_UNFORMED)
 			continue;
 		if (sz >= mbufsize) {
-			pr_debug("mrdump: module info buffer full(sz:%d)\n",
+			pr_info("mrdump: module info buffer full(sz:%d)\n",
 				mbufsize);
 			break;
 		}

@@ -61,7 +61,7 @@
 		if (DEVAPC_LOG_LEVEL & DEVAPC_LOG_DBG) { \
 			pr_debug(fmt, ##args); \
 		} else if (DEVAPC_LOG_LEVEL & DEVAPC_LOG_INFO) { \
-			pr_debug(fmt, ##args); \
+			pr_info(fmt, ##args); \
 		} \
 	} while (0)
 
@@ -73,7 +73,7 @@
 		if (DEVAPC_VIO_LEVEL & DEVAPC_LOG_DBG) { \
 			pr_debug(fmt, ##args); \
 		} else if (DEVAPC_VIO_LEVEL & DEVAPC_LOG_INFO) { \
-			pr_debug(fmt, ##args); \
+			pr_info(fmt, ##args); \
 		} else if (DEVAPC_VIO_LEVEL & DEVAPC_LOG_NOTICE) { \
 			pr_notice(fmt, ##args); \
 		} \
@@ -707,7 +707,7 @@ static int devapc_probe(struct platform_device *pdev)
 			DEVAPC_MSG("[DEVAPC] PD_INFRA_ADDRESS: %p, IRQ: %d\n",
 				devapc_pd_infra_base, devapc_infra_irq);
 		} else {
-			pr_debug(PFX "can't find DAPC_INFRA_PD compatible node\n");
+			pr_info(PFX "can't find DAPC_INFRA_PD compatible node\n");
 			return -1;
 		}
 	}
@@ -716,7 +716,7 @@ static int devapc_probe(struct platform_device *pdev)
 	ret = request_irq(devapc_infra_irq, (irq_handler_t) devapc_violation_irq,
 			  IRQF_TRIGGER_LOW | IRQF_SHARED, "devapc", &g_devapc_ctrl);
 	if (ret) {
-		pr_debug(PFX "Failed to request infra irq! (%d)\n", ret);
+		pr_info(PFX "Failed to request infra irq! (%d)\n", ret);
 		return ret;
 	}
 #endif
@@ -725,11 +725,11 @@ static int devapc_probe(struct platform_device *pdev)
 #if DEVAPC_USE_CCF
 	dapc_infra_clk = devm_clk_get(&pdev->dev, "devapc-infra-clock");
 	if (IS_ERR(dapc_infra_clk)) {
-		pr_debug(PFX "(Infra) Cannot get devapc clock from common clock framework.\n");
+		pr_info(PFX "(Infra) Cannot get devapc clock from common clock framework.\n");
 		return PTR_ERR(dapc_infra_clk);
 	}
 	if (clk_prepare_enable(dapc_infra_clk)) {
-		pr_debug(PFX "[CCF] cannot enable clock/enable MUX.\n");
+		pr_info(PFX "[CCF] cannot enable clock/enable MUX.\n");
 		return -1;
 	}
 
@@ -841,13 +841,13 @@ static int __init devapc_init(void)
 
 	ret = platform_driver_register(&devapc_driver);
 	if (ret) {
-		pr_debug(PFX "Unable to register driver (%d)\n", ret);
+		pr_info(PFX "Unable to register driver (%d)\n", ret);
 		return ret;
 	}
 
 	g_devapc_ctrl = cdev_alloc();
 	if (!g_devapc_ctrl) {
-		pr_debug(PFX " Failed to add devapc device! (%d)\n", ret);
+		pr_info(PFX " Failed to add devapc device! (%d)\n", ret);
 		platform_driver_unregister(&devapc_driver);
 		return ret;
 	}

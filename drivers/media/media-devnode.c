@@ -301,7 +301,7 @@ static int __init media_devnode_init(void)
 {
 	int ret;
 
-	pr_debug("Linux media interface: v0.10\n");
+	pr_info("Linux media interface: v0.10\n");
 	ret = alloc_chrdev_region(&media_dev_t, 0, MEDIA_NUM_DEVICES,
 				  MEDIA_NAME);
 	if (ret < 0) {

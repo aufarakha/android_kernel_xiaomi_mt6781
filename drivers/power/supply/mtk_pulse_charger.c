@@ -519,7 +519,7 @@ static int mtk_linear_charging_do_charging(struct mtk_charger *info,
 {
 	struct pcharger_data *algo_data = info->algo.algo_data;
 
-	pr_debug("%s en:%d %s\n", __func__, en, info->algorithm_name);
+	pr_info("%s en:%d %s\n", __func__, en, info->algorithm_name);
 	if (en) {
 		algo_data->disable_charging = false;
 		algo_data->state = CHR_CC;

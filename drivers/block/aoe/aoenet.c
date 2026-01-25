@@ -181,7 +181,7 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt, 
 	default:
 		if (h->cmd >= AOECMD_VEND_MIN)
 			break;	/* don't complain about vendor commands */
-		pr_debug("aoe: unknown AoE command type 0x%02x\n", h->cmd);
+		pr_info("aoe: unknown AoE command type 0x%02x\n", h->cmd);
 		break;
 	}
 

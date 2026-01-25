@@ -565,7 +565,7 @@ static int __init flashlight_class_init(void)
 {
 	flashlight_class = class_create(THIS_MODULE, "flashlight");
 	if (IS_ERR(flashlight_class)) {
-		pr_debug("Unable to create flashlight class; errno = %ld\n",
+		pr_info("Unable to create flashlight class; errno = %ld\n",
 		       PTR_ERR(flashlight_class));
 		return PTR_ERR(flashlight_class);
 	}

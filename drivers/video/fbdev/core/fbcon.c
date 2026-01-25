@@ -2972,7 +2972,7 @@ static int fbcon_fb_registered(struct fb_info *info)
 	fbcon_select_primary(info);
 
 	if (deferred_takeover) {
-		pr_debug("fbcon: Deferring console take-over\n");
+		pr_info("fbcon: Deferring console take-over\n");
 		return 0;
 	}
 
@@ -3374,7 +3374,7 @@ static int fbcon_output_notifier(struct notifier_block *nb,
 {
 	WARN_CONSOLE_UNLOCKED();
 
-	pr_debug("fbcon: Taking over console\n");
+	pr_info("fbcon: Taking over console\n");
 
 	dummycon_unregister_output_notifier(&fbcon_output_nb);
 

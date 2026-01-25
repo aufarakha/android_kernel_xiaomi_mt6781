@@ -1401,7 +1401,7 @@ static int __init gtp_init(void)
 	if (err < 0)
 		goto unreg_rtnl_link;
 
-	pr_debug("GTP module loaded (pdp ctx size %zd bytes)\n",
+	pr_info("GTP module loaded (pdp ctx size %zd bytes)\n",
 		sizeof(struct pdp_ctx));
 	return 0;
 
@@ -1421,7 +1421,7 @@ static void __exit gtp_fini(void)
 	rtnl_link_unregister(&gtp_link_ops);
 	unregister_pernet_subsys(&gtp_net_ops);
 
-	pr_debug("GTP module unloaded\n");
+	pr_info("GTP module unloaded\n");
 }
 module_exit(gtp_fini);
 

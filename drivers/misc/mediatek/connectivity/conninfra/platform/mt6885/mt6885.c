@@ -247,7 +247,7 @@ unsigned int consys_get_hw_ver(void)
 
 void consys_clock_fail_dump(void)
 {
-	pr_debug("[%s]", __func__);
+	pr_info("[%s]", __func__);
 }
 
 
@@ -282,7 +282,7 @@ static int calculate_thermal_temperature(int y)
 	t = (y - (data->thermal_b == 0 ? 0x36 : data->thermal_b)) *
 			((data->slop_molecule + 209) / 100) + (data->offset + const_offset);
 
-	pr_debug("y=[%d] b=[%d] constOffset=[%d] [%d] [%d] => t=[%d]\n",
+	pr_info("y=[%d] b=[%d] constOffset=[%d] [%d] [%d] => t=[%d]\n",
 			y, data->thermal_b, const_offset, data->slop_molecule, data->offset,
 			t);
 
@@ -353,7 +353,7 @@ int consys_thermal_query(void)
 			CONSYS_REG_READ(CONN_TOP_THERM_CTL_ADDR + thermal_dump_crs[i])) >= 0)
 			strncat(tmp_buf, tmp, strlen(tmp));
 	}
-	pr_debug("[%s] efuse:[0x%08x][0x%08x][0x%08x][0x%08x] thermal dump: %s",
+	pr_info("[%s] efuse:[0x%08x][0x%08x][0x%08x][0x%08x] thermal dump: %s",
 		__func__, efuse0, efuse1, efuse2, efuse3, tmp_buf);
 
 	res = calculate_thermal_temperature(cal_val);
@@ -393,7 +393,7 @@ int consys_power_state(char *buf, unsigned int size)
 			buf_len += str_len;
 		}
 	}
-	pr_debug("[%s] [0x%x] %s", __func__, r, temp_buf);
+	pr_info("[%s] [0x%x] %s", __func__, r, temp_buf);
 	return 0;
 }
 
@@ -440,7 +440,7 @@ int consys_bus_clock_ctrl(enum consys_drv_type drv_type, unsigned int bus_clock,
 			consys_sema_release_mt6885(CONN_SEMA_BUS_CONTROL);
 		}
 
-		pr_debug("drv=[%d] conninfra_bus_clock_wpll=[%u]->[%u] %s conninfra_bus_clock_bpll=[%u]->[%u] %s",
+		pr_info("drv=[%d] conninfra_bus_clock_wpll=[%u]->[%u] %s conninfra_bus_clock_bpll=[%u]->[%u] %s",
 			drv_type,
 			wpll_state, conninfra_bus_clock_wpll_state, (wpll_switch ? "enable" : ""),
 			bpll_state, conninfra_bus_clock_bpll_state, (bpll_switch ? "enable" : ""));
@@ -475,13 +475,13 @@ int consys_bus_clock_ctrl(enum consys_drv_type drv_type, unsigned int bus_clock,
 			consys_sema_release_mt6885(CONN_SEMA_BUS_CONTROL);
 		}
 
-		pr_debug("drv=[%d] conninfra_bus_clock_wpll=[%u]->[%u] %s conninfra_bus_clock_bpll=[%u]->[%u] %s",
+		pr_info("drv=[%d] conninfra_bus_clock_wpll=[%u]->[%u] %s conninfra_bus_clock_bpll=[%u]->[%u] %s",
 			drv_type,
 			wpll_state, conninfra_bus_clock_wpll_state, (wpll_switch ? "disable" : ""),
 			bpll_state, conninfra_bus_clock_bpll_state, (bpll_switch ? "disable" : ""));
 		if (consys_reg_mng_reg_readable() == 0) {
 			check = consys_reg_mng_is_bus_hang();
-			pr_debug("[%s] not readable, bus hang check=[%d]", __func__, check);
+			pr_info("[%s] not readable, bus hang check=[%d]", __func__, check);
 		}
 	}
 	return 0;
@@ -507,7 +507,7 @@ static unsigned long long consys_soc_timestamp_get(void)
 		} while (tick_h != tmp_h);
 		iounmap(addr);
 	} else {
-		pr_debug("[%s] remap fail", __func__);
+		pr_info("[%s] remap fail", __func__);
 		return 0;
 	}
 

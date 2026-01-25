@@ -6264,8 +6264,8 @@ static int __init be_init_module(void)
 	}
 
 	if (num_vfs > 0) {
-		pr_debug(DRV_NAME " : Module param num_vfs is obsolete.");
-		pr_debug(DRV_NAME " : Use sysfs method to enable VFs\n");
+		pr_info(DRV_NAME " : Module param num_vfs is obsolete.");
+		pr_info(DRV_NAME " : Use sysfs method to enable VFs\n");
 	}
 
 	be_wq = create_singlethread_workqueue("be_wq");

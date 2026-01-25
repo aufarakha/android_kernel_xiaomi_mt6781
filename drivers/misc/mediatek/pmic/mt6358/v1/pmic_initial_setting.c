@@ -111,7 +111,7 @@ void PMIC_CUST_SETTING(void)
 	np = of_find_compatible_node(NULL, NULL,
 		"mediatek,mt-pmic-custom-setting");
 	if (!np) {
-		pr_debug("[%s]Failed to find device-tree node\n", __func__);
+		pr_info("[%s]Failed to find device-tree node\n", __func__);
 		return;
 	}
 
@@ -234,7 +234,7 @@ void PMIC_LP_INIT_SETTING(void)
 	pmic_ldo_vusb_lp(SRCLKEN2, 1, HW_LP);
 	pmic_ldo_vbif28_lp(SRCLKEN2, 1, HW_OFF);
 
-	pr_debug("[%s] Chip Ver = %d\n", __func__, g_pmic_chip_version);
+	pr_info("[%s] Chip Ver = %d\n", __func__, g_pmic_chip_version);
 #endif /*LP_INIT_SETTING_VERIFIED*/
 
 	PMIC_CUST_SETTING();
@@ -329,7 +329,7 @@ void PMIC_LP_INIT_SETTING(void)
 	pmic_ldo_vusb_lp(SRCLKEN2, 1, HW_LP);
 	pmic_ldo_vbif28_lp(SRCLKEN2, 1, HW_OFF);
 
-	pr_debug("[%s] Chip Ver = %d\n", __func__, g_pmic_chip_version);
+	pr_info("[%s] Chip Ver = %d\n", __func__, g_pmic_chip_version);
 #endif /*LP_INIT_SETTING_VERIFIED*/
 
 	PMIC_CUST_SETTING();

@@ -2596,14 +2596,14 @@ int bdg_lcm_init(struct disp_lcm_handle *plcm, int force)
 
 	if (lcm_drv->init_power) {
 		if (!disp_lcm_is_inited(plcm) || force) {
-			pr_debug("lcm init power()\n");
+			pr_info("lcm init power()\n");
 			lcm_drv->init_power();
 		}
 	}
 
 	if (lcm_drv->init) {
 		if (!disp_lcm_is_inited(plcm) || force) {
-			pr_debug("lcm init()\n");
+			pr_info("lcm init()\n");
 			lcm_drv->init();
 		}
 	} else {

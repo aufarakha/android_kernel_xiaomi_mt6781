@@ -436,7 +436,7 @@ static void mtk_smi_dbg_monitor_run(struct mtk_smi_dbg *smi)
 
 	smi->exec = sched_clock();
 	smi->frame = smi->frame ? smi->frame : 10;
-	pr_debug("%s: exec:%llu frame:%u\n", __func__, smi->exec, smi->frame);
+	pr_info("%s: exec:%llu frame:%u\n", __func__, smi->exec, smi->frame);
 
 	for (i = 0; i < ARRAY_SIZE(smi->larb); i++) {
 		if (!smi->larb[i].dev)
@@ -481,7 +481,7 @@ static void mtk_smi_dbg_monitor_set(struct mtk_smi_dbg *smi, const u64 val)
 	u32	i, *mon, mstr = SMI_MON_DEC(val, MON_BIT_MSTR);
 
 	if (mstr >= MTK_LARB_NR_MAX || !nodes[mstr].dev || !nodes[mstr].va) {
-		pr_debug("%s: invalid %s:%d\n", __func__, name, mstr);
+		pr_info("%s: invalid %s:%d\n", __func__, name, mstr);
 		return;
 	}
 	mon = nodes[mstr].mon;
@@ -493,18 +493,18 @@ static void mtk_smi_dbg_monitor_set(struct mtk_smi_dbg *smi, const u64 val)
 		}
 
 	if (i == SMI_MON_BUS_NR)
-		pr_debug("%s: over monitor: %pa.%s:%u mon:%#x %#x %#x %#x\n",
+		pr_info("%s: over monitor: %pa.%s:%u mon:%#x %#x %#x %#x\n",
 			__func__, &nodes[mstr].pa, name, mstr,
 			mon[0], mon[1], mon[2], mon[3]);
 	else
-		pr_debug("%s: %pa.%s:%u mon:%#x %#x %#x %#x\n",
+		pr_info("%s: %pa.%s:%u mon:%#x %#x %#x %#x\n",
 			__func__, &nodes[mstr].pa, name, mstr,
 			mon[0], mon[1], mon[2], mon[3]);
 }
 
 static int mtk_smi_dbg_get(void *data, u64 *val)
 {
-	pr_debug("%s: val:%llu\n", __func__, *val);
+	pr_info("%s: val:%llu\n", __func__, *val);
 	return 0;
 }
 
@@ -514,10 +514,10 @@ static int mtk_smi_dbg_set(void *data, u64 val)
 	u64			exval;
 
 	if (!smi) {
-		pr_debug("%s: not init yet\n", __func__);
+		pr_info("%s: not init yet\n", __func__);
 		return -EFAULT;
 	}
-	pr_debug("%s: val:%#llx\n", __func__, val);
+	pr_info("%s: val:%#llx\n", __func__, val);
 
 	switch (val & 0x7) {
 	case SET_OPS_DUMP:
@@ -591,11 +591,11 @@ s32 mtk_smi_dbg_larb_prepare_enable(const u32 id, const char *user)
 	s32			ret;
 
 	if (!smi) {
-		pr_debug("%s: not init yet\n", __func__);
+		pr_info("%s: not init yet\n", __func__);
 		return -EFAULT;
 	}
 	if (id >= MTK_LARB_NR_MAX || !smi->larb[id].dev) {
-		pr_debug("%s: invalid larb-id:%u from user:%s\n", id, user);
+		pr_info("%s: invalid larb-id:%u from user:%s\n", id, user);
 		return -EINVAL;
 	}
 
@@ -614,11 +614,11 @@ void mtk_smi_dbg_larb_disable_unprepare(const u32 id, const char *user)
 	struct mtk_smi_dbg	*smi = gsmi;
 
 	if (!smi) {
-		pr_debug("%s: not init yet\n", __func__);
+		pr_info("%s: not init yet\n", __func__);
 		return;
 	}
 	if (id >= MTK_LARB_NR_MAX || !smi->larb[id].dev) {
-		pr_debug("%s: invalid larb-id:%u from user:%s\n", id, user);
+		pr_info("%s: invalid larb-id:%u from user:%s\n", id, user);
 		return;
 	}
 
@@ -634,10 +634,10 @@ s32 mtk_smi_dbg_hang_detect(const char *user)
 	s32			i;
 
 	if (!smi) {
-		pr_debug("%s: not init yet\n", __func__);
+		pr_info("%s: not init yet\n", __func__);
 		return -EFAULT;
 	}
-	pr_debug("%s: caller:%s\n", __func__, user);
+	pr_info("%s: caller:%s\n", __func__, user);
 
 	for (i = 0; i < ARRAY_SIZE(smi->larb); i++)
 		mtk_smi_dbg_print(&smi->larb[i], TYPE_LARB);

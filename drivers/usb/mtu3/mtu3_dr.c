@@ -412,12 +412,12 @@ static void ssusb_set_vcore(bool enable)
 {
 	if (enable) {
 		mtk_pm_qos_update_request(&vcore_pm_qos, VCORE_OPP);
-		pr_debug("%s: Vcore Qos update %d\n", __func__,
+		pr_info("%s: Vcore Qos update %d\n", __func__,
 				VCORE_OPP);
 	} else {
 		mtk_pm_qos_update_request(&vcore_pm_qos,
 				MTK_PM_QOS_VCORE_OPP_DEFAULT_VALUE);
-		pr_debug("%s: Vcore QOS update default\n", __func__);
+		pr_info("%s: Vcore QOS update default\n", __func__);
 	}
 }
 #endif
@@ -713,7 +713,7 @@ int ssusb_otg_switch_init(struct ssusb_mtk *ssusb)
 	/* add vcore quest */
 	mtk_pm_qos_add_request(&vcore_pm_qos, MTK_PM_QOS_VCORE_OPP,
 			MTK_PM_QOS_VCORE_OPP_DEFAULT_VALUE);
-	pr_debug("%s: add default Vcore QOS request\n", __func__);
+	pr_info("%s: add default Vcore QOS request\n", __func__);
 	#endif
 
 	if (otg_sx->manual_drd_enabled)

@@ -233,7 +233,7 @@ static int lcm_vci_disable(struct lcm *ctx)
 
 static void lcm_panel_init(struct lcm *ctx)
 {
-	pr_debug("%s +\n", __func__);
+	pr_info("%s +\n", __func__);
 
 #if WITH_DSC
 	lcm_dcs_write_seq_static(ctx, 0xFE, 0x00);
@@ -419,14 +419,14 @@ static void lcm_panel_init(struct lcm *ctx)
 	lcm_dcs_write_seq_static(ctx, 0x29);
 	mdelay(20);
 
-	pr_debug("%s -\n", __func__);
+	pr_info("%s -\n", __func__);
 }
 
 static int lcm_disable(struct drm_panel *panel)
 {
 	struct lcm *ctx = panel_to_lcm(panel);
 
-	pr_debug("%s +\n", __func__);
+	pr_info("%s +\n", __func__);
 
 	if (!ctx->enabled)
 		return 0;
@@ -438,7 +438,7 @@ static int lcm_disable(struct drm_panel *panel)
 
 	ctx->enabled = false;
 
-	pr_debug("%s -\n", __func__);
+	pr_info("%s -\n", __func__);
 
 	return 0;
 }
@@ -447,7 +447,7 @@ static int lcm_unprepare(struct drm_panel *panel)
 {
 	struct lcm *ctx = panel_to_lcm(panel);
 
-	pr_debug("%s +\n", __func__);
+	pr_info("%s +\n", __func__);
 
 	if (!ctx->prepared)
 		return 0;
@@ -478,7 +478,7 @@ static int lcm_unprepare(struct drm_panel *panel)
 	ctx->error = 0;
 	ctx->prepared = false;
 
-	pr_debug("%s -\n", __func__);
+	pr_info("%s -\n", __func__);
 
 	return 0;
 }
@@ -488,7 +488,7 @@ static int lcm_prepare(struct drm_panel *panel)
 	struct lcm *ctx = panel_to_lcm(panel);
 	int ret;
 
-	pr_debug("%s +\n", __func__);
+	pr_info("%s +\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -539,7 +539,7 @@ static int lcm_prepare(struct drm_panel *panel)
 	lcm_panel_get_data(ctx);
 #endif
 
-	pr_debug("%s -\n", __func__);
+	pr_info("%s -\n", __func__);
 
 	return ret;
 }
@@ -548,7 +548,7 @@ static int lcm_enable(struct drm_panel *panel)
 {
 	struct lcm *ctx = panel_to_lcm(panel);
 
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 
 	if (ctx->enabled)
 		return 0;
@@ -557,7 +557,7 @@ static int lcm_enable(struct drm_panel *panel)
 		ctx->backlight->props.power = FB_BLANK_UNBLANK;
 		backlight_update_status(ctx->backlight);
 	}
-	pr_debug("%s-\n", __func__);
+	pr_info("%s-\n", __func__);
 
 	ctx->enabled = true;
 
@@ -718,18 +718,18 @@ static int setbacklight_cmdq(void *dsi, dcs_write_gce cb, void *handle,
 	int level_mapping = 0;
 	char bl_tb0[] = {0x51, 0x07, 0xFF};
 
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 
 	if (level > 255)
 		level = 255;
 	bl_level = level;
 
 	level_mapping = level * 0x3FF / 255;
-	pr_debug("%s backlight = %d, mapping to 0x%x\n", __func__, level, level_mapping);
+	pr_info("%s backlight = %d, mapping to 0x%x\n", __func__, level, level_mapping);
 
 	bl_tb0[1] = (u8)((level_mapping >> 8) & 0x7);
 	bl_tb0[2] = (u8)(level_mapping & 0xFF);
-	pr_debug("%s tb0=0x%x,tb1=0x%x\n", __func__, bl_tb0[1], bl_tb0[2]);
+	pr_info("%s tb0=0x%x,tb1=0x%x\n", __func__, bl_tb0[1], bl_tb0[2]);
 
 	if (!cb)
 		return -1;
@@ -743,7 +743,7 @@ static int sethbm_cmdq(struct drm_panel *panel, void *dsi, dcs_write_gce cb, voi
 {
 	char bl_tb0[] = {0x51, 0x07, 0xFF};
 
-	pr_debug("%s,benter:%d+\n", __func__, en);
+	pr_info("%s,benter:%d+\n", __func__, en);
 
 	if (!cb)
 		return -1;
@@ -767,7 +767,7 @@ struct drm_display_mode *get_mode_by_id(struct drm_panel *panel,
 			return m;
 		i++;
 	}
-	pr_debug("%s, %d, failed to get mode:%d, total:%u\n", __func__, __LINE__, mode, i);
+	pr_info("%s, %d, failed to get mode:%d, total:%u\n", __func__, __LINE__, mode, i);
 	return NULL;
 }
 
@@ -777,7 +777,7 @@ static void lcm_mode_switch_to_120(struct drm_panel *panel,
 	if (stage == BEFORE_DSI_POWERDOWN) {
 		struct lcm *ctx = panel_to_lcm(panel);
 
-		pr_debug("%s\n", __func__);
+		pr_info("%s\n", __func__);
 		lcm_dcs_write_seq_static(ctx, 0xFE, 0x40);
 		lcm_dcs_write_seq_static(ctx, 0xBD, 0x00);//00:120HZ,05:60HZ
 		lcm_dcs_write_seq_static(ctx, 0xFE, 0x00);
@@ -790,7 +790,7 @@ static void lcm_mode_switch_to_60(struct drm_panel *panel,
 	if (stage == BEFORE_DSI_POWERDOWN) {
 		struct lcm *ctx = panel_to_lcm(panel);
 
-		pr_debug("%s\n", __func__);
+		pr_info("%s\n", __func__);
 		lcm_dcs_write_seq_static(ctx, 0xFE, 0x40);
 		lcm_dcs_write_seq_static(ctx, 0xBD, 0x05);//00:120HZ,05:60HZ
 		lcm_dcs_write_seq_static(ctx, 0xFE, 0x00);
@@ -825,7 +825,7 @@ static int mtk_panel_ext_param_set(struct drm_panel *panel,
 	struct mtk_panel_ext *ext = find_panel_ext(panel);
 	int ret = 0;
 
-	pr_debug("%s+:mode=%d\n", __func__, mode);
+	pr_info("%s+:mode=%d\n", __func__, mode);
 	if (mode == 0)
 		ext_params.pll_clk = 275;
 	else if (mode == 1)
@@ -876,7 +876,7 @@ static int lcm_get_modes(struct drm_panel *panel)
 	struct drm_display_mode *mode;
 //	struct drm_display_mode *mode_2;
 
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 
 	mode = drm_mode_duplicate(panel->drm, &default_mode);
 	if (!mode) {
@@ -923,7 +923,7 @@ static int lcm_probe(struct mipi_dsi_device *dsi)
 	struct lcm *ctx;
 	int ret;
 
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 
 	ctx = devm_kzalloc(dev, sizeof(struct lcm), GFP_KERNEL);
 	if (!ctx)
@@ -1003,7 +1003,7 @@ static int lcm_probe(struct mipi_dsi_device *dsi)
 		return ret;
 	}
 #endif
-	pr_debug("%s-\n", __func__);
+	pr_info("%s-\n", __func__);
 
 	return ret;
 }

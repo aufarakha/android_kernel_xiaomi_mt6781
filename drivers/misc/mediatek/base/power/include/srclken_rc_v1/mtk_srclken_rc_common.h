@@ -36,7 +36,7 @@
 #define srclken_dbg(fmt, args...)			\
 	do {						\
 		if (srclken_get_debug_cfg())			\
-			pr_debug(fmt, ##args);		\
+			pr_info(fmt, ##args);		\
 	} while (0)
 
 #define srclken_read(addr)		\

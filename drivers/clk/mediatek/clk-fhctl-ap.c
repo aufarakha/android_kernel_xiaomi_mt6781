@@ -60,7 +60,7 @@ static int __mt_fh_hw_hopping(struct clk_mt_fhctl *fh,
 	ret = readl_poll_timeout_atomic(fh_regs->reg_mon, mon_dds,
 			(mon_dds&pll_data->dds_mask) == new_dds, 10, 1000);
 	if (ret)
-		pr_debug("ERROR %s: target_dds=0x%x, mon_dds=0x%x",
+		pr_info("ERROR %s: target_dds=0x%x, mon_dds=0x%x",
 			__func__, new_dds, (mon_dds&pll_data->dds_mask));
 
 	if (postdiv == -1) {
@@ -106,12 +106,12 @@ static int clk_mt_fh_hw_pll_init(struct clk_mt_fhctl *fh)
 	mask = 1 << pll_id;
 
 	if (fh_regs == NULL) {
-		pr_debug("ERROR fh_reg (%d) is NULL", pll_id);
+		pr_info("ERROR fh_reg (%d) is NULL", pll_id);
 		return -EFAULT;
 	}
 
 	if (pll_data == NULL) {
-		pr_debug("ERROR pll_data (%d) is NULL", pll_id);
+		pr_info("ERROR pll_data (%d) is NULL", pll_id);
 		return -EFAULT;
 	}
 
@@ -145,7 +145,7 @@ static int clk_mt_fh_hw_pll_unpause(struct clk_mt_fhctl *fh)
 	fh_regs = fh->fh_regs;
 
 	if (fh->pll_data->pll_type != FH_PLL_TYPE_CPU) {
-		pr_debug("%s not support unpause.", fh->pll_data->pll_name);
+		pr_info("%s not support unpause.", fh->pll_data->pll_name);
 		return -EFAULT;
 	}
 
@@ -171,7 +171,7 @@ static int clk_mt_fh_hw_pll_pause(struct clk_mt_fhctl *fh)
 	fh_regs = fh->fh_regs;
 
 	if (fh->pll_data->pll_type != FH_PLL_TYPE_CPU) {
-		pr_debug("%s not support pause.", fh->pll_data->pll_name);
+		pr_info("%s not support pause.", fh->pll_data->pll_name);
 		return -EFAULT;
 	}
 
@@ -200,7 +200,7 @@ static int clk_mt_fh_hw_pll_ssc_disable(struct clk_mt_fhctl *fh)
 	pll_data = fh->pll_data;
 
 	if (pll_data->pll_type == FH_PLL_TYPE_NOT_SUPPORT) {
-		pr_debug("%s not support SSC.", pll_data->pll_name);
+		pr_info("%s not support SSC.", pll_data->pll_name);
 		return -EPERM;
 	}
 
@@ -240,7 +240,7 @@ static int clk_mt_fh_hw_pll_ssc_enable(struct clk_mt_fhctl *fh, int ssc_rate)
 	dds_mask = fh->pll_data->dds_mask;
 
 	if (pll_data->pll_type == FH_PLL_TYPE_NOT_SUPPORT) {
-		pr_debug("%s not support SSC.", pll_data->pll_name);
+		pr_info("%s not support SSC.", pll_data->pll_name);
 		return -EPERM;
 	}
 
@@ -299,7 +299,7 @@ static int clk_mt_fh_hw_pll_hopping(struct clk_mt_fhctl *fh,
 
 	if ((fh->pll_data->pll_type == FH_PLL_TYPE_NOT_SUPPORT) ||
 		(fh->pll_data->pll_type == FH_PLL_TYPE_CPU)) {
-		pr_debug("%s not support hopping in AP side",
+		pr_info("%s not support hopping in AP side",
 						pll_data->pll_name);
 		return -EPERM;
 	}
@@ -328,14 +328,14 @@ static int clk_mt_fh_hw_pll_hopping(struct clk_mt_fhctl *fh,
 		ret = readl_poll_timeout_atomic(fh_regs->reg_mon, mon_dds,
 			(mon_dds&pll_data->dds_mask) == pll_dds, 10, 1000);
 		if (ret)
-			pr_debug("ERROR %s: target_dds=0x%x, mon_dds=0x%x",
+			pr_info("ERROR %s: target_dds=0x%x, mon_dds=0x%x",
 				__func__, pll_dds, mon_dds&pll_data->dds_mask);
 
 	}
 
 	ret = __mt_fh_hw_hopping(fh, pll_id, new_dds, postdiv);
 	if (ret)
-		pr_debug("__mt_fh_hw_hopping error:%d", ret);
+		pr_info("__mt_fh_hw_hopping error:%d", ret);
 
 
 	/* Enable SSC status, if need. */

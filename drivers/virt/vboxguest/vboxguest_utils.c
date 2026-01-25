@@ -55,7 +55,7 @@ void name(const char *fmt, ...)						\
 }									\
 EXPORT_SYMBOL(name)
 
-VBG_LOG(vbg_info, pr_debug);
+VBG_LOG(vbg_info, pr_info);
 VBG_LOG(vbg_warn, pr_warn);
 VBG_LOG(vbg_err, pr_err);
 #if defined(DEBUG) && !defined(CONFIG_DYNAMIC_DEBUG)

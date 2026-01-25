@@ -713,7 +713,7 @@ static int __init init_menu(void)
 	/* Register FB notifier */
 	r = fb_register_client(&mtk_menu_fb_notifier);
 	if (r) {
-		pr_debug("FAILED TO REGISTER FB CLIENT (%d)\n", r);
+		pr_info("FAILED TO REGISTER FB CLIENT (%d)\n", r);
 		return r;
 	}
 

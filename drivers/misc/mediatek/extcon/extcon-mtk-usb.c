@@ -251,12 +251,12 @@ static int mtk_usb_extcon_set_vbus_v1(bool is_on) {
 	if (!primary_charger) {
 		primary_charger = get_charger_by_name("primary_chg");
 		if (!primary_charger) {
-			pr_debug("%s: get primary charger device failed\n", __func__);
+			pr_info("%s: get primary charger device failed\n", __func__);
 			return -ENODEV;
 		}
 	}
 #if defined(CONFIG_MTK_GAUGE_VERSION) && (CONFIG_MTK_GAUGE_VERSION == 30)
-	pr_debug("%s: is_on=%d\n", __func__, is_on);
+	pr_info("%s: is_on=%d\n", __func__, is_on);
 	if (is_on) {
 		charger_dev_enable_otg(primary_charger, true);
 		charger_dev_set_boost_current_limit(primary_charger,
@@ -448,7 +448,7 @@ static int mtk_usb_extcon_tcpc_init(struct mtk_extcon_info *extcon)
 static void issue_connection_work(unsigned int dr)
 {
 	if (!g_extcon) {
-		pr_debug("g_extcon = NULL\n");
+		pr_info("g_extcon = NULL\n");
 		return;
 	}
 
@@ -458,7 +458,7 @@ static void issue_connection_work(unsigned int dr)
 
 void mt_usb_connect_v1(void)
 {
-	pr_debug("%s in mtk extcon\n", __func__);
+	pr_info("%s in mtk extcon\n", __func__);
 
 #ifdef CONFIG_TCPC_CLASS
 	/* check current role to avoid power role swap issue */
@@ -472,7 +472,7 @@ EXPORT_SYMBOL_GPL(mt_usb_connect_v1);
 
 void mt_usb_disconnect_v1(void)
 {
-	pr_debug("%s  in mtk extcon\n", __func__);
+	pr_info("%s  in mtk extcon\n", __func__);
 #ifdef CONFIG_TCPC_CLASS
 	/* disconnect by tcpc notifier */
 #else

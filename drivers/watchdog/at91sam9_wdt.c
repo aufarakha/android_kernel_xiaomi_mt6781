@@ -372,7 +372,7 @@ static int __init at91wdt_probe(struct platform_device *pdev)
 
 	platform_set_drvdata(pdev, wdt);
 
-	pr_debug("enabled (heartbeat=%d sec, nowayout=%d)\n",
+	pr_info("enabled (heartbeat=%d sec, nowayout=%d)\n",
 		wdt->wdd.timeout, wdt->nowayout);
 
 	return 0;

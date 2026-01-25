@@ -302,14 +302,14 @@ void xenbus_dev_shutdown(struct device *_dev)
 
 	get_device(&dev->dev);
 	if (dev->state != XenbusStateConnected) {
-		pr_debug("%s: %s: %s != Connected, skipping\n",
+		pr_info("%s: %s: %s != Connected, skipping\n",
 			__func__, dev->nodename, xenbus_strstate(dev->state));
 		goto out;
 	}
 	xenbus_switch_state(dev, XenbusStateClosing);
 	timeout = wait_for_completion_timeout(&dev->down, timeout);
 	if (!timeout)
-		pr_debug("%s: %s timeout closing device\n",
+		pr_info("%s: %s timeout closing device\n",
 			__func__, dev->nodename);
  out:
 	put_device(&dev->dev);

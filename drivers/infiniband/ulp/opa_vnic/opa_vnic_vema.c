@@ -1055,7 +1055,7 @@ static int __init opa_vnic_init(void)
 {
 	int rc;
 
-	pr_debug("OPA Virtual Network Driver - v%s\n",
+	pr_info("OPA Virtual Network Driver - v%s\n",
 		opa_vnic_driver_version);
 
 	rc = ib_register_client(&opa_vnic_client);

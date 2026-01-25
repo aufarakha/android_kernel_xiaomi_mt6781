@@ -462,7 +462,7 @@ static void leds_i2c_shutdown(struct platform_device *pdev)
 	int i;
 	struct mtk_leds_info *m_leds = dev_get_platdata(&pdev->dev);
 
-	pr_debug("Turn off backlight\n");
+	pr_info("Turn off backlight\n");
 
 	for (i = 0; m_leds && i < m_leds->nums; i++) {
 #ifdef CONFIG_LEDS_BRIGHTNESS_CHANGED
@@ -492,11 +492,11 @@ static int __init mtk_leds_init(void)
 {
 	int ret;
 
-	pr_debug("Leds init\n");
+	pr_info("Leds init\n");
 	ret = platform_driver_register(&i2c_leds_driver);
 
 	if (ret) {
-		pr_debug("driver register error: %d\n", ret);
+		pr_info("driver register error: %d\n", ret);
 		return ret;
 	}
 

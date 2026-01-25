@@ -472,7 +472,7 @@ int spi_multipin_loopback_transfer(int len, int xfer_speed)
 	void *rx_buf;
 	int i, err = 0;
 
-	pr_debug("%s entry...\n", __func__);
+	pr_info("%s entry...\n", __func__);
 	tx_buf = kzalloc(len, GFP_KERNEL);
 	rx_buf = kzalloc(len, GFP_KERNEL);
 	for (i = 0; i < len; i++)
@@ -531,7 +531,7 @@ int spi_multipin_loopback_transfer(int len, int xfer_speed)
 		}
 	}
 	pr_debug("total length %d bytes, err %d bytes.\n", len, err);
-	pr_debug("%s quit...\n", __func__);
+	pr_info("%s quit...\n", __func__);
 tail:
 	kfree(tx_buf);
 	kfree(rx_buf);
@@ -553,7 +553,7 @@ static ssize_t hifi4dsp_spi_store(struct device *dev,
 			buf += 9;
 			if (!strncmp(buf, "len=", 4) &&
 				(sscanf(buf + 4, "%d", &len) == 1)) {
-				pr_debug("**dump set**\n addr = 0x%x, speed = %d, len = %d\n",
+				pr_info("**dump set**\n addr = 0x%x, speed = %d, len = %d\n",
 						 dsp_addr, xfer_speed, len);
 				ret = spi_multipin_loopback_transfer(len,
 						xfer_speed);
@@ -574,7 +574,7 @@ static void spi_create_attribute(struct device *dev)
 	for (idx = 0; idx < size; idx++) {
 		ret = device_create_file(dev, spi_attribute[idx]);
 		if (ret != 0)
-			pr_debug("device_create_file fail!\n");
+			pr_info("device_create_file fail!\n");
 	}
 }
 int hifi4dsp_spi_get_status(void)
@@ -589,7 +589,7 @@ static int hifi4dsp_spi_probe(struct spi_device *spi)
 	struct mtk_chip_config *data;
 	struct mtk_hifi4dsp_spi_data *pri_data = &hifi4dsp_spi_data;
 
-	pr_debug("%s() enter.\n", __func__);
+	pr_info("%s() enter.\n", __func__);
 	data = kzalloc(sizeof(struct mtk_chip_config), GFP_KERNEL);
 	if (!data) {
 		err = -ENOMEM;
@@ -597,16 +597,16 @@ static int hifi4dsp_spi_probe(struct spi_device *spi)
 	}
 	ret = of_property_read_u32(nc, "tick-dly", &tick_delay);
 	if (ret) {
-		pr_debug("tick-dly isn't setting!\n");
+		pr_info("tick-dly isn't setting!\n");
 		tick_delay = 0;
 	} else
-		pr_debug("tick-dly = %d\n", tick_delay);
+		pr_info("tick-dly = %d\n", tick_delay);
 	ret = of_property_read_u32(nc, "spi-pin-mode", &default_spi_trans_mode);
 	if (ret) {
-		pr_debug("spi-pin-mode isn't setting!\n");
+		pr_info("spi-pin-mode isn't setting!\n");
 		default_spi_trans_mode = 2;
 	} else
-		pr_debug("spi-pin-mode = %d\n", default_spi_trans_mode);
+		pr_info("spi-pin-mode = %d\n", default_spi_trans_mode);
 	/*
 	 * Structure filled with mtk-spi crtical values.
 	 */
@@ -627,7 +627,7 @@ tail:
 }
 static int hifi4dsp_spi_remove(struct spi_device *spi)
 {
-	pr_debug("%s().\n", __func__);
+	pr_info("%s().\n", __func__);
 	if (spi && spi->controller_data)
 		kfree(spi->controller_data);
 	return 0;

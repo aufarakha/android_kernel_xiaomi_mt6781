@@ -1213,7 +1213,7 @@ static int __init ppp_init(void)
 {
 	int err;
 
-	pr_debug("PPP generic driver version " PPP_VERSION "\n");
+	pr_info("PPP generic driver version " PPP_VERSION "\n");
 
 	err = register_pernet_device(&ppp_net_ops);
 	if (err) {

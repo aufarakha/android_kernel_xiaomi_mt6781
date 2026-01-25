@@ -149,7 +149,7 @@ static int consys_plt_pmic_event_notifier(unsigned int id, unsigned int event)
 	static int oc_dump = 0;
 
 	oc_counter++;
-	pr_debug("[%s] VCN13 OC times: %d\n", __func__, oc_counter);
+	pr_info("[%s] VCN13 OC times: %d\n", __func__, oc_counter);
 
 	if (oc_counter <= 30)
 		oc_dump = 1;
@@ -181,7 +181,7 @@ int consys_plt_pmic_ctrl_dump(const char* tag)
 	consys_hw_is_bus_hang();
 	ret = consys_hw_force_conninfra_wakeup();
 	if (ret) {
-		pr_debug("[%s] force conninfra wakeup fail\n", __func__);
+		pr_info("[%s] force conninfra wakeup fail\n", __func__);
 		return 0;
 	}
 
@@ -190,10 +190,10 @@ int consys_plt_pmic_ctrl_dump(const char* tag)
 	if (consys_sema_acquire_timeout_mt6885(CONN_SEMA_CONN_INFRA_COMMON_SYSRAM_INDEX, CONN_SEMA_TIMEOUT) == CONN_SEMA_GET_SUCCESS) {
 		value3 = CONSYS_REG_READ(CONN_INFRA_SYSRAM_BASE_ADDR + CONN_INFRA_SYSRAM_SW_CR_A_DIE_TOP_CK_EN_CTRL);
 		consys_sema_release_mt6885(CONN_SEMA_CONN_INFRA_COMMON_SYSRAM_INDEX);
-		pr_debug("[%s] D-die: 0x1800_1900:0x%08x 0x1800_50A8:0x%08x 0x1805_2830:0x%08x\n",
+		pr_info("[%s] D-die: 0x1800_1900:0x%08x 0x1800_50A8:0x%08x 0x1805_2830:0x%08x\n",
 			(tag == NULL?__func__:tag), value1, value2, value3);
 	} else {
-		pr_debug("[%s] D-die: 0x1800_1900:0x%08x 0x1800_50A8:0x%08x\n",
+		pr_info("[%s] D-die: 0x1800_1900:0x%08x 0x1800_50A8:0x%08x\n",
 			(tag == NULL?__func__:tag), value1, value2);
 	}
 
@@ -202,7 +202,7 @@ int consys_plt_pmic_ctrl_dump(const char* tag)
 		if (snprintf(tmp, LOG_TMP_BUF_SZ, " [0x%04x: 0x%08x]", adie_cr_list[index], adie_value) >= 0)
 			strncat(tmp_buf, tmp, strlen(tmp));
 	}
-	pr_debug("[%s] ATOP:%s\n", (tag == NULL?__func__:tag), tmp_buf);
+	pr_info("[%s] ATOP:%s\n", (tag == NULL?__func__:tag), tmp_buf);
 	consys_hw_force_conninfra_sleep();
 
 	return 0;
@@ -221,7 +221,7 @@ int consys_plt_pmic_get_from_dts(struct platform_device *pdev, struct conninfra_
 		vcn13_nb.notifier_call = consys_vcn13_oc_notify;
 		ret = devm_regulator_register_notifier(reg_VCN13, &vcn13_nb);
 		if (ret) {
-			pr_debug("VCN13 regulator notifier request failed\n");
+			pr_info("VCN13 regulator notifier request failed\n");
 		}
 	}
 	reg_VCN18 = regulator_get(&pdev->dev, "vcn18");
@@ -527,13 +527,13 @@ static void consys_raise_vcn13_vs2_voltage(enum vcn13_state next_state)
 
 	/* no change */
 	if (curr_vcn13_state == next_state) {
-		pr_debug("[%s] curr==next_state(%d, %d), return\n", __func__, curr_vcn13_state, next_state);
+		pr_info("[%s] curr==next_state(%d, %d), return\n", __func__, curr_vcn13_state, next_state);
 		return;
 	}
-	pr_debug("[%s] curr_vcn13_state=%d next_state=%d\n", __func__, curr_vcn13_state, next_state);
+	pr_info("[%s] curr_vcn13_state=%d next_state=%d\n", __func__, curr_vcn13_state, next_state);
 	/* Check raise window, the duration to previous action should be 1 ms. */
 	while (atomic_read(&g_voltage_change_status) == 1);
-	pr_debug("[%s] check down\n", __func__);
+	pr_info("[%s] check down\n", __func__);
 	curr_vcn13_state = next_state;
 
 	switch (curr_vcn13_state) {
@@ -641,7 +641,7 @@ static void consys_raise_vcn13_vs2_voltage(enum vcn13_state next_state)
 int consys_plt_pmic_raise_voltage(unsigned int drv_type, bool raise, bool onoff)
 {
 	static bool bt_raise = false;
-	pr_debug("[%s] [drv_type(%d) raise(%d) onoff(%d)][bt_raise(%d)]\n",
+	pr_info("[%s] [drv_type(%d) raise(%d) onoff(%d)][bt_raise(%d)]\n",
 		__func__, drv_type, raise, onoff, bt_raise);
 	if (drv_type == 0 && onoff) {
 		bt_raise = raise;
@@ -665,7 +665,7 @@ int consys_plt_pmic_raise_voltage(unsigned int drv_type, bool raise, bool onoff)
 	bool both_wifi_bt_on = false;
 	unsigned int radio_status;
 
-	pr_debug("[%s] drv_type=[%d] raise=[%d] onoff=[%d], bt_raise=[%d] wifi_raise=[%d] conninfra_raise=[%d]",
+	pr_info("[%s] drv_type=[%d] raise=[%d] onoff=[%d], bt_raise=[%d] wifi_raise=[%d] conninfra_raise=[%d]",
 		__func__, drv_type, raise, onoff, bt_raise, wifi_raise, conninfra_raise);
 
 	if (drv_type == 0) {

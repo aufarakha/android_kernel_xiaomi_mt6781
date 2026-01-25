@@ -5760,7 +5760,7 @@ static int __init cnic_init(void)
 {
 	int rc = 0;
 
-	pr_debug("%s", version);
+	pr_info("%s", version);
 
 	rc = register_netdevice_notifier(&cnic_netdev_notifier);
 	if (rc) {

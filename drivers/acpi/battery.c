@@ -726,7 +726,7 @@ static void battery_hook_unregister_unlocked(struct acpi_battery_hook *hook)
 	}
 	list_del_init(&hook->list);
 
-	pr_debug("extension unregistered: %s\n", hook->name);
+	pr_info("extension unregistered: %s\n", hook->name);
 }
 
 void battery_hook_unregister(struct acpi_battery_hook *hook)
@@ -769,7 +769,7 @@ void battery_hook_register(struct acpi_battery_hook *hook)
 			goto end;
 		}
 	}
-	pr_debug("new extension: %s\n", hook->name);
+	pr_info("new extension: %s\n", hook->name);
 end:
 	mutex_unlock(&hook_mutex);
 }
@@ -1494,7 +1494,7 @@ static int acpi_battery_add(struct acpi_device *device)
 	}
 #endif
 
-	pr_debug(PREFIX "%s Slot [%s] (battery %s)\n",
+	pr_info(PREFIX "%s Slot [%s] (battery %s)\n",
 		ACPI_BATTERY_DEVICE_NAME, acpi_device_bid(device),
 		device->status.battery_present ? "present" : "absent");
 
@@ -1578,7 +1578,7 @@ static void __init acpi_battery_init_async(void *unused, async_cookie_t cookie)
 	if (battery_check_pmic) {
 		for (i = 0; i < ARRAY_SIZE(acpi_battery_blacklist); i++)
 			if (acpi_dev_present(acpi_battery_blacklist[i], "1", -1)) {
-				pr_debug(PREFIX ACPI_BATTERY_DEVICE_NAME
+				pr_info(PREFIX ACPI_BATTERY_DEVICE_NAME
 					": found native %s PMIC, not loading\n",
 					acpi_battery_blacklist[i]);
 				return;

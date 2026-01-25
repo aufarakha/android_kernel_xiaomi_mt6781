@@ -1298,7 +1298,7 @@ static void srpt_rdma_read_done(struct ib_cq *cq, struct ib_wc *wc)
 	ioctx->n_rdma = 0;
 
 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
-		pr_debug("RDMA_READ for ioctx 0x%p failed with status %d\n",
+		pr_info("RDMA_READ for ioctx 0x%p failed with status %d\n",
 			ioctx, wc->status);
 		srpt_abort_cmd(ioctx);
 		return;
@@ -1724,7 +1724,7 @@ static void srpt_send_done(struct ib_cq *cq, struct ib_wc *wc)
 	atomic_add(1 + ioctx->n_rdma, &ch->sq_wr_avail);
 
 	if (wc->status != IB_WC_SUCCESS)
-		pr_debug("sending response for ioctx 0x%p failed"
+		pr_info("sending response for ioctx 0x%p failed"
 			" with status %d\n", ioctx, wc->status);
 
 	if (state != SRPT_STATE_DONE) {
@@ -1954,7 +1954,7 @@ static void srpt_disconnect_ch_sync(struct srpt_rdma_ch *ch)
 
 	while (wait_event_timeout(sport->ch_releaseQ, srpt_ch_closed(sport, ch),
 				  5 * HZ) == 0)
-		pr_debug("%s(%s-%d state %d): still waiting ...\n", __func__,
+		pr_info("%s(%s-%d state %d): still waiting ...\n", __func__,
 			ch->sess_name, ch->qp->qp_num, ch->state);
 
 }
@@ -1969,7 +1969,7 @@ static void __srpt_close_all_ch(struct srpt_port *sport)
 	list_for_each_entry(nexus, &sport->nexus_list, entry) {
 		list_for_each_entry(ch, &nexus->ch_list, list) {
 			if (srpt_disconnect_ch(ch) >= 0)
-				pr_debug("Closing channel %s-%d because target %s_%d has been disabled\n",
+				pr_info("Closing channel %s-%d because target %s_%d has been disabled\n",
 					ch->sess_name, ch->qp->qp_num,
 					dev_name(&sport->sdev->device->dev),
 					sport->port);
@@ -2136,7 +2136,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
 
 	it_iu_len = be32_to_cpu(req->req_it_iu_len);
 
-	pr_debug("Received SRP_LOGIN_REQ with i_port_id %pI6, t_port_id %pI6 and it_iu_len %d on port %d (guid=%pI6); pkey %#04x\n",
+	pr_info("Received SRP_LOGIN_REQ with i_port_id %pI6, t_port_id %pI6 and it_iu_len %d on port %d (guid=%pI6); pkey %#04x\n",
 		req->initiator_port_id, req->target_port_id, it_iu_len,
 		port_num, &sport->gid, be16_to_cpu(pkey));
 
@@ -2165,7 +2165,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
 
 	if (!sport->enabled) {
 		rej->reason = cpu_to_be32(SRP_LOGIN_REJ_INSUFFICIENT_RESOURCES);
-		pr_debug("rejected SRP_LOGIN_REQ because target port %s_%d has not yet been enabled\n",
+		pr_info("rejected SRP_LOGIN_REQ because target port %s_%d has not yet been enabled\n",
 			dev_name(&sport->sdev->device->dev), port_num);
 		goto reject;
 	}
@@ -2274,7 +2274,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
 		WARN_ON_ONCE(ch->sess == NULL);
 		ret = PTR_ERR(ch->sess);
 		ch->sess = NULL;
-		pr_debug("Rejected login for initiator %s: ret = %d.\n",
+		pr_info("Rejected login for initiator %s: ret = %d.\n",
 			ch->sess_name, ret);
 		rej->reason = cpu_to_be32(ret == -ENOMEM ?
 				SRP_LOGIN_REJ_INSUFFICIENT_RESOURCES :
@@ -2292,7 +2292,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
 		list_for_each_entry(ch2, &nexus->ch_list, list) {
 			if (srpt_disconnect_ch(ch2) < 0)
 				continue;
-			pr_debug("Relogin - closed existing channel %s\n",
+			pr_info("Relogin - closed existing channel %s\n",
 				ch2->sess_name);
 			rsp->rsp_flags = SRP_LOGIN_RSP_MULTICHAN_TERMINATED;
 		}
@@ -2305,7 +2305,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
 	if (!sport->enabled) {
 		rej->reason = cpu_to_be32(
 				SRP_LOGIN_REJ_INSUFFICIENT_RESOURCES);
-		pr_debug("rejected SRP_LOGIN_REQ because target %s_%d is not enabled\n",
+		pr_info("rejected SRP_LOGIN_REQ because target %s_%d is not enabled\n",
 			dev_name(&sdev->device->dev), port_num);
 		mutex_unlock(&sport->mutex);
 		ret = -EINVAL;
@@ -2410,7 +2410,7 @@ free_ch:
 	WARN_ON_ONCE(ret == 0);
 
 reject:
-	pr_debug("Rejecting login with reason %#x\n", be32_to_cpu(rej->reason));
+	pr_info("Rejecting login with reason %#x\n", be32_to_cpu(rej->reason));
 	rej->opcode = SRP_LOGIN_REJ;
 	rej->tag = req->tag;
 	rej->buf_fmt = cpu_to_be16(SRP_BUF_FORMAT_DIRECT |
@@ -2499,7 +2499,7 @@ static void srpt_cm_rej_recv(struct srpt_rdma_ch *ch,
 		for (i = 0; i < private_data_len; i++)
 			sprintf(priv + 3 * i, " %02x", private_data[i]);
 	}
-	pr_debug("Received CM REJ for ch %s-%d; reason %d%s%s.\n",
+	pr_info("Received CM REJ for ch %s-%d; reason %d%s%s.\n",
 		ch->sess_name, ch->qp->qp_num, reason, private_data_len ?
 		"; private data" : "", priv ? priv : " (?)");
 	kfree(priv);
@@ -2577,24 +2577,24 @@ static int srpt_cm_handler(struct ib_cm_id *cm_id,
 		srpt_disconnect_ch(ch);
 		break;
 	case IB_CM_DREP_RECEIVED:
-		pr_debug("Received CM DREP message for ch %s-%d.\n",
+		pr_info("Received CM DREP message for ch %s-%d.\n",
 			ch->sess_name, ch->qp->qp_num);
 		srpt_close_ch(ch);
 		break;
 	case IB_CM_TIMEWAIT_EXIT:
-		pr_debug("Received CM TimeWait exit for ch %s-%d.\n",
+		pr_info("Received CM TimeWait exit for ch %s-%d.\n",
 			ch->sess_name, ch->qp->qp_num);
 		srpt_close_ch(ch);
 		break;
 	case IB_CM_REP_ERROR:
-		pr_debug("Received CM REP error for ch %s-%d.\n", ch->sess_name,
+		pr_info("Received CM REP error for ch %s-%d.\n", ch->sess_name,
 			ch->qp->qp_num);
 		break;
 	case IB_CM_DREQ_ERROR:
-		pr_debug("Received CM DREQ ERROR event.\n");
+		pr_info("Received CM DREQ ERROR event.\n");
 		break;
 	case IB_CM_MRA_RECEIVED:
-		pr_debug("Received CM MRA event\n");
+		pr_info("Received CM MRA event\n");
 		break;
 	default:
 		pr_err("received unrecognized CM event %d\n", event->event);
@@ -2632,7 +2632,7 @@ static int srpt_rdma_cm_handler(struct rdma_cm_id *cm_id,
 		srpt_close_ch(ch);
 		break;
 	case RDMA_CM_EVENT_UNREACHABLE:
-		pr_debug("Received CM REP error for ch %s-%d.\n", ch->sess_name,
+		pr_info("Received CM REP error for ch %s-%d.\n", ch->sess_name,
 			ch->qp->qp_num);
 		break;
 	case RDMA_CM_EVENT_DEVICE_REMOVAL:
@@ -2892,12 +2892,12 @@ static int srpt_release_sport(struct srpt_port *sport)
 
 	while (wait_event_timeout(sport->ch_releaseQ,
 				  srpt_ch_list_empty(sport), 5 * HZ) <= 0) {
-		pr_debug("%s_%d: waiting for session unregistration ...\n",
+		pr_info("%s_%d: waiting for session unregistration ...\n",
 			dev_name(&sport->sdev->device->dev), sport->port);
 		rcu_read_lock();
 		list_for_each_entry(nexus, &sport->nexus_list, entry) {
 			list_for_each_entry(ch, &nexus->ch_list, list) {
-				pr_debug("%s-%d: state %s\n",
+				pr_info("%s-%d: state %s\n",
 					ch->sess_name, ch->qp->qp_num,
 					get_ch_state_name(ch->state));
 			}
@@ -3057,7 +3057,7 @@ static void srpt_add_one(struct ib_device *device)
 	if (rdma_port_get_link_layer(device, 1) == IB_LINK_LAYER_INFINIBAND)
 		sdev->cm_id = ib_create_cm_id(device, srpt_cm_handler, sdev);
 	if (IS_ERR(sdev->cm_id)) {
-		pr_debug("ib_create_cm_id() failed: %ld\n",
+		pr_info("ib_create_cm_id() failed: %ld\n",
 			PTR_ERR(sdev->cm_id));
 		sdev->cm_id = NULL;
 		if (!rdma_cm_id)
@@ -3129,7 +3129,7 @@ free_dev:
 	kfree(sdev);
 err:
 	sdev = NULL;
-	pr_debug("%s(%s) failed.\n", __func__, dev_name(&device->dev));
+	pr_info("%s(%s) failed.\n", __func__, dev_name(&device->dev));
 	goto out;
 }
 
@@ -3144,7 +3144,7 @@ static void srpt_remove_one(struct ib_device *device, void *client_data)
 	int i;
 
 	if (!sdev) {
-		pr_debug("%s(%s): nothing to do.\n", __func__,
+		pr_info("%s(%s): nothing to do.\n", __func__,
 			dev_name(&device->dev));
 		return;
 	}

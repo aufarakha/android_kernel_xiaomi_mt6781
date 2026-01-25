@@ -332,7 +332,7 @@ static void __init of_unittest_check_phandles(void)
 
 		hash_for_each_possible(phandle_ht, nh, node, np->phandle) {
 			if (nh->np->phandle == np->phandle) {
-				pr_debug("Duplicate phandle! %i used by %pOF and %pOF\n",
+				pr_info("Duplicate phandle! %i used by %pOF and %pOF\n",
 					np->phandle, nh->np, np);
 				dup_count++;
 				break;
@@ -2520,12 +2520,12 @@ static int __init of_unittest(void)
 
 	np = of_find_node_by_path("/testcase-data/phandle-tests/consumer-a");
 	if (!np) {
-		pr_debug("No testcase data in device tree; not running tests\n");
+		pr_info("No testcase data in device tree; not running tests\n");
 		return 0;
 	}
 	of_node_put(np);
 
-	pr_debug("start of unittest - you will see error messages\n");
+	pr_info("start of unittest - you will see error messages\n");
 	of_unittest_check_tree_linkage();
 	of_unittest_check_phandles();
 	of_unittest_find_node_by_name();
@@ -2547,7 +2547,7 @@ static int __init of_unittest(void)
 
 	of_unittest_overlay_high_level();
 
-	pr_debug("end of unittest - %i passed, %i failed\n",
+	pr_info("end of unittest - %i passed, %i failed\n",
 		unittest_results.passed, unittest_results.failed);
 
 	return 0;

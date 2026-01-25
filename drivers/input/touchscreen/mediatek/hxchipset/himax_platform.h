@@ -29,7 +29,7 @@
 
 #if defined(CONFIG_TOUCHSCREEN_HIMAX_DEBUG)
 #define D(fmt, arg...) pr_debug("<<-GTP-ERROR->> " fmt "\n", ##arg)
-#define I(fmt, arg...) pr_debug("<<-GTP-INFO->> " fmt "\n", ##arg)
+#define I(fmt, arg...) pr_info("<<-GTP-INFO->> " fmt "\n", ##arg)
 #define W(fmt, arg...) pr_debug("<<-GTP-ERROR->> " fmt "\n", ##arg)
 #define E(fmt, arg...) pr_debug("<<-GTP-ERROR->> " fmt "\n", ##arg)
 #define DIF(fmt, arg...)                                                       \

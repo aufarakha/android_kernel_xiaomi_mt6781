@@ -240,7 +240,7 @@ static int tianma_prepare(struct drm_panel *panel)
 	struct tianma *ctx = panel_to_tianma(panel);
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -512,7 +512,7 @@ struct drm_display_mode *get_mode_by_id(struct drm_panel *panel,
 			return m;
 		i++;
 	}
-	pr_debug("%s, %d, failed to get mode:%d, total:%u\n", __func__, __LINE__, mode, i);
+	pr_info("%s, %d, failed to get mode:%d, total:%u\n", __func__, __LINE__, mode, i);
 	return NULL;
 }
 
@@ -880,7 +880,7 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 	struct device_node *backlight;
 	int ret;
 
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 	ctx = devm_kzalloc(dev, sizeof(struct tianma), GFP_KERNEL);
 
 	if (!ctx)
@@ -935,7 +935,7 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 		return ret;
 #endif
 
-	pr_debug("%s-\n", __func__);
+	pr_info("%s-\n", __func__);
 
 	return ret;
 }

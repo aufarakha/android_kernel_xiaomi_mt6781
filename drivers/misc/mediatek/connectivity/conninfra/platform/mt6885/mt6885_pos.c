@@ -142,7 +142,7 @@ unsigned int consys_emi_set_remapping_reg_mt6885(
 			CON_REG_HOST_CSR_ADDR + CONN2AP_REMAP_MD_SHARE_EMI_BASE_ADDR_OFFSET,
 			md_shared_emi_base_addr, 0, 16, 20);
 	}
-	pr_debug("connsys_emi_base=[0x%llx] mcif_emi_base=[0x%llx] remap cr: connsys=[0x%08x] mcif=[0x%08x]\n",
+	pr_info("connsys_emi_base=[0x%llx] mcif_emi_base=[0x%llx] remap cr: connsys=[0x%08x] mcif=[0x%08x]\n",
 		con_emi_base_addr, md_shared_emi_base_addr,
 		CONSYS_REG_READ(CON_REG_HOST_CSR_ADDR + CONN2AP_REMAP_MCU_EMI_BASE_ADDR_OFFSET),
 		CONSYS_REG_READ(CON_REG_HOST_CSR_ADDR + CONN2AP_REMAP_MD_SHARE_EMI_BASE_ADDR_OFFSET));
@@ -179,7 +179,7 @@ int consys_conninfra_on_power_ctrl_mt6885(unsigned int enable)
 			return -1;
 		}
 #else
-		pr_debug("Turn on conn_infra power by POS steps\n");
+		pr_info("Turn on conn_infra power by POS steps\n");
 		/* Assert "conn_infra_on" primary part power on, set "connsys_on_domain_pwr_on"=1
 		 * Address: 0x1000_6304[2]
 		 * Data: 1'b1
@@ -345,7 +345,7 @@ int consys_conninfra_on_power_ctrl_mt6885(unsigned int enable)
 
 		/* Enable AXI bus sleep protect */
 #if MTK_CONNINFRA_CLOCK_BUFFER_API_AVAILABLE
-		pr_debug("Turn off conn_infra power by SPM API\n");
+		pr_info("Turn off conn_infra power by SPM API\n");
 		check = consys_platform_spm_conn_ctrl_mt6885(enable);
 		if (check) {
 			pr_err("Turn off conn_infra power fail, ret=%d\n", check);
@@ -525,7 +525,7 @@ int consys_conninfra_wakeup_mt6885(void)
 			check = consys_reg_mng_is_bus_hang();
 			r1 = CONSYS_REG_READ(CON_REG_HOST_CSR_ADDR + CONN_HOST_CSR_DBG_DUMMY_3);
 			r2 = CONSYS_REG_READ(CON_REG_HOST_CSR_ADDR + CONN_HOST_CSR_TOP_CONN_INFRA_WAKEPU_TOP_CONN_INFRA_WAKEPU_TOP);
-			pr_debug("[%s] check=[%d] r1=[0x%x] r2=[0x%x]", __func__, check, r1, r2);
+			pr_info("[%s] check=[%d] r1=[0x%x] r2=[0x%x]", __func__, check, r1, r2);
 			consys_reg_mng_dump_cpupcr(CONN_DUMP_CPUPCR_TYPE_ALL, 10, 200);
 			if (check > 0) {
 				return -1;
@@ -559,7 +559,7 @@ int consys_conninfra_wakeup_mt6885(void)
 					CONN_HW_VER_OFFSET);
 		if (consys_hw_ver == CONN_HW_VER) {
 			check = 0;
-			pr_debug("[%s] Polling chip id success (0x%x)\n", __func__, consys_hw_ver);
+			pr_info("[%s] Polling chip id success (0x%x)\n", __func__, consys_hw_ver);
 			break;
 		}
 		check = -1;
@@ -697,7 +697,7 @@ void consys_set_if_pinmux_mt6885(unsigned int enable)
 		}
 	}
 #else
-	pr_debug("[%s] not for FPGA\n", __func__);
+	pr_info("[%s] not for FPGA\n", __func__);
 #endif
 }
 
@@ -735,7 +735,7 @@ int consys_polling_chipid_mt6885(void)
 		if (consys_hw_ver == CONN_HW_VER) {
 			consys_configuration_id = CONSYS_REG_READ(
 				CON_REG_INFRA_CFG_ADDR + CONN_CFG_ID_OFFSET);
-			pr_debug("Consys HW version id(0x%x) cfg_id=(0x%x)\n",
+			pr_info("Consys HW version id(0x%x) cfg_id=(0x%x)\n",
 				consys_hw_ver, consys_configuration_id);
 			ret = 0;
 			break;
@@ -761,7 +761,7 @@ int consys_polling_chipid_mt6885(void)
 	/* For FPGA workaround */
 	CONSYS_SET_BIT(CON_REG_INFRA_CFG_ADDR + 0x0c04,
 		((0x1 << 1) | (0x1 << 9) | (0x1 << 17) | (0x1 << 25)));
-	pr_debug("Workaround for FPGA: Check %x\n", CON_REG_INFRA_CFG_ADDR + 0x0c04);
+	pr_info("Workaround for FPGA: Check %x\n", CON_REG_INFRA_CFG_ADDR + 0x0c04);
 #endif
 
 	return ret;
@@ -787,7 +787,7 @@ int connsys_d_die_cfg_mt6885(void)
 	CONSYS_REG_WRITE(
 		CONN_INFRA_SYSRAM_BASE_ADDR + CONN_INFRA_SYSRAM_SW_CR_BUILD_MODE,
 		CONNINFRA_PLAT_BUILD_MODE);
-	pr_debug("Write CONN_INFRA_SYSRAM_SW_CR_BUILD_MODE to 0x%08x\n",
+	pr_info("Write CONN_INFRA_SYSRAM_SW_CR_BUILD_MODE to 0x%08x\n",
 		CONSYS_REG_READ(CONN_INFRA_SYSRAM_BASE_ADDR + CONN_INFRA_SYSRAM_SW_CR_BUILD_MODE));
 #endif
 
@@ -1048,7 +1048,7 @@ static int connsys_a_die_efuse_read(unsigned int efuse_addr)
 		consys_spi_read_nolock(SYS_SPI_TOP, ATOP_EFUSE_CTRL, &ret);
 	}
 	if ((ret & (0x1 << 30)) != 0) {
-		pr_debug("[%s] EFUSE busy, retry failed(%d)\n", __func__, retry);
+		pr_info("[%s] EFUSE busy, retry failed(%d)\n", __func__, retry);
 	}
 
 	/* Check efuse_valid & return
@@ -1083,7 +1083,7 @@ static int connsys_a_die_efuse_read(unsigned int efuse_addr)
 			CONN_INFRA_SYSRAM_BASE_ADDR + CONN_INFRA_SYSRAM_SW_CR_A_DIE_EFUSE_DATA_3,
 			efuse3);
 
-		pr_debug("efuse = [0x%08x, 0x%08x, 0x%08x, 0x%08x]", efuse0, efuse1, efuse2, efuse3);
+		pr_info("efuse = [0x%08x, 0x%08x, 0x%08x, 0x%08x]", efuse0, efuse1, efuse2, efuse3);
 		if (ret0 || ret1 || ret2 || ret3)
 			pr_err("efuse read error: [%d, %d, %d, %d]", ret0, ret1, ret2, ret3);
 		ret = 1;
@@ -1113,16 +1113,16 @@ static int connsys_a_die_thermal_cal(int efuse_valid, unsigned int efuse)
 			consys_spi_write_offset_range_nolock(
 				SYS_SPI_TOP, ATOP_RG_TOP_THADC, efuse, 26, 13, 2);
 			input.slop_molecule = (efuse & 0x1f00) >> 8;
-			pr_debug("slop_molecule=[%d]", input.slop_molecule);
+			pr_info("slop_molecule=[%d]", input.slop_molecule);
 		}
 		if (efuse & (0x1 << 23)) {
 			/* [22:16] */
 			input.thermal_b = (efuse & 0x7f0000) >> 16;
-			pr_debug("thermal_b =[%d]", input.thermal_b);
+			pr_info("thermal_b =[%d]", input.thermal_b);
 		}
 		if (efuse & (0x1 << 31)) {
 			input.offset = (efuse & 0x7f000000) >> 24;
-			pr_debug("offset=[%d]", input.offset);
+			pr_info("offset=[%d]", input.offset);
 		}
 	}
 	update_thermal_data_mt6885(&input);
@@ -1137,7 +1137,7 @@ int connsys_a_die_cfg_mt6885(void)
 	unsigned int adie_id = 0;
 
 	if (consys_co_clock_type_mt6885() == CONNSYS_CLOCK_SCHEMATIC_52M_COTMS) {
-		pr_debug("A-die clock 52M\n");
+		pr_info("A-die clock 52M\n");
 		adie_26m = false;
 	}
 	/* First time to setup conninfra sysram, clean it. */
@@ -1185,7 +1185,7 @@ int connsys_a_die_cfg_mt6885(void)
 	consys_spi_read_mt6885(SYS_SPI_TOP, ATOP_CHIP_ID, &adie_id);
 	conn_hw_env.adie_hw_version = adie_id;
 	conn_hw_env.is_rc_mode = consys_is_rc_mode_enable_mt6885();
-	pr_debug("A-die CHIP_ID=0x%08x rc=%d\n", adie_id, conn_hw_env.is_rc_mode);
+	pr_info("A-die CHIP_ID=0x%08x rc=%d\n", adie_id, conn_hw_env.is_rc_mode);
 
 	CONSYS_REG_WRITE(
 		CONN_INFRA_SYSRAM_BASE_ADDR + CONN_INFRA_SYSRAM_SW_CR_A_DIE_CHIP_ID,
@@ -1591,7 +1591,7 @@ int connsys_low_power_setting_mt6885(unsigned int curr_status, unsigned int next
 	if ((next_status & (~(0x1 << CONNDRV_TYPE_BT))) == 0)
 		bt_only = true;
 
-	pr_debug("[%s] current_status=%d bt_only = %d\n", __func__, curr_status, bt_only);
+	pr_info("[%s] current_status=%d bt_only = %d\n", __func__, curr_status, bt_only);
 
 	/* First subsys on */
 	if (curr_status == 0) {
@@ -1898,7 +1898,7 @@ int consys_sema_acquire_timeout_mt6885(unsigned int index, unsigned int usec)
 		if (check > 0) {
 			r1 = CONSYS_REG_READ(CON_REG_HOST_CSR_ADDR + CONN_HOST_CSR_DBG_DUMMY_3);
 			r2 = CONSYS_REG_READ(CON_REG_HOST_CSR_ADDR + CONN_HOST_CSR_TOP_CONN_INFRA_WAKEPU_TOP_CONN_INFRA_WAKEPU_TOP);
-			pr_debug("[%s] check=[%d] r1=[0x%x] r2=[0x%x]", __func__, check, r1, r2);
+			pr_info("[%s] check=[%d] r1=[0x%x] r2=[0x%x]", __func__, check, r1, r2);
 			consys_reg_mng_dump_bus_status();
 			consys_reg_mng_dump_cpupcr(CONN_DUMP_CPUPCR_TYPE_ALL, 10, 200);
 			return CONN_SEMA_GET_FAIL;
@@ -2151,7 +2151,7 @@ static void consys_spi_write_offset_range_nolock(
 	unsigned int reg_mask;
 	int ret;
 
-	pr_debug("[%s][%s] addr=0x%04x value=0x%08x reg_offset=%d value_offset=%d size=%d",
+	pr_info("[%s][%s] addr=0x%04x value=0x%08x reg_offset=%d value_offset=%d size=%d",
 		__func__, get_spi_sys_name(subsystem), addr, value, reg_offset, value_offset, size);
 	value = (value >> value_offset);
 	value = GET_BIT_RANGE(value, size, 0);
@@ -2166,7 +2166,7 @@ static void consys_spi_write_offset_range_nolock(
 	data2 = data & (~reg_mask);
 	data2 = (data2 | value);
 	consys_spi_write_nolock(subsystem, addr, data2);
-	pr_debug("[%s][%s] Write CR:0x%08x from 0x%08x to 0x%08x",
+	pr_info("[%s][%s] Write CR:0x%08x from 0x%08x to 0x%08x",
 		__func__, get_spi_sys_name(subsystem),
 		addr, data, data2);
 }

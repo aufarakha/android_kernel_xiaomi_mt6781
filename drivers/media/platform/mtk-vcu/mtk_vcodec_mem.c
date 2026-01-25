@@ -7,7 +7,7 @@
 
 /*
  * #undef pr_debug
- * #define pr_debug pr_debug
+ * #define pr_debug pr_info
  */
 
 static uint64_t mtk_vcu_va_cnt;
@@ -20,7 +20,7 @@ struct mtk_vcu_queue *mtk_vcu_mem_init(struct device *dev,
 	pr_debug("Allocate new vcu queue !\n");
 	vcu_queue = vmalloc(sizeof(struct mtk_vcu_queue));
 	if (vcu_queue == NULL) {
-		pr_debug("Allocate new vcu queue fail!\n");
+		pr_info("Allocate new vcu queue fail!\n");
 		return NULL;
 	}
 	INIT_LIST_HEAD(&vcu_queue->pa_pages.list);
@@ -65,7 +65,7 @@ void mtk_vcu_mem_release(struct mtk_vcu_queue *vcu_queue)
 			vcu_queue->cmdq_dev,
 			(void *)(unsigned long)tmp->kva,
 			(dma_addr_t)tmp->pa);
-		pr_debug("Free cmdq pa %llx ref_cnt = %d\n", tmp->pa,
+		pr_info("Free cmdq pa %llx ref_cnt = %d\n", tmp->pa,
 			atomic_read(&tmp->ref_cnt));
 		list_del(p);
 		kfree(tmp);
@@ -94,7 +94,7 @@ void *mtk_vcu_set_buffer(struct mtk_vcu_queue *vcu_queue,
 	num_buffers = vcu_queue->num_buffers;
 	if (mem_buff_data->len > CODEC_ALLOCATE_MAX_BUFFER_SIZE ||
 		mem_buff_data->len == 0U || num_buffers >= CODEC_MAX_BUFFER) {
-		pr_debug("Set buffer fail: buffer len = %u num_buffers = %d !!\n",
+		pr_info("Set buffer fail: buffer len = %u num_buffers = %d !!\n",
 			   mem_buff_data->len, num_buffers);
 		mutex_unlock(&vcu_queue->mmap_lock);
 		return ERR_PTR(-EINVAL);
@@ -171,7 +171,7 @@ void *mtk_vcu_get_buffer(struct mtk_vcu_queue *vcu_queue,
 	buffers = vcu_queue->num_buffers;
 	if (mem_buff_data->len > CODEC_ALLOCATE_MAX_BUFFER_SIZE ||
 		mem_buff_data->len == 0U || buffers >= CODEC_MAX_BUFFER) {
-		pr_debug("Get buffer fail: buffer len = %u num_buffers = %d !!\n",
+		pr_info("Get buffer fail: buffer len = %u num_buffers = %d !!\n",
 			   mem_buff_data->len, buffers);
 		mutex_unlock(&vcu_queue->mmap_lock);
 		return ERR_PTR(-EINVAL);
@@ -283,7 +283,7 @@ int mtk_vcu_free_buffer(struct mtk_vcu_queue *vcu_queue,
 	mutex_unlock(&vcu_queue->mmap_lock);
 
 	if (ret != 0)
-		pr_debug("Can not free memory va %llx iova %llx len %u!\n",
+		pr_info("Can not free memory va %llx iova %llx len %u!\n",
 			   mem_buff_data->va, mem_buff_data->iova,
 			   mem_buff_data->len);
 
@@ -318,7 +318,7 @@ int mtk_vcu_free_page(struct mtk_vcu_queue *vcu_queue,
 	mutex_unlock(&vcu_queue->mmap_lock);
 
 	if (ret != 0)
-		pr_debug("Can not free memory va %llx pa %llx len %u!\n",
+		pr_info("Can not free memory va %llx pa %llx len %u!\n",
 			   mem_buff_data->va, mem_buff_data->pa,
 			   mem_buff_data->len);
 
@@ -339,7 +339,7 @@ void mtk_vcu_buffer_ref_dec(struct mtk_vcu_queue *vcu_queue,
 			if (atomic_read(&vcu_buffer->ref_cnt) > 0)
 				atomic_dec(&vcu_buffer->ref_cnt);
 			else
-				pr_debug("[VCU][Error] %s fail\n", __func__);
+				pr_info("[VCU][Error] %s fail\n", __func__);
 		}
 	}
 	mutex_unlock(&vcu_queue->mmap_lock);
@@ -354,7 +354,7 @@ void vcu_io_buffer_cache_sync(struct device *dev,
 	buf_att = dma_buf_attach(dbuf, dev);
 	sgt = dma_buf_map_attachment(buf_att, op);
 	if (IS_ERR_OR_NULL(sgt)) {
-		pr_debug("%s dma_buf_map_attachment fail %p.\n", __func__, sgt);
+		pr_info("%s dma_buf_map_attachment fail %p.\n", __func__, sgt);
 		dma_buf_detach(dbuf, buf_att);
 		return;
 	}
@@ -411,7 +411,7 @@ int vcu_buffer_cache_sync(struct device *dev, struct mtk_vcu_queue *vcu_queue,
 
 	num_buffers = vcu_queue->num_buffers;
 	if (num_buffers == 0U) {
-		pr_debug("Cache %s buffer fail, iova = %lx, size = %d, vcu no buffers\n",
+		pr_info("Cache %s buffer fail, iova = %lx, size = %d, vcu no buffers\n",
 			(op == DMA_TO_DEVICE) ? "flush" : "invalidate",
 			(unsigned long)dma_addr, (unsigned int)size);
 		mutex_unlock(&vcu_queue->mmap_lock);
@@ -446,7 +446,7 @@ int vcu_buffer_cache_sync(struct device *dev, struct mtk_vcu_queue *vcu_queue,
 		}
 	}
 
-	pr_debug("Cache %s buffer fail, iova = %lx, size = %d\n",
+	pr_info("Cache %s buffer fail, iova = %lx, size = %d\n",
 		(op == DMA_TO_DEVICE) ? "flush" : "invalidate",
 		(unsigned long)dma_addr, (unsigned int)size);
 	mutex_unlock(&vcu_queue->mmap_lock);

@@ -40,7 +40,7 @@ int is_mt6691_exist(void)
 	struct regulator *reg;
 
 	reg = regulator_get(NULL, MT6691_IS_EXIST_NAME);
-	pr_debug("%s: regulator_get=%s\n", __func__, MT6691_IS_EXIST_NAME);
+	pr_info("%s: regulator_get=%s\n", __func__, MT6691_IS_EXIST_NAME);
 	if (reg == NULL)
 		return 0;
 	regulator_put(reg);
@@ -281,7 +281,7 @@ static int mt6691_disable(struct regulator_dev *rdev)
 	struct mt6691_regulator_info *info = rdev_get_drvdata(rdev);
 
 	if (rdev->use_count == 0) {
-		pr_debug("ext_buck should not be disable (use_count=%d)\n"
+		pr_info("ext_buck should not be disable (use_count=%d)\n"
 			, rdev->use_count);
 		return -1;
 	}
@@ -477,7 +477,7 @@ static int mt6691_i2c_probe(struct i2c_client *i2c,
 		return -EINVAL;
 	}
 
-	pr_debug("%s Successfully\n", __func__);
+	pr_info("%s Successfully\n", __func__);
 
 	return 0;
 #endif
@@ -534,7 +534,7 @@ static struct i2c_driver mt6691_i2c_driver = {
 
 static int __init mt6691_i2c_init(void)
 {
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	return i2c_add_driver(&mt6691_i2c_driver);
 }
 subsys_initcall(mt6691_i2c_init);

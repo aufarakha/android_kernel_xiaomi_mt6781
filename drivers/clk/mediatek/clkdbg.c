@@ -287,7 +287,7 @@ static void proc_all_fclk_freq(fn_fclk_freq_proc proc, void *data)
 
 static void print_fclk_freq(const struct fmeter_clk *fclk, u32 freq, void *data)
 {
-	pr_debug("%2d: %-29s: %u\n", fclk->id, fclk->name, freq);
+	pr_info("%2d: %-29s: %u\n", fclk->id, fclk->name, freq);
 }
 
 void print_fmeter_all(void)
@@ -329,7 +329,7 @@ static void print_reg(const struct regname *rn, void *data)
 	if (!is_valid_reg(ADDR(rn)))
 		return;
 
-	pr_debug("%-21s: [0x%08x][0x%p] = 0x%08x\n",
+	pr_info("%-21s: [0x%08x][0x%p] = 0x%08x\n",
 		rn->name, PHYSADDR(rn), ADDR(rn), clk_readl(ADDR(rn)));
 }
 
@@ -379,7 +379,7 @@ static void print_reg2(const struct regname *rn, void *data)
 	if (!is_valid_reg(ADDR(rn)))
 		return;
 
-	pr_debug("%-21s: [0x%08x][0x%p] = 0x%08x\n",
+	pr_info("%-21s: [0x%08x][0x%p] = 0x%08x\n",
 		rn->name, PHYSADDR(rn), ADDR(rn), clk_readl(ADDR(rn)));
 
 	msleep(20);
@@ -632,12 +632,12 @@ static void show_pwr_status(u32 spm_pwr_status)
 	unsigned int i;
 	const char * const *pwr_name = get_pwr_names();
 
-	pr_debug("SPM_PWR_STATUS: 0x%08x\n\n", spm_pwr_status);
+	pr_info("SPM_PWR_STATUS: 0x%08x\n\n", spm_pwr_status);
 
 	for (i = 0; i < 32; i++) {
 		const char *st = (spm_pwr_status & BIT(i)) != 0U ? "ON" : "off";
 
-		pr_debug("[%2d]: %3s: %s\n", i, st, pwr_name[i]);
+		pr_info("[%2d]: %3s: %s\n", i, st, pwr_name[i]);
 		mdelay(20);
 	}
 }
@@ -829,7 +829,7 @@ void prepare_enable_provider(const char *pvd)
 			int r = clk_prepare_enable(pvdck->ck);
 
 			if (r != 0)
-				pr_debug("clk_prepare_enable(): %d\n", r);
+				pr_info("clk_prepare_enable(): %d\n", r);
 		}
 	}
 }
@@ -1369,20 +1369,20 @@ static void show_genpd_state(struct genpd_state *pdst)
 		"suspending",
 	};
 
-	pr_debug("domain_on [pmd_name  status]\n");
-	pr_debug("\tdev_on (dev_name usage_count, disable, status)\n");
-	pr_debug("------------------------------------------------------\n");
+	pr_info("domain_on [pmd_name  status]\n");
+	pr_info("\tdev_on (dev_name usage_count, disable, status)\n");
+	pr_info("------------------------------------------------------\n");
 
 	for (; pdst->pd != NULL; pdst++) {
 		int i;
 		struct generic_pm_domain *pd = pdst->pd;
 
 		if (IS_ERR_OR_NULL(pd)) {
-			pr_debug("pd: 0x%p\n", pd);
+			pr_info("pd: 0x%p\n", pd);
 			continue;
 		}
 
-		pr_debug("%c [%-9s %11s]\n",
+		pr_info("%c [%-9s %11s]\n",
 			(pdst->status == GPD_STATE_ACTIVE) ? '+' : '-',
 			pd->name, gpd_status_name[pdst->status]);
 
@@ -1391,7 +1391,7 @@ static void show_genpd_state(struct genpd_state *pdst)
 			struct device *dev = devst->dev;
 			struct platform_device *pdev = to_platform_device(dev);
 
-			pr_debug("\t%c (%-19s %3d, %d, %10s)\n",
+			pr_info("\t%c (%-19s %3d, %d, %10s)\n",
 				devst->active ? '+' : '-',
 				pdev->name,
 				atomic_read(&dev->power.usage_count),
@@ -1925,7 +1925,7 @@ static void show_provider_clk_state(struct provider_clk_state *st)
 	struct provider_clk *pvdck = st->pvdck;
 	struct clk_hw *c_hw = __clk_get_hw(pvdck->ck);
 
-	pr_debug("[%10s: %-17s: %3s, %3d, %3d, %10ld, %17s]\n",
+	pr_info("[%10s: %-17s: %3s, %3d, %3d, %10ld, %17s]\n",
 		pvdck->provider_name != NULL ? pvdck->provider_name : "/ ",
 		clk_hw_get_name(c_hw),
 		st->enabled ? "ON" : "off",
@@ -1961,11 +1961,11 @@ static void show_save_point(struct save_point *sp)
 	for (; st->pvdck != NULL; st++)
 		show_provider_clk_state(st);
 
-	pr_debug("\n");
+	pr_info("\n");
 	show_pwr_status(sp->spm_pwr_status);
 
 #if CLKDBG_PM_DOMAIN
-	pr_debug("\n");
+	pr_info("\n");
 	show_genpd_state(sp->genpd_states);
 #endif
 }

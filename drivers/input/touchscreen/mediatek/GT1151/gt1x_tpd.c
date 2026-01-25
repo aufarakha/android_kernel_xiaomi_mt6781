@@ -554,10 +554,10 @@ int gt1x_pm_notifier(struct notifier_block *nb, unsigned long val, void *ign)
 {
 	switch (val) {
 	case PM_RESTORE_PREPARE:
-		pr_debug("%s: PM_RESTORE_PREPARE enter\n", __func__);
+		pr_info("%s: PM_RESTORE_PREPARE enter\n", __func__);
 		if (!IS_ERR(update_thread) && update_thread)
 			wait_event(waiter, tpd_pm_flag == 1);
-		pr_debug("%s: PM_RESTORE_PREPARE leave\n", __func__);
+		pr_info("%s: PM_RESTORE_PREPARE leave\n", __func__);
 		return NOTIFY_DONE;
 	}
 	return NOTIFY_OK;

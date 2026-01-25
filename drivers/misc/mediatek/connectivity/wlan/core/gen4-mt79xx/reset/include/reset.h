@@ -56,9 +56,9 @@ enum ENUM_RST_MODULE_STATE_TYPE_T {
 *                                 M A C R O S
 ********************************************************************************
 */
-#define MR_Dbg(_Fmt...)  pr_debug("[reset] " _Fmt)
-#define MR_Info(_Fmt...)  pr_debug("[reset] " _Fmt)
-#define MR_Err(_Fmt...) pr_debug("[reset] " _Fmt)
+#define MR_Dbg(_Fmt...)  pr_info("[reset] " _Fmt)
+#define MR_Info(_Fmt...)  pr_info("[reset] " _Fmt)
+#define MR_Err(_Fmt...) pr_info("[reset] " _Fmt)
 
 
 /*******************************************************************************

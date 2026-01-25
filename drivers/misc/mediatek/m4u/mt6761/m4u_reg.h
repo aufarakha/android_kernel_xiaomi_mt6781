@@ -379,7 +379,7 @@ M4U_ReadReg32(unsigned long M4uBase, unsigned int Offset)
 
 	val = readl_relaxed((void __iomem *)(M4uBase + Offset));
 	/*
-	 * pr_debug("M4U_ReadReg32: M4uBase: 0x%lx, Offset:0x%x, val:0x%x\n",
+	 * pr_info("M4U_ReadReg32: M4uBase: 0x%lx, Offset:0x%x, val:0x%x\n",
 	 *	 M4uBase, Offset, val);
 	 */
 	return val;
@@ -390,7 +390,7 @@ M4U_WriteReg32(unsigned long M4uBase, unsigned int Offset, unsigned int Val)
 {
 	writel(Val, (void __iomem *)(M4uBase + (unsigned long)Offset));
 	/*
-	 * pr_debug("M4U_WriteReg32: M4uBase: 0x%lx, Offset:0x%x, val:0x%x\n",
+	 * pr_info("M4U_WriteReg32: M4uBase: 0x%lx, Offset:0x%x, val:0x%x\n",
 	 *	M4uBase, Offset, Val);
 	 */
 }

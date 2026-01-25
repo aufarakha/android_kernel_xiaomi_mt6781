@@ -1735,7 +1735,7 @@ static int  clk_mt6739_scpsys_probe(struct platform_device *pdev)
 
 	r = of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
 	if (r)
-		pr_debug("[CCF] %s:could not register clock provide\n", __func__);
+		pr_info("[CCF] %s:could not register clock provide\n", __func__);
 
 	spin_lock_init(&pgcb_lock);
 
@@ -1786,28 +1786,28 @@ void subsys_if_on(void)
 	int ret = 0;
 
 	if ((sta & (1U << 1)) && (sta_s & (1U << 0)))
-		pr_debug("suspend warning: SYS_MD1 is on!!!\n");
+		pr_info("suspend warning: SYS_MD1 is on!!!\n");
 	if ((sta & (1U << 2)) && (sta_s & (1U << 1)))
-		pr_debug("suspend warning: SYS_CONN is on!!!\n");
+		pr_info("suspend warning: SYS_CONN is on!!!\n");
 	if ((sta & (1U << 7)) && (sta_s & (1U << 3))) {
-		pr_debug("suspend warning: SYS_DISP is on!!!\n");
+		pr_info("suspend warning: SYS_DISP is on!!!\n");
 		check_mm0_clk_sts();
 		ret++;
 	}
 	if ((sta & (1U << 10)) && (sta_s & (1U << 4)))
-		pr_debug("suspend warning: SYS_MFG is on!!!\n");
+		pr_info("suspend warning: SYS_MFG is on!!!\n");
 	if ((sta & (1U << 14)) && (sta_s & (1U << 5))) {
-		pr_debug("suspend warning: SYS_ISP is on!!!\n");
+		pr_info("suspend warning: SYS_ISP is on!!!\n");
 		check_img_clk_sts();
 		ret++;
 	}
 	if ((sta & (1U << 17)) && (sta_s & (1U << 7))) {
-		pr_debug("suspend warning: SYS_VCODEC is on!!!\n");
+		pr_info("suspend warning: SYS_VCODEC is on!!!\n");
 		check_ven_clk_sts();
 		ret++;
 	}
 	if ((sta & (1U << 18)) && (sta_s & (1U << 31)))
-		pr_debug("suspend warning: SYS_MFG_CORE0 is on!!!\n");
+		pr_info("suspend warning: SYS_MFG_CORE0 is on!!!\n");
 #if 0
 	if (ret > 0)
 		WARN_ON();

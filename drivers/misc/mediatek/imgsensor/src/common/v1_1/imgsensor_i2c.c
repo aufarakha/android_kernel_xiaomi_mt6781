@@ -329,7 +329,7 @@ enum IMGSENSOR_RETURN imgsensor_i2c_buffer_mode(int enable)
 #else
 enum IMGSENSOR_RETURN imgsensor_i2c_buffer_mode(int enable)
 {
-	pr_debug("not support i2c_buf_mode\n");
+	pr_info("not support i2c_buf_mode\n");
 	return IMGSENSOR_RETURN_SUCCESS;
 }
 #endif
@@ -376,7 +376,7 @@ enum IMGSENSOR_RETURN imgsensor_i2c_read(
 		static DEFINE_RATELIMIT_STATE(ratelimit, 1 * HZ, 30);
 
 		if (__ratelimit(&ratelimit))
-			pr_debug("I2C read failed (%d)! speed(0=%d) (0x%x)\n",
+			pr_info("I2C read failed (%d)! speed(0=%d) (0x%x)\n",
 				i2c_ret, speed, *pwrite_data);
 		ret = IMGSENSOR_RETURN_ERROR;
 	}
@@ -432,7 +432,7 @@ enum IMGSENSOR_RETURN imgsensor_i2c_write(
 		static DEFINE_RATELIMIT_STATE(ratelimit, 1 * HZ, 30);
 
 		if (__ratelimit(&ratelimit))
-			pr_debug("NOTICE: I2C id %d write failed (%d)! speed(0=%d) (0x%x)\n",
+			pr_info("NOTICE: I2C id %d write failed (%d)! speed(0=%d) (0x%x)\n",
 				id, i2c_ret, speed, *pwrite_data);
 		ret = IMGSENSOR_RETURN_ERROR;
 	}

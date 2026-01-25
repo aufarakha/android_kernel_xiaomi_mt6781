@@ -96,7 +96,7 @@
  *
  *                u32 data = hwcnt_data[data_offset+j];
  *
- *                pr_debug( "COUNTER: %s DATA: %u\n", name, data );
+ *                pr_info( "COUNTER: %s DATA: %u\n", name, data );
  *            }
  *        }
  *

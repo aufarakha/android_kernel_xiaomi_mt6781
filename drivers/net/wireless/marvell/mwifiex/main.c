@@ -1774,7 +1774,7 @@ void _mwifiex_dbg(const struct mwifiex_adapter *adapter, int mask,
 	if (adapter->dev)
 		dev_info(adapter->dev, "%pV", &vaf);
 	else
-		pr_debug("%pV", &vaf);
+		pr_info("%pV", &vaf);
 
 	va_end(args);
 }

@@ -71,11 +71,11 @@ static int cm_mgr_check_dram_type(void)
 
 	if (ddr_type == TYPE_LPDDR4X || ddr_type == TYPE_LPDDR4)
 		cm_mgr_idx = CM_MGR_LP4X_2CH;
-	pr_debug("#@# %s(%d) ddr_type 0x%x, ddr_hz %d, cm_mgr_idx 0x%x\n",
+	pr_info("#@# %s(%d) ddr_type 0x%x, ddr_hz %d, cm_mgr_idx 0x%x\n",
 			__func__, __LINE__, ddr_type, ddr_hz, cm_mgr_idx);
 #else
 	cm_mgr_idx = 0;
-	pr_debug("#@# %s(%d) NO CONFIG_MTK_DRAMC_LEGACY !!! set cm_mgr_idx to 0x%x\n",
+	pr_info("#@# %s(%d) NO CONFIG_MTK_DRAMC_LEGACY !!! set cm_mgr_idx to 0x%x\n",
 			__func__, __LINE__, cm_mgr_idx);
 #endif /* CONFIG_MTK_DRAMC_LEGACY */
 
@@ -321,7 +321,7 @@ static int platform_cm_mgr_probe(struct platform_device *pdev)
 
 	ret = cm_mgr_common_init();
 	if (ret) {
-		pr_debug("[CM_MGR] FAILED TO INIT(%d)\n", ret);
+		pr_info("[CM_MGR] FAILED TO INIT(%d)\n", ret);
 		return ret;
 	}
 
@@ -330,7 +330,7 @@ static int platform_cm_mgr_probe(struct platform_device *pdev)
 	/* required-opps */
 	cm_mgr_num_perf = of_count_phandle_with_args(node,
 			"required-opps", NULL);
-	pr_debug("#@# %s(%d) cm_mgr_num_perf %d\n",
+	pr_info("#@# %s(%d) cm_mgr_num_perf %d\n",
 			__func__, __LINE__, cm_mgr_num_perf);
 
 	if (cm_mgr_num_perf > 0) {
@@ -353,18 +353,18 @@ static int platform_cm_mgr_probe(struct platform_device *pdev)
 		cm_mgr_num_array = cm_mgr_num_perf - 2;
 	} else
 		cm_mgr_num_array = 0;
-	pr_debug("#@# %s(%d) cm_mgr_num_array %d\n",
+	pr_info("#@# %s(%d) cm_mgr_num_array %d\n",
 			__func__, __LINE__, cm_mgr_num_array);
 
 	ret = cm_mgr_check_dts_setting(pdev);
 	if (ret) {
-		pr_debug("[CM_MGR] FAILED TO GET DTS DATA(%d)\n", ret);
+		pr_info("[CM_MGR] FAILED TO GET DTS DATA(%d)\n", ret);
 		return ret;
 	}
 
 	cm_mgr_pdev = pdev;
 
-	pr_debug("[CM_MGR] platform-cm_mgr_probe Done.\n");
+	pr_info("[CM_MGR] platform-cm_mgr_probe Done.\n");
 
 #ifdef CONFIG_MTK_CPU_FREQ
 	mt_cpufreq_set_governor_freq_registerCB(check_cm_mgr_status_mt6779);
@@ -431,7 +431,7 @@ static int __init platform_cm_mgr_init(void)
 static void __exit platform_cm_mgr_exit(void)
 {
 	platform_driver_unregister(&mtk_platform_cm_mgr_driver);
-	pr_debug("[CM_MGR] platform-cm_mgr Exit.\n");
+	pr_info("[CM_MGR] platform-cm_mgr Exit.\n");
 }
 
 late_initcall(platform_cm_mgr_init);

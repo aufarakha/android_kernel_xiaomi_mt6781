@@ -649,7 +649,7 @@ static const struct gre_protocol gre_pptp_protocol = {
 static int __init pptp_init_module(void)
 {
 	int err = 0;
-	pr_debug("PPTP driver version " PPTP_DRIVER_VERSION "\n");
+	pr_info("PPTP driver version " PPTP_DRIVER_VERSION "\n");
 
 	callid_sock = vzalloc(array_size(sizeof(void *), (MAX_CALLID + 1)));
 	if (!callid_sock)

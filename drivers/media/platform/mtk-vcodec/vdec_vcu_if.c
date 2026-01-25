@@ -86,13 +86,13 @@ inline int get_mapped_fd(struct dma_buf *dmabuf)
 	}
 
 	if (vcu_get_sig_lock(&flags) <= 0) {
-		pr_debug("%s() Failed to try lock...VPUD may die", __func__);
+		pr_info("%s() Failed to try lock...VPUD may die", __func__);
 		vcu_put_file_lock();
 		return -EMFILE;
 	}
 
 	if (vcu_check_vpud_alive() == 0) {
-		pr_debug("%s() Failed to check vpud alive. VPUD died", __func__);
+		pr_info("%s() Failed to check vpud alive. VPUD died", __func__);
 		vcu_put_file_lock();
 		vcu_put_sig_lock(flags);
 		return -EMFILE;
@@ -128,7 +128,7 @@ inline int get_mapped_fd(struct dma_buf *dmabuf)
 	put_files_struct(f);
 	vcu_put_file_lock();
 
-	/* pr_debug("get_mapped_fd: %d", target_fd); */
+	/* pr_info("get_mapped_fd: %d", target_fd); */
 #endif
 	return target_fd;
 }
@@ -148,13 +148,13 @@ inline void close_mapped_fd(unsigned int target_fd)
 	}
 
 	if (vcu_get_sig_lock(&flags) <= 0) {
-		pr_debug("%s() Failed to try lock...VPUD may die", __func__);
+		pr_info("%s() Failed to try lock...VPUD may die", __func__);
 		vcu_put_file_lock();
 		return;
 	}
 
 	if (vcu_check_vpud_alive() == 0) {
-		pr_debug("%s() Failed to check vpud alive. VPUD died", __func__);
+		pr_info("%s() Failed to check vpud alive. VPUD died", __func__);
 		vcu_put_file_lock();
 		vcu_put_sig_lock(flags);
 		return;
@@ -243,7 +243,7 @@ int vcu_dec_ipi_handler(void *data, unsigned int len, void *priv)
 	mutex_unlock(&dev->ctx_mutex);
 
 	if (vcu->daemon_pid != current->tgid) {
-		pr_debug("%s, vcu->daemon_pid:%d != current %d\n",
+		pr_info("%s, vcu->daemon_pid:%d != current %d\n",
 			__func__, vcu->daemon_pid, current->tgid);
 		return 1;
 	}

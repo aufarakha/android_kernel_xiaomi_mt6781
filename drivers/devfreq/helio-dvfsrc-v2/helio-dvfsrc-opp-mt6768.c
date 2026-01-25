@@ -18,7 +18,7 @@ static int get_vb_volt(int vcore_opp)
 	int ret = 0;
 	int ptpod64 = ((get_devinfo_with_index(64) >> 9) & 0x3);
 
-	pr_debug("%s: ptpod64: 0x%x\n", __func__, ptpod64);
+	pr_info("%s: ptpod64: 0x%x\n", __func__, ptpod64);
 	switch (vcore_opp) {
 	case VCORE_OPP_0:
 	case VCORE_OPP_1:
@@ -41,12 +41,12 @@ static int is_aging_test(void)
 #if defined(CONFIG_ARM64) && \
 	defined(CONFIG_BUILD_ARM64_DTB_OVERLAY_IMAGE_NAMES)
 
-	pr_debug("[VcoreFS] flavor name: %s\n",
+	pr_info("[VcoreFS] flavor name: %s\n",
 			CONFIG_BUILD_ARM64_DTB_OVERLAY_IMAGE_NAMES);
 
 	if ((strstr(CONFIG_BUILD_ARM64_DTB_OVERLAY_IMAGE_NAMES,
 				"k68v1_64_aging") != NULL)) {
-		pr_debug("[VcoreFS]: AGING flavor !!!\n");
+		pr_info("[VcoreFS]: AGING flavor !!!\n");
 		return 1;
 	}
 #endif
@@ -68,7 +68,7 @@ void dvfsrc_opp_level_mapping(void)
 				"k68v1_64_bsp_ctig", 17))
 		is_vcore_ct = is_mini_sqc = 1;
 
-	pr_debug("flavor check: %s, is_vcore_ct: %d, is_mini_sqc: %d\n",
+	pr_info("flavor check: %s, is_vcore_ct: %d, is_mini_sqc: %d\n",
 			CONFIG_ARCH_MTK_PROJECT,
 			is_vcore_ct, is_mini_sqc);
 
@@ -80,7 +80,7 @@ void dvfsrc_opp_level_mapping(void)
 		of_find_compatible_node(NULL, NULL, "mediatek,dvfsrc");
 	if (of_property_read_u32(dvfsrc_node, "dvfs_v_mode",
 		(u32 *) &dvfs_v_mode) == 0)
-		pr_debug("%s: DOE DVFS_V_MODE = %d\n",
+		pr_info("%s: DOE DVFS_V_MODE = %d\n",
 					__func__, dvfs_v_mode);
 
 	vcore_opp_0_uv = 800000;
@@ -107,10 +107,10 @@ void dvfsrc_opp_level_mapping(void)
 		vcore_opp_3_uv -= 12500;
 	}
 
-	pr_debug("flavor check: %s, is_vcore_ct: %d, is_mini_sqc: %d dvfs_v_mode: %d\n",
+	pr_info("flavor check: %s, is_vcore_ct: %d, is_mini_sqc: %d dvfs_v_mode: %d\n",
 			CONFIG_ARCH_MTK_PROJECT,
 			is_vcore_ct, is_mini_sqc, dvfs_v_mode);
-	pr_debug("%s: FINAL vcore_opp_uv: %d, %d, %d, %d\n",
+	pr_info("%s: FINAL vcore_opp_uv: %d, %d, %d, %d\n",
 			__func__,
 			vcore_opp_0_uv,
 			vcore_opp_1_uv,

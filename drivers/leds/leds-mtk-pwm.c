@@ -305,7 +305,7 @@ static void led_data_init(struct mtk_led_data *s_led)
 	s_led->debug.count++;
 
 	if (ret < 0 || ret >= 4096)
-		pr_debug("print log init error!");
+		pr_info("print log init error!");
 
 }
 

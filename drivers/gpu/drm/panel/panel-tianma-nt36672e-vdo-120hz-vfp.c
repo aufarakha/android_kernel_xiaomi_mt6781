@@ -567,7 +567,7 @@ static void tianma_panel_init(struct tianma *ctx)
 	tianma_dcs_write_seq_static(ctx, 0xFB, 0x01);
 	tianma_dcs_write_seq_static(ctx, 0x53, 0x22);
 	tianma_dcs_write_seq_static(ctx, 0x54, 0x02);
-	pr_debug("%s, fps:%d\n", __func__, current_fps);
+	pr_info("%s, fps:%d\n", __func__, current_fps);
 	tianma_dcs_write_seq_static(ctx, 0XFF, 0X25);
 	tianma_dcs_write_seq_static(ctx, 0XFB, 0X01);
 	tianma_dcs_write_seq_static(ctx, 0X18, 0X20);
@@ -623,7 +623,7 @@ static int tianma_unprepare(struct drm_panel *panel)
 
 	if (!ctx->prepared)
 		return 0;
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 
 	tianma_dcs_write_seq_static(ctx, 0x28);
 	tianma_dcs_write_seq_static(ctx, 0x10);
@@ -679,7 +679,7 @@ static int tianma_prepare(struct drm_panel *panel)
 	struct tianma *ctx = panel_to_tianma(panel);
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -972,7 +972,7 @@ static int tianma_setbacklight_cmdq(void *dsi, dcs_write_gce cb,
 {
 	if (level > 255)
 		level = 255;
-	pr_debug("%s backlight = -%d\n", __func__, level);
+	pr_info("%s backlight = -%d\n", __func__, level);
 	bl_tb0[1] = (u8)level;
 
 	if (!cb)
@@ -1039,7 +1039,7 @@ static int panel_ata_check(struct drm_panel *panel)
 
 	ret = mipi_dsi_dcs_read(dsi, 0x4, data, 3);
 	if (ret < 0) {
-		pr_debug("%s error\n", __func__);
+		pr_info("%s error\n", __func__);
 		return 0;
 	}
 
@@ -1163,17 +1163,17 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 		if (endpoint) {
 			remote_node = of_graph_get_remote_port_parent(endpoint);
 			if (!remote_node) {
-				pr_debug("No panel connected,skip probe lcm\n");
+				pr_info("No panel connected,skip probe lcm\n");
 				return -ENODEV;
 			}
-			pr_debug("device node name:%s\n", remote_node->name);
+			pr_info("device node name:%s\n", remote_node->name);
 		}
 	}
 	if (remote_node != dev->of_node) {
-		pr_debug("%s+ skip probe due to not current lcm\n", __func__);
+		pr_info("%s+ skip probe due to not current lcm\n", __func__);
 		return -ENODEV;
 	}
-	pr_debug("%s+\n", __func__);
+	pr_info("%s+\n", __func__);
 	ctx = devm_kzalloc(dev, sizeof(struct tianma), GFP_KERNEL);
 	if (!ctx)
 		return -ENOMEM;
@@ -1245,7 +1245,7 @@ static int tianma_probe(struct mipi_dsi_device *dsi)
 		return ret;
 #endif
 
-	pr_debug("%s-\n", __func__);
+	pr_info("%s-\n", __func__);
 
 	return ret;
 }

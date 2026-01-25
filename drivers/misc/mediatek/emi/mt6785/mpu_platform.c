@@ -82,8 +82,8 @@ static void clear_devmpu_violation(void)
 	mput = readl(IOMEM(EMI_MPUT));
 
 	if (mpus) {
-		pr_debug("[DEVMPU] fail to clear violation\n");
-		pr_debug("[DEVMPU] EMI_MPUS: %x, EMI_MPUT: %x\n", mpus, mput);
+		pr_info("[DEVMPU] fail to clear violation\n");
+		pr_info("[DEVMPU] EMI_MPUS: %x, EMI_MPUT: %x\n", mpus, mput);
 	}
 
 	/* clear hyp violation status */
@@ -91,8 +91,8 @@ static void clear_devmpu_violation(void)
 			0, 0, 0, 0, 0, 0, 0, &smc_res);
 	mput_2nd = readl(IOMEM(EMI_MPUT_2ND));
 	if ((smc_res.a0) || ((mput_2nd >> 21) & 0x3)) {
-		pr_debug("[MPU] fail to clear hypervisor violation\n");
-		pr_debug("[MPU] EMI_MPT_2ND: %x\n", mput_2nd);
+		pr_info("[MPU] fail to clear hypervisor violation\n");
+		pr_info("[MPU] EMI_MPT_2ND: %x\n", mput_2nd);
 	}
 }
 

@@ -861,19 +861,19 @@ xirc2ps_config(struct pcmcia_device * link)
       #if 0
 	{
 	    u_char tmp;
-	    pr_debug("ECOR:");
+	    pr_info("ECOR:");
 	    for (i=0; i < 7; i++) {
 		tmp = readb(local->dingo_ccr + i*2);
 		pr_cont(" %02x", tmp);
 	    }
 	    pr_cont("\n");
-	    pr_debug("DCOR:");
+	    pr_info("DCOR:");
 	    for (i=0; i < 4; i++) {
 		tmp = readb(local->dingo_ccr + 0x20 + i*2);
 		pr_cont(" %02x", tmp);
 	    }
 	    pr_cont("\n");
-	    pr_debug("SCOR:");
+	    pr_info("SCOR:");
 	    for (i=0; i < 10; i++) {
 		tmp = readb(local->dingo_ccr + 0x40 + i*2);
 		pr_cont(" %02x", tmp);

@@ -533,7 +533,7 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
 	if (ret)
 		goto put_clk_ce;
 
-	pr_debug("%s #0 at %p, irq=%d\n", timer->name, timer_baseaddr, irq);
+	pr_info("%s #0 at %p, irq=%d\n", timer->name, timer_baseaddr, irq);
 
 	return 0;
 

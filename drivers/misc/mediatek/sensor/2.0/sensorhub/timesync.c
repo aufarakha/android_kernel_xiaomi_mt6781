@@ -92,7 +92,7 @@ static int timesync_comm_with_nolock(void)
 	now_time = ktime_get_boottime_ns();
 	arch_counter = __arch_counter_get_cntvct();
 	local_irq_restore(flags);
-	pr_debug("host boottime %lld\n", now_time);
+	pr_info("host boottime %lld\n", now_time);
 
 	time->host_timestamp = now_time;
 	time->host_archcounter = arch_counter;
@@ -198,14 +198,14 @@ void timesync_stop(void)
 
 void timesync_resume(void)
 {
-	pr_debug("host resume boottime %lld\n", ktime_get_boottime_ns());
+	pr_info("host resume boottime %lld\n", ktime_get_boottime_ns());
 	WRITE_ONCE(timesync_suspend_flag, false);
 	timesync_comm_with();
 }
 
 void timesync_suspend(void)
 {
-	pr_debug("host suspend boottime %lld\n", ktime_get_boottime_ns());
+	pr_info("host suspend boottime %lld\n", ktime_get_boottime_ns());
 	WRITE_ONCE(timesync_suspend_flag, true);
 }
 

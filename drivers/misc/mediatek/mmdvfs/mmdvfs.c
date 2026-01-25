@@ -228,7 +228,7 @@ static void mm_apply_vcore(s32 vopp)
 			v_real = regulator_get_voltage(vcore_reg_id);
 			v_target = get_vcore_uv_table(vopp);
 			if (v_real < v_target) {
-				pr_debug("err vcore %d < %d\n",
+				pr_info("err vcore %d < %d\n",
 					v_real, v_target);
 				if (!is_dvfsrc_opp_fixed())
 					aee_kernel_warning("mmdvfs",
@@ -770,7 +770,7 @@ static int mmdvfs_probe(struct platform_device *pdev)
 
 	vcore_reg_id = regulator_get(&pdev->dev, "vcore");
 	if (!vcore_reg_id)
-		pr_debug("regulator_get vcore_reg_id failed\n");
+		pr_info("regulator_get vcore_reg_id failed\n");
 	return 0;
 
 }

@@ -1032,7 +1032,7 @@ static void xlvbd_flush(struct blkfront_info *info)
 {
 	blk_queue_write_cache(info->rq, info->feature_flush ? true : false,
 			      info->feature_fua ? true : false);
-	pr_debug("blkfront: %s: %s %s %s %s %s %s %s\n",
+	pr_info("blkfront: %s: %s %s %s %s %s %s %s\n",
 		info->gd->disk_name, flush_info(info),
 		"persistent grants:", info->feature_persistent ?
 		"enabled;" : "disabled;", "indirect descriptors:",
@@ -2809,13 +2809,13 @@ static int __init xlblk_init(void)
 		xen_blkif_max_segments = BLKIF_MAX_SEGMENTS_PER_REQUEST;
 
 	if (xen_blkif_max_ring_order > XENBUS_MAX_RING_GRANT_ORDER) {
-		pr_debug("Invalid max_ring_order (%d), will use default max: %d.\n",
+		pr_info("Invalid max_ring_order (%d), will use default max: %d.\n",
 			xen_blkif_max_ring_order, XENBUS_MAX_RING_GRANT_ORDER);
 		xen_blkif_max_ring_order = XENBUS_MAX_RING_GRANT_ORDER;
 	}
 
 	if (xen_blkif_max_queues > nr_cpus) {
-		pr_debug("Invalid max_queues (%d), will use default max: %d.\n",
+		pr_info("Invalid max_queues (%d), will use default max: %d.\n",
 			xen_blkif_max_queues, nr_cpus);
 		xen_blkif_max_queues = nr_cpus;
 	}

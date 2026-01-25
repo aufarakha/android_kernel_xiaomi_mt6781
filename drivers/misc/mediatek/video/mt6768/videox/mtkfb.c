@@ -1168,7 +1168,7 @@ static int mtkfb_ioctl(struct fb_info *info, unsigned int cmd,
 
 		if (copy_to_user(argp, &power_state,
 				sizeof(power_state))) {
-			pr_debug("MTKFB_GET_POWERSTATE failed\n");
+			pr_info("MTKFB_GET_POWERSTATE failed\n");
 			return -EFAULT;
 		}
 
@@ -1357,7 +1357,7 @@ static int mtkfb_ioctl(struct fb_info *info, unsigned int cmd,
 	}
 	case MTKFB_ERROR_INDEX_UPDATE_TIMEOUT:
 	{
-		pr_debug("[DDP] %s():MTKFB_ERROR_INDEX_UPDATE_TIMEOUT\n",
+		pr_info("[DDP] %s():MTKFB_ERROR_INDEX_UPDATE_TIMEOUT\n",
 			__func__);
 		/* call info dump function here */
 		/* mtkfb_dump_layer_info(); */
@@ -1365,7 +1365,7 @@ static int mtkfb_ioctl(struct fb_info *info, unsigned int cmd,
 	}
 	case MTKFB_ERROR_INDEX_UPDATE_TIMEOUT_AEE:
 	{
-		pr_debug("[DDP] %s():MTKFB_ERROR_INDEX_UPDATE_TIMEOUT\n",
+		pr_info("[DDP] %s():MTKFB_ERROR_INDEX_UPDATE_TIMEOUT\n",
 			__func__);
 		/* call info dump function here */
 		/* mtkfb_dump_layer_info(); */
@@ -1640,7 +1640,7 @@ static int mtkfb_compat_ioctl(struct fb_info *info, unsigned int cmd,
 		data32 = compat_ptr(arg);
 		data = (__u32) fb_pa;
 		if (put_user(data, data32)) {
-			pr_debug("MTKFB_FRAMEBUFFER_MVA failed\n");
+			pr_info("MTKFB_FRAMEBUFFER_MVA failed\n");
 			ret = -EFAULT;
 		}
 		DISPDBG("MTKFB_FRAMEBUFFER_MVA success 0x%lx\n", fb_pa);
@@ -1653,11 +1653,11 @@ static int mtkfb_compat_ioctl(struct fb_info *info, unsigned int cmd,
 
 		data32 = compat_ptr(arg);
 		if (get_user(displayid, data32)) {
-			pr_debug("COMPAT_MTKFB_GET_DISPLAY_IF_INFORMATION failed\n");
+			pr_info("COMPAT_MTKFB_GET_DISPLAY_IF_INFORMATION failed\n");
 			return -EFAULT;
 		}
 		if (displayid >= MTKFB_MAX_DISPLAY_COUNT) {
-			pr_debug("[FB]: invalid display id:%d\n", displayid);
+			pr_info("[FB]: invalid display id:%d\n", displayid);
 			return -EFAULT;
 		}
 		if (displayid == 0) {
@@ -1680,7 +1680,7 @@ static int mtkfb_compat_ioctl(struct fb_info *info, unsigned int cmd,
 
 		if (copy_to_user((void __user *)arg, &(dispif_info[displayid]),
 			sizeof(struct compat_mtk_dispif_info))) {
-			pr_debug("[FB]: copy_to_user failed! line:%d\n",
+			pr_info("[FB]: copy_to_user failed! line:%d\n",
 				__LINE__);
 			return -EFAULT;
 		}
@@ -1707,7 +1707,7 @@ static int mtkfb_compat_ioctl(struct fb_info *info, unsigned int cmd,
 		else
 			power_state = 1;
 		if (put_user(power_state, data32)) {
-			pr_debug("MTKFB_GET_POWERSTATE failed\n");
+			pr_info("MTKFB_GET_POWERSTATE failed\n");
 			ret = -EFAULT;
 		}
 		DISPDBG("MTKFB_GET_POWERSTATE success %d\n", power_state);
@@ -1831,7 +1831,7 @@ static int mtkfb_compat_ioctl(struct fb_info *info, unsigned int cmd,
 
 		data32 = compat_ptr(arg);
 		if (put_user(dal_en, data32)) {
-			pr_debug("MTKFB_GET_POWERSTATE failed\n");
+			pr_info("MTKFB_GET_POWERSTATE failed\n");
 			ret = -EFAULT;
 		}
 		break;
@@ -1845,7 +1845,7 @@ static int mtkfb_compat_ioctl(struct fb_info *info, unsigned int cmd,
 		result = mtkfb_fm_auto_test();
 		data32 = compat_ptr(arg);
 		if (put_user(result, data32)) {
-			pr_debug("MTKFB_GET_POWERSTATE failed\n");
+			pr_info("MTKFB_GET_POWERSTATE failed\n");
 			ret = -EFAULT;
 		}
 		break;
@@ -2652,13 +2652,13 @@ static int mtkfb_probe(struct platform_device *pdev)
 	}
 
 	MSG_FUNC_LEAVE();
-	pr_debug("disp driver(2) %s end\n", __func__);
+	pr_info("disp driver(2) %s end\n", __func__);
 	return 0;
 
 cleanup:
 	mtkfb_free_resources(fbdev, init_state);
 
-	pr_debug("disp driver(2) %s end\n", __func__);
+	pr_info("disp driver(2) %s end\n", __func__);
 	return r;
 }
 

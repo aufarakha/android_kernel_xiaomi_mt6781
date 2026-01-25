@@ -427,7 +427,7 @@ void rlmReqGenerateSupOpClassIE(struct ADAPTER *prAdapter,
 	ASSERT(prMsduInfo);
 
 	if (prMsduInfo->ucBssIndex != KAL_NETWORK_TYPE_AIS_INDEX) {
-		pr_debug("[%s] prMsduInfo->ucBssIndex(%d) is not KAL_NETWORK_TYPE_AIS_INDEX\n",
+		pr_info("[%s] prMsduInfo->ucBssIndex(%d) is not KAL_NETWORK_TYPE_AIS_INDEX\n",
 			__func__, prMsduInfo->ucBssIndex);
 		return;
 	}
@@ -477,7 +477,7 @@ void rlmReqGenerateMboIE(struct ADAPTER *prAdapter,
 	ASSERT(prMsduInfo);
 
 	if (prMsduInfo->ucBssIndex != KAL_NETWORK_TYPE_AIS_INDEX) {
-		pr_debug("[%s] prMsduInfo->ucBssIndex(%d) is not KAL_NETWORK_TYPE_AIS_INDEX\n",
+		pr_info("[%s] prMsduInfo->ucBssIndex(%d) is not KAL_NETWORK_TYPE_AIS_INDEX\n",
 			__func__, prMsduInfo->ucBssIndex);
 		return;
 	}

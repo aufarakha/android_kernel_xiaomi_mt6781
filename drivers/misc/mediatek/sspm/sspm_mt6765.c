@@ -49,7 +49,7 @@ static int __init mt6765_sspm_module_init(void)
 	if (atomic_inc_return(&sspm_inited) != 1)
 		return 0;
 
-	pr_debug("[SSPM] mt6765-sspm_module_init.\n");
+	pr_info("[SSPM] mt6765-sspm_module_init.\n");
 
 	/* static initialise */
 	sspm_ready = 0;
@@ -80,7 +80,7 @@ static int __init mt6765_sspm_module_init(void)
 		return -1;
 	}
 
-	pr_debug("SSPM is ready to service IPI\n");
+	pr_info("SSPM is ready to service IPI\n");
 
 
 #if SSPM_PLT_SERV_SUPPORT
@@ -88,7 +88,7 @@ static int __init mt6765_sspm_module_init(void)
 		pr_err("[SSPM] Platform Init Failed\n");
 		return -1;
 	}
-	pr_debug("SSPM platform service is ready\n");
+	pr_info("SSPM platform service is ready\n");
 #endif
 
 #if SSPM_TIMESYNC_SUPPORT
@@ -132,7 +132,7 @@ static int __init mt6765_sspm_probe(struct platform_device *pdev)
 		return -1;
 	}
 
-	pr_debug("[SSPM] mt6765-sspm irq=%d, cfgreg=0x%p\n",
+	pr_info("[SSPM] mt6765-sspm irq=%d, cfgreg=0x%p\n",
 			sspmreg.irq, sspmreg.cfg);
 
 	sspm_pdev = pdev;
@@ -144,7 +144,7 @@ static int __init mt6765_sspm_probe(struct platform_device *pdev)
 
 	sspm_reserve_mblock = mt6765_sspm_reserve_mblock;
 
-	pr_debug("[SSPM] mt6765-sspm_probe Done.\n");
+	pr_info("[SSPM] mt6765-sspm_probe Done.\n");
 
 	mt6765_sspm_module_init();
 
@@ -207,7 +207,7 @@ static int __init mt6765_sspm_init(void)
 
 static void __exit mt6765_sspm_exit(void)
 {
-	pr_debug("[SSPM] mt6765-sspm Exit.\n");
+	pr_info("[SSPM] mt6765-sspm Exit.\n");
 }
 
 MODULE_DESCRIPTION("MEDIATEK Module SSPM driver");

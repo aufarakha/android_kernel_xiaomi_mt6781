@@ -38,7 +38,7 @@ static ssize_t show_buck_ldo_info(struct device *dev,
 	unsigned short i;
 	unsigned int len = 0;
 
-	pr_debug("[%s]\n", __func__);
+	pr_info("[%s]\n", __func__);
 	for (i = 0; i < mt_bucks_size; i++)
 		len += snprintf(buf + len, PAGE_SIZE, "%s,0/1=off/on\n"
 				, mt_bucks[i].en_att.attr.name);
@@ -70,7 +70,7 @@ static ssize_t show_buck_api(struct device *dev,
 			     struct device_attribute *attr,
 			     char *buf)
 {
-	pr_debug("[%s] 0x%x\n", __func__, g_buck_uV);
+	pr_info("[%s] 0x%x\n", __func__, g_buck_uV);
 	return sprintf(buf, "%u\n", g_buck_uV);
 }
 
@@ -85,9 +85,9 @@ static ssize_t store_buck_api(struct device *dev,
 	unsigned int buck_uV = 0;
 	unsigned int buck_type = 0;
 
-	pr_debug("[%s]\n", __func__);
+	pr_info("[%s]\n", __func__);
 	if (buf != NULL && size != 0) {
-		pr_debug("[%s] buf is %s\n", __func__, buf);
+		pr_info("[%s] buf is %s\n", __func__, buf);
 		/*buck_type = simple_strtoul(buf, &pvalue, 16);*/
 
 		pvalue = (char *)buf;
@@ -100,7 +100,7 @@ static ssize_t store_buck_api(struct device *dev,
 			ret = kstrtou32(pvalue, 10, (unsigned int *)&buck_type);
 
 		if (buck_type == 9999) {
-			pr_debug("[%s] regulator_test!\n", __func__);
+			pr_info("[%s] regulator_test!\n", __func__);
 				pmic_regulator_en_test();
 #if 0
 				pmic_regulator_vol_test();
@@ -112,13 +112,13 @@ static ssize_t store_buck_api(struct device *dev,
 					ret = kstrtou32(val, 10,
 						(unsigned int *)&buck_uV);
 
-				pr_debug("[%s] write buck_type[%d] with voltgae %d !\n"
+				pr_info("[%s] write buck_type[%d] with voltgae %d !\n"
 					, __func__, buck_type, buck_uV);
 
 				/* only for regulator test*/
 				/* ret=buck_set_voltage(buck_type, buck_uV); */
 			} else {
-				pr_debug("[%s] use \"cat pmic_access\" to get value(decimal)\r\n"
+				pr_info("[%s] use \"cat pmic_access\" to get value(decimal)\r\n"
 					, __func__);
 			}
 		}
@@ -218,7 +218,7 @@ static int pmic_regulator_buck_dts_parser(struct platform_device *pdev,
 
 	buck_regulators = of_get_child_by_name(np, "buck_regulators");
 	if (!buck_regulators) {
-		pr_debug("[PMIC]regulators node not found\n");
+		pr_info("[PMIC]regulators node not found\n");
 		return -EINVAL;
 	}
 
@@ -226,7 +226,7 @@ static int pmic_regulator_buck_dts_parser(struct platform_device *pdev,
 				     pmic_regulator_buck_matches,
 				     pmic_regulator_buck_matches_size);
 	if ((matched < 0) || (matched != mt_bucks_size)) {
-		pr_debug("[PMIC]Error parsing regulator init data: %d %d\n",
+		pr_info("[PMIC]Error parsing regulator init data: %d %d\n",
 				matched, mt_bucks_size);
 		ret = -matched;
 		goto out;
@@ -305,7 +305,7 @@ static int pmic_regulator_ldo_dts_parser(struct platform_device *pdev,
 
 	ldo_regulators = of_get_child_by_name(np, "ldo_regulators");
 	if (!ldo_regulators) {
-		pr_debug("[PMIC]regulators node not found\n");
+		pr_info("[PMIC]regulators node not found\n");
 		return -EINVAL;
 	}
 
@@ -313,7 +313,7 @@ static int pmic_regulator_ldo_dts_parser(struct platform_device *pdev,
 				     pmic_regulator_ldo_matches,
 				     pmic_regulator_ldo_matches_size);
 	if ((matched < 0) || (matched != mt_ldos_size)) {
-		pr_debug("[PMIC]Error parsing regulator init data: %d %d\n",
+		pr_info("[PMIC]Error parsing regulator init data: %d %d\n",
 		       matched,	mt_ldos_size);
 		ret = -matched;
 		goto out;
@@ -383,7 +383,7 @@ static int pmic_regulator_ldo_dts_parser(struct platform_device *pdev,
 	/*--for ldo customization--*/
 	ret = pmic_regulator_cust_dts_parser(pdev, ldo_regulators);
 	if (ret) {
-		pr_debug("pmic_regulator_cust_dts_parser fail\n");
+		pr_info("pmic_regulator_cust_dts_parser fail\n");
 		ret = -EINVAL;
 		goto out;
 	}
@@ -402,20 +402,20 @@ static int pmic_regulator_init(struct platform_device *pdev)
 
 	np = pdev->dev.of_node;
 	if (!np) {
-		pr_debug("%s np = NULL\n", __func__);
+		pr_info("%s np = NULL\n", __func__);
 		return -EINVAL;
 	}
 
 	ret = pmic_regulator_buck_dts_parser(pdev, np);
 	if (ret) {
-		pr_debug("pmic_regulator_buck_dts_parser fail\n");
+		pr_info("pmic_regulator_buck_dts_parser fail\n");
 		ret = -EINVAL;
 		goto out;
 	}
 
 	ret = pmic_regulator_ldo_dts_parser(pdev, np);
 	if (ret) {
-		pr_debug("pmic_regulator_ldo_dts_parser fail\n");
+		pr_info("pmic_regulator_ldo_dts_parser fail\n");
 		ret = -EINVAL;
 		goto out;
 	}
@@ -438,7 +438,7 @@ void pmic_regulator_suspend(void)
 				if (mt_ldos[i].vosel.cur_sel !=
 				    mt_ldos[i].vosel.def_sel) {
 					mt_ldos[i].vosel.restore = true;
-					pr_debug("%s(name=%s id=%d default_sel=%d current_sel=%d)\n"
+					pr_info("%s(name=%s id=%d default_sel=%d current_sel=%d)\n"
 						, __func__
 						, mt_ldos[i].rdev->desc->name
 						, mt_ldos[i].rdev->desc->id
@@ -464,7 +464,7 @@ void pmic_regulator_resume(void)
 					selector = mt_ldos[i].vosel.cur_sel;
 					(mt_ldos[i].vol_cb)(selector);
 
-					pr_debug("%s(name=%s id=%d default_sel=%d current_sel=%d)\n"
+					pr_info("%s(name=%s id=%d default_sel=%d current_sel=%d)\n"
 						, __func__
 						, mt_ldos[i].rdev->desc->name
 						, mt_ldos[i].rdev->desc->id
@@ -482,11 +482,11 @@ static int pmic_regulator_pm_event(struct notifier_block *notifier,
 {
 	switch (pm_event) {
 	case PM_HIBERNATION_PREPARE:	/* Going to hibernate */
-		pr_debug("[%s] pm_event %lu (IPOH)\n", __func__, pm_event);
+		pr_info("[%s] pm_event %lu (IPOH)\n", __func__, pm_event);
 		return NOTIFY_DONE;
 
 	case PM_POST_HIBERNATION:	/* Hibernation finished */
-		pr_debug("[%s] pm_event %lu\n", __func__, pm_event);
+		pr_info("[%s] pm_event %lu\n", __func__, pm_event);
 		pmic_regulator_resume();
 		return NOTIFY_DONE;
 	}
@@ -530,23 +530,23 @@ void pmic_regulator_en_test(void)
 		if (strcmp("va09", mt_ldos[i].desc.name) != 0)
 			continue;
 		reg = mt_ldos[i].reg;
-		pr_debug("[regulator enable test] %s\n", mt_ldos[i].desc.name);
+		pr_info("[regulator enable test] %s\n", mt_ldos[i].desc.name);
 
 		ret1 = regulator_enable(reg);
 		ret2 = regulator_is_enabled(reg);
 
 		if (ret2 == (mt_ldos[i].da_en_cb()))
-			pr_debug("[enable test pass]\n");
+			pr_info("[enable test pass]\n");
 		else
-			pr_debug("[enable test fail]\n");
+			pr_info("[enable test fail]\n");
 
 		ret1 = regulator_disable(reg);
 		ret2 = regulator_is_enabled(reg);
 
 		if (ret2 == (mt_ldos[i].da_en_cb()))
-			pr_debug("[disable test pass]\n");
+			pr_info("[disable test pass]\n");
 		else
-			pr_debug("[disable test fail]\n");
+			pr_info("[disable test fail]\n");
 	}
 }
 
@@ -562,7 +562,7 @@ void pmic_regulator_vol_test(void)
 		reg = mt_ldos[i].reg;
 		if (mt_ldos[i].isUsedable != 1)
 			continue;
-		pr_debug("[regulator voltage test] %s n_voltages:%d\n",
+		pr_info("[regulator voltage test] %s n_voltages:%d\n",
 			mt_ldos[i].desc.name, mt_ldos[i].desc.n_voltages);
 
 		if (mt_ldos[i].pvoltages == NULL)
@@ -576,12 +576,12 @@ void pmic_regulator_vol_test(void)
 
 			if (idxs[j] == mt_ldos[i].da_vol_cb() &&
 			    (pVoltage[j] == rvoltage)) {
-				pr_debug("[%d]:pass  set_voltage:%d  rvoltage:%d\n"
+				pr_info("[%d]:pass  set_voltage:%d  rvoltage:%d\n"
 					, idxs[j]
 					, pVoltage[j]
 					, rvoltage);
 			} else {
-				pr_debug("[%d:%d]:fail  set_voltage:%d  rvoltage:%d\n"
+				pr_info("[%d:%d]:fail  set_voltage:%d  rvoltage:%d\n"
 					, idxs[j]
 					, mt_ldos[i].da_vol_cb()
 					, pVoltage[j]
@@ -620,7 +620,7 @@ void dump_ldo_status_read_debug(void)
 			voltage_reg = -1;
 			voltage = -1;
 		}
-		pr_debug("%s   status:%d     voltage:%duv    voltage_reg:%d\n",
+		pr_info("%s   status:%d     voltage:%duv    voltage_reg:%d\n",
 			mt_bucks[i].desc.name, en, voltage, voltage_reg);
 	}
 
@@ -662,7 +662,7 @@ void dump_ldo_status_read_debug(void)
 		} else
 			voltage = mt_ldos[i].desc.fixed_uV;
 
-		pr_debug("%s   status:%d     voltage:%duv    voltage_reg:%d\n",
+		pr_info("%s   status:%d     voltage:%duv    voltage_reg:%d\n",
 			mt_ldos[i].desc.name, en, voltage, voltage_reg);
 	}
 }

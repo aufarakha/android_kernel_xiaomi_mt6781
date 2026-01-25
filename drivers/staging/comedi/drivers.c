@@ -785,17 +785,17 @@ static void comedi_report_boards(struct comedi_driver *driv)
 	unsigned int i;
 	const char *const *name_ptr;
 
-	pr_debug("comedi: valid board names for %s driver are:\n",
+	pr_info("comedi: valid board names for %s driver are:\n",
 		driv->driver_name);
 
 	name_ptr = driv->board_name;
 	for (i = 0; i < driv->num_names; i++) {
-		pr_debug(" %s\n", *name_ptr);
+		pr_info(" %s\n", *name_ptr);
 		name_ptr = (const char **)((char *)name_ptr + driv->offset);
 	}
 
 	if (driv->num_names == 0)
-		pr_debug(" %s\n", driv->driver_name);
+		pr_info(" %s\n", driv->driver_name);
 }
 
 /**

@@ -814,7 +814,7 @@ static long vcodec_lockhw(unsigned long arg)
 			mutex_lock(&HWLock);
 			handle_id = pmem_user_v2p_video((unsigned long)rHWLock.pvHandle);
 			if (handle_id == 0) {
-				pr_debug("[error] handle is freed at %d\n", __LINE__);
+				pr_info("[error] handle is freed at %d\n", __LINE__);
 				mutex_unlock(&HWLock);
 				return -1;
 			}
@@ -854,7 +854,7 @@ static long vcodec_lockhw(unsigned long arg)
 				gu4VdecLockThreadId = current->pid;
 				handle_id = pmem_user_v2p_video((unsigned long)rHWLock.pvHandle);
 				if (handle_id == 0) {
-					pr_debug("[error] handle is freed at %d\n", __LINE__);
+					pr_info("[error] handle is freed at %d\n", __LINE__);
 					mutex_unlock(&HWLock);
 					return -1;
 				}
@@ -969,7 +969,7 @@ static long vcodec_lockhw(unsigned long arg)
 			mutex_lock(&HWLock);
 			handle_id = pmem_user_v2p_video((unsigned long)rHWLock.pvHandle);
 			if (handle_id == 0) {
-				pr_debug("[error] handle is freed at %d\n", __LINE__);
+				pr_info("[error] handle is freed at %d\n", __LINE__);
 				mutex_unlock(&HWLock);
 				return -1;
 			}
@@ -1009,7 +1009,7 @@ static long vcodec_lockhw(unsigned long arg)
 					handle_id = pmem_user_v2p_video(
 					(unsigned long)rHWLock.pvHandle);
 					if (handle_id == 0) {
-						pr_debug("[error] handle is freed at %d\n",
+						pr_info("[error] handle is freed at %d\n",
 						__LINE__);
 						mutex_unlock(&HWLock);
 						return -1;
@@ -1197,7 +1197,7 @@ static long vcodec_unlockhw(unsigned long arg)
 		mutex_lock(&HWLock);
 		handle_id = pmem_user_v2p_video((unsigned long)rHWLock.pvHandle);
 		if (handle_id == 0) {
-			pr_debug("[error] handle is freed at %d\n", __LINE__);
+			pr_info("[error] handle is freed at %d\n", __LINE__);
 			mutex_unlock(&HWLock);
 			return -1;
 		}
@@ -1240,7 +1240,7 @@ static long vcodec_unlockhw(unsigned long arg)
 		mutex_lock(&HWLock);
 		handle_id = pmem_user_v2p_video((unsigned long)rHWLock.pvHandle);
 		if (handle_id == 0) {
-			pr_debug("[error] handle is freed at %d\n", __LINE__);
+			pr_info("[error] handle is freed at %d\n", __LINE__);
 			mutex_unlock(&HWLock);
 			return -1;
 		}
@@ -1323,7 +1323,7 @@ static long vcodec_waitisr(unsigned long arg)
 		mutex_lock(&HWLock);
 		handle_id = pmem_user_v2p_video((unsigned long)val_isr.pvHandle);
 		if (handle_id == 0) {
-			pr_debug("[error] handle is freed at %d\n", __LINE__);
+			pr_info("[error] handle is freed at %d\n", __LINE__);
 			mutex_unlock(&HWLock);
 			return -1;
 		}
@@ -1358,7 +1358,7 @@ static long vcodec_waitisr(unsigned long arg)
 		mutex_lock(&HWLock);
 		handle_id = pmem_user_v2p_video((unsigned long)val_isr.pvHandle);
 		if (handle_id == 0) {
-			pr_debug("[error] handle is freed at %d\n", __LINE__);
+			pr_info("[error] handle is freed at %d\n", __LINE__);
 			mutex_unlock(&HWLock);
 			return -1;
 		}

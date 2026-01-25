@@ -570,7 +570,7 @@ void get_ufs_aee_buffer(unsigned long *vaddr, unsigned long *size)
 	char *buff;
 
 	if (!cmd_hist) {
-		pr_debug("====== Null cmd_hist, dump skipped ======\n");
+		pr_info("====== Null cmd_hist, dump skipped ======\n");
 		return;
 	}
 
@@ -613,19 +613,19 @@ static ssize_t ufs_debug_proc_write(struct file *file, const char *buf,
 
 	if (op == UFSDBG_CMD_LIST_ENABLE) {
 		cmd_hist_enable();
-		pr_debug("ufsdbg: cmd history on\n");
+		pr_info("ufsdbg: cmd history on\n");
 	} else if (op == UFSDBG_CMD_LIST_DISABLE) {
 		cmd_hist_disable();
-		pr_debug("ufsdbg: cmd history off\n");
+		pr_info("ufsdbg: cmd history off\n");
 	} else if (op == UFS_CMD_QOS_ON) {
 		if (host && host->qos_allowed) {
 			host->qos_enabled = true;
-			pr_debug("ufsdbg: QoS on\n");
+			pr_info("ufsdbg: QoS on\n");
 		}
 	} else if (op == UFS_CMD_QOS_OFF) {
 		if (host && host->qos_allowed) {
 			host->qos_enabled = false;
-			pr_debug("ufsdbg: QoS off\n");
+			pr_info("ufsdbg: QoS off\n");
 		}
 	} else {
 		return -EINVAL;
@@ -753,7 +753,7 @@ int ufsdbg_init_procfs(void)
 	if (prEntry)
 		proc_set_user(prEntry, uid, gid);
 	else
-		pr_debug("%s: failed to create ufs_debugn", __func__);
+		pr_info("%s: failed to create ufs_debugn", __func__);
 
 	/* Create ufs_perf for performance mode*/
 	prEntry = proc_create("ufs_perf", 0660, NULL, &ufs_debug_perf_fops);
@@ -761,7 +761,7 @@ int ufsdbg_init_procfs(void)
 	if (prEntry)
 		proc_set_user(prEntry, uid, gid);
 	else
-		pr_debug("%s: failed to create /proc/ufs_perf\n", __func__);
+		pr_info("%s: failed to create /proc/ufs_perf\n", __func__);
 
 	return 0;
 }
@@ -792,7 +792,7 @@ int ufsdbg_register(struct device *dev)
 
 	FOR_EACH_INTEREST(i) {
 		if (interests[i].tp == NULL) {
-			pr_debug("Error: %s not found\n", interests[i].name);
+			pr_info("Error: %s not found\n", interests[i].name);
 			ret = -EINVAL;
 			goto out;
 		}

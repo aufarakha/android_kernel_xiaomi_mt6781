@@ -44,7 +44,7 @@
 #define DISP_PR_INFO(string, args...)					\
 	do {								\
 		dprec_logger_pr(DPREC_LOGGER_ERROR, string, ##args);	\
-		pr_debug("[DISP][%s #%d]warn:"string,			\
+		pr_info("[DISP][%s #%d]warn:"string,			\
 				__func__, __LINE__, ##args);		\
 	} while (0)
 

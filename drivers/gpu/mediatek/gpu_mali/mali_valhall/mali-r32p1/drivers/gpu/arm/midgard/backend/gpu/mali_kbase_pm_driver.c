@@ -2727,7 +2727,7 @@ int kbase_pm_protected_mode_enable(struct kbase_device *const kbdev)
 {
 #if IS_ENABLED(CONFIG_MTK_GPU_DEBUG)
 	if (is_gpu_ged_log_enable())
-		pr_debug("[gpu_debug]%s", __func__);
+		pr_info("[gpu_debug]%s", __func__);
 #endif
 	kbase_reg_write(kbdev, GPU_CONTROL_REG(GPU_COMMAND),
 		GPU_COMMAND_SET_PROTECTED_MODE);
@@ -2740,7 +2740,7 @@ int kbase_pm_protected_mode_disable(struct kbase_device *const kbdev)
 
 #if IS_ENABLED(CONFIG_MTK_GPU_DEBUG)
 	if (is_gpu_ged_log_enable())
-		pr_debug("[gpu_debug]%s", __func__);
+		pr_info("[gpu_debug]%s", __func__);
 #endif
 
 	return kbase_pm_do_reset(kbdev);

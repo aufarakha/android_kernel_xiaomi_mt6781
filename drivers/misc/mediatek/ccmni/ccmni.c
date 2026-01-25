@@ -68,7 +68,7 @@ void set_ccmni_rps(unsigned long value)
 	int i = 0;
 	struct ccmni_ctl_block *ctlb = ccmni_ctl_blk[0];
 	if (ctlb == NULL) {
-		pr_debug("%s: invalid ctlb\n", __func__);
+		pr_info("%s: invalid ctlb\n", __func__);
 		return;
 	}
 	for (i = 0; i < ctlb->ccci_ops->ccmni_num; i++)

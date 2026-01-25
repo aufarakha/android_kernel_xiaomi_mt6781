@@ -835,7 +835,7 @@ err:
 	mutex_unlock(&st->mutex);
 
 	if (ret < 0) {
-		pr_debug("%s ERROR: %i\n", __func__, ret);
+		pr_info("%s ERROR: %i\n", __func__, ret);
 		return ret;
 	}
 	return num;

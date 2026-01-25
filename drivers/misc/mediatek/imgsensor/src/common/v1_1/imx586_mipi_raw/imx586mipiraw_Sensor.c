@@ -480,7 +480,7 @@ static void read_sensor_Cali(void)
 		(otp_data[1] == 0x00) &&
 		(otp_data[2] == 0x0b) &&
 		(otp_data[3] == 0x01)) {
-		pr_debug("OTP type: Internal Only");
+		pr_info("OTP type: Internal Only");
 		otp_flag = OTP_QSC_INTERNAL;
 
 		for (idx = 0; idx < 2304; idx++) {
@@ -503,7 +503,7 @@ static void read_sensor_Cali(void)
 
 	} else if ((otp_data[5] == 0x56) && (otp_data[6] == 0x00)) {
 		/*Internal Module Type*/
-		pr_debug("OTP type: Custom Only");
+		pr_info("OTP type: Custom Only");
 		otp_flag = OTP_QSC_CUSTOM;
 
 		for (idx = 0; idx < 2304; idx++) {
@@ -515,7 +515,7 @@ static void read_sensor_Cali(void)
 		}
 
 	} else {
-		pr_debug("OTP type: No Data, 0x0008 = %d, 0x0009 = %d",
+		pr_info("OTP type: No Data, 0x0008 = %d, 0x0009 = %d",
 		read_cmos_eeprom_8(0x0008), read_cmos_eeprom_8(0x0009));
 	}
 
@@ -1019,7 +1019,7 @@ static kal_uint32 streaming_control(kal_bool enable)
 		enable);
 	if (enable) {
 		if (read_cmos_sensor_8(0x0350) != 0x01) {
-			pr_debug("single cam scenario enable auto-extend");
+			pr_info("single cam scenario enable auto-extend");
 			write_cmos_sensor_8(0x0350, 0x01);
 		}
 		write_cmos_sensor_8(0x3020, 0x00);/*Mode transition mode change*/
@@ -3134,7 +3134,7 @@ static void custom3_setting(void)
 	}
 
 	if (otp_flag == OTP_QSC_NONE) {
-		pr_debug("OTP no QSC Data, close qsc register");
+		pr_info("OTP no QSC Data, close qsc register");
 		if (!imx586_is_seamless)
 			write_cmos_sensor_8(0x3621, 0x00);
 		else {
@@ -3169,7 +3169,7 @@ static void custom4_setting(void)
 	}
 
 	if (otp_flag == OTP_QSC_NONE) {
-		pr_debug("OTP no QSC Data, close qsc register");
+		pr_info("OTP no QSC Data, close qsc register");
 		if (!imx586_is_seamless)
 			write_cmos_sensor_8(0x3621, 0x00);
 		else {
@@ -4956,7 +4956,7 @@ break;
 				sizeof(struct SENSOR_VC_INFO_STRUCT));
 			break;
 		default:
-			pr_debug("error: get wrong vc_INFO id = %d",
+			pr_info("error: get wrong vc_INFO id = %d",
 			*feature_data_32);
 			break;
 		}
@@ -4991,7 +4991,7 @@ break;
 			"warning! no ae_ctrl input");
 		}
 		if (feature_data == NULL) {
-			pr_debug("error! input scenario is null!");
+			pr_info("error! input scenario is null!");
 			return ERROR_INVALID_SCENARIO_ID;
 		}
 
@@ -5011,7 +5011,7 @@ break;
 			pScenarios =
 			(MUINT32 *)((uintptr_t)(*(feature_data + 1)));
 		} else {
-			pr_debug("input pScenarios vector is NULL!\n");
+			pr_info("input pScenarios vector is NULL!\n");
 			return ERROR_INVALID_SCENARIO_ID;
 		}
 		switch (*feature_data) {

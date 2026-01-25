@@ -155,7 +155,7 @@ static const char *mt6885_bus_id_to_master(uint32_t bus_id, uint32_t vio_addr,
 
 	if ((vio_addr >= TINYSYS_START_ADDR && vio_addr <= TINYSYS_END_ADDR) ||
 	    (vio_addr >= MD_START_ADDR && vio_addr <= MD_END_ADDR)) {
-		pr_debug(PFX "[DEVAPC] bus_id might be wrong\n");
+		pr_info(PFX "[DEVAPC] bus_id might be wrong\n");
 
 		if (domain == 0x1)
 			return "SSPM";
@@ -163,7 +163,7 @@ static const char *mt6885_bus_id_to_master(uint32_t bus_id, uint32_t vio_addr,
 			return "CONNSYS";
 
 	} else if (vio_addr >= CONN_START_ADDR && vio_addr <= CONN_END_ADDR) {
-		pr_debug(PFX "[DEVAPC] bus_id might be wrong\n");
+		pr_info(PFX "[DEVAPC] bus_id might be wrong\n");
 
 		if (domain == 0x1)
 			return "MD";
@@ -191,7 +191,7 @@ static const char *mt6885_bus_id_to_master(uint32_t bus_id, uint32_t vio_addr,
 		if ((bus_id & 0x1) == 1)
 			return "GCE_M";
 		else if ((bus_id >> 3) == 0)
-			pr_debug(PFX "Master might be %s\n", "GCE_M2");
+			pr_info(PFX "Master might be %s\n", "GCE_M2");
 
 		return infra_mi_trans(bus_id >> 1);
 
@@ -401,7 +401,7 @@ static void mm2nd_vio_handler(void __iomem *infracfg,
 		reg = infracfg + vio0_offset + i * 4;
 		vio_sta = readl(reg);
 		if (vio_sta)
-			pr_debug(PFX "MM 2nd violation: %s%d:0x%x\n",
+			pr_info(PFX "MM 2nd violation: %s%d:0x%x\n",
 					mm_str, i, vio_sta);
 	}
 

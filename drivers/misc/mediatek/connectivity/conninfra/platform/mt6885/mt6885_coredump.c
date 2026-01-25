@@ -160,7 +160,7 @@ static bool consys_plt_coredump_is_host_csr_readable(void)
             ret = true;
         }
     } else
-        pr_debug("[%s] remap fail, [%p][%p]", __func__, vir_addr_rx, vir_addr_tx);
+        pr_info("[%s] remap fail, [%p][%p]", __func__, vir_addr_rx, vir_addr_tx);
 
     if (vir_addr_rx)
         iounmap(vir_addr_rx);

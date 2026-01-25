@@ -1108,7 +1108,7 @@ int bdg_tx_phy_config(enum DISP_BDG_ENUM module,
 	ui = 1000 / tx_data_rate;
 	cycle_time = 8000 / tx_data_rate;
 
-	pr_debug(
+	pr_info(
 		"%s, tx_data_rate=%d, cycle_time=%d, ui=%d\n",
 		__func__, tx_data_rate, cycle_time, ui);
 

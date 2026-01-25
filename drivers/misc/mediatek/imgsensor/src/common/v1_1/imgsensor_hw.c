@@ -258,7 +258,7 @@ static enum IMGSENSOR_RETURN imgsensor_hw_power_sequence(
 				    || sensor_idx == IMGSENSOR_SENSOR_IDX_SUB
 				    || sensor_idx == IMGSENSOR_SENSOR_IDX_MAIN2)
 				    && ppwr_info->pin ==IMGSENSOR_HW_PIN_DOVDD) {
-				    pr_debug("when close back front or ultra camera,iovdd need set to on");
+				    pr_info("when close back front or ultra camera,iovdd need set to on");
 				    if (pdev->set != NULL)
 						pdev->set(pdev->pinstance,
 						sensor_idx,
@@ -316,7 +316,7 @@ enum IMGSENSOR_RETURN imgsensor_hw_power(
 
 	ret = snprintf(str_index, sizeof(str_index), "%d", sensor_idx);
 	if (ret < 0) {
-		pr_debug("Error! snprintf allocate 0");
+		pr_info("Error! snprintf allocate 0");
 		ret = IMGSENSOR_RETURN_ERROR;
 		return ret;
 	}

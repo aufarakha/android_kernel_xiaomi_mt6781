@@ -2553,7 +2553,7 @@ static void fix_read_error(struct r10conf *conf, struct mddev *mddev, struct r10
 				       bdevname(rdev->bdev, b));
 				break;
 			case 1:
-				pr_debug("md/raid10:%s: read error corrected (%d sectors at %llu on %s)\n",
+				pr_info("md/raid10:%s: read error corrected (%d sectors at %llu on %s)\n",
 				       mdname(mddev), s,
 				       (unsigned long long)(
 					       sect +
@@ -3945,7 +3945,7 @@ static int raid10_run(struct mddev *mddev)
 	if (mddev->recovery_cp != MaxSector)
 		pr_notice("md/raid10:%s: not clean -- starting background reconstruction\n",
 			  mdname(mddev));
-	pr_debug("md/raid10:%s: active with %d out of %d devices\n",
+	pr_info("md/raid10:%s: active with %d out of %d devices\n",
 		mdname(mddev), conf->geo.raid_disks - mddev->degraded,
 		conf->geo.raid_disks);
 	/*

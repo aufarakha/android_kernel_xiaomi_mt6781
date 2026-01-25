@@ -340,7 +340,7 @@ int pd_hal_set_mivr(struct chg_alg_device *alg, enum chg_idx chgidx, int uV)
 			ret = charger_dev_set_mivr(hal->chg2_dev,
 				uV + pd->slave_mivr_diff);
 			if (ret < 0)
-				pr_debug("%s: chg2 failed, ret = %d\n", __func__,
+				pr_info("%s: chg2 failed, ret = %d\n", __func__,
 					ret);
 		}
 	}

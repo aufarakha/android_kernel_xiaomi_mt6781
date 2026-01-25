@@ -620,7 +620,7 @@ static struct pci_driver com20020pci_driver = {
 static int __init com20020pci_init(void)
 {
 	if (BUGLVL(D_NORMAL))
-		pr_debug("%s\n", "COM20020 PCI support");
+		pr_info("%s\n", "COM20020 PCI support");
 	return pci_register_driver(&com20020pci_driver);
 }
 

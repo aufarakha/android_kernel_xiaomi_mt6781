@@ -167,7 +167,7 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
 	}
 
 	if (base == 0) {
-		pr_debug("failed to allocate memory for node '%s'\n", uname);
+		pr_info("failed to allocate memory for node '%s'\n", uname);
 		return -ENOMEM;
 	}
 
@@ -196,7 +196,7 @@ static int __init __reserved_mem_init_node(struct reserved_mem *rmem)
 			continue;
 
 		if (initfn(rmem) == 0) {
-			pr_debug("initialized node %s, compatible id %s\n",
+			pr_info("initialized node %s, compatible id %s\n",
 				rmem->name, compat);
 			return 0;
 		}

@@ -101,7 +101,7 @@ static int consys_emi_mpu_set_region_protection_mt6893(void)
 	mtk_emimpu_set_protection(&region);
 	mtk_emimpu_free_region(&region);
 
-	pr_debug("setting MPU for EMI share memory\n");
+	pr_info("setting MPU for EMI share memory\n");
 #endif
 	return 0;
 }
@@ -113,9 +113,9 @@ void consys_emi_get_md_shared_emi_mt6893(phys_addr_t* base, unsigned int* size)
 
 #if IS_ENABLED(CONFIG_MTK_ECCCI_DRIVER)
 	mdPhy = get_smem_phy_start_addr(MD_SYS1, SMEM_USER_RAW_MD_CONSYS, &ret);
-	pr_debug("MCIF base=0x%llx size=0x%x", mdPhy, ret);
+	pr_info("MCIF base=0x%llx size=0x%x", mdPhy, ret);
 #else
-	pr_debug("[%s] ECCCI Driver is not supported.\n", __func__);
+	pr_info("[%s] ECCCI Driver is not supported.\n", __func__);
 #endif
 	if (ret && mdPhy) {
 		if (base)
@@ -123,7 +123,7 @@ void consys_emi_get_md_shared_emi_mt6893(phys_addr_t* base, unsigned int* size)
 		if (size)
 			*size = ret;
 	} else {
-		pr_debug("MCIF is not supported");
+		pr_info("MCIF is not supported");
 		if (base)
 			*base = 0;
 		if (size)

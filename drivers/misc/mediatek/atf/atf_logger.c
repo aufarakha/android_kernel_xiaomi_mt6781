@@ -87,12 +87,12 @@ static int dt_parse_atf_logger_buf(void)
 			ATF_LOG_RESERVED_MEMORY_KEY);
 
 	if (!atf_logger_rmem_np) {
-		pr_debug("No atf_logger reserved memory\n");
+		pr_info("No atf_logger reserved memory\n");
 		return -EINVAL;
 	}
 	rmem = of_reserved_mem_lookup(atf_logger_rmem_np);
 	if (!rmem) {
-		pr_debug("No rmem\n");
+		pr_info("No rmem\n");
 		return -EINVAL;
 	}
 
@@ -474,19 +474,19 @@ static int __init atf_logger_probe(struct platform_device *pdev)
 	pr_notice("atf_log: inited");
 	err = dt_parse_atf_logger_buf();
 	if (unlikely(err)) {
-		pr_debug("No atf_log_buffer\n");
+		pr_info("No atf_log_buffer\n");
 		return -1;
 	}
 
 	err = misc_register(&atf_log_dev);
 	if (unlikely(err)) {
-		pr_debug("atf_log: failed to register device");
+		pr_info("atf_log: failed to register device");
 		return -1;
 	}
 
 	err = misc_register(&atf_raw_buf_dev);
 	if (unlikely(err)) {
-		pr_debug("atf_raw_buf: failed to register device");
+		pr_info("atf_raw_buf: failed to register device");
 		return -1;
 	}
 
@@ -517,14 +517,14 @@ static int __init atf_logger_probe(struct platform_device *pdev)
 	/* create /proc/atf_log */
 	atf_log_proc_dir = proc_mkdir("atf_log", NULL);
 	if (atf_log_proc_dir == NULL) {
-		pr_debug("atf_log proc_mkdir failed\n");
+		pr_info("atf_log proc_mkdir failed\n");
 		return -ENOMEM;
 	}
 	/* create /proc/atf_log/atf_log */
 	atf_log_proc_file = proc_create("atf_log", 0440,
 		atf_log_proc_dir, &atf_log_fops);
 	if (atf_log_proc_file == NULL) {
-		pr_debug("atf_log proc_create failed at atf_log\n");
+		pr_info("atf_log proc_create failed at atf_log\n");
 		return -ENOMEM;
 	}
 
@@ -532,7 +532,7 @@ static int __init atf_logger_probe(struct platform_device *pdev)
 	atf_raw_buf_proc_file = proc_create("atf_raw_buf", 0440,
 		atf_log_proc_dir, &atf_raw_buf_fops);
 	if (atf_raw_buf_proc_file == NULL) {
-		pr_debug("atf_raw_buf proc_create failed at atf_log\n");
+		pr_info("atf_raw_buf proc_create failed at atf_log\n");
 		return -ENOMEM;
 	}
 
@@ -570,7 +570,7 @@ static int __init atf_log_init(void)
 
 	ret = platform_driver_register(&atf_logger_driver_probe);
 	if (ret)
-		pr_debug("atf logger init FAIL, ret 0x%x\n", ret);
+		pr_info("atf logger init FAIL, ret 0x%x\n", ret);
 	return ret;
 }
 

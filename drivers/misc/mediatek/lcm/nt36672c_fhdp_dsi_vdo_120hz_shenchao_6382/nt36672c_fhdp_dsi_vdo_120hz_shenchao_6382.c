@@ -179,7 +179,7 @@ static int _lcm_i2c_remove(struct i2c_client *client)
 	// write_data[1] = value;
 	// ret = i2c_master_send(client, write_data, 2);
 	// if (ret < 0)
-		// pr_debug("[LCM][ERROR] _lcm_i2c write data fail !!\n");
+		// pr_info("[LCM][ERROR] _lcm_i2c write data fail !!\n");
 
 	// return ret;
 // }

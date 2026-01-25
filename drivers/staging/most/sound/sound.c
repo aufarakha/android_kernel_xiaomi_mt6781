@@ -425,7 +425,7 @@ static int pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 		return 0;
 
 	default:
-		pr_debug("%s(), invalid\n", __func__);
+		pr_info("%s(), invalid\n", __func__);
 		return -EINVAL;
 	}
 	return 0;
@@ -733,7 +733,7 @@ static struct core_component comp = {
 
 static int __init audio_init(void)
 {
-	pr_debug("init()\n");
+	pr_info("init()\n");
 
 	INIT_LIST_HEAD(&dev_list);
 
@@ -744,7 +744,7 @@ static void __exit audio_exit(void)
 {
 	struct channel *channel, *tmp;
 
-	pr_debug("exit()\n");
+	pr_info("exit()\n");
 
 	list_for_each_entry_safe(channel, tmp, &dev_list, list) {
 		list_del(&channel->list);

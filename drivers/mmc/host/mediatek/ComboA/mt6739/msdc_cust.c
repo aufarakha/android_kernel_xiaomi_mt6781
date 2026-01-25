@@ -105,7 +105,7 @@ void msdc_ldo_power(u32 on, struct regulator *reg, int voltage_mv, u32 *status)
 	if (on) { /* want to power on */
 		if (*status == 0) {  /* can power on */
 			/* Comment out to reduce log */
-			/* pr_debug("msdc power on<%d>\n", voltage_uv); */
+			/* pr_info("msdc power on<%d>\n", voltage_uv); */
 			(void)msdc_regulator_set_and_enable(reg, voltage_uv);
 			*status = voltage_uv;
 		} else if (*status == voltage_uv) {
@@ -118,7 +118,7 @@ void msdc_ldo_power(u32 on, struct regulator *reg, int voltage_mv, u32 *status)
 	} else {  /* want to power off */
 		if (*status != 0) {  /* has been powerred on */
 			/* Comment out to reduce log */
-			/* pr_debug("msdc power off\n"); */
+			/* pr_info("msdc power off\n"); */
 			(void)regulator_disable(reg);
 			*status = 0;
 		} else {
@@ -279,7 +279,7 @@ void msdc_emmc_power(struct msdc_host *host, u32 on)
 	msdc_ldo_power(on, host->mmc->supply.vmmc, VOL_3000,
 		&host->power_flash);
 
-	pr_debug("msdc%d power %s\n", host->id, (on ? "on" : "off"));
+	pr_info("msdc%d power %s\n", host->id, (on ? "on" : "off"));
 
 #ifdef MTK_MSDC_BRINGUP_DEBUG
 	msdc_dump_ldo_sts(host);
@@ -314,7 +314,7 @@ void msdc_sd_power(struct msdc_host *host, u32 on)
 		/* VMC VOLSEL */
 		msdc_ldo_power(on, host->mmc->supply.vqmmc, VOL_3000,
 			&host->power_io);
-		pr_debug("msdc%d power %s\n", host->id, (on ? "on" : "off"));
+		pr_info("msdc%d power %s\n", host->id, (on ? "on" : "off"));
 		break;
 
 	default:
@@ -366,10 +366,10 @@ void msdc_dump_dvfs_reg(char **buff, unsigned long *size, struct seq_file *m,
 {
 	void __iomem *base = host->base;
 
-	pr_debug("SDC_STS:0x%x", MSDC_READ32(SDC_STS));
+	pr_info("SDC_STS:0x%x", MSDC_READ32(SDC_STS));
 	if (sleep_base) {
 		/* bit24 high is in dvfs request status, which cause sdc busy */
-		pr_debug("DVFS_REQUEST@0x%p = 0x%x, bit[24] shall 0b\n",
+		pr_info("DVFS_REQUEST@0x%p = 0x%x, bit[24] shall 0b\n",
 			sleep_base + 0x478,
 			MSDC_READ32(sleep_base + 0x478));
 	}
@@ -439,7 +439,7 @@ void msdc_HQA_set_voltage(struct msdc_host *host)
 	if (vio_cal_orig < 0)
 		pmic_read_interface(REG_VIO18_VOCAL, &vio_cal_orig,
 			MASK_VIO18_VOCAL, SHIFT_VIO18_VOCAL);
-	pr_debug("[MSDC~%d HQA] orig Vcore 0x%x, Vio_cal 0x%x\n",
+	pr_info("[MSDC~%d HQA] orig Vcore 0x%x, Vio_cal 0x%x\n",
 		host->id, vcore_orig, vio_cal_orig);
 
 #if !defined(MSDC_HQA_NV)
@@ -472,7 +472,7 @@ void msdc_HQA_set_voltage(struct msdc_host *host)
 	pmic_config_interface(REG_VIO18_VOCAL, vio_cal,
 		MASK_VIO18_VOCAL, SHIFT_VIO18_VOCAL);
 
-	pr_debug("[MSDC%d HQA] adj Vcore 0x%x, Vio_cal 0x%x\n",
+	pr_info("[MSDC%d HQA] adj Vcore 0x%x, Vio_cal 0x%x\n",
 		host->id, vcore, vio_cal);
 #endif
 }
@@ -538,7 +538,7 @@ int msdc_get_ccf_clk_pointer(struct platform_device *pdev,
 			host->hclk = clk_freq;
 	}
 
-	pr_debug("[msdc%d] hclk:%dHz, clk_ctl:%p, hclk_ctl:%p\n",
+	pr_info("[msdc%d] hclk:%dHz, clk_ctl:%p, hclk_ctl:%p\n",
 		pdev->id, host->hclk, host->clk_ctl, host->hclk_ctl);
 
 #endif
@@ -1201,12 +1201,12 @@ int msdc_of_parse(struct platform_device *pdev, struct mmc_host *mmc)
 	}
 	host->base_top = of_iomap(np, 1);
 	if (host->base_top)
-		pr_debug("of_iomap for MSDC%d TOP base @ 0x%p\n",
+		pr_info("of_iomap for MSDC%d TOP base @ 0x%p\n",
 			host->id, host->base_top);
 
 	/* get irq # */
 	host->irq = irq_of_parse_and_map(np, 0);
-	pr_debug("[msdc%d] get irq # %d\n", host->id, host->irq);
+	pr_info("[msdc%d] get irq # %d\n", host->id, host->irq);
 	WARN_ON(host->irq < 0);
 
 #if !defined(FPGA_PLATFORM)

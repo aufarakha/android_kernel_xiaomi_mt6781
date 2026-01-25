@@ -143,7 +143,7 @@ static int __add_fh_obj_tbl(struct mtk_fhctl *pfhctl, int posi,
 			struct clk_mt_fhctl *pfh)
 {
 	if (pfhctl == NULL) {
-		pr_debug("Error: null pointer pfhctl");
+		pr_info("Error: null pointer pfhctl");
 		return -EFAULT;
 	}
 
@@ -160,7 +160,7 @@ struct clk_mt_fhctl *mtk_fh_get_fh_obj_tbl(struct mtk_fhctl *pfhctl, int posi)
 	struct clk_mt_fhctl *pfh;
 
 	if (pfhctl == NULL) {
-		pr_debug("Error: null pointer pfhctl");
+		pr_info("Error: null pointer pfhctl");
 		return ERR_PTR(-EFAULT);
 	}
 
@@ -194,7 +194,7 @@ bool _mtk_fh_set_rate(int pll_id, unsigned long dds, int postdiv)
 
 	fhctl = __get_fhctl();
 	if (fhctl == NULL) {
-		pr_debug("ERROR: fhctl is not initialized");
+		pr_info("ERROR: fhctl is not initialized");
 		return false;
 	}
 
@@ -222,12 +222,12 @@ bool _mtk_fh_set_rate(int pll_id, unsigned long dds, int postdiv)
 		return false;
 
 	if (fh->pll_data->pll_type == FH_PLL_TYPE_NOT_SUPPORT) {
-		pr_debug("ERROR: pll not support");
+		pr_info("ERROR: pll not support");
 		return false;
 	}
 
 	if (fh->pll_data->pll_type == FH_PLL_TYPE_CPU) {
-		pr_debug("ERROR: CPU hopping not support in AP side");
+		pr_info("ERROR: CPU hopping not support in AP side");
 		return false;
 	}
 
@@ -239,7 +239,7 @@ bool _mtk_fh_set_rate(int pll_id, unsigned long dds, int postdiv)
 
 	/* Look up hopping support table */
 	if (fh->pll_data->hp_tbl == NULL) {
-		pr_debug("ERROR: fh->pll_data->hp_tbl NULL!");
+		pr_info("ERROR: fh->pll_data->hp_tbl NULL!");
 		return false;
 	}
 

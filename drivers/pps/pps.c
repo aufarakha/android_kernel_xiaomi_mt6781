@@ -496,8 +496,8 @@ static int __init pps_init(void)
 		goto remove_class;
 	}
 
-	pr_debug("LinuxPPS API ver. %d registered\n", PPS_API_VERS);
-	pr_debug("Software ver. %s - Copyright 2005-2007 Rodolfo Giometti "
+	pr_info("LinuxPPS API ver. %d registered\n", PPS_API_VERS);
+	pr_info("Software ver. %s - Copyright 2005-2007 Rodolfo Giometti "
 		"<giometti@linux.it>\n", PPS_VERSION);
 
 	return 0;

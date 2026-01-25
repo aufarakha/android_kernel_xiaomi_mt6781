@@ -1644,7 +1644,7 @@ static int crypt_dev_id(const char *path)
 		type = 1;
 	}
 
-	pr_debug("[dm-crypt] dev path: %s, type: %d\n", path, type);
+	pr_info("[dm-crypt] dev path: %s, type: %d\n", path, type);
 
 	return type;
 }

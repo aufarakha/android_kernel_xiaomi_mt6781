@@ -91,7 +91,7 @@ static int xilinx_wdt_stop(struct watchdog_device *wdd)
 
 	clk_disable(xdev->clk);
 
-	pr_debug("Stopped!\n");
+	pr_info("Stopped!\n");
 
 	return 0;
 }

@@ -38,7 +38,7 @@ int __init mtk_acao_cpuidle_init(void)
 
 	ret = mtk_cpuidle_register_driver();
 	if (ret) {
-		pr_debug("Failed to register mtk cpuidle driver (%d)\n", ret);
+		pr_info("Failed to register mtk cpuidle driver (%d)\n", ret);
 		return ret;
 	}
 
@@ -57,7 +57,7 @@ int __init mtk_acao_cpuidle_init(void)
 			continue;
 
 		if (ret) {
-			pr_debug("CPU %d failed to init idle CPU ops\n", cpu);
+			pr_info("CPU %d failed to init idle CPU ops\n", cpu);
 			goto out_fail;
 		}
 
@@ -68,7 +68,7 @@ int __init mtk_acao_cpuidle_init(void)
 
 		ret = cpuidle_register_device(dev);
 		if (ret) {
-			pr_debug("Failed to register cpuidle device for CPU %d\n",
+			pr_info("Failed to register cpuidle device for CPU %d\n",
 			       cpu);
 			kfree(dev);
 			goto out_fail;

@@ -79,7 +79,7 @@ const char * const *kbase_gator_hwcnt_init_names(uint32_t *total_counters)
 	default:
 		hardware_counters = NULL;
 		count = 0;
-		pr_debug("Unrecognized product ID: %u\n", product_id);
+		pr_info("Unrecognized product ID: %u\n", product_id);
 		break;
 	}
 
@@ -191,7 +191,7 @@ struct kbase_gator_hwcnt_handles *kbase_gator_hwcnt_init(struct kbase_gator_hwcn
 	errcode = kbase_hwcnt_virtualizer_client_create(
 		hand->kbdev->hwcnt_gpu_virt, &hand->enable_map, &hand->hvcli);
 	if (errcode) {
-		pr_debug("Failed to register gator with hwcnt virtualizer core");
+		pr_info("Failed to register gator with hwcnt virtualizer core");
 		goto free_layout;
 	}
 

@@ -6832,8 +6832,8 @@ il4965_init(void)
 {
 
 	int ret;
-	pr_debug(DRV_DESCRIPTION ", " DRV_VERSION "\n");
-	pr_debug(DRV_COPYRIGHT "\n");
+	pr_info(DRV_DESCRIPTION ", " DRV_VERSION "\n");
+	pr_info(DRV_COPYRIGHT "\n");
 
 	ret = il4965_rate_control_register();
 	if (ret) {

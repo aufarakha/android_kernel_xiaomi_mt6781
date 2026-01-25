@@ -1339,7 +1339,7 @@ sg_rq_end_io(struct request *rq, blk_status_t status)
 
 	sdp = sfp->parentdp;
 	if (unlikely(atomic_read(&sdp->detaching)))
-		pr_debug("%s: device detaching\n", __func__);
+		pr_info("%s: device detaching\n", __func__);
 
 	sense = req->sense;
 	result = req->result;

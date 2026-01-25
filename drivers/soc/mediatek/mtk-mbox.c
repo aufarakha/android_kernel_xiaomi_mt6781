@@ -734,13 +734,13 @@ int mtk_mbox_probe(struct platform_device *pdev, struct mtk_mbox_device *mbdev,
 		snprintf(name, sizeof(name), "mbox%d_base", mbox);
 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
 		if (IS_ERR_OR_NULL(res)) {
-			pr_debug("MBOX %s:get resource %s failed!\n",
+			pr_info("MBOX %s:get resource %s failed!\n",
 				__func__, name);
 		} else {
 			minfo->base = devm_ioremap_resource(dev, res);
 
 			if (IS_ERR((void const *) minfo->base))
-				pr_debug("MBOX %d can't remap base\n", mbox);
+				pr_info("MBOX %d can't remap base\n", mbox);
 
 			minfo->slot = (unsigned int)resource_size(res)/MBOX_SLOT_SIZE;
 		}
@@ -748,23 +748,23 @@ int mtk_mbox_probe(struct platform_device *pdev, struct mtk_mbox_device *mbdev,
 		snprintf(name, sizeof(name), "mbox%d_init", mbox);
 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
 		if (IS_ERR_OR_NULL(res)) {
-			pr_debug("MBOX %s:get resource %s failed!\n",
+			pr_info("MBOX %s:get resource %s failed!\n",
 				__func__, name);
 		} else {
 			minfo->init_base_reg = devm_ioremap_resource(dev, res);
 			if (IS_ERR((void const *) minfo->init_base_reg))
-				pr_debug("MBOX %d can't find init reg\n", mbox);
+				pr_info("MBOX %d can't find init reg\n", mbox);
 		}
 		/*set irq reg*/
 		snprintf(name, sizeof(name), "mbox%d_set", mbox);
 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
 		if (IS_ERR_OR_NULL(res)) {
-			pr_debug("MBOX %s:get resource %s failed!\n",
+			pr_info("MBOX %s:get resource %s failed!\n",
 				__func__, name);
 		} else {
 			minfo->set_irq_reg = devm_ioremap_resource(dev, res);
 			if (IS_ERR((void const *) minfo->set_irq_reg)) {
-				pr_debug("MBOX %d can't find set reg\n", mbox);
+				pr_info("MBOX %d can't find set reg\n", mbox);
 				goto mtk_mbox_probe_fail;
 			}
 		}
@@ -772,12 +772,12 @@ int mtk_mbox_probe(struct platform_device *pdev, struct mtk_mbox_device *mbdev,
 		snprintf(name, sizeof(name), "mbox%d_clr", mbox);
 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
 		if (IS_ERR_OR_NULL(res)) {
-			pr_debug("MBOX %s:get resource %s failed!\n",
+			pr_info("MBOX %s:get resource %s failed!\n",
 				__func__, name);
 		} else {
 			minfo->clr_irq_reg = devm_ioremap_resource(dev, res);
 			if (IS_ERR((void const *) minfo->clr_irq_reg)) {
-				pr_debug("MBOX %d can't find clr reg\n", mbox);
+				pr_info("MBOX %d can't find clr reg\n", mbox);
 				goto mtk_mbox_probe_fail;
 			}
 		}
@@ -785,7 +785,7 @@ int mtk_mbox_probe(struct platform_device *pdev, struct mtk_mbox_device *mbdev,
 		snprintf(name, sizeof(name), "mbox%d_send", mbox);
 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
 		if (IS_ERR_OR_NULL(res)) {
-			pr_debug("MBOX %s:get resource %s failed!\n",
+			pr_info("MBOX %s:get resource %s failed!\n",
 				__func__, name);
 		} else {
 			minfo->send_status_reg = devm_ioremap_resource(dev, res);
@@ -798,7 +798,7 @@ int mtk_mbox_probe(struct platform_device *pdev, struct mtk_mbox_device *mbdev,
 		snprintf(name, sizeof(name), "mbox%d_recv", mbox);
 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
 		if (IS_ERR_OR_NULL(res)) {
-			pr_debug("MBOX %s:get resource %s failed!\n",
+			pr_info("MBOX %s:get resource %s failed!\n",
 				__func__, name);
 		} else {
 			minfo->recv_status_reg = devm_ioremap_resource(dev, res);

@@ -184,7 +184,7 @@ static ssize_t cpufreq_oppidx_proc_write(struct file *file,
 	rc = kstrtoint(buf, 10, &oppidx);
 	if (rc < 0) {
 		p->dvfs_disable_by_procfs = false;
-		pr_debug("echo oppidx > /proc/cpufreq/%s/cpufreq_oppidx\n",
+		pr_info("echo oppidx > /proc/cpufreq/%s/cpufreq_oppidx\n",
 			p->name);
 	} else {
 		if (oppidx >= 0 && oppidx < p->nr_opp_tbl) {
@@ -198,7 +198,7 @@ static ssize_t cpufreq_oppidx_proc_write(struct file *file,
 #endif
 		} else {
 			p->dvfs_disable_by_procfs = false;
-			pr_debug("echo oppidx > /proc/cpufreq/%s/cpufreq_oppidx\n",
+			pr_info("echo oppidx > /proc/cpufreq/%s/cpufreq_oppidx\n",
 				p->name);
 		}
 	}
@@ -240,7 +240,7 @@ static ssize_t cpufreq_freq_proc_write(struct file *file,
 		tmp_freq = p->opp_tbl[p->nr_opp_tbl - 1].cpufreq_khz;
 		if (freq < p->opp_tbl[p->nr_opp_tbl - 1].cpufreq_khz) {
 			if (freq != 0)
-				pr_debug("frequency should higher than %dKHz!\n",
+				pr_info("frequency should higher than %dKHz!\n",
 					tmp_freq);
 
 			p->dvfs_disable_by_procfs = false;

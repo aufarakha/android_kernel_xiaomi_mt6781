@@ -132,7 +132,7 @@ int vcu_enc_ipi_handler(void *data, unsigned int len, void *priv)
 	mutex_unlock(&dev->ctx_mutex);
 
 	if (vcu->daemon_pid != current->tgid) {
-		pr_debug("%s, vcu->daemon_pid:%d != current %d\n",
+		pr_info("%s, vcu->daemon_pid:%d != current %d\n",
 			__func__, vcu->daemon_pid, current->tgid);
 		return 1;
 	}

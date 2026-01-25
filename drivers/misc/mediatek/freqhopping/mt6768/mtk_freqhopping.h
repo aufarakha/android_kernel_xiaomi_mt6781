@@ -18,7 +18,7 @@
 
 #if VERBOSE_DEBUG
 	#define FH_MSG(fmt, args...) \
-	pr_debug(FHTAG""fmt" <- %s(): L<%d>  PID<%s><%d>\n", \
+	pr_info(FHTAG""fmt" <- %s(): L<%d>  PID<%s><%d>\n", \
 		##args, __func__, __LINE__, current->comm, current->pid)
 
 	#define FH_MSG_DEBUG FH_MSG

@@ -417,7 +417,7 @@ static int __init ptp_init(void)
 	}
 
 	ptp_class->dev_groups = ptp_groups;
-	pr_debug("PTP clock support registered\n");
+	pr_info("PTP clock support registered\n");
 	return 0;
 
 no_region:

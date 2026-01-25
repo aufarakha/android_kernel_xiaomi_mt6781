@@ -41,7 +41,7 @@ static void vpu_dec_ipi_handler(void *data, unsigned int len, void *priv)
 
 	if (!vpu) {
 		/* Cannot use mtk_vcodec_err because it needs vdec_vpu_inst. */
-		pr_debug("%s: invalid ap_inst_addr with id=%X status=%d len=%u\n",
+		pr_info("%s: invalid ap_inst_addr with id=%X status=%d len=%u\n",
 			   __func__, msg->msg_id, msg->status, len);
 		return;
 	}

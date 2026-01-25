@@ -167,7 +167,7 @@ void dvfsrc_init_opp_table(void)
 	dvfsrc->curr_vcore_uv = vcorefs_get_curr_vcore();
 	dvfsrc->curr_ddr_khz = vcorefs_get_curr_ddr();
 
-	pr_debug("curr_vcore_uv: %u, curr_ddr_khz: %u\n",
+	pr_info("curr_vcore_uv: %u, curr_ddr_khz: %u\n",
 			dvfsrc->curr_vcore_uv,
 			dvfsrc->curr_ddr_khz);
 
@@ -182,7 +182,7 @@ void dvfsrc_init_opp_table(void)
 						opp_ctrl_table[opp].ddr_khz);
 #endif
 
-		pr_debug("opp %u: vcore_uv: %u, ddr_khz: %u\n", opp,
+		pr_info("opp %u: vcore_uv: %u, ddr_khz: %u\n", opp,
 				opp_ctrl_table[opp].vcore_uv,
 				opp_ctrl_table[opp].ddr_khz);
 	}
@@ -301,9 +301,9 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 		ret = wait_for_completion
 			(is_dvfsrc_in_progress(dvfsrc) == 0, DVFSRC_TIMEOUT);
 		if (ret) {
-			pr_debug("[%s] wait no idle, class: %d, data: 0x%x",
+			pr_info("[%s] wait no idle, class: %d, data: 0x%x",
 				__func__, type, data);
-			pr_debug("rc_level: 0x%x (last: %d -> %d)\n",
+			pr_info("rc_level: 0x%x (last: %d -> %d)\n",
 				dvfsrc_read(dvfsrc, DVFSRC_LEVEL),
 				last_cnt, dvfsrc_read(dvfsrc, DVFSRC_LAST));
 
@@ -317,7 +317,7 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 		if (data == PM_QOS_MEMORY_BANDWIDTH_DEFAULT_VALUE)
 			break;
 		if (dvfsrc->log_mask & (0x1 << type))
-			pr_debug("[%s] class: %d, data: 0x%x\n",
+			pr_info("[%s] class: %d, data: 0x%x\n",
 				__func__, type, data);
 		dvfsrc_write(dvfsrc, DVFSRC_SW_BW_0, data / 100);
 		break;
@@ -339,7 +339,7 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 		break;
 	case PM_QOS_EMI_OPP:
 		if (dvfsrc->log_mask & (0x1 << type))
-			pr_debug("[%s] class: %d, data: 0x%x\n",
+			pr_info("[%s] class: %d, data: 0x%x\n",
 				__func__, type, data);
 
 		if (data >= DDR_OPP_NUM)
@@ -365,7 +365,7 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 		SPM_DVFS_TIMEOUT);
 #endif
 		if (ret < 0) {
-			pr_debug
+			pr_info
 			("[%s] wair not complete, class: %d, data: 0x%x\n",
 			__func__, type, data);
 			spm_vcorefs_dump_dvfs_regs(NULL);
@@ -376,7 +376,7 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 		break;
 	case PM_QOS_VCORE_OPP:
 		if (dvfsrc->log_mask & (0x1 << type))
-			pr_debug("[%s] class: %d, data: 0x%x\n",
+			pr_info("[%s] class: %d, data: 0x%x\n",
 				__func__, type, data);
 
 		if (data >= VCORE_OPP_NUM)
@@ -402,7 +402,7 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 				SPM_DVFS_TIMEOUT);
 #endif
 		if (ret < 0) {
-			pr_debug
+			pr_info
 			("[%s] not complete, class: %d, data: 0x%x\n",
 			__func__, type, data);
 			spm_vcorefs_dump_dvfs_regs(NULL);
@@ -414,7 +414,7 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 			vcore_uv = regulator_get_voltage(vcore_reg_id);
 			opp_uv = get_vcore_opp_volt(opp);
 				if (vcore_uv < opp_uv) {
-					pr_debug("DVFS FAIL= %d %d 0x%08x %08x\n",
+					pr_info("DVFS FAIL= %d %d 0x%08x %08x\n",
 					vcore_uv, opp_uv,
 					dvfsrc_read(dvfsrc, DVFSRC_LEVEL),
 					spm_vcorefs_get_dvfs_opp());
@@ -427,7 +427,7 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 		break;
 	case PM_QOS_VCORE_DVFS_FIXED_OPP:
 		if (dvfsrc->log_mask & (0x1 << type))
-			pr_debug("[%s] class: %d, data: 0x%x\n",
+			pr_info("[%s] class: %d, data: 0x%x\n",
 					__func__, type, data);
 
 		if (data >= VCORE_DVFS_OPP_NUM)
@@ -456,7 +456,7 @@ static int commit_data(struct helio_dvfsrc *dvfsrc, int type, int data)
 			SPM_DVFS_TIMEOUT);
 #endif
 			if (ret < 0) {
-				pr_debug
+				pr_info
 				("[%s] not complete, class: %d, data: 0x%x\n",
 				__func__, type, data);
 				spm_vcorefs_dump_dvfs_regs(NULL);
@@ -669,7 +669,7 @@ static int helio_dvfsrc_probe(struct platform_device *pdev)
 
 	vcore_reg_id = regulator_get(&pdev->dev, "vcore");
 	if (!vcore_reg_id)
-		pr_debug("regulator_get vcore_reg_id failed\n");
+		pr_info("regulator_get vcore_reg_id failed\n");
 
 	dvfsrc->devfreq = devm_devfreq_add_device(&pdev->dev,
 						 &helio_devfreq_profile,
@@ -763,7 +763,7 @@ static int __init helio_dvfsrc_init(void)
 
 	ret = devfreq_add_governor(&helio_dvfsrc_governor);
 	if (ret) {
-		pr_debug("%s: failed to add governor: %d\n", __func__, ret);
+		pr_info("%s: failed to add governor: %d\n", __func__, ret);
 		return ret;
 	}
 
@@ -783,7 +783,7 @@ static void __exit helio_dvfsrc_exit(void)
 
 	ret = devfreq_remove_governor(&helio_dvfsrc_governor);
 	if (ret)
-		pr_debug("%s: failed to remove governor: %d\n", __func__, ret);
+		pr_info("%s: failed to remove governor: %d\n", __func__, ret);
 }
 module_exit(helio_dvfsrc_exit)
 

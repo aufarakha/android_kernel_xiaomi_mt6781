@@ -30,7 +30,7 @@ int tee_spi_cfg_padsel(uint32_t padsel)
 
 	uint32_t returnOrigin;
 
-	pr_debug("padsel=0x%x\n", padsel);
+	pr_info("padsel=0x%x\n", padsel);
 
 	memset(&context, 0, sizeof(context));
 	memset(&session, 0, sizeof(session));
@@ -90,7 +90,7 @@ int tee_spi_transfer(void *conf, uint32_t conf_size,
 	char *buf;
 	uint32_t returnOrigin;
 
-	pr_debug("conf=%p conf_size=%u inbuf=%p outbuf=%p size=%u\n",
+	pr_info("conf=%p conf_size=%u inbuf=%p outbuf=%p size=%u\n",
 		conf, conf_size, inbuf, outbuf, size);
 
 	if (!conf || !inbuf || !outbuf) {

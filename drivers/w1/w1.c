@@ -1193,7 +1193,7 @@ static int __init w1_init(void)
 {
 	int retval;
 
-	pr_debug("Driver for 1-wire Dallas network protocol.\n");
+	pr_info("Driver for 1-wire Dallas network protocol.\n");
 
 	w1_init_netlink();
 

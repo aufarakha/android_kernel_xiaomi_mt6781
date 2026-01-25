@@ -86,7 +86,7 @@ MODULE_FIRMWARE(QED_FW_FILE_NAME);
 
 static int __init qed_init(void)
 {
-	pr_debug("%s", version);
+	pr_info("%s", version);
 
 	return 0;
 }

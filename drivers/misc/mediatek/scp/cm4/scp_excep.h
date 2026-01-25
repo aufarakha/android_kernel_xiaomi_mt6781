@@ -101,7 +101,7 @@ struct elf32_timeval {
 };
 
 struct elf32_prstatus {
-	struct elf_siginfo pr_debug;
+	struct elf_siginfo pr_info;
 	short pr_cursig;
 	uint32_t pr_sigpend;
 	uint32_t pr_sighold;

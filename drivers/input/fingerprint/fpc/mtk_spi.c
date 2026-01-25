@@ -302,7 +302,7 @@ static const struct attribute_group const fpc_attribute_group = {
 };
 static void notification_work(struct work_struct *work)
 {
-	pr_debug("[XMFP]: %s: fpc fp unblank\n", __func__);
+	pr_info("[XMFP]: %s: fpc fp unblank\n", __func__);
 	mtk_drm_early_resume(FP_UNLOCK_REJECTION_TIMEOUT);
 }
 
@@ -324,7 +324,7 @@ static const struct attribute_group performance_attr_group = {
 
 static void unblank_work(struct work_struct *work)
 {
-	pr_debug(" entry %s line %d \n", __func__, __LINE__);
+	pr_info(" entry %s line %d \n", __func__, __LINE__);
 	//mtkfb_prim_panel_unblank(200);
 }
 
@@ -337,7 +337,7 @@ static void freq_release(struct work_struct *work)
 		freq_to_set[i].max = -1;
 	}
 	if (atomic_read(&boosted) == 1) {
-		pr_debug("%s  release freq lock\n", __func__);
+		pr_info("%s  release freq lock\n", __func__);
 		//update_userlimit_cpu_freq(CPU_KIR_FP, cluster_num, freq_to_set);
 		atomic_dec(&boosted);
 	}
@@ -345,7 +345,7 @@ static void freq_release(struct work_struct *work)
 
 static void freq_release_timer(struct timer_list *t)
 {
-	pr_debug(" entry %s line %d \n", __func__, __LINE__);
+	pr_info(" entry %s line %d \n", __func__, __LINE__);
 	schedule_work(&fp_freq_work);
 }
 
@@ -359,7 +359,7 @@ static int freq_hold(int sec)
 		freq_to_set[i].max = -1;
 	}
 	if (atomic_read(&boosted) == 0) {
-		pr_debug( "%s for %d * 500 msec \n", __func__, sec);
+		pr_info( "%s for %d * 500 msec \n", __func__, sec);
 		//update_userlimit_cpu_freq(CPU_KIR_FP, cluster_num, freq_to_set);
 		atomic_inc(&boosted);
 		release_timer.expires = jiffies + (HZ / 2) * sec;
@@ -374,19 +374,19 @@ static ssize_t performance_store(struct device *dev,
 				 size_t count)
 {
 	if (!strncmp(buf, "1", count)) {
-		pr_debug("finger down in authentication/enroll\n");
+		pr_info("finger down in authentication/enroll\n");
 		freq_hold(1);
 
 	} else if (!strncmp(buf, "0", 1)) {
-		pr_debug("finger up in authentication/enroll\n");
+		pr_info("finger up in authentication/enroll\n");
 	} else {
 		int timeout;
 		if (kstrtoint(buf, 10, &timeout) == 0) {
 			freq_hold(timeout);
-			pr_debug( "hold performance lock for %d * 500ms\n", timeout);
+			pr_info( "hold performance lock for %d * 500ms\n", timeout);
 		} else {
 			freq_hold(1);
-			pr_debug("hold performance lock for 500ms\n");
+			pr_info("hold performance lock for 500ms\n");
 		}
 	}
 	return count;
@@ -418,7 +418,7 @@ static irqreturn_t fpc_irq_handler(int irq, void *handle)
 	mutex_unlock(&fpc->lock);
 	sysfs_notify(&fpc->dev->kobj, NULL, dev_attr_irq.attr.name);
 	if (fpc->wait_finger_down && fpc->fb_black) {
-		pr_debug("[XMFP]: %s enter fingerdown & fb_black then schedule_work\n", __func__);
+		pr_info("[XMFP]: %s enter fingerdown & fb_black then schedule_work\n", __func__);
 		fpc->wait_finger_down = false;
 		schedule_work(&fpc->work);
         }
@@ -485,25 +485,25 @@ static int fpc_fb_notif_callback(struct notifier_block *nb,
 						    fb_notifier);
 	struct fb_event *evdata = data;
 	unsigned int blank;
-        pr_debug("[XMFP]: [info] %s value = %d\n", __func__, (int)event);
+        pr_info("[XMFP]: [info] %s value = %d\n", __func__, (int)event);
 	if (!fpc)
 		return 0;
 
 	if (event != FB_DRM_EARLY_EVENT_BLANK )
 		return 0;
 
-	pr_debug("[XMFP]: [info] %s value = %d\n", __func__, (int)event);
+	pr_info("[XMFP]: [info] %s value = %d\n", __func__, (int)event);
 
 	if (evdata && evdata->data && event == FB_DRM_EARLY_EVENT_BLANK ) {
 		blank = *(int *)(evdata->data);
 		switch (blank) {
 		case FB_BLANK_POWERDOWN:
 			fpc->fb_black = true;
-			pr_debug("[XMFP]: %s blank=0x%x, lcd off notify\n", __func__, blank);
+			pr_info("[XMFP]: %s blank=0x%x, lcd off notify\n", __func__, blank);
 			break;
 		case FB_BLANK_UNBLANK:
 			fpc->fb_black = false;
-			pr_debug("[XMFP]: %s blank=0x%x, lcd on notify\n", __func__, blank);
+			pr_info("[XMFP]: %s blank=0x%x, lcd on notify\n", __func__, blank);
 			break;
 		default:
 			pr_debug("[XMFP]: %s defalut\n", __func__);
@@ -522,7 +522,7 @@ static int check_hwid(struct spi_device *spi)
 
 	do {
 		spi_read_hwid(spi, tmp_buf);
-		pr_debug("%s, fpc1520 chip version is 0x%x, 0x%x\n",
+		pr_info("%s, fpc1520 chip version is 0x%x, 0x%x\n",
 		       __func__, tmp_buf[0], tmp_buf[1]);
 
 		time_out++;
@@ -543,13 +543,13 @@ static int check_hwid(struct spi_device *spi)
 		}
 
 		if (!error) {
-			pr_debug("fpc %s, fpc1022 chip version check pass, time_out=%d\n",
+			pr_info("fpc %s, fpc1022 chip version check pass, time_out=%d\n",
 			       __func__, time_out);
 			return 0;
 		}
 	} while (time_out < 2);
 
-	pr_debug("%s, fpc1022 chip version read failed, time_out=%d\n",
+	pr_info("%s, fpc1022 chip version read failed, time_out=%d\n",
 	       __func__, time_out);
 	spi_fingerprint = spi;
 	return -1;
@@ -563,7 +563,7 @@ static int proc_show_ver(struct seq_file *file,void *v)
 
 static int proc_open(struct inode *inode,struct file *file)
 {
-	pr_debug("fpc proc_open\n");
+	pr_info("fpc proc_open\n");
 	single_open(file,proc_show_ver,NULL);
 	return 0;
 }
@@ -579,7 +579,7 @@ static int fpc_power_supply(struct fpc_data *fpc)
 {
 	int ret = 0;
 	struct device *dev = &fpc->spidev->dev;
-	pr_debug("fp Power init start");
+	pr_info("fp Power init start");
 	// dev:i2c client device or spi slave device
 
 	ldoreg = regulator_get(dev, "VFP");
@@ -597,7 +597,7 @@ static int fpc_power_supply(struct fpc_data *fpc)
 	if (ret)
 		pr_err("regulator_enable(%d) failed!\n", ret);
 
-	pr_debug("fp Power init OK");
+	pr_info("fp Power init OK");
 	return ret;
 }
 */
@@ -803,7 +803,7 @@ static int __init fpc_sensor_init(void)
 	pr_err("%s, fpc_sensor_init enter.\n", __func__);
 	status = spi_register_driver(&mtk6765_driver);
 	if (status < 0) {
-		pr_debug("%s, fpc_sensor_init failed.\n", __func__);
+		pr_info("%s, fpc_sensor_init failed.\n", __func__);
 	}
 
 	return status;

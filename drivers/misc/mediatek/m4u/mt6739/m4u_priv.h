@@ -24,7 +24,7 @@
 
 #define m4u_err(string, args...)	pr_err("[M4U] "string, ##args)
 #define m4u_warn(string, args...)	pr_warn("[M4U] "string, ##args)
-#define m4u_info(string, args...)       pr_debug("[M4U] "string, ##args)
+#define m4u_info(string, args...)       pr_info("[M4U] "string, ##args)
 #define m4u_notice(string, args...)     pr_notice("[M4U] "string, ##args)
 #define m4u_debug(string, args...)      pr_debug("[M4U] "string, ##args)
 
@@ -38,7 +38,7 @@ extern int gM4U_log_to_uart;
 	do {\
 		if (level > gM4U_log_level) {\
 			if (level > gM4U_log_to_uart)\
-				pr_debug("[M4U] "string, ##args);\
+				pr_info("[M4U] "string, ##args);\
 			else\
 				pr_debug("[M4U] "string, ##args);\
 		} \
@@ -84,7 +84,7 @@ extern int gM4U_log_to_uart;
 
 #endif
 
-#define M4UMSG(string, args...) pr_debug("[M4U] " string, ##args)
+#define M4UMSG(string, args...) pr_info("[M4U] " string, ##args)
 #define M4UINFO(string, args...) pr_debug("[M4U] " string, ##args)
 
 #if defined(CONFIG_TRUSTONIC_TEE_SUPPORT) &&                                   \
@@ -334,7 +334,7 @@ extern int gM4U_log_to_uart;
 	do {                                                                   \
 		if (level > gM4U_log_level) {                                  \
 			if (level > gM4U_log_to_uart)                          \
-				pr_debug("[M4U] " string, ##args);              \
+				pr_info("[M4U] " string, ##args);              \
 			else                                                   \
 				pr_debug("[M4U] " string, ##args);             \
 		}                                                              \
@@ -352,7 +352,7 @@ extern int gM4U_log_to_uart;
 			__FILE__, __LINE__,                                    \
 			DB_OPT_MMPROFILE_BUFFER | DB_OPT_DUMP_DISPLAY,         \
 			m4u_name, "[M4U] error" string, ##args);               \
-		pr_debug("[M4U] error:" string, ##args);                        \
+		pr_info("[M4U] error:" string, ##args);                        \
 	} while (0)
 /*aee_kernel_warning(m4u_name, "[M4U] error:"string,##args); */
 
@@ -361,7 +361,7 @@ extern int gM4U_log_to_uart;
 		if (seq_file)                                                  \
 			seq_printf(seq_file, fmt, ##args);                     \
 		else                                                           \
-			pr_debug(fmt, ##args);                                  \
+			pr_info(fmt, ##args);                                  \
 	} while (0)
 
 #define M4U_PRINT_LOG_OR_SEQ(seq_file, fmt, args...)                           \
@@ -369,7 +369,7 @@ extern int gM4U_log_to_uart;
 		if (seq_file)                                                  \
 			seq_printf(seq_file, fmt, ##args);                     \
 		else                                                           \
-			pr_debug(fmt, ##args);                                  \
+			pr_info(fmt, ##args);                                  \
 	} while (0)
 
 /* ======================================= */

@@ -388,7 +388,7 @@ static int sclp_sd_file_update(struct sclp_sd_file *sd_file)
 	rc = sclp_sd_store_data(&data, sd_file->di);
 	if (rc) {
 		if (rc == -ENOENT) {
-			pr_debug("No data is available for the %s data entity\n",
+			pr_info("No data is available for the %s data entity\n",
 				 name);
 		}
 		return rc;
@@ -399,7 +399,7 @@ static int sclp_sd_file_update(struct sclp_sd_file *sd_file)
 	sd_file->data = data;
 	mutex_unlock(&sd_file->data_mutex);
 
-	pr_debug("A %zu-byte %s data entity was retrieved\n", data.dsize_bytes,
+	pr_info("A %zu-byte %s data entity was retrieved\n", data.dsize_bytes,
 		name);
 	kobject_uevent(&sd_file->kobj, KOBJ_CHANGE);
 

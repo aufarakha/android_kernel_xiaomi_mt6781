@@ -160,7 +160,7 @@ static void shutdown_onchannelcallback(void *context)
 					fw_versions, FW_VER_COUNT,
 					sd_versions, SD_VER_COUNT,
 					NULL, &sd_srv_version)) {
-				pr_debug("Shutdown IC version %d.%d\n",
+				pr_info("Shutdown IC version %d.%d\n",
 					sd_srv_version >> 16,
 					sd_srv_version & 0xFFFF);
 			}
@@ -176,14 +176,14 @@ static void shutdown_onchannelcallback(void *context)
 				icmsghdrp->status = HV_S_OK;
 				execute_shutdown = true;
 
-				pr_debug("Shutdown request received -"
+				pr_info("Shutdown request received -"
 					    " graceful shutdown initiated\n");
 				break;
 			default:
 				icmsghdrp->status = HV_E_FAIL;
 				execute_shutdown = false;
 
-				pr_debug("Shutdown request received -"
+				pr_info("Shutdown request received -"
 					    " Invalid request\n");
 				break;
 			}
@@ -321,7 +321,7 @@ static void timesync_onchannelcallback(void *context)
 						fw_versions, FW_VER_COUNT,
 						ts_versions, TS_VER_COUNT,
 						NULL, &ts_srv_version)) {
-				pr_debug("TimeSync IC version %d.%d\n",
+				pr_info("TimeSync IC version %d.%d\n",
 					ts_srv_version >> 16,
 					ts_srv_version & 0xFFFF);
 			}
@@ -387,7 +387,7 @@ static void heartbeat_onchannelcallback(void *context)
 					hb_versions, HB_VER_COUNT,
 					NULL, &hb_srv_version)) {
 
-				pr_debug("Heartbeat IC version %d.%d\n",
+				pr_info("Heartbeat IC version %d.%d\n",
 					hb_srv_version >> 16,
 					hb_srv_version & 0xFFFF);
 			}
@@ -587,14 +587,14 @@ static void hv_timesync_deinit(void)
 
 static int __init init_hyperv_utils(void)
 {
-	pr_debug("Registering HyperV Utility Driver\n");
+	pr_info("Registering HyperV Utility Driver\n");
 
 	return vmbus_driver_register(&util_drv);
 }
 
 static void exit_hyperv_utils(void)
 {
-	pr_debug("De-Registered HyperV Utility Driver\n");
+	pr_info("De-Registered HyperV Utility Driver\n");
 
 	vmbus_driver_unregister(&util_drv);
 }

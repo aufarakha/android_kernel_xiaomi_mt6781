@@ -1506,7 +1506,7 @@ static int __init vga_arb_device_init(void)
 
 	vga_arb_select_default_device();
 
-	pr_debug("loaded\n");
+	pr_info("loaded\n");
 	return rc;
 }
 subsys_initcall(vga_arb_device_init);

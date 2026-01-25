@@ -5369,7 +5369,7 @@ void mtk_ddp_add_comp_to_path(struct mtk_drm_crtc *mtk_crtc,
 		break;
 
 	default:
-		pr_debug("%s mtk drm not support mmsys id %d\n",
+		pr_info("%s mtk drm not support mmsys id %d\n",
 			__func__, priv->data->mmsys_id);
 		break;
 	}
@@ -5580,7 +5580,7 @@ void mtk_ddp_add_comp_to_path_with_cmdq(struct mtk_drm_crtc *mtk_crtc,
 		break;
 
 	default:
-		pr_debug("%s mtk drm not support mmsys id %d\n",
+		pr_info("%s mtk drm not support mmsys id %d\n",
 			__func__, priv->data->mmsys_id);
 		break;
 	}
@@ -6284,7 +6284,7 @@ mtk_ddp_get_mmsys_reg_data(enum mtk_mmsys_id mmsys_id)
 		data = &mt6781_mmsys_reg_data;
 		break;
 	default:
-		pr_debug("mtk drm not support mmsys id %d\n", mmsys_id);
+		pr_info("mtk drm not support mmsys id %d\n", mmsys_id);
 		break;
 	}
 	return data;
@@ -8275,12 +8275,12 @@ static int mtk_ddp_probe(struct platform_device *pdev)
 		ddp->mutex[i].id = i;
 #ifndef CONFIG_FPGA_EARLY_PORTING
 	if (!of_find_property(dev->of_node, "clocks", &i))
-		pr_debug("mediatek-drm %s: has no clocks, set freerun\n",
+		pr_info("mediatek-drm %s: has no clocks, set freerun\n",
 			dev_name(dev));
 	else {
 		ddp->clk = devm_clk_get(dev, NULL);
 		if (IS_ERR(ddp->clk)) {
-			pr_debug("Failed to get clock\n");
+			pr_info("Failed to get clock\n");
 			return PTR_ERR(ddp->clk);
 		}
 	}

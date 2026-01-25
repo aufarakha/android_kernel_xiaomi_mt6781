@@ -2823,7 +2823,7 @@ int fsg_common_create_lun(struct fsg_common *common, struct fsg_lun_config *cfg,
 
 		rc = device_register(&lun->dev);
 		if (rc) {
-			pr_debug("failed to register LUN%d: %d\n", id, rc);
+			pr_info("failed to register LUN%d: %d\n", id, rc);
 			put_device(&lun->dev);
 			goto error_sysfs;
 		}
@@ -2847,7 +2847,7 @@ int fsg_common_create_lun(struct fsg_common *common, struct fsg_lun_config *cfg,
 				p = "(error)";
 		}
 	}
-	pr_debug("LUN: %s%s%sfile: %s\n",
+	pr_info("LUN: %s%s%sfile: %s\n",
 	      lun->removable ? "removable " : "",
 	      lun->ro ? "read only " : "",
 	      lun->cdrom ? "CD-ROM " : "",
@@ -2881,7 +2881,7 @@ int fsg_common_create_luns(struct fsg_common *common, struct fsg_config *cfg)
 			goto fail;
 	}
 
-	pr_debug("Number of LUNs=%d\n", cfg->nluns);
+	pr_info("Number of LUNs=%d\n", cfg->nluns);
 
 	return 0;
 
@@ -2984,7 +2984,7 @@ int fsg_sysfs_update(struct fsg_common *common, struct device *dev, bool create)
 
 	nluns = _fsg_common_get_max_lun(common) + 1;
 
-	pr_debug("%s(): nluns:%d\n", __func__, nluns);
+	pr_info("%s(): nluns:%d\n", __func__, nluns);
 	if (create) {
 		for (i = 0; i < nluns; i++) {
 			if (i == 0)
@@ -2995,7 +2995,7 @@ int fsg_sysfs_update(struct fsg_common *common, struct device *dev, bool create)
 					&common->luns[i]->dev.kobj,
 					common->name[i]);
 			if (ret) {
-				pr_debug("%s(): failed creating sysfs:%d %s)\n",
+				pr_info("%s(): failed creating sysfs:%d %s)\n",
 						__func__, i, common->name[i]);
 				goto remove_sysfs;
 			}
@@ -3009,7 +3009,7 @@ int fsg_sysfs_update(struct fsg_common *common, struct device *dev, bool create)
 
 remove_sysfs:
 	for (; i > 0; i--) {
-		pr_debug("%s(): delete sysfs for lun(id:%d)(name:%s)\n",
+		pr_info("%s(): delete sysfs for lun(id:%d)(name:%s)\n",
 					__func__, i, common->name[i-1]);
 		sysfs_remove_link(&dev->kobj, common->name[i-1]);
 	}
@@ -3493,7 +3493,7 @@ static struct usb_function_instance *fsg_alloc_inst(void)
 	if (rc)
 		goto release_common;
 
-	pr_debug(FSG_DRIVER_DESC ", version: " FSG_DRIVER_VERSION "\n");
+	pr_info(FSG_DRIVER_DESC ", version: " FSG_DRIVER_VERSION "\n");
 
 	memset(&config, 0, sizeof(config));
 	config.removable = true;

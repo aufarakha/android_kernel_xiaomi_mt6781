@@ -395,7 +395,7 @@ static int lg_prepare(struct drm_panel *panel)
 	struct lg_panel *ctx = panel_to_lg(panel);
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	if (ctx->prepared)
 		return 0;
 

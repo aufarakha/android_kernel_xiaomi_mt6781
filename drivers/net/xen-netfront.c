@@ -2418,7 +2418,7 @@ static int __init netif_init(void)
 	if (!xen_has_pv_nic_devices())
 		return -ENODEV;
 
-	pr_debug("Initialising Xen virtual ethernet driver\n");
+	pr_info("Initialising Xen virtual ethernet driver\n");
 
 	/* Allow as many queues as there are CPUs inut max. 8 if user has not
 	 * specified a value.

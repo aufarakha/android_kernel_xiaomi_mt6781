@@ -1024,7 +1024,7 @@ int __init vmci_host_init(void)
 		return error;
 	}
 
-	pr_debug("VMCI host device registered (name=%s, major=%d, minor=%d)\n",
+	pr_info("VMCI host device registered (name=%s, major=%d, minor=%d)\n",
 		vmci_host_miscdev.name, MISC_MAJOR, vmci_host_miscdev.minor);
 
 	vmci_host_device_initialized = true;

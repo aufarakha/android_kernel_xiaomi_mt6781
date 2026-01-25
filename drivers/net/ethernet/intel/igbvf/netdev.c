@@ -2993,8 +2993,8 @@ static int __init igbvf_init_module(void)
 {
 	int ret;
 
-	pr_debug("%s - version %s\n", igbvf_driver_string, igbvf_driver_version);
-	pr_debug("%s\n", igbvf_copyright);
+	pr_info("%s - version %s\n", igbvf_driver_string, igbvf_driver_version);
+	pr_info("%s\n", igbvf_copyright);
 
 	ret = pci_register_driver(&igbvf_driver);
 

@@ -802,7 +802,7 @@ static irqreturn_t vip_irq(int irq, void *data)
 
 	if (status & DVP_IT_FIFO)
 		if (vip->overflow++ > 5)
-			pr_debug("VIP: fifo overflow\n");
+			pr_info("VIP: fifo overflow\n");
 
 	if ((status & DVP_IT_VST) && (status & DVP_IT_VSB)) {
 		/* this is bad, we are too slow, hope the condition is gone
@@ -1227,7 +1227,7 @@ static int sta2x11_vip_suspend(struct pci_dev *pdev, pm_message_t state)
 		vip->disabled = 1;
 	}
 
-	pr_debug("VIP: suspend\n");
+	pr_info("VIP: suspend\n");
 	return 0;
 }
 
@@ -1250,7 +1250,7 @@ static int sta2x11_vip_resume(struct pci_dev *pdev)
 	unsigned long flags;
 	int ret, i;
 
-	pr_debug("VIP: resume\n");
+	pr_info("VIP: resume\n");
 	/* restore pci state */
 	if (vip->disabled) {
 		ret = pci_enable_device(pdev);

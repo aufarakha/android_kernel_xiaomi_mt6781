@@ -224,13 +224,13 @@ static ssize_t power_ro_lock_store(struct device *dev,
 	blk_put_request(req);
 
 	if (!ret) {
-		pr_debug("%s: Locking boot partition ro until next power on\n",
+		pr_info("%s: Locking boot partition ro until next power on\n",
 			md->disk->disk_name);
 		set_disk_ro(md->disk, 1);
 
 		list_for_each_entry(part_md, &md->part, part)
 			if (part_md->area_type == MMC_BLK_DATA_AREA_BOOT) {
-				pr_debug("%s: Locking boot partition ro until next power on\n", part_md->disk->disk_name);
+				pr_info("%s: Locking boot partition ro until next power on\n", part_md->disk->disk_name);
 				set_disk_ro(part_md->disk, 1);
 			}
 	}
@@ -2381,7 +2381,7 @@ static int mmc_blk_swcq_issue_rw_rq(struct mmc_queue *mq,
 	if (atomic_read(&host->areq_cnt) < card->ext_csd.cmdq_depth) {
 		index = mmc_get_cmdq_index(mq);
 		if (WARN_ON(index == card->ext_csd.cmdq_depth)) {
-			pr_debug("%s,areq_cnt:%d\n",
+			pr_info("%s,areq_cnt:%d\n",
 				__func__, atomic_read(&host->areq_cnt));
 			return -EBUSY;
 		}
@@ -2679,7 +2679,7 @@ static int mmc_blk_alloc_part(struct mmc_card *card,
 
 	string_get_size((u64)get_capacity(part_md->disk), 512, STRING_UNITS_2,
 			cap_str, sizeof(cap_str));
-	pr_debug("%s: %s %s partition %u %s\n",
+	pr_info("%s: %s %s partition %u %s\n",
 	       part_md->disk->disk_name, mmc_card_id(card),
 	       mmc_card_name(card), part_md->part_type, cap_str);
 	return 0;
@@ -2818,7 +2818,7 @@ static int mmc_blk_alloc_rpmb_part(struct mmc_card *card,
 	string_get_size((u64)size, 512, STRING_UNITS_2,
 			cap_str, sizeof(cap_str));
 
-	pr_debug("%s: %s %s partition %u %s, chardev (%d:%d)\n",
+	pr_info("%s: %s %s partition %u %s, chardev (%d:%d)\n",
 		rpmb_name, mmc_card_id(card),
 		mmc_card_name(card), EXT_CSD_PART_CONFIG_ACC_RPMB, cap_str,
 		MAJOR(mmc_rpmb_devt), rpmb->id);
@@ -3172,7 +3172,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 
 	string_get_size((u64)get_capacity(md->disk), 512, STRING_UNITS_2,
 			cap_str, sizeof(cap_str));
-	pr_debug("%s: %s %s %s %s\n",
+	pr_info("%s: %s %s %s %s\n",
 		md->disk->disk_name, mmc_card_id(card), mmc_card_name(card),
 		cap_str, md->read_only ? "(ro)" : "");
 
@@ -3216,7 +3216,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 		if (elv_iosched_store(md->disk->queue,
 				CONFIG_MMC_SD_IOSCHED,
 				strlen(CONFIG_MMC_SD_IOSCHED))) {
-			pr_debug("%s: fail: change io scheduler of SD card to %s",
+			pr_info("%s: fail: change io scheduler of SD card to %s",
 				md->disk->disk_name, CONFIG_MMC_SD_IOSCHED);
 		}
 	}
@@ -3326,7 +3326,7 @@ static int __init mmc_blk_init(void)
 	}
 
 	if (perdev_minors != CONFIG_MMC_BLOCK_MINORS)
-		pr_debug("mmcblk: using %d minors per device\n", perdev_minors);
+		pr_info("mmcblk: using %d minors per device\n", perdev_minors);
 
 	max_devices = min(MAX_DEVICES, (1 << MINORBITS) / perdev_minors);
 

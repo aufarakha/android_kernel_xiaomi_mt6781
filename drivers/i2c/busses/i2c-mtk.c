@@ -99,12 +99,12 @@ s32 map_cg_regs(struct mt_i2c *i2c)
 		cg_node = of_find_compatible_node(NULL, NULL,
 			i2c->dev_comp->clk_compatible);
 		if (!cg_node) {
-			pr_debug("Cannot find cg_node\n");
+			pr_info("Cannot find cg_node\n");
 			return -ENODEV;
 		}
 		cg_base = of_iomap(cg_node, 0);
 		if (!cg_base) {
-			pr_debug("cg_base iomap failed\n");
+			pr_info("cg_base iomap failed\n");
 			return -ENOMEM;
 		}
 		ret = 0;
@@ -119,7 +119,7 @@ void dump_cg_regs(struct mt_i2c *i2c)
 	u32 clk_sel_val, arbit_val, clk_sel_offs, arbit_offs;
 
 	if (!cg_base || i2c->id >= I2C_MAX_CHANNEL) {
-		pr_debug("cg_base %p, i2c id = %d\n", cg_base, i2c->id);
+		pr_info("cg_base %p, i2c id = %d\n", cg_base, i2c->id);
 		return;
 	}
 
@@ -127,7 +127,7 @@ void dump_cg_regs(struct mt_i2c *i2c)
 	clk_sta_val = readl(cg_base + clk_sta_offs);
 	cg_bit = i2c->cg_bit;
 
-	pr_debug("[I2C] cg regs dump:\n"
+	pr_info("[I2C] cg regs dump:\n"
 		"name %s, offset 0x%x: value = 0x%08x, bit %d, clock %s\n",
 		i2c->dev_comp->clk_compatible,
 		clk_sta_offs, clk_sta_val, cg_bit,
@@ -138,7 +138,7 @@ void dump_cg_regs(struct mt_i2c *i2c)
 	clk_sel_val = readl(cg_base + clk_sel_offs);
 	arbit_offs = i2c->dev_comp->arbit_offset;
 	arbit_val = readl(cg_base + arbit_offs);
-	pr_debug("[I2C] clk src & arbit dump:\n"
+	pr_info("[I2C] clk src & arbit dump:\n"
 		"name: %s, clk_sel_offs: 0x%x, val=0x%08x, arbit_offs: 0x%x, val=0x%08x\n",
 			i2c->dev_comp->clk_compatible,
 			clk_sel_offs, clk_sel_val,
@@ -153,12 +153,12 @@ s32 map_dma_regs(void)
 
 	dma_node = of_find_compatible_node(NULL, NULL, "mediatek,ap_dma");
 	if (!dma_node) {
-		pr_debug("Cannot find dma_node\n");
+		pr_info("Cannot find dma_node\n");
 		return -ENODEV;
 	}
 	dma_base = of_iomap(dma_node, 0);
 	if (!dma_base) {
-		pr_debug("dma_base iomap failed\n");
+		pr_info("dma_base iomap failed\n");
 		return -ENOMEM;
 	}
 	return 0;
@@ -170,15 +170,15 @@ void dump_dma_regs(void)
 	int i;
 
 	if (!dma_base) {
-		pr_debug("dma_base NULL\n");
+		pr_info("dma_base NULL\n");
 		return;
 	}
 
 	status =  readl(dma_base + 8);
-	pr_debug("DMA RUNNING STATUS : 0x%x .\n", status);
+	pr_info("DMA RUNNING STATUS : 0x%x .\n", status);
 	for (i = 0; i < 21 ; i++) {
 		if (status & (0x1 << i))
-			pr_debug("DMA[%d] CONTROL REG : 0x%x, DEBUG : 0x%x .\n",
+			pr_info("DMA[%d] CONTROL REG : 0x%x, DEBUG : 0x%x .\n",
 				i,
 				readl(dma_base + 0x80 + 0x80 * i + 0x18),
 				readl(dma_base + 0x80 + 0x80 * i + 0x50));
@@ -805,12 +805,12 @@ void i2c_gpio_dump_info(struct mt_i2c *i2c)
 void dump_i2c_status(int id)
 {
 	if (id >= I2C_MAX_CHANNEL) {
-		pr_debug("error %s, id = %d\n", __func__, id);
+		pr_info("error %s, id = %d\n", __func__, id);
 		return;
 	}
 
 	if (!g_mt_i2c[id]) {
-		pr_debug("error %s, g_mt_i2c[%d] == NULL\n", __func__, id);
+		pr_info("error %s, g_mt_i2c[%d] == NULL\n", __func__, id);
 		return;
 	}
 
@@ -1409,19 +1409,19 @@ int i2c_tui_enable_clock(int id)
 
 	adap = i2c_get_adapter(id);
 	if (!adap) {
-		pr_debug("Cannot get adapter\n");
+		pr_info("Cannot get adapter\n");
 		return -1;
 	}
 
 	i2c = i2c_get_adapdata(adap);
 	ret = clk_prepare_enable(i2c->clk_main);
 	if (ret) {
-		pr_debug("Cannot enable main clk\n");
+		pr_info("Cannot enable main clk\n");
 		return ret;
 	}
 	ret = clk_prepare_enable(i2c->clk_dma);
 	if (ret) {
-		pr_debug("Cannot enable dma clk\n");
+		pr_info("Cannot enable dma clk\n");
 		clk_disable_unprepare(i2c->clk_main);
 		return ret;
 	}
@@ -1436,7 +1436,7 @@ int i2c_tui_disable_clock(int id)
 
 	adap = i2c_get_adapter(id);
 	if (!adap) {
-		pr_debug("Cannot get adapter\n");
+		pr_info("Cannot get adapter\n");
 		return -1;
 	}
 
@@ -1678,7 +1678,7 @@ static int mt_i2c_parse_dt(struct device_node *np, struct mt_i2c *i2c)
 	ret = of_property_read_u32(np, "apdma_size", &i2c->apdma_size);
 	if (ret)
 		i2c->apdma_size = MAX_DMA_TRANS_SIZE;
-	pr_debug("[I2C]id:%d,freq:%d,div:%d,ch_offset:0x%x,offset_dma:0x%x,offset_ccu:0x%x,apdma_size:0x%x\n",
+	pr_info("[I2C]id:%d,freq:%d,div:%d,ch_offset:0x%x,offset_dma:0x%x,offset_ccu:0x%x,apdma_size:0x%x\n",
 		i2c->id, i2c->speed_hz, i2c->clk_src_div,
 		i2c->ch_offset_default,
 		i2c->ch_offset_dma_default, i2c->ccu_offset, i2c->apdma_size);
@@ -1695,7 +1695,7 @@ int mt_i2c_parse_comp_data(void)
 
 	comp_node = of_find_compatible_node(NULL, NULL, "mediatek,i2c_common");
 	if (!comp_node) {
-		pr_debug("Cannot find i2c_common node\n");
+		pr_info("Cannot find i2c_common node\n");
 		return -ENODEV;
 	}
 	of_property_read_u8(comp_node, "dma_support",
@@ -1721,7 +1721,7 @@ int mt_i2c_parse_comp_data(void)
 		of_property_read_u8_array(comp_node, "clk_compatible",
 			(u8 *)i2c_common_compat.clk_compatible, ret);
 	else
-		pr_debug("[I2C]No clk_compatible(%d)\n", ret);
+		pr_info("[I2C]No clk_compatible(%d)\n", ret);
 	of_property_read_u32(comp_node, "clk_sel_offset",
 		(u32 *)&i2c_common_compat.clk_sel_offset);
 	of_property_read_u32(comp_node, "arbit_offset",
@@ -1937,7 +1937,7 @@ static int mt_i2c_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, i2c);
 
 	if (!map_cg_regs(i2c))
-		pr_debug("Map cg regs successfully.\n");
+		pr_info("Map cg regs successfully.\n");
 
 	return 0;
 }
@@ -1960,12 +1960,12 @@ void mt_i2c_pll_resume(void)
 
 #if !defined(CONFIG_MT_I2C_FPGA_ENABLE)
 	if (i2c_pll_info.clk_mux && i2c_pll_info.clk_p_univ) {
-		pr_debug("i2c main pll switch to univ pll\n");
+		pr_info("i2c main pll switch to univ pll\n");
 		clk_prepare_enable(i2c_pll_info.clk_mux);
 		clk_set_parent(i2c_pll_info.clk_mux, i2c_pll_info.clk_p_univ);
 		clk_disable_unprepare(i2c_pll_info.clk_mux);
 	} else {
-		pr_debug("i2c no need switch top pll\n");
+		pr_info("i2c no need switch top pll\n");
 	}
 #endif
 }
@@ -1977,27 +1977,27 @@ int mt_i2c_pll_suspend(void)
 	const char *parent;
 
 	if (i2c_pll_info.clk_mux && i2c_pll_info.clk_p_main) {
-		pr_debug("i2c univ pll switch to main pll\n");
+		pr_info("i2c univ pll switch to main pll\n");
 		ret = clk_prepare_enable(i2c_pll_info.clk_mux);
 		if (ret) {
-			pr_debug("enable i2c clk_mux fail(%d)\n", ret);
+			pr_info("enable i2c clk_mux fail(%d)\n", ret);
 			return ret;
 		}
 		parent =
 			__clk_get_name(clk_get_parent(i2c_pll_info.clk_mux));
-		pr_debug("i2c before parent: %s\n", parent);
+		pr_info("i2c before parent: %s\n", parent);
 		ret = clk_set_parent(i2c_pll_info.clk_mux,
 			i2c_pll_info.clk_p_main);
 		if (ret) {
-			pr_debug("set i2c clk_p_main fail(%d)\n", ret);
+			pr_info("set i2c clk_p_main fail(%d)\n", ret);
 			goto err_clk_set_main;
 		}
 		parent =
 			__clk_get_name(clk_get_parent(i2c_pll_info.clk_mux));
-		pr_debug("i2c after parent: %s\n", parent);
+		pr_info("i2c after parent: %s\n", parent);
 		clk_disable_unprepare(i2c_pll_info.clk_mux);
 	} else {
-		pr_debug("i2c no need switch top pll\n");
+		pr_info("i2c no need switch top pll\n");
 	}
 
 	return ret;
@@ -2084,12 +2084,12 @@ static s32 enable_arbitration(void)
 
 	pericfg_node = of_find_compatible_node(NULL, NULL, "mediatek,pericfg");
 	if (!pericfg_node) {
-		pr_debug("Cannot find pericfg node\n");
+		pr_info("Cannot find pericfg node\n");
 		return -ENODEV;
 	}
 	pericfg_base = of_iomap(pericfg_node, 0);
 	if (!pericfg_base) {
-		pr_debug("pericfg iomap failed\n");
+		pr_info("pericfg iomap failed\n");
 		return -ENOMEM;
 	}
 	/* Enable the I2C arbitration */
@@ -2105,19 +2105,19 @@ static s32 __init mt_i2c_init(void)
 
 	ret = enable_arbitration();
 	if (ret) {
-		pr_debug("Cannot enalbe arbitration.\n");
+		pr_info("Cannot enalbe arbitration.\n");
 		return ret;
 	}
 #endif
 
 	if (!map_dma_regs())
-		pr_debug("Mapp dma regs successfully.\n");
+		pr_info("Mapp dma regs successfully.\n");
 	if (!mt_i2c_parse_comp_data())
-		pr_debug("Get compatible data from dts successfully.\n");
+		pr_info("Get compatible data from dts successfully.\n");
 
 	register_syscore_ops(&mtk_i2c_syscore_ops);
 
-	pr_debug("%s: driver as platform device\n", __func__);
+	pr_info("%s: driver as platform device\n", __func__);
 	return platform_driver_register(&mt_i2c_driver);
 }
 

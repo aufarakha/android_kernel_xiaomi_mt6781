@@ -411,7 +411,7 @@ static int mtk_pmic_keys_probe(struct platform_device *pdev)
 
 		error = mtk_pmic_key_setup(keys, &keys->keys[index]);
 		if (error) {
-			pr_debug("Set key index = %d error.\n", index);
+			pr_info("Set key index = %d error.\n", index);
 			return error;
 		}
 

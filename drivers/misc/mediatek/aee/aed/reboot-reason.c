@@ -44,7 +44,7 @@ static const char *mrdump_get_cmd(void)
 	set_fs(KERNEL_DS);
 	fd = filp_open("/proc/cmdline", O_RDONLY, 0);
 	if (IS_ERR(fd)) {
-		pr_debug("kedump: Unable to open /proc/cmdline (%ld)",
+		pr_info("kedump: Unable to open /proc/cmdline (%ld)",
 			PTR_ERR(fd));
 		set_fs(fs);
 		return aee_cmdline;

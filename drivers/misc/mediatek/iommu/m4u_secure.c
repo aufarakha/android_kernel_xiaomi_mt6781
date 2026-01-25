@@ -62,7 +62,7 @@ static int m4u_exec_session(struct m4u_sec_context *ctx)
 		return -1;
 	}
 
-	pr_debug("%s, Notify 0x%x\n", __func__, ctx->m4u_msg->cmd);
+	pr_info("%s, Notify 0x%x\n", __func__, ctx->m4u_msg->cmd);
 
 	memset(&m4u_operation, 0, sizeof(struct TEEC_Operation));
 	m4u_operation.paramTypes = TEEC_PARAM_TYPES(
@@ -79,7 +79,7 @@ static int m4u_exec_session(struct m4u_sec_context *ctx)
 		goto exit;
 	}
 
-	pr_debug("%s, get_resp %x\n", __func__, ctx->m4u_msg->cmd);
+	pr_info("%s, get_resp %x\n", __func__, ctx->m4u_msg->cmd);
 exit:
 	return ret;
 }
@@ -95,7 +95,7 @@ static int m4u_sec_gp_init(struct m4u_sec_context *ctx)
 		return ret;
 	}
 
-	pr_debug("%s, ta teec_initialize_context\n", __func__);
+	pr_info("%s, ta teec_initialize_context\n", __func__);
 
 
 	memset(&gp_ctx->shared_mem, 0, sizeof(struct TEEC_SharedMemory));
@@ -106,7 +106,7 @@ static int m4u_sec_gp_init(struct m4u_sec_context *ctx)
 	ret = TEEC_AllocateSharedMemory(&gp_ctx->ctx, &gp_ctx->shared_mem);
 	if (ret == TEEC_SUCCESS) {
 		ctx->m4u_msg = (struct m4u_msg *)gp_ctx->shared_mem.buffer;
-		pr_debug("teec_allocate_shared_memory buf: 0x%p\n",
+		pr_info("teec_allocate_shared_memory buf: 0x%p\n",
 		gp_ctx->shared_mem.buffer);
 	} else {
 		pr_err("teec_allocate_shared_memory failed: %d\n", ret);
@@ -127,7 +127,7 @@ static int m4u_sec_gp_init(struct m4u_sec_context *ctx)
 		gp_ctx->init = 1;
 	}
 
-	pr_debug("%s, open TCI session success\n", __func__);
+	pr_info("%s, open TCI session success\n", __func__);
 	return ret;
 
 exit_release:
@@ -226,7 +226,7 @@ static int __m4u_sec_init(void)
 	ctx->m4u_msg->init_param.l2_en = M4U_L2_ENABLE;
 	ctx->m4u_msg->init_param.sec_pt_pa = 0;
 
-	pr_debug("%s call CMD_M4UTL_INIT, nonsec_pt_pa: 0x%lx\n",
+	pr_info("%s call CMD_M4UTL_INIT, nonsec_pt_pa: 0x%lx\n",
 		__func__, pt_pa_nonsec);
 	ret = m4u_exec_cmd(ctx);
 	if (ret) {
@@ -245,10 +245,10 @@ int m4u_sec_init(void)
 {
 	int ret;
 
-	pr_debug("%s: start\n", __func__);
+	pr_info("%s: start\n", __func__);
 
 	if (m4u_tee_en) {
-		pr_debug("warning: re-initiation, %d\n", m4u_tee_en);
+		pr_info("warning: re-initiation, %d\n", m4u_tee_en);
 		goto m4u_sec_reinit;
 	}
 
@@ -273,7 +273,7 @@ m4u_sec_reinit:
 	}
 
 	/* don't deinit ta because of multiple init operation */
-	pr_debug("%s:normal init done\n", __func__);
+	pr_info("%s:normal init done\n", __func__);
 	return 0;
 }
 
@@ -380,22 +380,22 @@ out:
 
 static void m4u_early_suspend(void)
 {
-	pr_debug("%s +, %d\n", __func__, m4u_tee_en);
+	pr_info("%s +, %d\n", __func__, m4u_tee_en);
 
 	if (m4u_tee_en)
 		m4u_reg_backup_sec();
 
-	pr_debug("%s -\n", __func__);
+	pr_info("%s -\n", __func__);
 }
 
 static void m4u_late_resume(void)
 {
-	pr_debug("%s +, %d\n", __func__, m4u_tee_en);
+	pr_info("%s +, %d\n", __func__, m4u_tee_en);
 
 	if (m4u_tee_en)
 		m4u_reg_restore_sec();
 
-	pr_debug("%s -\n", __func__);
+	pr_info("%s -\n", __func__);
 }
 
 static struct notifier_block m4u_fb_notifier;
@@ -405,7 +405,7 @@ static int m4u_fb_notifier_callback(
 	struct fb_event *evdata = data;
 	int blank;
 
-	pr_debug("%s %ld, %d\n", __func__, event, FB_EVENT_BLANK);
+	pr_info("%s %ld, %d\n", __func__, event, FB_EVENT_BLANK);
 
 	if (event != FB_EVENT_BLANK)
 		return 0;
@@ -440,16 +440,16 @@ irqreturn_t mtk_m4u_isr_sec(int irq, void *dev_id)
 
 	if (irq == m4u_dev_irq[0]) {
 		m4u_id = 0;
-		pr_debug("This is secure MM_IOMMU domian\n");
+		pr_info("This is secure MM_IOMMU domian\n");
 	} else if (irq == m4u_dev_irq[1]) {
 		m4u_id = 1;
-		pr_debug("This is secure VPU_IOMMU domian\n");
+		pr_info("This is secure VPU_IOMMU domian\n");
 	} else {
 		pr_err("%s(), Invalid secure irq number %d\n", __func__, irq);
 		return -1;
 	}
 
-	pr_debug("secure bank irq in normal world!\n");
+	pr_info("secure bank irq in normal world!\n");
 	arm_smccc_smc(MTK_M4U_DEBUG_DUMP, m4u_id, 0, 0,
 		0, 0, 0, 0, &res);
 	tf_en = res.a0;
@@ -470,20 +470,20 @@ static unsigned long mtk_m4u_get_pt(void)
 	if (reval & F_PGD_REG_BIT33)
 		reval |= BIT_ULL(33);
 
-	pr_debug("get pt: 0x%lx\n", reval);
+	pr_info("get pt: 0x%lx\n", reval);
 	return reval;
 }
 
 static int m4u_open(struct inode *inode, struct file *file)
 {
-	pr_debug("%s process : %s\n", __func__, current->comm);
+	pr_info("%s process : %s\n", __func__, current->comm);
 
 	return 0;
 }
 
 static int m4u_release(struct inode *inode, struct file *file)
 {
-	pr_debug("%s process : %s\n", __func__, current->comm);
+	pr_info("%s process : %s\n", __func__, current->comm);
 
 	return 0;
 }
@@ -497,7 +497,7 @@ static long m4u_ioctl(struct file *filp,
 #ifdef M4U_TEE_SERVICE_ENABLE
 	case MTK_M4U_T_SEC_INIT:
 		{
-			pr_debug("MTK M4U ioctl : MTK_M4U_T_SEC_INIT command!! 0x%x\n",
+			pr_info("MTK M4U ioctl : MTK_M4U_T_SEC_INIT command!! 0x%x\n",
 				cmd);
 			mutex_lock(&gM4u_sec_init);
 			ret = m4u_sec_init();
@@ -527,7 +527,7 @@ static long m4u_compat_ioctl(struct file *filp,
 #ifdef M4U_TEE_SERVICE_ENABLE
 	case COMPAT_MTK_M4U_T_SEC_INIT:
 		{
-			pr_debug("MTK_M4U_T_SEC_INIT command!! 0x%x\n",
+			pr_info("MTK_M4U_T_SEC_INIT command!! 0x%x\n",
 				  cmd);
 			mutex_lock(&gM4u_sec_init);
 			ret = m4u_sec_init();
@@ -571,7 +571,7 @@ static int m4u_probe(struct platform_device *pdev)
 
 	plarbdev = of_find_device_by_node(mm_m4unode);
 	if (!plarbdev || !plarbdev->dev.driver) {
-		pr_debug("mm m4u not ready!\n");
+		pr_info("mm m4u not ready!\n");
 		return -EPROBE_DEFER;
 	}
 

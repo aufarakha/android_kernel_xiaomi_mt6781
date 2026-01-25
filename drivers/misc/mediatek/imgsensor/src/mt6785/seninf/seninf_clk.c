@@ -46,7 +46,7 @@ int imgsensor_dfs_ctrl(enum DFS_OPTION option, void *pbuff)
 {
 	int i4RetValue = 0;
 
-	/*pr_debug("%s\n", __func__);*/
+	/*pr_info("%s\n", __func__);*/
 
 	switch (option) {
 	case DFS_CTRL_ENABLE:
@@ -118,7 +118,7 @@ int imgsensor_dfs_ctrl(enum DFS_OPTION option, void *pbuff)
 	}
 		break;
 	default:
-		pr_debug("None\n");
+		pr_info("None\n");
 		break;
 	}
 	return i4RetValue;
@@ -160,7 +160,7 @@ enum SENINF_RETURN seninf_clk_init(struct SENINF_CLK *pclk)
 	pclk->seninf_wake_lock = wakeup_source_register(
 			NULL, "seninf_lock_wakelock");
 	if (!pclk->seninf_wake_lock) {
-		pr_debug("failed to get seninf_wake_lock\n");
+		pr_info("failed to get seninf_wake_lock\n");
 		return SENINF_RETURN_ERROR;
 	}
 #endif

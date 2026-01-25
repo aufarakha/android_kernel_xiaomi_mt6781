@@ -4521,7 +4521,7 @@ static void show_pwq(struct pool_workqueue *pwq)
 	bool has_in_flight = false, has_pending = false;
 	int bkt;
 
-	pr_debug("  pwq %d:", pool->id);
+	pr_info("  pwq %d:", pool->id);
 	pr_cont_pool_info(pool);
 
 	pr_cont(" active=%d/%d refcnt=%d%s\n",
@@ -4537,7 +4537,7 @@ static void show_pwq(struct pool_workqueue *pwq)
 	if (has_in_flight) {
 		bool comma = false;
 
-		pr_debug("    in-flight:");
+		pr_info("    in-flight:");
 		hash_for_each(pool->busy_hash, bkt, worker, hentry) {
 			if (worker->current_pwq != pwq)
 				continue;
@@ -4562,7 +4562,7 @@ static void show_pwq(struct pool_workqueue *pwq)
 	if (has_pending) {
 		bool comma = false;
 
-		pr_debug("    pending:");
+		pr_info("    pending:");
 		list_for_each_entry(work, &pool->worklist, entry) {
 			if (get_work_pwq(work) != pwq)
 				continue;
@@ -4576,7 +4576,7 @@ static void show_pwq(struct pool_workqueue *pwq)
 	if (!list_empty(&pwq->delayed_works)) {
 		bool comma = false;
 
-		pr_debug("    delayed:");
+		pr_info("    delayed:");
 		list_for_each_entry(work, &pwq->delayed_works, entry) {
 			pr_cont_work(comma, work);
 			comma = !(*work_data_bits(work) & WORK_STRUCT_LINKED);
@@ -4600,7 +4600,7 @@ void show_workqueue_state(void)
 
 	rcu_read_lock_sched();
 
-	pr_debug("Showing busy workqueues and worker pools:\n");
+	pr_info("Showing busy workqueues and worker pools:\n");
 
 	list_for_each_entry_rcu(wq, &workqueues, list) {
 		struct pool_workqueue *pwq;
@@ -4615,7 +4615,7 @@ void show_workqueue_state(void)
 		if (idle)
 			continue;
 
-		pr_debug("workqueue %s: flags=0x%x\n", wq->name, wq->flags);
+		pr_info("workqueue %s: flags=0x%x\n", wq->name, wq->flags);
 
 		for_each_pwq(pwq, wq) {
 			spin_lock_irqsave(&pwq->pool->lock, flags);
@@ -4639,7 +4639,7 @@ void show_workqueue_state(void)
 		if (pool->nr_workers == pool->nr_idle)
 			goto next_pool;
 
-		pr_debug("pool %d:", pool->id);
+		pr_info("pool %d:", pool->id);
 		pr_cont_pool_info(pool);
 		pr_cont(" hung=%us workers=%d",
 			jiffies_to_msecs(jiffies - pool->watchdog_ts) / 1000,
@@ -5723,7 +5723,7 @@ static void __init wq_numa_init(void)
 		return;
 
 	if (wq_disable_numa) {
-		pr_debug("workqueue: NUMA affinity support disabled\n");
+		pr_info("workqueue: NUMA affinity support disabled\n");
 		return;
 	}
 

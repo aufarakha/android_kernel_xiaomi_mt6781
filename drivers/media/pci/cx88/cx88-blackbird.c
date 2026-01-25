@@ -1147,10 +1147,10 @@ static int blackbird_register_video(struct cx8802_dev *dev)
 	dev->mpeg_dev.queue = &dev->vb2_mpegq;
 	err = video_register_device(&dev->mpeg_dev, VFL_TYPE_GRABBER, -1);
 	if (err < 0) {
-		pr_debug("can't register mpeg device\n");
+		pr_info("can't register mpeg device\n");
 		return err;
 	}
-	pr_debug("registered device %s [mpeg]\n",
+	pr_info("registered device %s [mpeg]\n",
 		video_device_node_name(&dev->mpeg_dev));
 	return 0;
 }
@@ -1186,7 +1186,7 @@ static int cx8802_blackbird_probe(struct cx8802_driver *drv)
 	v4l2_ctrl_add_handler(&dev->cxhdl.hdl, &core->video_hdl, NULL, false);
 
 	/* blackbird stuff */
-	pr_debug("cx23416 based mpeg encoder (blackbird reference design)\n");
+	pr_info("cx23416 based mpeg encoder (blackbird reference design)\n");
 	host_setup(dev->core);
 
 	blackbird_initialize_codec(dev);
@@ -1246,7 +1246,7 @@ static struct cx8802_driver cx8802_blackbird_driver = {
 
 static int __init blackbird_init(void)
 {
-	pr_debug("cx2388x blackbird driver version %s loaded\n",
+	pr_info("cx2388x blackbird driver version %s loaded\n",
 		CX88_VERSION);
 	return cx8802_register_driver(&cx8802_blackbird_driver);
 }

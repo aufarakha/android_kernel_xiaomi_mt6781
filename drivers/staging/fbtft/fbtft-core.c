@@ -1264,7 +1264,7 @@ static u32 fbtft_of_value(struct device_node *node, const char *propname)
 
 	ret = of_property_read_u32(node, propname, &val);
 	if (ret == 0)
-		pr_debug("%s: %s = %u\n", __func__, propname, val);
+		pr_info("%s: %s = %u\n", __func__, propname, val);
 
 	return val;
 }

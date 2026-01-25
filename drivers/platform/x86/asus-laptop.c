@@ -1494,7 +1494,7 @@ static void asus_input_notify(struct asus_laptop *asus, int event)
 	if (!asus->inputdev)
 		return ;
 	if (!sparse_keymap_report_event(asus->inputdev, event, 1, true))
-		pr_debug("Unknown key %x pressed\n", event);
+		pr_info("Unknown key %x pressed\n", event);
 }
 
 static int asus_input_init(struct asus_laptop *asus)

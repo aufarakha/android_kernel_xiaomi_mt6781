@@ -3853,7 +3853,7 @@ bnad_module_init(void)
 {
 	int err;
 
-	pr_debug("bna: QLogic BR-series 10G Ethernet driver - version: %s\n",
+	pr_info("bna: QLogic BR-series 10G Ethernet driver - version: %s\n",
 		BNAD_VERSION);
 
 	bfa_nw_ioc_auto_recover(bnad_ioc_auto_recover);

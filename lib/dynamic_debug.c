@@ -106,7 +106,7 @@ static char *ddebug_describe_flags(unsigned int flags, struct flagsbuf *fb)
 #define vpr_info(fmt, ...)					\
 do {								\
 	if (verbose)						\
-		pr_debug(fmt, ##__VA_ARGS__);			\
+		pr_info(fmt, ##__VA_ARGS__);			\
 } while (0)
 
 static void vpr_info_dq(const struct ddebug_query *query, const char *msg)
@@ -205,7 +205,7 @@ static int ddebug_change(const struct ddebug_query *query,
 	mutex_unlock(&ddebug_lock);
 
 	if (!nfound && verbose)
-		pr_debug("no matches for query\n");
+		pr_info("no matches for query\n");
 
 	return nfound;
 }
@@ -262,7 +262,7 @@ static int ddebug_tokenize(char *buf, char *words[], int maxwords)
 
 	if (verbose) {
 		int i;
-		pr_debug("split into words:");
+		pr_info("split into words:");
 		for (i = 0; i < nwords; i++)
 			pr_cont(" \"%s\"", words[i]);
 		pr_cont("\n");
@@ -1174,7 +1174,7 @@ static int __init dynamic_debug_init(void)
 			pr_warn("Invalid ddebug boot param %s\n",
 				ddebug_setup_string);
 		else
-			pr_debug("%d changes by ddebug_query\n", ret);
+			pr_info("%d changes by ddebug_query\n", ret);
 	}
 	/* now that ddebug tables are loaded, process all boot args
 	 * again to find and activate queries given in dyndbg params.

@@ -69,11 +69,11 @@ int imgsensor_dfs_ctrl(enum DFS_OPTION option, void *pbuff)
 		option == DFS_SUPPORTED_ISP_CLOCKS ||
 		option == DFS_CUR_ISP_CLOCK)) {
 		if (pbuff == NULL) {
-			pr_debug("pbuff == null");
+			pr_info("pbuff == null");
 			return IMGSENSOR_RETURN_ERROR;
 		}
 	}
-	/*pr_debug("%s\n", __func__);*/
+	/*pr_info("%s\n", __func__);*/
 
 	switch (option) {
 	case DFS_CTRL_ENABLE:
@@ -146,7 +146,7 @@ int imgsensor_dfs_ctrl(enum DFS_OPTION option, void *pbuff)
 	}
 		break;
 	default:
-		pr_debug("None\n");
+		pr_info("None\n");
 		break;
 	}
 	return i4RetValue;
@@ -260,7 +260,7 @@ void imgsensor_clk_enable_all(struct IMGSENSOR_CLK *pclk)
 {
 	int i;
 
-	pr_debug("imgsensor_clk_enable_all_cg\n");
+	pr_info("imgsensor_clk_enable_all_cg\n");
 	for (i = IMGSENSOR_CCF_MTCMOS_MIN_NUM;
 		i < IMGSENSOR_CCF_MTCMOS_MAX_NUM;
 		i++) {
@@ -293,7 +293,7 @@ void imgsensor_clk_enable_all(struct IMGSENSOR_CLK *pclk)
 void imgsensor_clk_disable_all(struct IMGSENSOR_CLK *pclk)
 {
 	unsigned int i;
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	for (i = IMGSENSOR_CCF_MCLK_TG_MIN_NUM;
 		i < IMGSENSOR_CCF_MAX_NUM;
 		i++) {
@@ -308,10 +308,10 @@ void imgsensor_clk_disable_all(struct IMGSENSOR_CLK *pclk)
 int imgsensor_clk_ioctrl_handler(void *pbuff)
 {
 	if (pbuff == NULL)
-		pr_debug(" %s pbuff == null", __func__);
+		pr_info(" %s pbuff == null", __func__);
 	else
 		*(unsigned int *)pbuff = mt_get_ckgen_freq(*(unsigned int *)pbuff);
-	pr_debug("hf_fcamtg_ck = %d, hf_fmm_ck = %d, f_fseninf_ck = %d\n",
+	pr_info("hf_fcamtg_ck = %d, hf_fmm_ck = %d, f_fseninf_ck = %d\n",
 		mt_get_ckgen_freq(7),
 		mt_get_ckgen_freq(3),
 		mt_get_ckgen_freq(27));

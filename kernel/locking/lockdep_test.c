@@ -56,7 +56,7 @@ void lockdep_test_suspicious_rcu(void)
 
 		/* rcu_read_lock() should be here */
 		rcu_reader = rcu_dereference(lockdep_test_rcu_data);
-		pr_debug("data value is %d\n", rcu_reader->val);
+		pr_info("data value is %d\n", rcu_reader->val);
 		/* rcu_read_unlock() should be here */
 	}
 }

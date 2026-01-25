@@ -678,10 +678,10 @@ static void lcm_init(void)
 #endif
 
 	if (ret < 0) {
-		pr_debug("ili9881c----tps6132----cmd=%0x--i2c write error----\n",
+		pr_info("ili9881c----tps6132----cmd=%0x--i2c write error----\n",
 			cmd);
 	} else {
-		pr_debug("ili9881c----tps6132----cmd=%0x--i2c write success----\n",
+		pr_info("ili9881c----tps6132----cmd=%0x--i2c write success----\n",
 			cmd);
 	}
 
@@ -697,10 +697,10 @@ static void lcm_init(void)
 #endif
 
 	if (ret < 0) {
-		pr_debug("ili9881c----tps6132----cmd=%0x--i2c write error----\n",
+		pr_info("ili9881c----tps6132----cmd=%0x--i2c write error----\n",
 			cmd);
 	} else {
-		pr_debug("ili9881c----tps6132----cmd=%0x--i2c write success----\n",
+		pr_info("ili9881c----tps6132----cmd=%0x--i2c write success----\n",
 			cmd);
 	}
 

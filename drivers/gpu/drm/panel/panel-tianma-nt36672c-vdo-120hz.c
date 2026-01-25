@@ -443,7 +443,7 @@ static int tianma_prepare(struct drm_panel *panel)
 	struct tianma *ctx = panel_to_tianma(panel);
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	if (ctx->prepared)
 		return 0;
 

@@ -110,14 +110,14 @@ static void cqhci_dump_desc_by_tag(struct cqhci_host *cq_host, u8 tag)
 	u8 *tran_desc = NULL;
 	int i;
 
-	pr_debug("%s cqhci dump task%d desc:", __func__, tag);
+	pr_info("%s cqhci dump task%d desc:", __func__, tag);
 	if (tag < 31) {
 		tran_desc = get_trans_desc(cq_host, tag);
 		task_desc = get_desc(cq_host, tag);
 		for (i = 0; i < cq_host->task_desc_len; i++)
-			pr_debug("task desc[%d] %02x\n", i, task_desc[i]);
+			pr_info("task desc[%d] %02x\n", i, task_desc[i]);
 		for (i = 0; i < cq_host->trans_desc_len; i++)
-			pr_debug("trans_desc[%d] %02x\n", i, tran_desc[i]);
+			pr_info("trans_desc[%d] %02x\n", i, tran_desc[i]);
 	} else {
 		return;
 	}
@@ -1208,7 +1208,7 @@ int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc,
 	init_completion(&cq_host->halt_comp);
 	init_waitqueue_head(&cq_host->wait_queue);
 
-	pr_debug("%s: CQHCI version %u.%02u\n",
+	pr_info("%s: CQHCI version %u.%02u\n",
 		mmc_hostname(mmc), cqhci_ver_major(cq_host),
 		cqhci_ver_minor(cq_host));
 

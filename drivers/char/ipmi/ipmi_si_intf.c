@@ -1929,7 +1929,7 @@ int ipmi_si_add_smi(struct si_sm_io *io)
 		}
 	}
 
-	pr_debug(PFX "Adding %s-specified %s state machine\n",
+	pr_info(PFX "Adding %s-specified %s state machine\n",
 		ipmi_addr_src_to_str(new_smi->io.addr_source),
 		si_to_str[new_smi->io.si_type]);
 
@@ -1953,7 +1953,7 @@ static int try_smi_init(struct smi_info *new_smi)
 	int i;
 	char *init_name = NULL;
 
-	pr_debug(PFX "Trying %s-specified %s state machine at %s address 0x%lx, slave address 0x%x, irq %d\n",
+	pr_info(PFX "Trying %s-specified %s state machine at %s address 0x%lx, slave address 0x%x, irq %d\n",
 		ipmi_addr_src_to_str(new_smi->io.addr_source),
 		si_to_str[new_smi->io.si_type],
 		addr_space_to_str[new_smi->io.addr_type],
@@ -2137,7 +2137,7 @@ static int __init init_ipmi_si(void)
 		return 0;
 
 	ipmi_hardcode_init();
-	pr_debug("IPMI System Interface driver.\n");
+	pr_info("IPMI System Interface driver.\n");
 
 	ipmi_si_platform_init();
 

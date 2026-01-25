@@ -347,7 +347,7 @@ static ssize_t situbatch_store(struct device *dev,
 			goto err_out;
 		}
 	} else
-		pr_debug("batch state no need change\n");
+		pr_info("batch state no need change\n");
 #else
 	err = situation_enable_and_batch(index);
 #endif

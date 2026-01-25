@@ -235,7 +235,7 @@ static int __init ir_sharp_decode_init(void)
 {
 	ir_raw_handler_register(&sharp_handler);
 
-	pr_debug("IR Sharp protocol handler initialized\n");
+	pr_info("IR Sharp protocol handler initialized\n");
 	return 0;
 }
 

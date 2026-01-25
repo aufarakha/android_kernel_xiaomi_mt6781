@@ -426,7 +426,7 @@ static int lcm_prepare(struct drm_panel *panel)
 	struct lcm *ctx = panel_to_lcm(panel);
 	int ret;
 
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	if (ctx->prepared)
 		return 0;
 
@@ -765,7 +765,7 @@ static int lcm_probe(struct mipi_dsi_device *dsi)
 		return ret;
 #endif
 	check_is_need_fake_resolution(dev);
-	pr_debug("%s-\n", __func__);
+	pr_info("%s-\n", __func__);
 
 	return ret;
 }

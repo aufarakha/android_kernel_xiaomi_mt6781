@@ -4113,7 +4113,7 @@ static int __init dasd_init(void)
 
 	return 0;
 failed:
-	pr_debug("The DASD device driver could not be initialized\n");
+	pr_info("The DASD device driver could not be initialized\n");
 	dasd_exit();
 	return rc;
 }

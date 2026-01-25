@@ -4889,7 +4889,7 @@ static int subsys_is_on(enum subsys_id id)
 	r = sys->ops->get_state(sys);
 
 #if MT_CCF_PG_DEBUG
-	pr_debug("[CCF] %s:%d, sys=%s, id=%d\n", __func__, r, sys->name, id);
+	pr_info("[CCF] %s:%d, sys=%s, id=%d\n", __func__, r, sys->name, id);
 #endif				/* MT_CCF_PG_DEBUG */
 
 	return r;
@@ -4962,7 +4962,7 @@ static int enable_subsys(enum subsys_id id)
 	case SYS_DIS:
 		break;
 	default:
-		pr_debug("[CCF] %s: sys=%s, id=%d\n",
+		pr_info("[CCF] %s: sys=%s, id=%d\n",
 			__func__, sys->name, id);
 		break;
 	}
@@ -4970,7 +4970,7 @@ static int enable_subsys(enum subsys_id id)
 
 	if (allow[id] == 0) {
 		#if MT_CCF_PG_DEBUG
-		pr_debug("[CCF] %s: do nothing return\n", __func__);
+		pr_info("[CCF] %s: do nothing return\n", __func__);
 		#endif
 		return 0;
 	}
@@ -5040,7 +5040,7 @@ static int disable_subsys(enum subsys_id id)
 	case SYS_DIS:
 		break;
 	default:
-		pr_debug("[CCF] %s: sys=%s, id=%d\n",
+		pr_info("[CCF] %s: sys=%s, id=%d\n",
 			__func__, sys->name, id);
 		break;
 	}
@@ -5048,7 +5048,7 @@ static int disable_subsys(enum subsys_id id)
 
 	if (allow[id] == 0) {
 		#if MT_CCF_PG_DEBUG
-		pr_debug("[CCF] %s: do nothing return\n", __func__);
+		pr_info("[CCF] %s: do nothing return\n", __func__);
 		#endif
 		return 0;
 	}
@@ -5112,7 +5112,7 @@ static int pg_prepare(struct clk_hw *hw)
 		strcmp(__clk_get_name(hw->clk), "pg_mfg1") &&
 		strcmp(__clk_get_name(hw->clk), "pg_dis")) {
 
-		pr_debug("[CCF] %s start: clk=%s, pre_clk=%s\n", __func__,
+		pr_info("[CCF] %s start: clk=%s, pre_clk=%s\n", __func__,
 			 __clk_get_name(hw->clk),
 			 pg->pre_clk ? __clk_get_name(pg->pre_clk) : "");
 	}
@@ -5150,7 +5150,7 @@ fail:
 			strcmp(__clk_get_name(hw->clk), "pg_mfg1") &&
 			strcmp(__clk_get_name(hw->clk), "pg_dis")) {
 
-			pr_debug("[CCF] %s end\n", __func__);
+			pr_info("[CCF] %s end\n", __func__);
 		}
 #endif				/* MT_CCF_PG_DEBUG */
 
@@ -5169,7 +5169,7 @@ static void pg_unprepare(struct clk_hw *hw)
 		strcmp(__clk_get_name(hw->clk), "pg_mfg1") &&
 		strcmp(__clk_get_name(hw->clk), "pg_dis")) {
 
-		pr_debug("[CCF] %s start: clk=%s, pre_clk=%s\n", __func__,
+		pr_info("[CCF] %s start: clk=%s, pre_clk=%s\n", __func__,
 			 __clk_get_name(hw->clk),
 			 pg->pre_clk ? __clk_get_name(pg->pre_clk) : "");
 	}
@@ -5195,7 +5195,7 @@ static void pg_unprepare(struct clk_hw *hw)
 		strcmp(__clk_get_name(hw->clk), "pg_mfg1") &&
 		strcmp(__clk_get_name(hw->clk), "pg_dis")) {
 
-		pr_debug("[CCF] %s end\n", __func__);
+		pr_info("[CCF] %s end\n", __func__);
 	}
 #endif				/* MT_CCF_PG_DEBUG */
 }
@@ -5368,7 +5368,7 @@ static void __init init_clk_scpsys(void __iomem *infracfg_reg,
 			clk_data->clks[pg->id] = clk;
 
 #if MT_CCF_PG_DEBUG
-		pr_debug("[CCF] %s: pgate %3d: %s\n", __func__, i, pg->name);
+		pr_info("[CCF] %s: pgate %3d: %s\n", __func__, i, pg->name);
 #endif				/* MT_CCF_PG_DEBUG */
 	}
 }
@@ -5435,7 +5435,7 @@ void iomap_mm(void)
 	node = of_find_compatible_node(NULL, NULL,
 				"mediatek,mt6779-ipesys");
 	if (!node)
-		pr_debug("[CLK_IPESYS_CONFIG] find node failed\n");
+		pr_info("[CLK_IPESYS_CONFIG] find node failed\n");
 
 	clk_ipesys_base = of_iomap(node, 0);
 	if (!clk_ipesys_base)
@@ -5502,7 +5502,7 @@ static int clk_mt6779_scpsys_probe(struct platform_device *pdev)
 	int ret = 0;
 
 #if MT_CCF_PG_DEBUG
-	pr_debug("enter %s\n", __func__);
+	pr_info("enter %s\n", __func__);
 #endif
 
 	infracfg_reg = get_reg(node, 0);
@@ -5519,7 +5519,7 @@ static int clk_mt6779_scpsys_probe(struct platform_device *pdev)
 	}
 
 #if MT_CCF_PG_DEBUG
-	pr_debug("[CCF] %s: sys: %s, reg: 0x%x, 0x%x\n",
+	pr_info("[CCF] %s: sys: %s, reg: 0x%x, 0x%x\n",
 				__func__, node->name, infracfg_reg, spm_reg);
 #endif
 
@@ -5555,7 +5555,7 @@ static int clk_mt6779_scpsys_probe(struct platform_device *pdev)
 #endif				/* !MT_CCF_BRINGUP */
 
 #if MT_CCF_PG_DEBUG
-	pr_debug("exit %s\n", __func__);
+	pr_info("exit %s\n", __func__);
 #endif
 
 	return ret;
@@ -5848,7 +5848,7 @@ static struct platform_driver clk_mt6779_scpsys_drv = {
 
 static int __init clk_mt6779_scpsys_init(void)
 {
-	pr_debug("%s()\n", __func__);
+	pr_info("%s()\n", __func__);
 	return platform_driver_register(&clk_mt6779_scpsys_drv);
 }
 

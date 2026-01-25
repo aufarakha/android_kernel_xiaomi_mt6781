@@ -1799,7 +1799,7 @@ void i40e_dbg_init(void)
 {
 	i40e_dbg_root = debugfs_create_dir(i40e_driver_name, NULL);
 	if (IS_ERR(i40e_dbg_root))
-		pr_debug("init of debugfs failed\n");
+		pr_info("init of debugfs failed\n");
 }
 
 /**

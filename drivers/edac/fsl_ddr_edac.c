@@ -597,13 +597,13 @@ int fsl_mc_err_probe(struct platform_device *op)
 			goto err2;
 		}
 
-		pr_debug(EDAC_MOD_STR " acquired irq %d for MC\n",
+		pr_info(EDAC_MOD_STR " acquired irq %d for MC\n",
 		       pdata->irq);
 	}
 
 	devres_remove_group(&op->dev, fsl_mc_err_probe);
 	edac_dbg(3, "success\n");
-	pr_debug(EDAC_MOD_STR " MC err registered\n");
+	pr_info(EDAC_MOD_STR " MC err registered\n");
 
 	return 0;
 
