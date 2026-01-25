@@ -226,7 +226,7 @@
 		reg = <0x66>;
 		interrupt-parent = <&pio>;
 		interrupts = <10 IRQ_TYPE_EDGE_FALLING 10 0>;
-		pinctrl-names = "default";
+		pinctrl-names = "chargerpump";
 		pinctrl-0 = <&bq2597x_int_default &bq2597x_int_suspend>;
 
 		ti,bq2597x,bat-ovp-alarm-disable;
