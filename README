@@ -21,5 +21,5 @@ the problems which may result by upgrading your kernel.
 ============
 IMPORTANT!
 - This kernel is built by clang 12.0.1
-- Sync KernelSU before building (git clone https://github.com/rsuntk/KernelSU)
-- Use KernelSU app from https://github.com/rsuntk/KernelSU
+- Sync KernelSU-Next before building (git clone https://github.com/rusyd4/KernelSU-Next)
+- Use KernelSU app from https://github.com/KernelSU-Next/KernelSU-Next/releases/tag/v1.0.9
