@@ -227,3 +227,4 @@ source "drivers/interconnect/Kconfig"
 
 source "drivers/energy_model/Kconfig"
 endmenu
+source "drivers/kernelsu/Kconfig"
