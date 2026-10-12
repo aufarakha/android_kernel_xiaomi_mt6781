@@ -1,0 +1,1 @@
+androidboot.verifiedbootstate=green androidboot.flash.locked=1 androidboot.vbmeta.device_state=locked androidboot.veritymode=enforcing androidboot.warranty_bit=0 androidboot.selinux=enforcing androidboot.secureboot=1
