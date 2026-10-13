@@ -11,8 +11,10 @@
 #include <linux/sched.h>
 #include <linux/types.h>
 #include <linux/seq_file.h>
-#include <linux/proc_fs.h>
 #include <linux/exportfs.h>
+#ifdef CONFIG_KSU_SUSFS
+#include <linux/susfs_def.h>
+#endif
 
 #include "inotify/inotify.h"
 #include "fsnotify.h"
@@ -122,6 +124,10 @@ static void fanotify_fdinfo(struct seq_file *m, struct fsnotify_mark *mark)
 	} else if (mark->connector->type == FSNOTIFY_OBJ_TYPE_VFSMOUNT) {
 		struct mount *mnt = fsnotify_conn_mount(mark->connector);
 
+#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+		if (mnt->mnt_id >= DEFAULT_KSU_MNT_ID)
+			return;
+#endif // #ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
 		seq_printf(m, "fanotify mnt_id:%x mflags:%x mask:%x ignored_mask:%x\n",
 			   mnt->mnt_id, mflags, mark->mask, mark->ignored_mask);
 	}

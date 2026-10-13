@@ -17,6 +17,17 @@
 #include "internal.h"
 #include "fd.h"
 
+#ifdef CONFIG_KSU_SUSFS
+#include <linux/susfs_def.h>
+#endif // #ifdef CONFIG_KSU_SUSFS
+
+#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+extern int susfs_get_non_sus_mnt_id_from_mnt(struct mount *orig_mnt);
+#endif // #ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+#ifdef CONFIG_KSU_SUSFS_OPEN_REDIRECT
+extern int susfs_open_redirect_spoof_seq_show(struct inode *inode, int *out_mnt_id, unsigned long *out_ino);
+#endif // #ifdef CONFIG_KSU_SUSFS_OPEN_REDIRECT
+
 static int seq_show(struct seq_file *m, void *v)
 {
 	struct files_struct *files = NULL;
@@ -53,9 +64,38 @@ static int seq_show(struct seq_file *m, void *v)
 	if (ret)
 		return ret;
 
+#ifdef CONFIG_KSU_SUSFS_OPEN_REDIRECT
+	if (SUSFS_IS_INODE_OPEN_REDIRECT(file_inode(file))) {
+		int spoofed_mnt_id = 0;
+		unsigned long spoofed_ino = 0;
+		if (!susfs_open_redirect_spoof_seq_show(file_inode(file), &spoofed_mnt_id, &spoofed_ino)) {
+			seq_printf(m, "pos:\t%lli\nflags:\t0%o\nmnt_id:\t%i\n",
+					(long long)file->f_pos, f_flags,
+					spoofed_mnt_id);
+			goto bypass_orig_flow;
+		}
+	}
+#endif // #ifdef CONFIG_KSU_SUSFS_OPEN_REDIRECT
+
+#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+	if (likely(susfs_is_current_proc_umounted())) {
+		struct mount *mnt = real_mount(file->f_path.mnt);
+		if (mnt->mnt_id >= DEFAULT_KSU_MNT_ID) {
+			seq_printf(m, "pos:\t%lli\nflags:\t0%o\nmnt_id:\t%i\n",
+					(long long)file->f_pos, f_flags,
+					susfs_get_non_sus_mnt_id_from_mnt(mnt));
+			goto bypass_orig_flow;
+		}
+	}
+#endif // #ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+
 	seq_printf(m, "pos:\t%lli\nflags:\t0%o\nmnt_id:\t%i\n",
 		   (long long)file->f_pos, f_flags,
 		   real_mount(file->f_path.mnt)->mnt_id);
+
+#if defined(CONFIG_KSU_SUSFS_SUS_MOUNT) || defined(CONFIG_KSU_SUSFS_OPEN_REDIRECT)
+bypass_orig_flow:
+#endif // #if defined(CONFIG_KSU_SUSFS_SUS_MOUNT) || defined(CONFIG_KSU_SUSFS_OPEN_REDIRECT)
 
 	show_fd_locks(m, file, files);
 	if (seq_has_overflowed(m))

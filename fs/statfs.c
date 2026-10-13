@@ -9,7 +9,17 @@
 #include <linux/security.h>
 #include <linux/uaccess.h>
 #include <linux/compat.h>
+#ifdef CONFIG_KSU_SUSFS
+#include <linux/susfs_def.h>
+#endif
 #include "internal.h"
+
+#ifdef CONFIG_KSU_SUSFS_OPEN_REDIRECT
+extern int susfs_open_redirect_spoof_vfs_statfs(struct inode *inode, struct kstatfs *buf);
+#endif
+#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+extern struct vfsmount *susfs_get_non_sus_vfsmnt_from_vfsmnt(struct vfsmount *vfsmnt);
+#endif
 
 static int flags_by_mnt(int mnt_flags)
 {
@@ -70,6 +80,35 @@ static int statfs_by_dentry(struct dentry *dentry, struct kstatfs *buf)
 int vfs_statfs(const struct path *path, struct kstatfs *buf)
 {
 	int error;
+
+#ifdef CONFIG_KSU_SUSFS_OPEN_REDIRECT
+	if (SUSFS_IS_INODE_OPEN_REDIRECT(d_backing_inode(path->dentry))) {
+		error = susfs_open_redirect_spoof_vfs_statfs(d_backing_inode(path->dentry), buf);
+		if (!error)
+			return 0;
+	}
+#endif
+
+#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
+	if (likely(susfs_is_current_proc_umounted())) {
+		struct vfsmount *no_sus_vfsmnt = NULL;
+		no_sus_vfsmnt = susfs_get_non_sus_vfsmnt_from_vfsmnt(path->mnt);
+		if (path->mnt == no_sus_vfsmnt) {
+			dput(no_sus_vfsmnt->mnt_root);
+			mntput(no_sus_vfsmnt);
+			error = statfs_by_dentry(path->dentry, buf);
+			if (!error)
+				buf->f_flags = calculate_f_flags(path->mnt);
+			return error;
+		}
+		error = statfs_by_dentry(no_sus_vfsmnt->mnt_root, buf);
+		if (!error)
+			buf->f_flags = calculate_f_flags(no_sus_vfsmnt);
+		dput(no_sus_vfsmnt->mnt_root);
+		mntput(no_sus_vfsmnt);
+		return error;
+	}
+#endif
 
 	error = statfs_by_dentry(path->dentry, buf);
 	if (!error)
