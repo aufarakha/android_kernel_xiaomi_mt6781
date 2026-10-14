@@ -2494,10 +2494,14 @@ static enum g_posdiv_power_enum __mt_gpufreq_get_posdiv_power(unsigned int freq)
 	enum g_posdiv_power_enum posdiv_power = POSDIV_POWER_4;
 
 	/*
-	 * only use posdiv 4 or 8
+	 * use posdiv 2 (>950MHz), 4 (>=375MHz) or 8 (<375MHz)
+	 * for the >1.0GHz OPP keep the MFGPLL VCO low via posdiv 2
+	 * (VCO = 2*freq); posdiv 4 would exceed the ~4.0GHz lockable VCO ceiling
 	 * sub-clksrc is MAINPLL_D5(218.4MHz), please make sure don't overclock
 	 */
-	if (freq < POSDIV_4_MIN_FREQ)
+	if (freq > POSDIV_4_MAX_FREQ)
+		posdiv_power = POSDIV_POWER_2;
+	else if (freq < POSDIV_4_MIN_FREQ)
 		posdiv_power = POSDIV_POWER_8;
 
 	return posdiv_power;
@@ -2535,9 +2539,9 @@ static unsigned int __mt_gpufreq_calculate_dds(
 			freq_khz,
 			(1 << posdiv_power));
 
-	/* only use posdiv 4 or 8 */
+	/* use posdiv 2 (>950MHz), 4 (>=375MHz) or 8 (<375MHz) */
 	if ((freq_khz >= POSDIV_8_MIN_FREQ) &&
-		(freq_khz <= POSDIV_4_MAX_FREQ)) {
+		(freq_khz <= POSDIV_2_MAX_FREQ)) {
 		dds = (((freq_khz / TO_MHZ_HEAD *
 				(1 << posdiv_power)) << DDS_SHIFT) /
 				MFGPLL_FIN + ROUNDING_VALUE) / TO_MHZ_TAIL;

@@ -88,7 +88,7 @@
  * Reference Power Setting
  **************************************************/
 #define GPU_ACT_REF_POWER               (1307)                /* mW  */
-#define GPU_ACT_REF_FREQ                (950000)              /* KHz */
+#define GPU_ACT_REF_FREQ                (1000000)              /* KHz */
 #define GPU_ACT_REF_VOLT                (90000)               /* mV x 100 */
 #define PTPOD_DISABLE_VOLT              (75000)
 
@@ -350,7 +350,7 @@ unsigned int g_ptpod_opp_idx_table_segment[] = {
  * GPU OPP table definition
  **************************************************/
 struct opp_table_info g_opp_table_segment_1[] = {
-	GPUOP(950000, 90000, 100000, POSDIV_POWER_4, 625), /* 0 sign off */
+	GPUOP(1000000, 90000, 100000, POSDIV_POWER_2, 625), /* 0 sign off */
 	GPUOP(940000, 89375, 99375,  POSDIV_POWER_4, 625), /* 1 */
 	GPUOP(930000, 88750, 98750,  POSDIV_POWER_4, 625), /* 2 */
 	GPUOP(920000, 88125, 98125,  POSDIV_POWER_4, 625), /* 3 */
