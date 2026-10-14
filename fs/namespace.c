@@ -3907,8 +3907,14 @@ struct vfsmount *susfs_get_non_sus_vfsmnt_from_vfsmnt(struct vfsmount *vfsmnt) {
 	lock_mount_hash();
 	for (; mnt && mnt->mnt_parent && mnt != mnt->mnt_parent && mnt->mnt_id >= DEFAULT_KSU_MNT_ID; mnt = mnt->mnt_parent) { }
 	mntget(&mnt->mnt);
-	if (!mnt->mnt.mnt_root || IS_ERR(mnt->mnt.mnt_root)) {
+	if (unlikely(!mnt->mnt.mnt_root || IS_ERR(mnt->mnt.mnt_root))) {
+		/* - mnt_root is invalid (should not happen for a live mount). Drop the
+		 *   temporary reference and return a referenced copy of the original
+		 *   vfsmount so callers can always dput()/mntput() what we return
+		 *   without unbalancing the refcount. */
 		mntput(&mnt->mnt);
+		mntget(&real_mount(vfsmnt)->mnt);
+		dget(vfsmnt->mnt_root);
 		unlock_mount_hash();
 		return vfsmnt;
 	}
